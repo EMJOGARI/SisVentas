@@ -26,7 +26,7 @@
 							<td>{{ number_format($ven->total_venta, 2, ',', '.') }}</td>
 							<td>{{ $ven->estado }}</td>							
 							<td>
-								<a href="{{ URL::action('VentasController@show',$ven->idventa) }}"><button class="btn btn-primary">Detalles</button></a> 
+								<a href="{{ URL::action('VentaController@show',$ven->idventa) }}"><button class="btn btn-primary">Detalles</button></a> 
 								<a href="" data-target="#modal-delete-{{ $ven->idventa }}" data-toggle="modal"> <button class="btn btn-danger">Anular</button></a>
 							</td>
 						</tr>

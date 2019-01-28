@@ -54,7 +54,7 @@
 				            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
 				                <div class="form-group">
 				                    {!! Form::label('articulo', 'Articulo') !!}
-				                    <select name="pidarticulo" id="pidarticulo" class="form-control selectpicker" data-live-search="true">
+				                    <select name="idarticulo" id="pidarticulo" class="form-control selectpicker" data-live-search="true">
 				                    	@foreach($articulos as $articulo)
 				                    		<option value="{{ $articulo->idarticulo }}_{{ $articulo->stock }}_{{ $articulo->costo }}">{{ $articulo->articulo }}</option>
 				                    	@endforeach
@@ -69,20 +69,20 @@
 				            </div>
 				            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
 				                <div class="form-group">
-				                    {!! Form::label('cantidad', 'Cantidad') !!}
-				                    {!! Form::number('cantidad', null, ['id'=>'pcantidad','class'=>'form-control','placeholder'=>'Cantidad']) !!}
-				                </div>
-				            </div>				            
-				            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
-				                <div class="form-group">
 				                    {!! Form::label('precio_venta', 'Precio Venta') !!}
 				                    {!! Form::number('precio_venta', null, ['id'=>'pcosto','class'=>'form-control','placeholder'=>'P. Venta']) !!}
 				                </div>
 				            </div>
+				            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+				                <div class="form-group">
+				                    {!! Form::label('cantidad', 'Cantidad') !!}
+				                    {!! Form::number('cantidad', null, ['id'=>'pcantidad','class'=>'form-control','placeholder'=>'Cantidad']) !!}
+				                </div>
+				            </div>	
 				             <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
 				                <div class="form-group">
-				                    {!! Form::label('descuento', 'Descuento') !!}
-				                    {!! Form::number('descuento', null, ['id'=>'pdescuento','class'=>'form-control','placeholder'=>'Descuento', 'value'=>'0']) !!}
+				                    {!! Form::label('descuento', 'Descuento') !!}				                    
+				                    {!! Form::number('descuento', null, ['id'=>'pdescuento','class'=>'form-control','placeholder'=>'Descuento']) !!}
 				                </div>
 				            </div>		            
 				            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
@@ -96,15 +96,15 @@
 									    <th scope="col">Opciones</th>
 									    <th scope="col">Articulo</th>
 									    <th scope="col">Cantidad</th>
-									    <th scope="col">Precio Venta</th>
-									    <th scope="col">Descuento</th>							      
+									    <th scope="col">Precio Venta</th>									    
+									    <th scope="col">% Descuento</th>							      
 									    <th scope="col">Subtotal</th>									    
 								  	</thead>
 								  	<tfoot>
 								  		<th><h4>TOTAL</h4></th>
 								  		<th></th>
 								  		<th></th>
-								  		<th></th>
+								  		<th></th>								  		
 								  		<th></th>
 								  		<th><h4 id="total">BsS. 0.00</h4> <input type="hidden" name="total_venta" id="total_venta"></th>
 								  	</tfoot>
@@ -137,12 +137,14 @@
 	var cont=0;
 	total=0;
 	subtotal=[];
+	//neto=[];
 	$("#guardar").hide();
 	$("#pidarticulo").change(mostrarValores());
 
 	function mostrarValores()
 	{
-		datosArticulos=document.getElementById('pidarticulo').value.split('_');		
+		datosArticulos=document.getElementById('pidarticulo').value.split('_');
+		
 		$("#pstock").val(datosArticulos[1]);
 		$("#pcosto").val(datosArticulos[2]);	
 	}
@@ -158,12 +160,17 @@
 		descuento=$("#pdescuento").val();
 		precio_venta=$("#pcosto").val();
 		stock=$("#pstock").val();
-
+		
 		if (idarticulo!="" && cantidad!="" && cantidad>0 && precio_venta!="" && descuento!="")
 		{
 			if (stock>=cantidad)
 			{
-				subtotal[cont]=((cantidad*precio_venta)-descuento);
+				//subtotal[cont]=((cantidad*precio_venta)-descuento);
+				des=(descuento/100);
+				/*----------------*/
+				//neto[cont]=(cantidad*precio_venta);
+				subtotal[cont]=(cantidad*precio_venta);
+				subtotal[cont]=(subtotal[cont]-(subtotal[cont]*des));
 				total=total+subtotal[cont];
 				
 				var fila='<tr class="selected" id="fila'+cont+'"><td><button type="button" class="btn btn-warning" onclick="eliminar('+cont+')">X</button></td><td><input type="hidden" name="idarticulo[]" value="'+idarticulo+'">'+articulo+'</td><td><input type="hidden" name="cantidad[]" value="'+cantidad+'">'+cantidad+'</td><td><input type="hidden" name="precio_venta[]" value="'+precio_venta+'">'+precio_venta+'</td><td><input type="hidden" name="descuento[]" value="'+descuento+'">'+descuento+'</td><td>'+subtotal[cont]+'</td></tr>';

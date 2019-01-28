@@ -19,7 +19,7 @@ class VentaController extends Controller
 {
     public function __construct()
     {
-
+        $this->middleware('auth');
     }
     
     public function index(Request $request)
@@ -43,7 +43,7 @@ class VentaController extends Controller
     public function create()
     {   
         $personas=DB::table('persona')
-        	->where('tipo_persona','=','Cliente')
+        	//->where('tipo_persona','=','Cliente')
             ->get();    	
 
     	$articulos=DB::table('articulo as art')
@@ -79,22 +79,20 @@ class VentaController extends Controller
 
 		        $cont = 0;
 
-		        while($cont < count($idarticulo)){ // count($idarticulo)) -> recorre todos los articulos recibidos en el detalle
-                    dd($request->all());
+		        while($cont < count($idarticulo)){ // count($idarticulo)) -> recorre todos los articulos recibidos en el detalle                   
 		        	$detalle = new DetalleVenta();
 		        	$detalle->idventa=$venta->idventa;
 		        	$detalle->idarticulo=$idarticulo[$cont];
 		        	$detalle->cantidad=$cantidad[$cont];
-		        	$detalle->descuento=$descunto[$cont];
-		        	$detalle->precio_venta=$precio_venta[$cont];		        	
-		        	$detalle->save();	        	
+                    $detalle->precio_venta=$precio_venta[$cont];
+		        	$detalle->descuento=$descuento[$cont];		        			        	
+		        	$detalle->save();
 		        	$cont=$cont+1;
 		        }
     		DB::commit();
     	}catch(\Exception $e){
     		DB::rollback();
     	}
-        //dd($request->all());
         return Redirect::to('ventas/venta');   
 
     }
@@ -109,7 +107,7 @@ class VentaController extends Controller
             ->first();
 
         $detalles=DB::table('detalle_venta as d')
-            ->join('articulo as a', 'dv.idarticulo', '=','a.idarticulo')
+            ->join('articulo as a', 'd.idarticulo', '=','a.idarticulo')
             ->select('a.nombre as articulo', 'd.cantidad', 'd.descuento','d.precio_venta')
             ->where('d.idventa','=',$id)
             ->get();
