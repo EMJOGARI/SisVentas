@@ -28,4 +28,4 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/{slug?}', 'HomeController@index')->name('home');
 
-Route::get('pdf', 'ReporteController@generar');
+Route::get('pdf/reporte', 'ReporteController@generar');

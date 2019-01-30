@@ -1,4 +1,4 @@
-<<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
@@ -20,7 +20,7 @@
 	</style>
 </head>
 <body>
-	<h2>Reporte de Productos</h2>
+	<h2>Reporte de Articulos</h2>
 	<table>
 		<tr>
 			<th>ID</th>
@@ -28,16 +28,20 @@
 			<th>Codigo</th>
 			<th>Categoria</th>
 			<th>Stock</th>
+			<th>Costo</th>
 			<th>Estado</th>
-		</tr>
-		<tr>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
-		</tr>
+		</tr>		
+		@foreach ($articulos as $art)
+			<tr>												
+				<td>{{ $art->idarticulo }}</td>
+				<td>{{ $art->nombre }}</td>
+				<td>{{ $art->codigo }}</td>
+				<td>{{ $art->categoria }}</td>
+				<td>{{ $art->stock }}</td>	
+				<td>{{ $art->costo }}</td>						
+				<td>{{ $art->estado }}</td>							
+			</tr>				
+		@endforeach				
 	</table>
 	
 </body>
