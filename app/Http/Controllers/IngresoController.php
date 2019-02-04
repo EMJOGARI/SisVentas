@@ -120,10 +120,6 @@ class IngresoController extends Controller
         $ingreso=Ingreso::findOrFail($id);
         $ingreso->estado='C';
         $ingreso->update();
-
-
-
-
         return Redirect::to('compras/ingreso');
     }
 }

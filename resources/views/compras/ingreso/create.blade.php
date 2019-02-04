@@ -75,7 +75,7 @@
 				            </div>				            		            
 				            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
 				                <div class="form-group">
-				                    {!! Form::button('Agregar', ['id'=>'bt_add','class'=>'btn btn-primary']) !!}				                    
+				                	<button id="bt_add" class="btn btn-primary" type="button"><i class="fa fa-plus"></i> Agregar</button>          
 				                </div>
 				            </div>
 				            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -102,9 +102,12 @@
 	            	</div>
 	            </div>
 	            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="guardar">
-	                <div class="form-group">	                              	
+	                <div class="form-group">
+	                	<button class="btn btn-primary" type="submit"><i class="fa fa-save"></i> Guardar</button>
+	                	<button class="btn btn-danger" onclick="history.back()" type="reset" ><i class="fa fa-close"></i> Cancelar</button>
+	                	{{--                              	
 	                    {!! Form::submit('Guardar', ['class'=>'btn btn-primary']) !!}
-	                    {!! Form::reset('Cancelar', ['class'=>'btn btn-danger', 'onclick'=>'history.back()']) !!}
+	                    {!! Form::reset('Cancelar', ['class'=>'btn btn-danger', 'onclick'=>'history.back()']) !!} --}}
 	                </div>
 	            </div>
 			</div>
@@ -137,7 +140,7 @@ function agregar()
 		subtotal[cont]=(cantidad*precio_compra);
 		total=total+subtotal[cont];
 		
-		var fila='<tr class="selected" id="fila'+cont+'"><td><button type="button" class="btn btn-warning" onclick="eliminar('+cont+')">X</button></td><td><input type="hidden" name="idarticulo[]" value="'+idarticulo+'">'+articulo+'</td><td><input type="hidden" name="cantidad[]" value="'+cantidad+'">'+cantidad+'</td><td><input type="hidden" name="precio_compra[]" value="'+precio_compra+'">'+precio_compra+'</td><td>'+subtotal[cont]+'</td></tr>';
+		var fila='<tr class="selected" id="fila'+cont+'"><td><button type="button" class="btn btn-warning" onclick="eliminar('+cont+')"><i class="fa fa-close"></i></button></td><td><input type="hidden" name="idarticulo[]" value="'+idarticulo+'">'+articulo+'</td><td><input type="hidden" name="cantidad[]" value="'+cantidad+'">'+cantidad+'</td><td><input type="hidden" name="precio_compra[]" value="'+precio_compra+'">'+precio_compra+'</td><td>'+subtotal[cont]+'</td></tr>';
 		
 		cont++;
 		limpiar();

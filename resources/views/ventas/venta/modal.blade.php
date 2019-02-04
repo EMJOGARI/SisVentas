@@ -14,8 +14,8 @@
 					<p>Confirme si cancelar la venta seleccionada</p>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-					<button type="submit" class="btn btn-primary">Confirmar</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-close"></i> Cerrar</button>
+					<button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Confirmar</button>
 				</div>
 			</div>
 		</div>	

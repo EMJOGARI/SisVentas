@@ -35,7 +35,9 @@ class VentaController extends Controller
             	->select('v.idventa','v.fecha_hora','p.nombre','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.estado','v.total_venta')
             	->where('v.num_comprobante','LIKE','%'.$query.'%')
             	->orderBy('idventa','desc')
-                ->paginate(8);                
+                ->groupBy('v.idventa','v.fecha_hora','p.nombre','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.estado','v.total_venta')
+                ->paginate(8); 
+                //dd($ventas);               
             return view('ventas.venta.index',["ventas"=>$ventas,"searchText"=>$query]);
         }
     }
@@ -102,7 +104,7 @@ class VentaController extends Controller
        $venta=DB::table('venta as v')
             ->join('persona as p','v.idcliente','=','p.idpersona')
             ->join('detalle_venta as dv','v.idventa','=','dv.idventa')
-            ->select('v.idventa','v.fecha_hora','p.nombre','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.estado','v.total_venta')            
+            ->select('v.idventa','v.fecha_hora','p.nombre','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.estado','v.total_venta')
             ->where('v.idventa','=',$id)
             ->first();
 

@@ -59,8 +59,8 @@
         	</div>
         </div>
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <div class="form-group"> 
-                {!! Form::reset('Regresar', ['class'=>'btn btn-danger', 'onclick'=>'history.back()']) !!}
+            <div class="form-group">
+                <button class="btn btn-danger" onclick="history.back()" type="reset"><i class="fa fa-hand-o-left" value="Regresar"></i> Regresar</button>
             </div>
         </div>
 	</div>

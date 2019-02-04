@@ -3,7 +3,7 @@
 
 <head>
 	<meta charset="UTF-8">
-	<title>Reporte de Articulos</title>
+	<title>Reporte de Ventas</title>
 	<style>
 		table{
 			font-family: arial, sans-serif;
@@ -21,24 +21,23 @@
 	</style>
 </head>
 <body>
-	<h2>Reporte de Articulos</h2>
+	<h2>Reporte de Ventas</h2>
 	<table>
 		<tr style="background-color: #dddddd;">
-			<th>ID</th>
-			<th>Nombre</th>
-			<th>Codigo</th>
-			<th>Categoria</th>
-			<th>Stock</th>
+			<th>Fecha</th>			
+			<th>Cliente</th>
+			<th>Comprobante</th>
+			<th>Total</th>						
 			<th>Estado</th>
+						
 		</tr>		
-		@foreach ($articulos as $art)
+		@foreach ($ventas as $ven)
 			<tr>												
-				<td>{{ $art->idarticulo }}</td>
-				<td>{{ $art->nombre }}</td>
-				<td>{{ $art->codigo }}</td>
-				<td>{{ $art->categoria }}</td>
-				<td>{{ $art->stock }}</td>					
-				<td>{{ $art->estado }}</td>							
+				<td>{{ $ven->fecha_hora }}</td>
+				<td>{{ $ven->nombre }}</td>
+				<td>{{ $ven->tipo_comprobante.': '.$ven->serie_comprobante.' - '.$ven->num_comprobante }}</td>
+				<td>{{ number_format($ven->total_venta, 2, ',', '.') }}</td>
+				<td>{{ $ven->estado }}</td>							
 			</tr>				
 		@endforeach				
 	</table>

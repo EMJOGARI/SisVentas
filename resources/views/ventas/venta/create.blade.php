@@ -61,7 +61,7 @@
 				                    </select>
 				                </div>
 				            </div>
-				            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+				            <div class="col-lg-1 col-md-1 col-sm-1 col-xs-12">
 				                <div class="form-group">
 				                    {!! Form::label('stock', 'Stock') !!}
 				                    {!! Form::number('stock', null, ['id'=>'pstock','class'=>'form-control', 'disabled']) !!}
@@ -79,7 +79,7 @@
 				                    {!! Form::number('cantidad', null, ['id'=>'pcantidad','class'=>'form-control','placeholder'=>'Cantidad']) !!}
 				                </div>
 				            </div>	
-				             <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+				             <div class="col-lg-1 col-md-1 col-sm-1 col-xs-12">
 				                <div class="form-group">
 				                    {!! Form::label('descuento', 'Descuento') !!}				                    
 				                    {!! Form::number('descuento', null, ['id'=>'pdescuento','class'=>'form-control','placeholder'=>'Descuento']) !!}
@@ -87,7 +87,7 @@
 				            </div>		            
 				            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
 				                <div class="form-group">
-				                    {!! Form::button('Agregar', ['id'=>'bt_add','class'=>'btn btn-primary']) !!}				                    
+				                    <button id="bt_add" class="btn btn-primary" type="button"><i class="fa fa-plus"></i> Agregar</button>				                    
 				                </div>
 				            </div>
 				            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -116,9 +116,11 @@
 	            	</div>
 	            </div>
 	            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="guardar">
-	                <div class="form-group">	                              	
-	                    {!! Form::submit('Guardar', ['class'=>'btn btn-primary']) !!}
-	                    {!! Form::reset('Cancelar', ['class'=>'btn btn-danger', 'onclick'=>'history.back()']) !!}
+	                <div class="form-group">
+	                	<button class="btn btn-primary" type="submit"><i class="fa fa-save"></i> Guardar</button>
+	                	<button class="btn btn-danger" onclick="history.back()" type="reset" ><i class="fa fa-close"></i> Cancelar</button>	                              	
+	                   {{-- {!! Form::submit('Guardar', ['class'=>'btn btn-primary']) !!}
+	                    {!! Form::reset('Cancelar', ['class'=>'btn btn-danger', 'onclick'=>'history.back()']) !!} --}}
 	                </div>
 	            </div>
 			</div>
@@ -163,7 +165,7 @@
 		
 		if (idarticulo!="" && cantidad!="" && cantidad>0 && precio_venta!="" && descuento!="")
 		{
-			if (stock>=cantidad)
+			if (stock<=cantidad)
 			{
 				//subtotal[cont]=((cantidad*precio_venta)-descuento);
 				des=(descuento/100);
@@ -173,7 +175,7 @@
 				subtotal[cont]=(subtotal[cont]-(subtotal[cont]*des));
 				total=total+subtotal[cont];
 				
-				var fila='<tr class="selected" id="fila'+cont+'"><td><button type="button" class="btn btn-warning" onclick="eliminar('+cont+')">X</button></td><td><input type="hidden" name="idarticulo[]" value="'+idarticulo+'">'+articulo+'</td><td><input type="hidden" name="cantidad[]" value="'+cantidad+'">'+cantidad+'</td><td><input type="hidden" name="precio_venta[]" value="'+precio_venta+'">'+precio_venta+'</td><td><input type="hidden" name="descuento[]" value="'+descuento+'">'+descuento+'</td><td>'+subtotal[cont]+'</td></tr>';
+				var fila='<tr class="selected" id="fila'+cont+'"><td><button type="button" class="btn btn-warning" onclick="eliminar('+cont+')"><i class="fa fa-close"></i></button></td><td><input type="hidden" name="idarticulo[]" value="'+idarticulo+'">'+articulo+'</td><td><input type="hidden" name="cantidad[]" value="'+cantidad+'">'+cantidad+'</td><td><input type="hidden" name="precio_venta[]" value="'+precio_venta+'">'+precio_venta+'</td><td><input type="hidden" name="descuento[]" value="'+descuento+'">'+descuento+'</td><td>'+subtotal[cont]+'</td></tr>';
 				
 				cont++;
 				limpiar();

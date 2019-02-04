@@ -28,4 +28,13 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/{slug?}', 'HomeController@index')->name('home');
 
-Route::get('pdf/reporte', 'ReporteController@generar');
+Route::get('pdf/reportearticulo', 'ReporteController@ReporteArticulo');
+
+Route::get('pdf/reporteingreso', 'ReporteController@ReporteIngreso');
+Route::get('pdf/reporteingresoid/{id}', 'ReporteController@ReporteIngresoID');
+
+Route::get('pdf/reporteventa', 'ReporteController@ReporteVenta');
+Route::get('pdf/reporteventaid/{id}', 'ReporteController@ReporteVentaID');
+
+Route::get('pdf/reportecliente', 'ReporteController@ReporteCliente');
+Route::get('pdf/reporteproveedor', 'ReporteController@ReporteProveedor');

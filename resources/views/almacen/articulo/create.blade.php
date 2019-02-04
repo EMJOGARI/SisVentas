@@ -49,8 +49,8 @@
 
 	            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 	                <div class="form-group">
-	                    {!! Form::submit('Guardar', ['class'=>'btn btn-primary']) !!}
-	                    {!! Form::reset('Cancelar', ['class'=>'btn btn-danger', 'onclick'=>'history.back()']) !!}
+	                    <button class="btn btn-primary" type="submit"><i class="fa fa-save"></i> Guardar</button>
+	                	<button class="btn btn-danger" onclick="history.back()" type="reset"><i class="fa fa-close"></i> Cancelar</button>
 	                </div>
 	            </div>
 			</div>
