@@ -21,7 +21,7 @@ class Articulo extends Model
     	'costo',
     	'estado'
     ];
-
+/*configurado*/
     protected $guarded =[
     	
     ];
