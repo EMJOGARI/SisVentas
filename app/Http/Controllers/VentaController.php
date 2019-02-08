@@ -81,7 +81,8 @@ class VentaController extends Controller
 
 		        $cont = 0;
 
-		        while($cont < count($idarticulo)){ // count($idarticulo)) -> recorre todos los articulos recibidos en el detalle                   
+		        while($cont < count($idarticulo))
+                { // count($idarticulo)) -> recorre todos los articulos recibidos en el detalle                   
 		        	$detalle = new DetalleVenta();
 		        	$detalle->idventa=$venta->idventa;
 		        	$detalle->idarticulo=$idarticulo[$cont];

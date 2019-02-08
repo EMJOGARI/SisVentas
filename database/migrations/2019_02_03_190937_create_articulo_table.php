@@ -15,7 +15,7 @@ class CreateArticuloTable extends Migration
     {
         Schema::create('articulo', function (Blueprint $table) {
             $table->increments('idarticulo');
-            $table->integer('idcategoria');
+            $table->integer('idcategoria')->unsigned();
             $table->string('codigo',30);
             $table->string('nombre',30);
             $table->string('descripcion',150);            
@@ -31,7 +31,7 @@ class CreateArticuloTable extends Migration
      * @return void
      */
     public function down()
-    {
+    {       
         Schema::dropIfExists('articulo');
     }
 }

@@ -51,12 +51,12 @@
 	    	<div class="row">
 	            <div class="panel panel-primary">
 	            	<div class="panel-body">	            			            
-				            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+				            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
 				                <div class="form-group">
 				                    {!! Form::label('articulo', 'Articulo') !!}
-				                    <select name="idarticulo" id="pidarticulo" class="form-control selectpicker" data-live-search="true">
-				                    	@foreach($articulos as $articulo)
-				                    		<option value="{{ $articulo->idarticulo }}_{{ $articulo->stock }}_{{ $articulo->costo }}">{{ $articulo->articulo }}</option>
+				                    <select name="pidarticulo" id="pidarticulo" class="form-control selectpicker" data-live-search="true">
+				                    	@foreach($articulos as $art)
+				                    		<option value="{{ $art->idarticulo }}_{{ $art->stock }}_{{ $art->costo }}">{{ $art->articulo }}</option>
 				                    	@endforeach
 				                    </select>
 				                </div>
@@ -64,22 +64,22 @@
 				            <div class="col-lg-1 col-md-1 col-sm-1 col-xs-12">
 				                <div class="form-group">
 				                    {!! Form::label('stock', 'Stock') !!}
-				                    {!! Form::number('stock', null, ['id'=>'pstock','class'=>'form-control', 'disabled']) !!}
+				                    {!! Form::number('pstock', null, ['id'=>'pstock','class'=>'form-control', 'disabled']) !!}
 				                </div>
 				            </div>
 				            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
-				                <div class="form-group">
+				                <div class="form-group">				                	
 				                    {!! Form::label('precio_venta', 'Precio Venta') !!}
-				                    {!! Form::number('precio_venta', null, ['id'=>'pcosto','class'=>'form-control','placeholder'=>'P. Venta']) !!}
+				                    {!! Form::number('pcosto', null, ['id'=>'pcosto','class'=>'form-control','placeholder'=>'P. Venta']) !!}
 				                </div>
 				            </div>
 				            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
 				                <div class="form-group">
 				                    {!! Form::label('cantidad', 'Cantidad') !!}
-				                    {!! Form::number('cantidad', null, ['id'=>'pcantidad','class'=>'form-control','placeholder'=>'Cantidad']) !!}
+				                    {!! Form::number('pcantidad', null, ['id'=>'pcantidad','class'=>'form-control','placeholder'=>'Cantidad']) !!}
 				                </div>
 				            </div>	
-				             <div class="col-lg-1 col-md-1 col-sm-1 col-xs-12">
+				             <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
 				                <div class="form-group">
 				                    {!! Form::label('descuento', 'Descuento') !!}				                    
 				                    {!! Form::number('descuento', null, ['id'=>'pdescuento','class'=>'form-control','placeholder'=>'Descuento']) !!}
@@ -101,11 +101,11 @@
 									    <th scope="col">Subtotal</th>									    
 								  	</thead>
 								  	<tfoot>
-								  		<th><h4>TOTAL</h4></th>
+								  		<th></th>
 								  		<th></th>
 								  		<th></th>
 								  		<th></th>								  		
-								  		<th></th>
+								  		<th><h4>TOTAL</h4></th>
 								  		<th><h4 id="total">BsS. 0.00</h4> <input type="hidden" name="total_venta" id="total_venta"></th>
 								  	</tfoot>
 								  	<tbody>
@@ -118,9 +118,7 @@
 	            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="guardar">
 	                <div class="form-group">
 	                	<button class="btn btn-primary" type="submit"><i class="fa fa-save"></i> Guardar</button>
-	                	<button class="btn btn-danger" onclick="history.back()" type="reset" ><i class="fa fa-close"></i> Cancelar</button>	                              	
-	                   {{-- {!! Form::submit('Guardar', ['class'=>'btn btn-primary']) !!}
-	                    {!! Form::reset('Cancelar', ['class'=>'btn btn-danger', 'onclick'=>'history.back()']) !!} --}}
+	                	<button class="btn btn-danger" onclick="history.back()" type="reset" ><i class="fa fa-close"></i> Cancelar</button>
 	                </div>
 	            </div>
 			</div>
@@ -139,16 +137,14 @@
 	var cont=0;
 	total=0;
 	subtotal=[];
-	//neto=[];
 	$("#guardar").hide();
-	$("#pidarticulo").change(mostrarValores());
+	$("#pidarticulo").change(mostrar());
 
-	function mostrarValores()
+	function mostrar()
 	{
-		datosArticulos=document.getElementById('pidarticulo').value.split('_');
-		
+		datosArticulos=document.getElementById('pidarticulo').value.split('_');		
 		$("#pstock").val(datosArticulos[1]);
-		$("#pcosto").val(datosArticulos[2]);	
+		$("#pcosto").val(datosArticulos[2]);
 	}
 
 	function agregar()
@@ -165,7 +161,7 @@
 		
 		if (idarticulo!="" && cantidad!="" && cantidad>0 && precio_venta!="" && descuento!="")
 		{
-			if (stock<=cantidad)
+			if (stock>=cantidad)
 			{
 				//subtotal[cont]=((cantidad*precio_venta)-descuento);
 				des=(descuento/100);

@@ -91,8 +91,6 @@ class IngresoController extends Controller
     	}catch(\Exception $e){
     		DB::rollback();
     	}
-        dd($request->all());
-        //dd($detalle->precio_venta);
         return Redirect::to('compras/ingreso');      
     }
    

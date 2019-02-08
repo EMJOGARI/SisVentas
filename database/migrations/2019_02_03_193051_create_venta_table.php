@@ -15,7 +15,7 @@ class CreateVentaTable extends Migration
     {
         Schema::create('venta', function (Blueprint $table) {
             $table->increments('idventa');
-            $table->integer('idcliente');
+            $table->integer('idcliente')->unsigned();
             $table->string('tipo_comprobante',10);
             $table->string('serie_comprobante',10);
             $table->string('num_comprobante',10);
@@ -31,7 +31,7 @@ class CreateVentaTable extends Migration
      * @return void
      */
     public function down()
-    {
+    {        
         Schema::dropIfExists('venta');
     }
 }
