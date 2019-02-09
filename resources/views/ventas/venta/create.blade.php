@@ -56,7 +56,7 @@
 				                    {!! Form::label('articulo', 'Articulo') !!}
 				                    <select name="pidarticulo" id="pidarticulo" class="form-control selectpicker" data-live-search="true">
 				                    	@foreach($articulos as $art)
-				                    		<option value="{{ $art->idarticulo }}_{{ $art->stock }}_{{ $art->costo }}">{{ $art->articulo }}</option>
+				                    		<option value="{{ $art->idarticulo }}_{{ $art->stock }}_{{ $art->precio_venta }}">{{ $art->articulo }}</option>
 				                    	@endforeach
 				                    </select>
 				                </div>
@@ -64,13 +64,14 @@
 				            <div class="col-lg-1 col-md-1 col-sm-1 col-xs-12">
 				                <div class="form-group">
 				                    {!! Form::label('stock', 'Stock') !!}
-				                    {!! Form::number('pstock', null, ['id'=>'pstock','class'=>'form-control', 'disabled']) !!}
+				                   {!! Form::number('pstock', null, ['id'=>'pstock','class'=>'form-control', 'disabled', 'style'=>'padding-left: 6px; padding-right: 6px; text-align: center;']) !!}
+				                    
 				                </div>
 				            </div>
 				            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
 				                <div class="form-group">				                	
 				                    {!! Form::label('precio_venta', 'Precio Venta') !!}
-				                    {!! Form::number('pcosto', null, ['id'=>'pcosto','class'=>'form-control','placeholder'=>'P. Venta']) !!}
+				                    {!! Form::number('pprecio_venta', null, ['id'=>'pprecio_venta','class'=>'form-control']) !!} 
 				                </div>
 				            </div>
 				            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
@@ -138,13 +139,13 @@
 	total=0;
 	subtotal=[];
 	$("#guardar").hide();
-	$("#pidarticulo").change(mostrar());
+	$("#pidarticulo").change(mostrarArticulo);
 
-	function mostrar()
+	function mostrarArticulo()
 	{
-		datosArticulos=document.getElementById('pidarticulo').value.split('_');		
+		datosArticulos=document.getElementById('pidarticulo').value.split('_');			
 		$("#pstock").val(datosArticulos[1]);
-		$("#pcosto").val(datosArticulos[2]);
+		$("#pprecio_venta").val(datosArticulos[2]);		
 	}
 
 	function agregar()
@@ -156,7 +157,7 @@
 		articulo=$("#pidarticulo option:selected").text();
 		cantidad=$("#pcantidad").val();
 		descuento=$("#pdescuento").val();
-		precio_venta=$("#pcosto").val();
+		precio_venta=$("#pprecio_venta").val();
 		stock=$("#pstock").val();
 		
 		if (idarticulo!="" && cantidad!="" && cantidad>0 && precio_venta!="" && descuento!="")

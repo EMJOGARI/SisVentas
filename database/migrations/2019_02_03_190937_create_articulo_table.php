@@ -20,7 +20,6 @@ class CreateArticuloTable extends Migration
             $table->string('nombre',30);
             $table->string('descripcion',150);            
             $table->integer('stock');
-            $table->decimal('costo',11,2);
             $table->string('estado',10);
         });
     }

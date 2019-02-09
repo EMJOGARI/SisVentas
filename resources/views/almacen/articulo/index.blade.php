@@ -3,7 +3,7 @@
 	<div class="row">
 		<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
 			<h3>Listado de Articulos
-				<a href="articulo/create">
+				<a href="{{ url('almacen/articulo/create') }}">
 					<button class="btn btn-primary"><i class="fa fa-plus"></i> Nuevo Articulo</button>
 				</a>
 				<a href="{{ url('pdf/reportearticulo') }}" target="_blank">
@@ -23,7 +23,6 @@
 						<th>Codigo</th>
 						<th>Categoría</th>
 						<th>Stock</th>
-						<th>Precio Venta</th>
 						<th>Estado</th>
 						<th>Opcions</th>
 					</thead>
@@ -33,8 +32,7 @@
 							<td>{{ $art->nombre }}</td>
 							<td>{{ $art->codigo }}</td>
 							<td>{{ $art->categoria }}</td>
-							<td>{{ $art->stock }}</td>	
-							<td>{{ $art->costo }}</td>						
+							<td>{{ $art->stock }}</td>						
 							<td>{{ $art->estado }}</td>
 							<td>
 								<a href="{{ URL::action('ArticuloController@edit',$art->idarticulo) }}"><button class="btn btn-primary"><i class="fa fa-file-text-o"></i> Editar</button></a> 

@@ -2,7 +2,7 @@
 @section('content')
 	<div class="row">
 		<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
-			<h3>Listado de Categoria <a href="categoria/create"><button class="btn btn-success"><i class="fa fa-plus"></i> Nuevo</button></a></h3>
+			<h3>Listado de Categoria <a href="{{ url('almacen/categoria/create') }}"><button class="btn btn-success"><i class="fa fa-plus"></i> Nuevo</button></a></h3>
 			@include('almacen.categoria.search')			
 		</div>
 	</div>

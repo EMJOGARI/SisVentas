@@ -2,7 +2,7 @@
 @section('content')
 	<div class="row">
 		<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
-			<h3>Listado de Proveedor <a href="proveedor/create"><button class="btn btn-primary"><i class="fa fa-plus"></i> Nuevo</button></a>
+			<h3>Listado de Proveedor <a href="{{ url('compras/proveedor/create') }}"><button class="btn btn-primary"><i class="fa fa-plus"></i> Nuevo</button></a>
 				<a href="{{ url('pdf/reporteproveedor') }}" target="_blank">
 					<button class="btn btn-success"><i class="fa fa-print"></i> Lista de Proveedores</button>
 				</a>

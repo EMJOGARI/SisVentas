@@ -50,17 +50,17 @@ class VentaController extends Controller
 
     	$articulos=DB::table('articulo as art')
     		->join('detalle_ingreso as di','art.idarticulo','=','di.idarticulo')
-    		->select(DB::raw("CONCAT(art.codigo,' - ',art.nombre) AS articulo"),'art.idarticulo','art.stock','art.costo')
+    		->select(DB::raw("CONCAT(art.codigo,' - ',art.nombre) AS articulo"),'art.idarticulo','art.stock', DB::raw("MAX(di.precio_venta) AS precio_venta"))
     		->where('art.estado','=','Activo')
     		->where('art.stock','>','0')
-    		->groupBy('articulo','art.idarticulo','art.stock','art.costo')
+    		->groupBy('articulo','art.idarticulo','art.stock')
     		->get(); 
+            //dd($personas, $articulos);
         return view("ventas.venta.create",["personas"=>$personas, "articulos"=>$articulos]);
     }
     
     public function store(VentaFormRequest $request)
-    {
-       
+    {       
     	try{
     		DB::beginTransaction();
     			$venta = new Venta;
