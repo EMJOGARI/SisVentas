@@ -31,6 +31,7 @@
 			<th>Numero Doc.</th>
 			<th>Telefono</th>
 			<th>Email</th>
+			<th>Tipo Persona</th>
 		</tr>		
 		@foreach ($personas as $per)
 			<tr>												
@@ -39,7 +40,8 @@
 				<td>{{ $per->tipo_documento }}</td>
 				<td>{{ $per->num_documento }}</td>
 				<td>{{ $per->telefono }}</td>							
-				<td>{{ $per->email }}</td>							
+				<td>{{ $per->email }}</td>
+				<td>{{ $per->tipo_persona }}</td>							
 			</tr>						
 		@endforeach				
 	</table>

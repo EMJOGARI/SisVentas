@@ -16,11 +16,10 @@ Route::get('/', function () {
 });
 
 Route::resource('seguridad/usuario', 'UsuarioController');
+Route::resource('seguridad/persona', 'PersonaController');
 Route::resource('almacen/categoria', 'CategoriaController');
 Route::resource('almacen/articulo', 'ArticuloController');
-Route::resource('ventas/cliente', 'ClienteController');
 Route::resource('ventas/venta', 'VentaController');
-Route::resource('compras/proveedor', 'ProveedorController');
 Route::resource('compras/ingreso', 'IngresoController');
 
 Auth::routes();
@@ -36,5 +35,7 @@ Route::get('pdf/reporteingresoid/{id}', 'ReporteController@ReporteIngresoID');
 Route::get('pdf/reporteventa', 'ReporteController@ReporteVenta');
 Route::get('pdf/reporteventaid/{id}', 'ReporteController@ReporteVentaID');
 
+Route::get('pdf/reportepersona', 'ReporteController@ReportePersona');
 Route::get('pdf/reportecliente', 'ReporteController@ReporteCliente');
 Route::get('pdf/reporteproveedor', 'ReporteController@ReporteProveedor');
+

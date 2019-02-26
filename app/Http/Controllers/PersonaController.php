@@ -10,9 +10,9 @@ use PcArts\Persona;
 use PcArts\Http\Requests\PersonaFormRequest;
 use DB;
 
-class ClienteController extends Controller
+class PersonaController extends Controller
 {
-    public function __construct()
+     public function __construct()
     {
         $this->middleware('auth');
     }
@@ -24,44 +24,42 @@ class ClienteController extends Controller
         {
             // Variable de busqueda por categoria dond trim quita los espacios en blanco en el inicio y el final
             $query=trim($request->get('searchText'));
-            $personas=DB::table('persona')
+            $personas=DB::table('persona')           
                 ->where('nombre','LIKE','%'.$query.'%')
-                ->where('tipo_persona','=','Cliente')
-                ->orwhere('num_documento','LIKE','%'.$query.'%')
-                ->where('tipo_persona','=','Cliente')
-                ->orderBy('idpersona','desc')
+                ->orwhere('tipo_persona','LIKE','%'.$query.'%')                              
                 ->paginate(8);
-            return view('ventas.cliente.index',["personas"=>$personas,"searchText"=>$query]);
+
+            return view('seguridad.persona.index',["personas"=>$personas,"searchText"=>$query]);
         }
     }
     
     public function create()
     {
-        return view("ventas.cliente.create");
+        return view("seguridad.persona.create");
     }
     
     public function store(PersonaFormRequest $request)
     {
-        $persona=new Persona;
-        $persona->tipo_persona='Cliente';
+        $persona=new Persona;        
         $persona->nombre=$request->get('nombre');
         $persona->tipo_documento=$request->get('tipo_documento');
         $persona->num_documento=$request->get('num_documento');
         $persona->direccion=$request->get('direccion');
         $persona->telefono=$request->get('telefono');
-        $persona->email=$request->get('email');        
+        $persona->email=$request->get('email');
+        $persona->tipo_persona=$request->get('tipo_persona');        
         $persona->save();
-        return Redirect::to('ventas/cliente');      
+        return Redirect::to('seguridad/persona');      
     }
    
     public function show($id)
     {
-        return view("ventas.cliente.show",["persona"=>Persona::findOrFail($id)]);
+        return view("seguridad.persona.show",["persona"=>Persona::findOrFail($id)]);
     }
    
     public function edit($id)
     {
-        return view("ventas.cliente.edit",["persona"=>Persona::findOrFail($id)]);
+        return view("seguridad.persona.edit",["persona"=>Persona::findOrFail($id)]);
     }
    
     public function update(PersonaFormRequest $request, $id)
@@ -72,9 +70,10 @@ class ClienteController extends Controller
         $persona->num_documento=$request->get('num_documento');
         $persona->direccion=$request->get('direccion');
         $persona->telefono=$request->get('telefono');
-        $persona->email=$request->get('email');  
+        $persona->email=$request->get('email');
+        $persona->tipo_persona=$request->get('tipo_persona'); 
         $persona->update();
-        return Redirect::to('ventas/cliente');
+        return Redirect::to('seguridad/persona');
     }
    
     public function destroy($id)
@@ -82,6 +81,6 @@ class ClienteController extends Controller
         $persona=Persona::findOrFail($id);
         $persona->tipo_persona='Inactivo';
         $persona->update();
-        return Redirect::to('ventas/cliente');
+        return Redirect::to('seguridad/persona');
     }
 }

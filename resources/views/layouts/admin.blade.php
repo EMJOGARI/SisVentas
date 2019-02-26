@@ -68,7 +68,6 @@
                                        document.getElementById('logout-form').submit();">
                           {{ __('Cerrar') }}
                       </a>
-
                       <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                           @csrf
                       </form>
@@ -113,7 +112,6 @@
               </a>
               <ul class="treeview-menu">
                 <li><a href="{{ url('compras/ingreso') }}"><i class="fa fa-circle-o"></i> Ingresos</a></li>
-                <li><a href="{{ url('compras/proveedor') }}"><i class="fa fa-circle-o"></i> Proveedores</a></li>
               </ul>
             </li>
             <li class="treeview">
@@ -124,7 +122,6 @@
               </a>
               <ul class="treeview-menu">
                 <li><a href="{{ url('ventas/venta') }}"><i class="fa fa-circle-o"></i> Ventas</a></li>
-                <li><a href="{{ url('ventas/cliente') }}"><i class="fa fa-circle-o"></i> Clientes</a></li>
               </ul>
             </li>
                        
@@ -134,10 +131,12 @@
                 <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
-                <li><a href="{{ url('seguridad/usuario') }}"><i class="fa fa-circle-o"></i> Usuarios</a></li>
                 
+                <li><a href="{{ url('seguridad/usuario') }}"><i class="fa fa-circle-o"></i> Usuarios</a></li>
+                <li><a href="{{ url('seguridad/persona') }}"><i class="fa fa-user"></i> <span>Personas</span></a></li>                
               </ul>
-            </li>     
+            </li>
+                 
           </ul>
         </section>
         <!-- /.sidebar -->
@@ -158,10 +157,9 @@
             <div class="col-md-12">
               <div class="box">
                 <div class="box-header with-border">
-                  <h3 class="box-title">Sistema de Ventas</h3>
+                  <h3 class="box-title">SisVentas</h3>
                   <div class="box-tools pull-right">
-                    <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                    
+                    <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>                    
                     <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
                   </div>
                 </div>
@@ -187,7 +185,7 @@
       <!--Fin-Contenido-->
       <footer class="main-footer">
         <div class="pull-right hidden-xs">
-          <b>Version</b> 2.3.0
+          <b>Version</b> 1.0.0
         </div>
         <strong>Copyright &copy; 2015-2020 </strong> All rights reserved.
       </footer>

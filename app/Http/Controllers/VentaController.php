@@ -45,7 +45,8 @@ class VentaController extends Controller
     public function create()
     {   
         $personas=DB::table('persona')
-        	//->where('tipo_persona','=','Cliente')
+        	->where('tipo_persona','=','Cliente')
+            ->orwhere('tipo_persona','=','Proveedor')
             ->get();    	
 
     	$articulos=DB::table('articulo as art')

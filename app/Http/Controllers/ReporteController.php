@@ -74,18 +74,26 @@ class ReporteController extends Controller
         return $pdf->stream('informe'.'.pdf');
     }
 
+    public function ReportePersona()
+    {
+       $personas=DB::table('persona')
+            ->get();
+        $view = \View::make('pdf.reportepersona',compact('personas'))->render();
+        $pdf = \App::make('dompdf.wrapper');
+        $pdf->loadHTML($view); 
+        return $pdf->stream('informe'.'.pdf');
+    } 
 
     public function ReporteCliente()
     {
        $personas=DB::table('persona')               
-            ->where('tipo_persona','=','Cliente')
+            ->where('tipo_persona','=','Cliente')            
             ->get();
         $view = \View::make('pdf.reportecliente',compact('personas'))->render();
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadHTML($view); 
         return $pdf->stream('informe'.'.pdf');
     }
-
     public function ReporteProveedor()
     {
        $personas=DB::table('persona')               
@@ -95,8 +103,7 @@ class ReporteController extends Controller
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadHTML($view); 
         return $pdf->stream('informe'.'.pdf');
-    }
-
+    }    
    
     public function ReporteVenta()
     {

@@ -2,12 +2,18 @@
 @section('content')
 	<div class="row">
 		<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
-			<h3>Listado de Proveedor <a href="{{ url('compras/proveedor/create') }}"><button class="btn btn-primary"><i class="fa fa-plus"></i> Nuevo</button></a>
+			<h3>Personas <a href="{{ url('seguridad/persona/create') }}"><button class="btn btn-primary"><i class="fa fa-plus"></i> Nuevo</button></a>
+				<a href="{{ url('pdf/reportepersona') }}" target="_blank">
+					<button class="btn btn-success"><i class="fa fa-print"></i> Listado de Personas</button>
+				</a>
+				<a href="{{ url('pdf/reportecliente') }}" target="_blank">
+					<button class="btn btn-success"><i class="fa fa-print"></i> Listado de Clientes</button>
+				</a>
 				<a href="{{ url('pdf/reporteproveedor') }}" target="_blank">
 					<button class="btn btn-success"><i class="fa fa-print"></i> Lista de Proveedores</button>
 				</a>
 			</h3>
-			@include('compras.proveedor.search')			
+			@include('seguridad.persona.search')			
 		</div>
 	</div>
 	<div class="row">
@@ -21,6 +27,7 @@
 						<th>Numero Doc.</th>
 						<th>Telefono</th>
 						<th>Email</th>
+						<th>Tipo Persona</th>
 						<th>Opcions</th>
 					</thead>
 					@foreach ($personas as $per)
@@ -31,12 +38,13 @@
 							<td>{{ $per->num_documento }}</td>
 							<td>{{ $per->telefono }}</td>							
 							<td>{{ $per->email }}</td>
+							<td>{{ $per->tipo_persona }}</td>
 							<td>
-								<a href="{{ URL::action('ProveedorController@edit',$per->idpersona) }}"><button class="btn btn-primary"><i class="fa fa-file-text-o"></i> Editar</button></a> 
-								<a href="{{ URL::action('ProveedorController@destroy',$per->idpersona) }}" data-target="#modal-delete-{{ $per->idpersona }}" data-toggle="modal"> <button class="btn btn-danger"><i class="fa fa-close"></i> Eliminar</button></a>
+								<a href="{{ URL::action('PersonaController@edit',$per->idpersona) }}"><button class="btn btn-primary"><i class="fa fa-file-text-o"></i> Editar</button></a> 
+								<a href="{{ URL::action('PersonaController@destroy',$per->idpersona) }}" data-target="#modal-delete-{{ $per->idpersona }}" data-toggle="modal"> <button class="btn btn-danger"><i class="fa fa-close"></i> Eliminar</button></a>
 							</td>
 						</tr>
-						@include('compras.proveedor.modal')
+						@include('seguridad.persona.modal')
 					@endforeach
 				</table>
 			</div>
