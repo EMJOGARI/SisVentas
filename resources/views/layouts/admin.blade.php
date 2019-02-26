@@ -51,8 +51,7 @@
                 </a>
                 <ul class="dropdown-menu">
                   <!-- User image -->
-                  <li class="user-header">
-                    
+                  <li class="user-header"> 
                     <p>
                       Desarrollando Software
                     </p>
@@ -60,10 +59,17 @@
                   
                   <!-- Menu Footer-->
                   <li class="user-footer">
-                    
+
+
+                    <div class="pull-left">                      
+                        @if(Auth::user()->email=='ejgameror@gmail.com')
+                          <a class="btn btn-success btn-flat" href="{{ url('seguridad/usuario') }}"><i class="fa fa-plus"></i> {{ __('Usuarios') }}</a>
+                        @endif                      
+                    </div>
+
                     <div class="pull-right">
 
-                      <a class="btn btn-default btn-flat" href="{{ route('logout') }}"
+                      <a class="btn btn-danger btn-flat" href="{{ route('logout') }}"
                          onclick="event.preventDefault();
                                        document.getElementById('logout-form').submit();">
                           {{ __('Cerrar') }}
@@ -130,9 +136,7 @@
                 <i class="fa fa-folder"></i> <span>Acceso</span>
                 <i class="fa fa-angle-left pull-right"></i>
               </a>
-              <ul class="treeview-menu">
-                
-                <li><a href="{{ url('seguridad/usuario') }}"><i class="fa fa-circle-o"></i> Usuarios</a></li>
+              <ul class="treeview-menu"> 
                 <li><a href="{{ url('seguridad/persona') }}"><i class="fa fa-user"></i> <span>Personas</span></a></li>                
               </ul>
             </li>
