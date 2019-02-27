@@ -14,7 +14,7 @@ class CreateTrigger extends Migration
     public function up()
     {
 
-		DB::unprepared('
+		/*DB::unprepared('
 
 	    	CREATE OR REPLACE FUNCTION StockIngresar() RETURNS TRIGGER AS $$
 			DECLARE
@@ -50,7 +50,7 @@ class CreateTrigger extends Migration
 			CREATE TRIGGER Trigger_Stock_Venta AFTER INSERT ON detalle_venta FOR EACH ROW 
             EXECUTE PROCEDURE StockVenta();
         	
-    	');
+    	');*/
 
     /*
         DB::unprepared('
