@@ -12,7 +12,8 @@ class UserAdminSeeder extends Seeder
     public function run()
     {
         \DB::table('users')->insert([
-            'name' => 'Admin SisVentas',
+            'rol' => '0',
+            'name' => 'Administrador SisVentas',
             'email' => 'admin@gmail.com',
             'password' => bcrypt('123456'),
         ]);

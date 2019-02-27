@@ -62,7 +62,7 @@
 
 
                     <div class="pull-left">                      
-                        @if(Auth::user()->email=='ejgameror@gmail.com')
+                        @if(Auth::user()->rol=='0')
                           <a class="btn btn-success btn-flat" href="{{ url('seguridad/usuario') }}"><i class="fa fa-plus"></i> {{ __('Usuarios') }}</a>
                         @endif                      
                     </div>
