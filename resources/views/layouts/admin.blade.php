@@ -47,7 +47,7 @@
               <!-- User Account: style can be found in dropdown.less -->
               <li class="dropdown user user-menu">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">                  
-                  <span class="hidden-xs">{{ Auth::user()->name }}</span>
+                  <i class="fa fa-user"></i><span class="hidden-xs">{{ Auth::user()->name }}</span>
                 </a>
                 <ul class="dropdown-menu">
                   <!-- User image -->
@@ -59,13 +59,6 @@
                   
                   <!-- Menu Footer-->
                   <li class="user-footer">
-
-
-                    <div class="pull-left">                      
-                        @if(Auth::user()->rol=='0')
-                          <a class="btn btn-success btn-flat" href="{{ url('seguridad/usuario') }}"><i class="fa fa-plus"></i> {{ __('Usuarios') }}</a>
-                        @endif                      
-                    </div>
 
                     <div class="pull-right">
 
@@ -130,7 +123,20 @@
                 <li><a href="{{ url('ventas/venta') }}"><i class="fa fa-circle-o"></i> Ventas</a></li>
               </ul>
             </li>
-              <li><a href="{{ url('seguridad/persona') }}"><i class="fa fa-user"></i><span>Personas</span></a></li>
+            <li><a href="{{ url('seguridad/persona') }}"><i class="fa fa-user"></i><span>Personas</span></a></li>
+            @if(Auth::user()->rol=='0')
+              <li class="treeview">
+                <a href="#">
+                  <i class="fa fa-cog"></i>
+                  <span>Configuraciones</span>
+                  <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                  <li><a href="{{ url('seguridad/usuario') }}"><i class="fa fa-circle-o"></i> {{ __('Agregar Usuarios') }}</a></li>
+                </ul>
+              </li>
+            @endif
+
           </ul>
         </section>
         <!-- /.sidebar -->
