@@ -14,6 +14,10 @@ class AddForeignKeyTable extends Migration
     public function up()
     {
         /**/
+        Schema::table('users', function (Blueprint $table) {            
+            $table->foreign('idrol')->references('idrol')->on('roles')->onDelete('cascade');
+        });
+        /**/
         Schema::table('articulo', function (Blueprint $table) {            
             $table->foreign('idcategoria')->references('idcategoria')->on('categoria')->onDelete('cascade');
         });
@@ -44,6 +48,9 @@ class AddForeignKeyTable extends Migration
      */
     public function down()
     {
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropForeign('users_idrol_foreign');
+        });
         Schema::table('articulo', function (Blueprint $table) {
             $table->dropForeign('articulo_idcategoria_foreign');
         });

@@ -124,7 +124,7 @@
               </ul>
             </li>
             <li><a href="{{ url('seguridad/persona') }}"><i class="fa fa-user"></i><span>Personas</span></a></li>
-            @if(Auth::user()->rol=='0')
+            @if(Auth::user()->idrol=='1')
               <li class="treeview">
                 <a href="#">
                   <i class="fa fa-cog"></i>
