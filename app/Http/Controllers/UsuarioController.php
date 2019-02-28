@@ -25,7 +25,7 @@ class UsuarioController extends Controller
             $query=trim($request->get('searchText'));
             $usuarios=DB::table('users as u')
                 ->join('roles as r','u.idrol','=','r.idrol')
-                ->select('u.id','u.name','u.email','r.name as nombre')
+                ->select('u.id','u.name','u.email','r.name as tipo')
                 ->where('u.name','LIKE','%'.$query.'%')                         
                 ->orderBy('id','desc')
                 ->paginate(8);
