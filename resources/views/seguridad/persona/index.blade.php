@@ -4,13 +4,13 @@
 		<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
 			<h3>Personas <a href="{{ url('seguridad/persona/create') }}"><button class="btn btn-primary"><i class="fa fa-plus"></i> Nuevo</button></a>
 				<a href="{{ url('pdf/reportepersona') }}" target="_blank">
-					<button class="btn btn-success"><i class="fa fa-print"></i> Listado de Personas</button>
+					<button class="btn btn-success"><i class="fa fa-print"></i> Personas</button>
 				</a>
 				<a href="{{ url('pdf/reportecliente') }}" target="_blank">
-					<button class="btn btn-success"><i class="fa fa-print"></i> Listado de Clientes</button>
+					<button class="btn btn-success"><i class="fa fa-print"></i> Clientes</button>
 				</a>
 				<a href="{{ url('pdf/reporteproveedor') }}" target="_blank">
-					<button class="btn btn-success"><i class="fa fa-print"></i> Lista de Proveedores</button>
+					<button class="btn btn-success"><i class="fa fa-print"></i> Proveedores</button>
 				</a>
 			</h3>
 			@include('seguridad.persona.search')			
