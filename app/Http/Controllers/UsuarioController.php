@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use PcArts\Http\Requests;
 use Illuminate\Support\Facades\Redirect;
 use PcArts\User;
+use PcArts\Rol;
 use PcArts\Http\Requests\UsuarioFormRequest;
 use DB;
 
@@ -22,8 +23,10 @@ class UsuarioController extends Controller
         if ($request)
         {           
             $query=trim($request->get('searchText'));
-            $usuarios=DB::table('users')                
-                ->where('name','LIKE','%'.$query.'%')                         
+            $usuarios=DB::table('users as u')
+                ->join('roles as r','u.idrol','=','r.idrol')
+                ->select('u.id','u.name','u.email','r.name as nombre')
+                ->where('u.name','LIKE','%'.$query.'%')                         
                 ->orderBy('id','desc')
                 ->paginate(8);
             return view('seguridad.usuario.index',["usuarios"=>$usuarios,"searchText"=>$query]);
