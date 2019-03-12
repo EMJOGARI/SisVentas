@@ -1,6 +1,6 @@
 <?php
 
-namespace PcArts;
+namespace SisVentas;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;

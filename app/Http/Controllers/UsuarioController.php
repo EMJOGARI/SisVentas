@@ -1,14 +1,14 @@
 <?php
 
-namespace PcArts\Http\Controllers;
+namespace SisVentas\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use PcArts\Http\Requests;
+use SisVentas\Http\Requests;
 use Illuminate\Support\Facades\Redirect;
-use PcArts\User;
-use PcArts\Rol;
-use PcArts\Http\Requests\UsuarioFormRequest;
+use SisVentas\User;
+use SisVentas\Rol;
+use SisVentas\Http\Requests\UsuarioFormRequest;
 use DB;
 
 class UsuarioController extends Controller

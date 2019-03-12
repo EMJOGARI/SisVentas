@@ -1,6 +1,6 @@
 <?php
 
-namespace PcArts\Exceptions;
+namespace SisVentas\Exceptions;
 
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;

@@ -1,6 +1,6 @@
 <?php
 
-namespace PcArts\Http\Requests;
+namespace SisVentas\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 

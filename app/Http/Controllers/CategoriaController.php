@@ -1,13 +1,13 @@
 <?php
 
-namespace PcArts\Http\Controllers;
+namespace SisVentas\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use PcArts\Http\Requests;
+use SisVentas\Http\Requests;
 use Illuminate\Support\Facades\Redirect;
-use PcArts\Categoria;
-use PcArts\Http\Requests\CategoriaFormRequest;
+use SisVentas\Categoria;
+use SisVentas\Http\Requests\CategoriaFormRequest;
 use DB;
 
 class CategoriaController extends Controller

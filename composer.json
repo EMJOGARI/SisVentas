@@ -25,7 +25,7 @@
             "database/factories"
         ],
         "psr-4": {
-            "PcArts\\": "app/"
+            "SisVentas\\": "app/"
         }
     },
     "autoload-dev": {

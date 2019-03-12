@@ -105,9 +105,6 @@
 	                <div class="form-group">
 	                	<button class="btn btn-primary" type="submit"><i class="fa fa-save"></i> Guardar</button>
 	                	<button class="btn btn-danger" onclick="history.back()" type="reset" ><i class="fa fa-close"></i> Cancelar</button>
-	                	{{--                              	
-	                    {!! Form::submit('Guardar', ['class'=>'btn btn-primary']) !!}
-	                    {!! Form::reset('Cancelar', ['class'=>'btn btn-danger', 'onclick'=>'history.back()']) !!} --}}
 	                </div>
 	            </div>
 			</div>
@@ -140,7 +137,12 @@ function agregar()
 		subtotal[cont]=(cantidad*precio_compra);
 		total=total+subtotal[cont];
 		
-		var fila='<tr class="selected" id="fila'+cont+'"><td><button type="button" class="btn btn-warning" onclick="eliminar('+cont+')"><i class="fa fa-close"></i></button></td><td><input type="hidden" name="idarticulo[]" value="'+idarticulo+'">'+articulo+'</td><td><input type="hidden" name="cantidad[]" value="'+cantidad+'">'+cantidad+'</td><td><input type="hidden" name="precio_compra[]" value="'+precio_compra+'">'+precio_compra+'</td><td>'+subtotal[cont]+'</td></tr>';
+		var fila='<tr class="selected" id="fila'+cont+'">\n\
+			<td><button type="button" class="btn btn-warning" onclick="eliminar('+cont+')"><i class="fa fa-close"></i></button></td>\n\
+			<td><input type="hidden" name="idarticulo[]" value="'+idarticulo+'">'+articulo+'</td>\n\
+			<td><input type="hidden" name="cantidad[]" value="'+cantidad+'">'+cantidad+'</td>\n\
+			<td><input type="hidden" name="precio_compra[]" value="'+precio_compra+'">'+precio_compra+'</td>\n\
+			<td>'+subtotal[cont]+'</td></tr>';
 		
 		cont++;
 		limpiar();

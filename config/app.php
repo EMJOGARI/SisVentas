@@ -157,11 +157,11 @@ return [
         /*
          * Application Service Providers...
          */
-        PcArts\Providers\AppServiceProvider::class,
-        PcArts\Providers\AuthServiceProvider::class,
-        // PcArts\Providers\BroadcastServiceProvider::class,
-        PcArts\Providers\EventServiceProvider::class,
-        PcArts\Providers\RouteServiceProvider::class,
+        SisVentas\Providers\AppServiceProvider::class,
+        SisVentas\Providers\AuthServiceProvider::class,
+        // SisVentas\Providers\BroadcastServiceProvider::class,
+        SisVentas\Providers\EventServiceProvider::class,
+        SisVentas\Providers\RouteServiceProvider::class,
 
     ],
 

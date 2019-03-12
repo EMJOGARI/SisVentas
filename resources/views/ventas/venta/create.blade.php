@@ -173,11 +173,17 @@
 				subtotal[cont]=(subtotal[cont]-(subtotal[cont]*des));
 				total=total+subtotal[cont];
 				
-				var fila='<tr class="selected" id="fila'+cont+'"><td><button type="button" class="btn btn-warning" onclick="eliminar('+cont+')"><i class="fa fa-close"></i></button></td><td><input type="hidden" name="idarticulo[]" value="'+idarticulo+'">'+articulo+'</td><td><input type="hidden" name="cantidad[]" value="'+cantidad+'">'+cantidad+'</td><td><input type="hidden" name="precio_venta[]" value="'+precio_venta+'">'+precio_venta+'</td><td><input type="hidden" name="descuento[]" value="'+descuento+'">'+descuento+'</td><td>'+subtotal[cont]+'</td></tr>';
+				var fila='<tr class="selected" id="fila'+cont+'">\n\
+					<td><button type="button" class="btn btn-warning" onclick="eliminar('+cont+')"><i class="fa fa-close"></i></button></td>\n\
+					<td><input type="hidden" name="idarticulo[]" value="'+idarticulo+'">'+articulo+'</td>\n\
+					<td><input type="hidden" name="cantidad[]" value="'+cantidad+'">'+cantidad+'</td>\n\
+					<td><input type="hidden" name="precio_venta[]" value="'+precio_venta+'">'+precio_venta+'</td>\n\
+					<td><input type="hidden" name="descuento[]" value="'+descuento+'">'+descuento+'</td>\n\
+					<td>'+subtotal[cont]+'</td></tr>';
 				
 				cont++;
 				limpiar();
-				$("#total").html("BsS. " + total);
+				$("#total").html("BsS. " + total); // number_format(total, 2, ',', '.')
 				$("#total_venta").val(total);
 				evaluar();
 				$('#detalles').append(fila);

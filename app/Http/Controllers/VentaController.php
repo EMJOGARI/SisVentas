@@ -1,14 +1,14 @@
 <?php
 
-namespace PcArts\Http\Controllers;
+namespace SisVentas\Http\Controllers;
 
 use Illuminate\Http\Request;
-use PcArts\Http\Requests;
+use SisVentas\Http\Requests;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Input;
-use PcArts\Venta;
-use PcArts\DetalleVenta;
-use PcArts\Http\Requests\VentaFormRequest;
+use SisVentas\Venta;
+use SisVentas\DetalleVenta;
+use SisVentas\Http\Requests\VentaFormRequest;
 use DB;
 
 use Carbon\Carbon;

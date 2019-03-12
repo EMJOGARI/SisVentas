@@ -67,7 +67,7 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => PcArts\User::class,
+            'model' => SisVentas\User::class,
         ],
 
         // 'users' => [

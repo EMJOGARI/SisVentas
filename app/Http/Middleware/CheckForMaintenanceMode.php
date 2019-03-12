@@ -1,6 +1,6 @@
 <?php
 
-namespace PcArts\Http\Middleware;
+namespace SisVentas\Http\Middleware;
 
 use Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode as Middleware;
 

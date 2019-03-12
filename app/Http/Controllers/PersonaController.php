@@ -1,13 +1,13 @@
 <?php
 
-namespace PcArts\Http\Controllers;
+namespace SisVentas\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use PcArts\Http\Requests;
+use SisVentas\Http\Requests;
 use Illuminate\Support\Facades\Redirect;
-use PcArts\Persona;
-use PcArts\Http\Requests\PersonaFormRequest;
+use SisVentas\Persona;
+use SisVentas\Http\Requests\PersonaFormRequest;
 use DB;
 
 class PersonaController extends Controller

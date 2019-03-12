@@ -1,6 +1,6 @@
 <?php
 
-namespace PcArts;
+namespace SisVentas;
 
 use Illuminate\Database\Eloquent\Model;
 

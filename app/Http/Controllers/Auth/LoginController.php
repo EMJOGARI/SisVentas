@@ -1,8 +1,8 @@
 <?php
 
-namespace PcArts\Http\Controllers\Auth;
+namespace SisVentas\Http\Controllers\Auth;
 
-use PcArts\Http\Controllers\Controller;
+use SisVentas\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class LoginController extends Controller

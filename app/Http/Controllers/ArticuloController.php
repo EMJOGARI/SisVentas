@@ -1,13 +1,13 @@
 <?php
 
-namespace PcArts\Http\Controllers;
+namespace SisVentas\Http\Controllers;
 
 use Illuminate\Http\Request;
-use PcArts\Http\Requests;
+use SisVentas\Http\Requests;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Input;
-use PcArts\Articulo;
-use PcArts\Http\Requests\ArticuloFormRequest;
+use SisVentas\Articulo;
+use SisVentas\Http\Requests\ArticuloFormRequest;
 use DB;
 
 class ArticuloController extends Controller

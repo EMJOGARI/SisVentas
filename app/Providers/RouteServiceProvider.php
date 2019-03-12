@@ -1,6 +1,6 @@
 <?php
 
-namespace PcArts\Providers;
+namespace SisVentas\Providers;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
@@ -14,7 +14,7 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    protected $namespace = 'PcArts\Http\Controllers';
+    protected $namespace = 'SisVentas\Http\Controllers';
 
     /**
      * Define your route model bindings, pattern filters, etc.

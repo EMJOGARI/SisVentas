@@ -1,14 +1,14 @@
 <?php
 
-namespace PcArts\Http\Controllers;
+namespace SisVentas\Http\Controllers;
 
 use Illuminate\Http\Request;
-use PcArts\Http\Requests;
+use SisVentas\Http\Requests;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Input;
-use PcArts\Ingreso;
-use PcArts\DetalleIngreso;
-use PcArts\Http\Requests\IngresoFormRequest;
+use SisVentas\Ingreso;
+use SisVentas\DetalleIngreso;
+use SisVentas\Http\Requests\IngresoFormRequest;
 use DB;
 
 use Carbon\Carbon;
