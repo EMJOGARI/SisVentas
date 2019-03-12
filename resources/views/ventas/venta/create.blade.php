@@ -19,7 +19,7 @@
 	            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 	                <div class="form-group">
 	                    {!! Form::label('cliente', 'Cliente') !!}
-	                    <select name="idcliente" id="idcliente" class="form-control selectpicker" data-live-search="true">
+	                    <select name="idcliente" id="idcliente" class="form-control selectpicker" data-live-search="true">	                    	
 	                    	@foreach($personas as $persona)
 	                    		<option value="{{ $persona->idpersona }}">{{ $persona->nombre }}</option>
 	                    	@endforeach
@@ -55,6 +55,7 @@
 				                <div class="form-group">
 				                    {!! Form::label('articulo', 'Articulo') !!}
 				                    <select name="pidarticulo" id="pidarticulo" class="form-control selectpicker" data-live-search="true">
+				                    	<option value="">Seleccioné un Articulo</option>
 				                    	@foreach($articulos as $art)
 				                    		<option value="{{ $art->idarticulo }}_{{ $art->stock }}_{{ $art->precio_venta }}">{{ $art->articulo }}</option>
 				                    	@endforeach

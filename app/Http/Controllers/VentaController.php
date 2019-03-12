@@ -29,9 +29,9 @@ class VentaController extends Controller
         {
             // Variable de busqueda por categoria dond trim quita los espacios en blanco en el inicio y el final
             $query=trim($request->get('searchText'));
-            $ventas=DB::table('venta as v')
-            	->join('persona as p','v.idcliente','=','p.idpersona')
-            	->join('detalle_venta as dv','v.idventa','=','dv.idventa')
+            $ventas=DB::table('tb_venta as v')
+            	->join('tb_persona as p','v.idcliente','=','p.idpersona')
+            	->join('tb_detalle_venta as dv','v.idventa','=','dv.idventa')
             	->select('v.idventa','v.fecha_hora','p.nombre','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.estado','v.total_venta')
             	->where('v.num_comprobante','LIKE','%'.$query.'%')
             	->orderBy('idventa','desc')
@@ -44,13 +44,13 @@ class VentaController extends Controller
     
     public function create()
     {   
-        $personas=DB::table('persona')
+        $personas=DB::table('tb_persona')
         	->where('tipo_persona','=','Cliente')
             ->orwhere('tipo_persona','=','Proveedor')
             ->get();    	
 
-    	$articulos=DB::table('articulo as art')
-    		->join('detalle_ingreso as di','art.idarticulo','=','di.idarticulo')
+    	$articulos=DB::table('tb_articulo as art')
+    		->join('tb_detalle_ingreso as di','art.idarticulo','=','di.idarticulo')
     		->select(DB::raw("CONCAT(art.codigo,' - ',art.nombre) AS articulo"),'art.idarticulo','art.stock', DB::raw("MAX(di.precio_venta) AS precio_venta"))
     		->where('art.estado','=','Activo')
     		->where('art.stock','>','0')
@@ -103,15 +103,15 @@ class VentaController extends Controller
    
     public function show($id)
     {
-       $venta=DB::table('venta as v')
-            ->join('persona as p','v.idcliente','=','p.idpersona')
-            ->join('detalle_venta as dv','v.idventa','=','dv.idventa')
+       $venta=DB::table('tb_venta as v')
+            ->join('tb_persona as p','v.idcliente','=','p.idpersona')
+            ->join('tb_detalle_venta as dv','v.idventa','=','dv.idventa')
             ->select('v.idventa','v.fecha_hora','p.nombre','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.estado','v.total_venta')
             ->where('v.idventa','=',$id)
             ->first();
 
-        $detalles=DB::table('detalle_venta as d')
-            ->join('articulo as a', 'd.idarticulo', '=','a.idarticulo')
+        $detalles=DB::table('tb_detalle_venta as d')
+            ->join('tb_articulo as a', 'd.idarticulo', '=','a.idarticulo')
             ->select('a.nombre as articulo', 'd.cantidad', 'd.descuento','d.precio_venta')
             ->where('d.idventa','=',$id)
             ->get();

@@ -23,8 +23,8 @@ class UsuarioController extends Controller
         if ($request)
         {           
             $query=trim($request->get('searchText'));
-            $usuarios=DB::table('users as u')
-                ->join('roles as r','u.idrol','=','r.idrol')
+            $usuarios=DB::table('tb_users as u')
+                ->join('tb_roles as r','u.idrol','=','r.idrol')
                 ->select('u.id','u.name','u.email','r.name as tipo')
                 ->where('u.name','LIKE','%'.$query.'%')                         
                 ->orderBy('id','desc')
@@ -35,16 +35,19 @@ class UsuarioController extends Controller
 
      public function create()
     {
-        return view("seguridad.usuario.create");
+        $rol=DB::table('tb_roles')->where('idrol','>','1')->get();
+        return view("seguridad.usuario.create",["rol"=>$rol]);
     }
 
     public function store(UsuarioFormRequest $request)
     {
+       
         $usuario=new User;
+        $usuario->idrol=$request->get('idrol');
         $usuario->name=$request->get('name');
         $usuario->email=$request->get('email');
-        $usuario->password=bcrypt($request->get('password'));        
-        $usuario->save();
+        $usuario->password=bcrypt($request->get('password'));
+        $usuario->save();        
         return Redirect::to('seguridad/usuario');      
     }
 
@@ -55,11 +58,14 @@ class UsuarioController extends Controller
    
     public function edit($id)
     {
-        return view("seguridad.usuario.edit",["usuario"=>User::findOrFail($id)]);
+        $usuario=User::findOrFail($id);
+        $rol=DB::table('tb_roles')->where('idrol','>','1')->get();
+        return view("seguridad.usuario.edit",["usuario"=>$usuario,"rol"=>$rol]);
     }
     public function update(UsuarioFormRequest $request, $id)
     {
         $categoria=User::findOrFail($id);
+        $usuario->idrol=$request->get('idrol');
         $usuario->name=$request->get('name');
         $usuario->email=$request->get('email');
         $usuario->password=bcrypt($request->get('password')); 
@@ -69,7 +75,7 @@ class UsuarioController extends Controller
    
     public function destroy($id)
     {
-        $categoria= DB::table('users')
+        $categoria= DB::table('tb_users')
         	->where('id','=',$id)
         	->delete();       
         return Redirect::to('seguridad/usuario');

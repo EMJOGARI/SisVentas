@@ -13,7 +13,7 @@ class CreateRolesTable extends Migration
      */
     public function up()
     {
-        Schema::create('roles', function (Blueprint $table) {           
+        Schema::create('tb_roles', function (Blueprint $table) {           
             $table->increments('idrol');
             $table->string('name');
         });
@@ -26,6 +26,6 @@ class CreateRolesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('roles');
+        Schema::dropIfExists('tb_roles');
     }
 }

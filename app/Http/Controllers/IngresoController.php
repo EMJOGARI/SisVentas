@@ -29,9 +29,9 @@ class IngresoController extends Controller
         {
             // Variable de busqueda por categoria dond trim quita los espacios en blanco en el inicio y el final
             $query=trim($request->get('searchText'));
-            $ingresos=DB::table('ingreso as i')
-            	->join('persona as p','i.idproveedor','=','p.idpersona')
-            	->join('detalle_ingreso as di','i.idingreso','=','di.idingreso')
+            $ingresos=DB::table('tb_ingreso as i')
+            	->join('tb_persona as p','i.idproveedor','=','p.idpersona')
+            	->join('tb_detalle_ingreso as di','i.idingreso','=','di.idingreso')
             	->select('i.idingreso','i.fecha_hora','p.nombre','i.tipo_comprobante','i.serie_comprobante','i.num_comprobante','i.estado'
                     ,DB::raw('sum(di.cantidad*di.precio_compra) as total'))
             	->where('i.num_comprobante','LIKE','%'.$query.'%')
@@ -44,11 +44,11 @@ class IngresoController extends Controller
     
     public function create()
     {   
-        $personas=DB::table('persona')
+        $personas=DB::table('tb_persona')
             ->where('tipo_persona','=','Proveedor')
             ->get();    	
 
-    	$articulos=DB::table('articulo as art')
+    	$articulos=DB::table('tb_articulo as art')
     		->select(DB::raw("CONCAT(art.codigo,' - ',art.nombre) AS articulo"),'art.idarticulo')
     		->where('art.estado','=','Activo')
     		->get();
@@ -96,16 +96,16 @@ class IngresoController extends Controller
    
     public function show($id)
     {
-       $ingreso=DB::table('ingreso as i')
-            ->join('persona as p','i.idproveedor','=','p.idpersona')
-            ->join('detalle_ingreso as di','i.idingreso','=','di.idingreso')
+       $ingreso=DB::table('tb_ingreso as i')
+            ->join('tb_persona as p','i.idproveedor','=','p.idpersona')
+            ->join('tb_detalle_ingreso as di','i.idingreso','=','di.idingreso')
             ->select('i.idingreso','i.fecha_hora','p.nombre','i.tipo_comprobante','i.serie_comprobante','i.num_comprobante','i.estado',DB::raw('sum(di.cantidad*di.precio_compra) as total'))
             ->groupBy('i.idingreso','i.fecha_hora','p.nombre','i.tipo_comprobante','i.serie_comprobante','i.num_comprobante', 'i.estado')
             ->where('i.idingreso','=',$id)
             ->first();
 
-        $detalles=DB::table('detalle_ingreso as d')
-            ->join('articulo as a', 'd.idarticulo', '=','a.idarticulo')
+        $detalles=DB::table('tb_detalle_ingreso as d')
+            ->join('tb_articulo as a', 'd.idarticulo', '=','a.idarticulo')
             ->select('a.nombre as articulo', 'd.cantidad', 'd.precio_compra')
             ->where('d.idingreso','=',$id)
             ->get();

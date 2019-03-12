@@ -13,7 +13,7 @@ class CreateArticuloTable extends Migration
      */
     public function up()
     {
-        Schema::create('articulo', function (Blueprint $table) {
+        Schema::create('tb_articulo', function (Blueprint $table) {
             $table->increments('idarticulo');
             $table->integer('idcategoria')->unsigned();
             $table->string('codigo',30);
@@ -31,6 +31,6 @@ class CreateArticuloTable extends Migration
      */
     public function down()
     {       
-        Schema::dropIfExists('articulo');
+        Schema::dropIfExists('tb_articulo');
     }
 }

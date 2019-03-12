@@ -13,7 +13,7 @@ class CreateVentaTable extends Migration
      */
     public function up()
     {
-        Schema::create('venta', function (Blueprint $table) {
+        Schema::create('tb_venta', function (Blueprint $table) {
             $table->increments('idventa');
             $table->integer('idcliente')->unsigned();
             $table->string('tipo_comprobante',10);
@@ -32,6 +32,6 @@ class CreateVentaTable extends Migration
      */
     public function down()
     {        
-        Schema::dropIfExists('venta');
+        Schema::dropIfExists('tb_venta');
     }
 }

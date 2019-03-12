@@ -13,22 +13,21 @@ class CreateTrigger extends Migration
      */
     public function up()
     {
-
-		/*DB::unprepared('
+       
+		DB::unprepared('
 
 	    	CREATE OR REPLACE FUNCTION StockIngresar() RETURNS TRIGGER AS $$
 			DECLARE
 			BEGIN
-			    
-			    UPDATE articulo AS a
-			    SET stock = stock + NEW.cantidad
-                WHERE a.idarticulo = NEW.idarticulo;
+			   
+    			UPDATE tb_articulo AS a SET stock = stock + NEW.cantidad WHERE a.idarticulo = NEW.idarticulo;
 
 			    RETURN NULL;
-			  END;
+
+			END;
 			$$ LANGUAGE plpgsql;
 
-			CREATE TRIGGER Trigger_Stock_Ingresar AFTER INSERT ON detalle_ingreso FOR EACH ROW 
+			CREATE TRIGGER Trigger_Stock_Ingresar AFTER INSERT ON tb_detalle_ingreso FOR EACH ROW 
             EXECUTE PROCEDURE StockIngresar();
 
 		');
@@ -39,35 +38,35 @@ class CreateTrigger extends Migration
 			DECLARE
 			BEGIN
 			    
-			    UPDATE articulo AS a
-			    SET stock = stock - NEW.cantidad
-                WHERE a.idarticulo = NEW.idarticulo;
+			    UPDATE tb_articulo AS a SET stock = stock - NEW.cantidad WHERE a.idarticulo = NEW.idarticulo;
 
 			    RETURN NULL;
-			  END;
+
+			END;
 			$$ LANGUAGE plpgsql;
 
-			CREATE TRIGGER Trigger_Stock_Venta AFTER INSERT ON detalle_venta FOR EACH ROW 
+			CREATE TRIGGER Trigger_Stock_Venta AFTER INSERT ON tb_detalle_venta FOR EACH ROW 
             EXECUTE PROCEDURE StockVenta();
         	
-    	');*/
+    	');
 
     /*
         DB::unprepared('
-            CREATE TRIGGER StockIngresar AFTER INSERT ON detalle_ingreso FOR EACH ROW 
+            CREATE TRIGGER StockIngresar AFTER INSERT ON tb_detalle_ingreso FOR EACH ROW 
                 BEGIN
-                    UPDATE articulo SET stock = stock + new.cantidad
+                    UPDATE tb_articulo SET stock = stock + new.cantidad
                     WHERE articulo.idarticulo = new.idarticulo;
                 END 
         ');
 
         DB::unprepared('
-            CREATE TRIGGER StockVenta AFTER INSERT ON detalle_venta FOR EACH ROW 
+            CREATE TRIGGER StockVenta AFTER INSERT ON tb_detalle_venta FOR EACH ROW 
                 BEGIN
-                    UPDATE articulo SET stock = stock - new.cantidad
+                    UPDATE tb_articulo SET stock = stock - new.cantidad
                     WHERE articulo.idarticulo = new.idarticulo;
                 END
-        ');*/
+        ');
+    */
     }
 
     /**

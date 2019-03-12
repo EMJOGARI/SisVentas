@@ -13,7 +13,7 @@ class CreateDetalleIngresoTable extends Migration
      */
     public function up()
     {
-        Schema::create('detalle_ingreso', function (Blueprint $table) {
+        Schema::create('tb_detalle_ingreso', function (Blueprint $table) {
             $table->increments('iddetalle_ingreso');
             $table->integer('idingreso')->unsigned();
             $table->integer('idarticulo')->unsigned();
@@ -30,6 +30,6 @@ class CreateDetalleIngresoTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('detalle_ingreso');
+        Schema::dropIfExists('tb_detalle_ingreso');
     }
 }

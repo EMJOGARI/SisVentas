@@ -13,7 +13,7 @@ class CreateDetalleVentaTable extends Migration
      */
     public function up()
     {
-        Schema::create('detalle_venta', function (Blueprint $table) {
+        Schema::create('tb_detalle_venta', function (Blueprint $table) {
             $table->increments('iddetalle_venta');
             $table->integer('idventa')->unsigned();
             $table->integer('idarticulo')->unsigned();
@@ -30,6 +30,6 @@ class CreateDetalleVentaTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('detalle_venta');
+        Schema::dropIfExists('tb_detalle_venta');
     }
 }

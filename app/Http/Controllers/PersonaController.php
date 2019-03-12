@@ -24,7 +24,7 @@ class PersonaController extends Controller
         {
             // Variable de busqueda por categoria dond trim quita los espacios en blanco en el inicio y el final
             $query=trim($request->get('searchText'));
-            $personas=DB::table('persona')           
+            $personas=DB::table('tb_persona')           
                 ->where('nombre','LIKE','%'.$query.'%')
                 ->orwhere('tipo_persona','LIKE','%'.$query.'%')                              
                 ->paginate(8);

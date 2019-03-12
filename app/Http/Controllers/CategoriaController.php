@@ -24,7 +24,7 @@ class CategoriaController extends Controller
         {
             // Variable de busqueda por categoria dond trim quita los espacios en blanco en el inicio y el final
             $query=trim($request->get('searchText'));
-            $categorias=DB::table('categoria')
+            $categorias=DB::table('tb_categoria')
                 ->where('nombre','LIKE','%'.$query.'%')
                 ->where('condicion','=','1')
                 ->orderBy('idcategoria','desc')

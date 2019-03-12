@@ -20,7 +20,7 @@ class ReporteController extends Controller
     {
         
               	//dd($ingresos);
-        $view = \View::make('pdf.reporte',compact('articulos'))->render();
+        $view = \View::make('pdf.reporte',compact('tb_articulos'))->render();
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadHTML($view); 
         return $pdf->stream('informe'.'.pdf');
@@ -28,8 +28,8 @@ class ReporteController extends Controller
 
     public function ReporteArticulo()
     {
-        $articulos=DB::table('articulo as a')
-            ->join('categoria as c','a.idcategoria','=','c.idcategoria')
+        $articulos=DB::table('tb_articulo as a')
+            ->join('tb_categoria as c','a.idcategoria','=','c.idcategoria')
             ->select('a.idarticulo','a.nombre','a.codigo','a.stock','c.nombre as categoria','a.estado')
             ->get();
         $view = \View::make('pdf.reportearticulo',compact('articulos'))->render();
@@ -40,9 +40,9 @@ class ReporteController extends Controller
 
      public function ReporteIngreso()
     {
-       $ingresos=DB::table('ingreso as i')
-        	->join('persona as p','i.idproveedor','=','p.idpersona')
-        	->join('detalle_ingreso as di','i.idingreso','=','di.idingreso')
+       $ingresos=DB::table('tb_ingreso as i')
+        	->join('tb_persona as p','i.idproveedor','=','p.idpersona')
+        	->join('tb_detalle_ingreso as di','i.idingreso','=','di.idingreso')
             ->select('i.idingreso','i.fecha_hora','p.nombre','i.tipo_comprobante','i.serie_comprobante','i.num_comprobante','i.estado',DB::raw('sum(di.cantidad*di.precio_compra) as total')) 
             ->groupBy('i.idingreso','i.fecha_hora','p.nombre','i.tipo_comprobante','i.serie_comprobante','i.num_comprobante', 'i.estado')           
         	->get();
@@ -55,16 +55,16 @@ class ReporteController extends Controller
 
     public function ReporteIngresoID($id)
     {
-        $ingresos=DB::table('ingreso as i')
-        	->join('persona as p','i.idproveedor','=','p.idpersona')
-        	->join('detalle_ingreso as di','i.idingreso','=','di.idingreso')
+        $ingresos=DB::table('tb_ingreso as i')
+        	->join('tb_persona as p','i.idproveedor','=','p.idpersona')
+        	->join('tb_detalle_ingreso as di','i.idingreso','=','di.idingreso')
             ->select('i.idingreso','i.fecha_hora','p.nombre','i.tipo_comprobante','i.serie_comprobante','i.num_comprobante','i.estado',DB::raw('sum(di.cantidad*di.precio_compra) as total'))
             ->groupBy('i.idingreso','i.fecha_hora','p.nombre','i.tipo_comprobante','i.serie_comprobante','i.num_comprobante', 'i.estado')          
             ->where('di.idingreso','=',$id)
             ->first();                   	
            
-       $detalles=DB::table('detalle_ingreso as d')
-            ->join('articulo as a', 'd.idarticulo', '=','a.idarticulo')
+       $detalles=DB::table('tb_detalle_ingreso as d')
+            ->join('tb_articulo as a', 'd.idarticulo', '=','a.idarticulo')
             ->select('a.nombre as articulo', 'd.cantidad', 'd.precio_compra')
             ->where('d.idingreso','=',$id)            
             ->get();
@@ -76,7 +76,7 @@ class ReporteController extends Controller
 
     public function ReportePersona()
     {
-       $personas=DB::table('persona')
+       $personas=DB::table('tb_persona')
             ->get();
         $view = \View::make('pdf.reportepersona',compact('personas'))->render();
         $pdf = \App::make('dompdf.wrapper');
@@ -86,7 +86,7 @@ class ReporteController extends Controller
 
     public function ReporteCliente()
     {
-       $personas=DB::table('persona')               
+       $personas=DB::table('tb_persona')               
             ->where('tipo_persona','=','Cliente')            
             ->get();
         $view = \View::make('pdf.reportecliente',compact('personas'))->render();
@@ -96,7 +96,7 @@ class ReporteController extends Controller
     }
     public function ReporteProveedor()
     {
-       $personas=DB::table('persona')               
+       $personas=DB::table('tb_persona')               
             ->where('tipo_persona','=','Proveedor')
             ->get();
         $view = \View::make('pdf.reporteproveedor',compact('personas'))->render();
@@ -107,9 +107,9 @@ class ReporteController extends Controller
    
     public function ReporteVenta()
     {
-       $ventas=DB::table('venta as v')
-        	->join('persona as p','v.idcliente','=','p.idpersona')
-        	->join('detalle_venta as dv','v.idventa','=','dv.idventa')
+       $ventas=DB::table('tb_venta as v')
+        	->join('tb_persona as p','v.idcliente','=','p.idpersona')
+        	->join('tb_detalle_venta as dv','v.idventa','=','dv.idventa')
             ->select('v.idventa','v.fecha_hora','p.nombre','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.estado','v.total_venta')
             ->groupBy('v.idventa','v.fecha_hora','p.nombre','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.estado','v.total_venta')
         	->get();
@@ -121,15 +121,15 @@ class ReporteController extends Controller
 
     public function ReporteVentaID($id)
     {
-       $venta=DB::table('venta as v')
-            ->join('persona as p','v.idcliente','=','p.idpersona')
-            ->join('detalle_venta as dv','v.idventa','=','dv.idventa')
+       $venta=DB::table('tb_venta as v')
+            ->join('tb_persona as p','v.idcliente','=','p.idpersona')
+            ->join('tb_detalle_venta as dv','v.idventa','=','dv.idventa')
             ->select('v.idventa','v.fecha_hora','p.nombre','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.estado','v.total_venta')
             ->where('v.idventa','=',$id)
             ->first();
 
-        $detalles=DB::table('detalle_venta as d')
-            ->join('articulo as a', 'd.idarticulo', '=','a.idarticulo')
+        $detalles=DB::table('tb_detalle_venta as d')
+            ->join('tb_articulo as a', 'd.idarticulo', '=','a.idarticulo')
             ->select('a.nombre as articulo', 'd.cantidad', 'd.descuento','d.precio_venta')
             ->where('d.idventa','=',$id)
             ->get();

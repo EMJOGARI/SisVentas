@@ -29,17 +29,17 @@
 	                    {!! Form::label('tipo_documento', 'Tipo Documento') !!}
 	                    <select name="tipo_documento" class="form-control">
 	                    	@if($persona->tipo_documento=='C')
-	                    		<option value="C" selected>Cedula de Identidad</option>
-		                    	<option value="R">RIF</option>
-		                    	<option value="P">Pasaporte</option>
+	                    		<option value="CI" selected>Cedula de Identidad</option>
+		                    	<option value="RIF">RIF</option>
+		                    	<option value="PAS">Pasaporte</option>
 	                    	@elseif($persona->tipo_documento=='R')
-	                    		<option value="C">Cedula de Identidad</option>
-		                    	<option value="R" selected>RIF</option>
-		                    	<option value="P">Pasaporte</option>
+	                    		<option value="CI">Cedula de Identidad</option>
+		                    	<option value="RIF" selected>RIF</option>
+		                    	<option value="PAS">Pasaporte</option>
 	                    	@else
-	                    		<option value="C">Cedula de Identidad</option>
-		                    	<option value="R">RIF</option>
-		                    	<option value="P" selected>Pasaporte</option>
+	                    		<option value="CI">Cedula de Identidad</option>
+		                    	<option value="RIF">RIF</option>
+		                    	<option value="PAS" selected>Pasaporte</option>
 	                    	@endif	                    	                   	
 	                    </select>
 	                </div>

@@ -13,7 +13,7 @@
 						@endforeach
 					</ul>
 				</div>
-			@endif
+			@endif paste
 
 			{!! Form::open(array('url'=>'seguridad/persona', 'method'=>'POST', 'autocomplete'=>'off')) !!}
 			{{ Form::token() }}
@@ -28,9 +28,9 @@
 	                <div class="form-group">
 	                    {!! Form::label('tipo_documento', 'Tipo Documento') !!}
 	                    <select name="tipo_documento" class="form-control"> 
-	                    	<option value="C">Cedula de Identidad</option>
-	                    	<option value="R">RIF</option>
-	                    	<option value="P">Pasaporte</option>	                    	
+	                    	<option value="CI">Cedula de Identidad</option>
+	                    	<option value="RIF">RIF</option>
+	                    	<option value="PAS">Pasaporte</option>	                    	
 	                    </select>
 	                </div>
 	            </div>
@@ -57,7 +57,7 @@
 	                <div class="form-group">
 	                    {!! Form::label('tipo_persona', 'Tipo Persona') !!}
 	                    <select name="tipo_persona" class="form-control"> 
-	                    	<option value="Proveedos">Proveedor</option>
+	                    	<option value="Proveedor">Proveedor</option>
 	                    	<option value="Cliente">Cliente</option>
 	                    	<option value="Vendedor">Vendedor</option>	                    	
 	                    </select>
