@@ -118,6 +118,21 @@ class IngresoController extends Controller
         $ingreso=Ingreso::findOrFail($id);
         $ingreso->estado='C';
         $ingreso->update();
+
+      /*  $cantidad = DB::table('tb_ingreso as i')
+                ->join('tb_detalle_ingreso as di','di.idingreso','=','i.idingreso')
+                ->select('i.idingreso','i.estado','di.cantidad')
+                ->selectRaw('$cantidad - di.cantidad')
+                ->where('i.estado','=','C','AND')
+                ->where('i.idingreso','=',$id);
+        
+
+      //  dd($cantidad);
+
+            DB::table('tb_articulo')            
+                ->decrement('stock', 10);
+
+        */
         return Redirect::to('compras/ingreso');
     }
 }
