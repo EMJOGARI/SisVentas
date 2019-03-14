@@ -119,20 +119,14 @@ class IngresoController extends Controller
         $ingreso->estado='C';
         $ingreso->update();
 
-      /*  $cantidad = DB::table('tb_ingreso as i')
-                ->join('tb_detalle_ingreso as di','di.idingreso','=','i.idingreso')
-                ->select('i.idingreso','i.estado','di.cantidad')
-                ->selectRaw('$cantidad - di.cantidad')
-                ->where('i.estado','=','C','AND')
-                ->where('i.idingreso','=',$id);
-        
+        DB::table('tb_articulo as a')
+            ->join('tb_detalle_ingreso as di','di.idarticulo','=','a.idarticulo')
+            ->join('tb_ingreso as i','i.idingreso','=','di.iddetalle_ingreso')
+            //->select()
+            ->where('i.estado','=','C','AND')
+            ->where('i.idingreso','=',$id)
+            ->update(['a.stock' => ('a.stock'-'di.cantidad')]);
 
-      //  dd($cantidad);
-
-            DB::table('tb_articulo')            
-                ->decrement('stock', 10);
-
-        */
         return Redirect::to('compras/ingreso');
     }
 }

@@ -98,41 +98,43 @@
                 <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
-                <li><a href="{{ url('almacen/articulo') }}"><i class="fa fa-circle-o"></i> Artículos</a></li>
-                <li><a href="{{ url('almacen/categoria') }}"><i class="fa fa-circle-o"></i> Categorías</a></li>
+                <li><a href="{{ url('almacen/articulo') }}"><i class="fa fa-th-large"></i> Artículos</a></li>
+                <li><a href="{{ url('almacen/categoria') }}"><i class="fa fa-tag"></i> Categorías</a></li>
               </ul>
             </li>
             
             <li class="treeview">
               <a href="#">
-                <i class="fa fa-th"></i>
+                <i class="fa fa-truck"></i>
                 <span>Compras</span>
                  <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
-                <li><a href="{{ url('compras/ingreso') }}"><i class="fa fa-circle-o"></i> Ingresos</a></li>
+                <li><a href="{{ url('compras/ingreso/create') }}"><i class="fa fa-shopping-cart"></i>Nueva Compra</a></li>
+                <li><a href="{{ url('compras/ingreso/') }}"><i class="fa fa-th"></i>Historial de Compras</a></li>
               </ul>
             </li>
             <li class="treeview">
               <a href="#">
                 <i class="fa fa-shopping-cart"></i>
-                <span>Ventas</span>
+                <span>Facturacion</span>
                  <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
-                <li><a href="{{ url('ventas/venta') }}"><i class="fa fa-circle-o"></i> Ventas</a></li>
+                <li><a href="{{ url('ventas/venta/create') }}"><i class="fa fa-cart-plus"></i>Nueva Venta</a></li>
+                <li><a href="{{ url('ventas/venta') }}"><i class="fa fa-list-alt"></i>Administrar Facturas</a></li>
               </ul>
             </li>
             <li><a href="{{ url('seguridad/persona') }}"><i class="fa fa-user"></i><span>Personas</span></a></li>
             @if(Auth::user()->idrol=='1')
               <li class="treeview">
                 <a href="#">
-                  <i class="fa fa-cog"></i>
+                  <i class="fa fa-wrench"></i>
                   <span>Configuraciones</span>
                   <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
-                  <li><a href="{{ url('seguridad/usuario') }}"><i class="fa fa-circle-o"></i> {{ __('Agregar Usuarios') }}</a></li>
+                  <li><a href="{{ url('seguridad/usuario') }}"><i class="fa fa-users"></i> {{ __('Agregar Usuarios') }}</a></li>
                 </ul>
               </li>
             @endif

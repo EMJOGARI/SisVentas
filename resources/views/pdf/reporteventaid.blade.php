@@ -26,11 +26,11 @@
 	<table>
 		<tr style="background-color: #dddddd;">
 			<th>Cliente</th>
-			<th>Comprobante</th>			
+					
 		</tr>
 		<tr>
 			<td>{{ $venta->nombre }}</td>
-			<td>{{ $venta->tipo_comprobante.': '.$venta->serie_comprobante.' - '.$venta->num_comprobante }}</td>
+			
 		</tr>
 	</table>
 
