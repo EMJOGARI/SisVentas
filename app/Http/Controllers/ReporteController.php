@@ -134,8 +134,9 @@ class ReporteController extends Controller
             ->where('d.idventa','=',$id)
             ->get();
         $view = \View::make('pdf.reporteventaid',compact('venta','detalles'))->render();
-        $pdf = \App::make('dompdf.wrapper');
-        $pdf->loadHTML($view); 
+        $paper_size = array(0,0,360,360);
+        $pdf = \App::make('dompdf.wrapper');        
+        $pdf->loadHTML($view)->setPaper($paper_size); 
         return $pdf->stream('informe'.'.pdf');
     }
 }

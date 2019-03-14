@@ -5,8 +5,15 @@
 	<meta charset="UTF-8">
 	<title>Detalle Venta</title>
 	<style>
+		/*html {
+			margin: 0;
+		}
+		body {
+			
+			margin: 45mm 8mm 2mm 8mm;
+		}*/
 		table{
-			font-family: arial, sans-serif;
+			font-family: arial, sans-serif;	
 			border-collapse: collapse;
 			width: 100%;
 			font-size: 12px;
@@ -21,16 +28,15 @@
 	</style>
 </head>
 <body>
-	<h2>Detalle Venta</h2>
-	
+	<h2>Detalle Venta </h2>
+	<p >{{ date('d-m-Y') }}</p>
 	<table>
 		<tr style="background-color: #dddddd;">
 			<th>Cliente</th>
 					
 		</tr>
 		<tr>
-			<td>{{ $venta->nombre }}</td>
-			
+			<td>{{ $venta->nombre }} </td>			
 		</tr>
 	</table>
 
