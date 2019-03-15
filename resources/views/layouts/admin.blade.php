@@ -98,7 +98,8 @@
                 <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
-                <li><a href="{{ url('almacen/articulo') }}"><i class="fa fa-th-large"></i> Artículos</a></li>
+                <li><a href="{{ url('almacen/articulo/create') }}"><i class="fa fa-th-large"></i>Nuevo Artículo</a></li>
+                <li><a href="{{ url('almacen/articulo/') }}"><i class="fa fa-th-list"></i>Listado de Artículo</a></li>
                 <li><a href="{{ url('almacen/categoria') }}"><i class="fa fa-tag"></i> Categorías</a></li>
               </ul>
             </li>
@@ -116,7 +117,7 @@
             </li>
             <li class="treeview">
               <a href="#">
-                <i class="fa fa-shopping-cart"></i>
+                <i class="fa fa-dollar"></i>
                 <span>Facturacion</span>
                  <i class="fa fa-angle-left pull-right"></i>
               </a>

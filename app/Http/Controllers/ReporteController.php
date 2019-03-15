@@ -133,10 +133,12 @@ class ReporteController extends Controller
             ->select('a.nombre as articulo', 'd.cantidad', 'd.descuento','d.precio_venta')
             ->where('d.idventa','=',$id)
             ->get();
+
         $view = \View::make('pdf.reporteventaid',compact('venta','detalles'))->render();
-        $paper_size = array(0,0,360,360);
+        $paper_size = array(0,0,623.622,433.701);
+
         $pdf = \App::make('dompdf.wrapper');        
-        $pdf->loadHTML($view)->setPaper($paper_size); 
+        $pdf->loadHTML($view)->setPaper($paper_size, 'portrait'); 
         return $pdf->stream('informe'.'.pdf');
     }
 }

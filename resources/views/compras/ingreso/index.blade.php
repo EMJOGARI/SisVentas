@@ -29,7 +29,7 @@
 							<td>{{ $ing->tipo_comprobante.': '.$ing->serie_comprobante.' - '.$ing->num_comprobante }}</td>
 							<td>{{ number_format($ing->total, 2, ',', '.') }}</td>
 							<td>{{ $ing->estado }}</td>							
-							<td>								
+							<td>															
 								<a href="{{ URL::action('IngresoController@show',$ing->idingreso) }}"><button class="btn btn-primary"><i class="fa fa-file-text-o"></i> Detalles</button></a> 
 								<a href="" data-target="#modal-delete-{{ $ing->idingreso }}" data-toggle="modal"> <button class="btn btn-danger"><i class="fa fa-close"></i> Anular</button></a>
 							</td>

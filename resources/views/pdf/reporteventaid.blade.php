@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 	<meta charset="UTF-8">
 	<title>Detalle Venta</title>
@@ -14,22 +13,18 @@
 		}*/
 		table{
 			font-family: arial, sans-serif;	
-			border-collapse: collapse;
+			
 			width: 100%;
 			font-size: 12px;
 			
-		}
-		td, th {
-			border: 1px solid #dddddd;
-			text-align: left;
-			padding: 8px;
 		}
 		
 	</style>
 </head>
 <body>
-	<h2>Detalle Venta </h2>
-	<p >{{ date('d-m-Y') }}</p>
+	
+	
+	<p >{{ date('d') }} {{ date('m') }} {{ date('Y') }}</p>
 	<table>
 		<tr style="background-color: #dddddd;">
 			<th>Cliente</th>
@@ -67,7 +62,6 @@
 	  		<th><h4 id="total">{{ number_format($venta->total_venta, 2, ',', '.') }}</h4></th>
 		</tr>
 	</table>
-	
-	
+
 </body>
 </html>
