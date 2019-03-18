@@ -124,7 +124,7 @@ class ReporteController extends Controller
        $venta=DB::table('tb_venta as v')
             ->join('tb_persona as p','v.idcliente','=','p.idpersona')
             ->join('tb_detalle_venta as dv','v.idventa','=','dv.idventa')
-            ->select('v.idventa','v.fecha_hora','p.nombre','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.estado','v.total_venta')
+            ->select('v.idventa','v.fecha_hora','p.nombre','p.direccion','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.estado','v.total_venta')
             ->where('v.idventa','=',$id)
             ->first();
 
@@ -135,10 +135,10 @@ class ReporteController extends Controller
             ->get();
 
         $view = \View::make('pdf.reporteventaid',compact('venta','detalles'))->render();
-        $paper_size = array(0,0,623.622,433.701);
+        $paper_size = array(0,0,623.622,433.701); // 'portrait' or 'landscape' 
 
         $pdf = \App::make('dompdf.wrapper');        
-        $pdf->loadHTML($view)->setPaper($paper_size, 'portrait'); 
+        $pdf->loadHTML($view)->setPaper('landscape'); 
         return $pdf->stream('informe'.'.pdf');
     }
 }

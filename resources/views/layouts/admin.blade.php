@@ -170,13 +170,12 @@
                 <div class="box-body">
                   	<div class="row">
 	                  	<div class="col-md-12">
-		                          <!--Contenido-->
-                              @yield('content')
-		                          <!--Fin Contenido-->
-                           </div>
-                        </div>
-		                    
-                  		</div>
+                          <!--Contenido-->
+                          @yield('content')
+                          <!--Fin Contenido-->
+                      </div>
+                    </div>		                    
+                </div>
                   	</div><!-- /.row -->
                 </div><!-- /.box-body -->
               </div><!-- /.box -->
