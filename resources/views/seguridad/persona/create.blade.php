@@ -28,9 +28,9 @@
 	                <div class="form-group">
 	                    {!! Form::label('tipo_documento', 'Tipo Documento') !!}
 	                    <select name="tipo_documento" class="form-control"> 
-	                    	<option value="CI">Cedula de Identidad</option>
-	                    	<option value="RIF">RIF</option>
-	                    	<option value="PAS">Pasaporte</option>	                    	
+	                    	<option value="V">Venezolana</option>
+	                    	<option value="J">Juridico</option>
+	                    	<option value="E">Extranjero</option>	                    	
 	                    </select>
 	                </div>
 	            </div>

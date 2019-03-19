@@ -3,15 +3,19 @@
 	<div class="row">
 		<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
 			<h3>Personas <a href="{{ url('seguridad/persona/create') }}"><button class="btn btn-primary"><i class="fa fa-plus"></i> Nuevo</button></a>
-				<a href="{{ url('pdf/reportepersona') }}" target="_blank">
-					<button class="btn btn-success"><i class="fa fa-print"></i> Personas</button>
-				</a>
-				<a href="{{ url('pdf/reportecliente') }}" target="_blank">
-					<button class="btn btn-success"><i class="fa fa-print"></i> Clientes</button>
-				</a>
-				<a href="{{ url('pdf/reporteproveedor') }}" target="_blank">
-					<button class="btn btn-success"><i class="fa fa-print"></i> Proveedores</button>
-				</a>
+
+				<div class="btn-group">
+				    <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
+				    	Reporte de Personas <span class="caret"></span>
+				    </button>
+
+				    <ul class="dropdown-menu" role="menu">
+					    <li><a href="{{ url('pdf/reportepersona') }}" target="_blank">Todos</a></li>
+					    <li><a href="{{ url('pdf/reportecliente') }}" target="_blank">Clientes</a></li>
+					    <li><a href="{{ url('pdf/reporteproveedor') }}" target="_blank">Proveedores</a></li>					    
+					    <li><a href="{{ url('pdf/reportevendedor') }}" target="_blank">Vendedores</a></li>
+				    </ul>
+				</div>				
 			</h3>
 			@include('seguridad.persona.search')			
 		</div>

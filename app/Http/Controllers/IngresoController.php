@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Input;
 use SisVentas\Ingreso;
 use SisVentas\DetalleIngreso;
+use SisVentas\Articulo;
 use SisVentas\Http\Requests\IngresoFormRequest;
 use DB;
 
@@ -35,6 +36,7 @@ class IngresoController extends Controller
             	->select('i.idingreso','i.fecha_hora','p.nombre','i.tipo_comprobante','i.serie_comprobante','i.num_comprobante','i.estado'
                     ,DB::raw('sum(di.cantidad*di.precio_compra) as total'))
             	->where('i.num_comprobante','LIKE','%'.$query.'%')
+                ->where('i.estado','=','A')
             	->orderBy('idingreso','desc')                
                 ->groupBy('i.idingreso','i.fecha_hora','p.nombre','i.tipo_comprobante','i.serie_comprobante','i.num_comprobante', 'i.estado')
                 ->paginate(8);                
@@ -117,16 +119,46 @@ class IngresoController extends Controller
     {
         $ingreso=Ingreso::findOrFail($id);
         $ingreso->estado='C';
-        $ingreso->update();
+        $ingreso->save();
 
-        DB::table('tb_articulo as a')
-            ->join('tb_detalle_ingreso as di','di.idarticulo','=','a.idarticulo')
-            ->join('tb_ingreso as i','i.idingreso','=','di.iddetalle_ingreso')
-            //->select()
-            ->where('i.estado','=','C','AND')
-            ->where('i.idingreso','=',$id)
-            ->update(['a.stock' => ('a.stock'-'di.cantidad')]);
+        try {
+            $detalleingreso       = new DetalleIngreso;
+            $detalle_articulos  = $detalleingreso->Sumadetalleingreso($id);
+
+            if ($detalle_articulos->count()) {
+                DB::beginTransaction();
+                    foreach ($detalle_articulos as $key => $detalle) {
+                        $articulo = new Articulo;
+                        $articulo = $articulo->find($detalle->idarticulo);
+                        $articulo->stock -= $detalle->suma;
+                        $articulo->save();
+                     }
+                DB::commit();
+            }   
+        } catch (Exception $e) {
+            DB::rollback();
+        }       
 
         return Redirect::to('compras/ingreso');
+    }
+
+    public function restore(){
+        try {
+            $detalleingreso       = new DetalleIngreso;
+            $detalle_articulos  = $detalleingreso->Sumadetalleingreso(2);
+
+            if ($detalle_articulos->count()) {
+                DB::beginTransaction();
+                    foreach ($detalle_articulos as $key => $detalle) {
+                        $articulo = new Articulo;
+                        $articulo = $articulo->find($detalle->idarticulo);
+                        $articulo->stock -= $detalle->suma;
+                        $articulo->save();
+                     }
+                DB::commit();
+            }   
+        } catch (Exception $e) {
+            DB::rollback();
+        }
     }
 }

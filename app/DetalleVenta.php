@@ -3,6 +3,7 @@
 namespace SisVentas;
 
 use Illuminate\Database\Eloquent\Model;
+use DB;
 
 class DetalleVenta extends Model
 {
@@ -23,4 +24,11 @@ class DetalleVenta extends Model
     protected $guarded =[
     	
     ];
+
+    public function scopeSumadetalleventa($query,$venta_id){
+        return $query->select('idarticulo',DB::raw("SUM(cantidad) as suma"))
+                    ->where('idventa',$venta_id)
+                    ->groupBy('idarticulo')
+                    ->get();
+    }
 }

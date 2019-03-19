@@ -103,7 +103,17 @@ class ReporteController extends Controller
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadHTML($view); 
         return $pdf->stream('informe'.'.pdf');
-    }    
+    }
+    public function ReporteVendedor()
+    {
+       $personas=DB::table('tb_persona')               
+            ->where('tipo_persona','=','Vendedor')
+            ->get();
+        $view = \View::make('pdf.reporteproveedor',compact('personas'))->render();
+        $pdf = \App::make('dompdf.wrapper');
+        $pdf->loadHTML($view); 
+        return $pdf->stream('informe'.'.pdf');
+    }     
    
     public function ReporteVenta()
     {
@@ -124,7 +134,7 @@ class ReporteController extends Controller
        $venta=DB::table('tb_venta as v')
             ->join('tb_persona as p','v.idcliente','=','p.idpersona')
             ->join('tb_detalle_venta as dv','v.idventa','=','dv.idventa')
-            ->select('v.idventa','v.fecha_hora','p.nombre','p.direccion','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.estado','v.total_venta')
+            ->select('v.idventa','v.fecha_hora','p.nombre','p.direccion','p.tipo_documento','p.num_documento','p.telefono','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.estado','v.total_venta')
             ->where('v.idventa','=',$id)
             ->first();
 

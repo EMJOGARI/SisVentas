@@ -27,19 +27,19 @@
 	            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
 	                <div class="form-group">
 	                    {!! Form::label('tipo_documento', 'Tipo Documento') !!}
-	                    <select name="tipo_documento" class="form-control">
-	                    	@if($persona->tipo_documento=='C')
-	                    		<option value="CI" selected>Cedula de Identidad</option>
-		                    	<option value="RIF">RIF</option>
-		                    	<option value="PAS">Pasaporte</option>
-	                    	@elseif($persona->tipo_documento=='R')
-	                    		<option value="CI">Cedula de Identidad</option>
-		                    	<option value="RIF" selected>RIF</option>
-		                    	<option value="PAS">Pasaporte</option>
+	                    <select name="tipo_documento" class="form-control">	                    	
+	                    	@if($persona->tipo_documento=='V')
+	                    		<option value="V" selected>Venezolana</option>
+		                    	<option value="J">Juridico</option>
+		                    	<option value="E">Extranjero</option>	                    		
+	                    	@elseif($persona->tipo_documento=='J')
+	                    		<option value="V">Venezolana</option>
+		                    	<option value="J" selected>Juridico</option>
+		                    	<option value="E">Extranjero</option>
 	                    	@else
-	                    		<option value="CI">Cedula de Identidad</option>
-		                    	<option value="RIF">RIF</option>
-		                    	<option value="PAS" selected>Pasaporte</option>
+	                    		<option value="V">Venezolana</option>
+		                    	<option value="J">Juridico</option>
+		                    	<option value="E" selected>Extranjero</option>
 	                    	@endif	                    	                   	
 	                    </select>
 	                </div>

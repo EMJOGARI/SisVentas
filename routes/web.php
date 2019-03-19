@@ -38,4 +38,5 @@ Route::get('pdf/reporteventaid/{id}', 'ReporteController@ReporteVentaID');
 Route::get('pdf/reportepersona', 'ReporteController@ReportePersona');
 Route::get('pdf/reportecliente', 'ReporteController@ReporteCliente');
 Route::get('pdf/reporteproveedor', 'ReporteController@ReporteProveedor');
+Route::get('pdf/reportevendedor', 'ReporteController@ReporteVendedor');
 

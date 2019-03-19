@@ -2,9 +2,9 @@
 @section('content')
 	<div class="row">
 		<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
-			<h3>Listado de Ingresos <a href="{{ url('compras/ingreso/create') }}"><button class="btn btn-primary"><i class="fa fa-plus"></i> Nuevo</button></a>
+			<h3>Historial de Compras <a href="{{ url('compras/ingreso/create') }}"><button class="btn btn-primary"><i class="fa fa-plus"></i> Nuevo</button></a>
 				<a href="{{ url('pdf/reporteingreso') }}" target="_blank">
-					<button class="btn btn-success"><i class="fa fa-print"></i> Reporte de Ingreso</button>
+					<button class="btn btn-info"><i class="fa fa-print"></i> Reporte de Ingreso</button>
 				</a>
 			</h3>
 			@include('compras.ingreso.search')			

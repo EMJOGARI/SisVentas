@@ -7,7 +7,7 @@
 					<button class="btn btn-primary"><i class="fa fa-plus"></i> Nuevo Articulo</button>
 				</a>
 				<a href="{{ url('pdf/reportearticulo') }}" target="_blank">
-					<button class="btn btn-success"><i class="fa fa-print"></i> Reporte de Articulos</button>
+					<button class="btn btn-info"><i class="fa fa-print"></i> Reporte de Articulos</button>
 				</a>
 			</h3>
 			@include('almacen.articulo.search')			

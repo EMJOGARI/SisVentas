@@ -14,7 +14,7 @@ class UserAdminSeeder extends Seeder
     	\DB::table('tb_roles')->insert([            
             'name' => 'Administrador'            
         ]);
-
+        
         \DB::table('tb_users')->insert([
             'idrol' => '1',
             'name' => 'Administrador SisVentas',

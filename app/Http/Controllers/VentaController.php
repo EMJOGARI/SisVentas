@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Input;
 use SisVentas\Venta;
 use SisVentas\DetalleVenta;
+use SisVentas\Articulo;
 use SisVentas\Http\Requests\VentaFormRequest;
 use DB;
 
@@ -34,6 +35,7 @@ class VentaController extends Controller
             	->join('tb_detalle_venta as dv','v.idventa','=','dv.idventa')
             	->select('v.idventa','v.fecha_hora','p.nombre','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.estado','v.total_venta')
             	->where('v.num_comprobante','LIKE','%'.$query.'%')
+                ->where('v.estado','=','A')
             	->orderBy('idventa','desc')
                 ->groupBy('v.idventa','v.fecha_hora','p.nombre','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.estado','v.total_venta')
                 ->paginate(8); 
@@ -124,7 +126,46 @@ class VentaController extends Controller
     {
         $venta=Venta::findOrFail($id);
         $venta->estado='C';
-        $venta->update();
+        $venta->save();
+
+        try {
+            $detalleventa       = new DetalleVenta;
+            $detalle_articulos  = $detalleventa->Sumadetalleventa($id);
+
+            if ($detalle_articulos->count()) {
+                DB::beginTransaction();
+                    foreach ($detalle_articulos as $key => $detalle) {
+                        $articulo = new Articulo;
+                        $articulo = $articulo->find($detalle->idarticulo);
+                        $articulo->stock += $detalle->suma;
+                        $articulo->save();
+                     }
+                DB::commit();
+            }   
+        } catch (Exception $e) {
+            DB::rollback();
+        }
+
         return Redirect::to('ventas/venta');
+    }
+
+    public function restore(){
+        try {
+            $detalleventa       = new DetalleVenta;
+            $detalle_articulos  = $detalleventa->Sumadetalleventa(2);
+
+            if ($detalle_articulos->count()) {
+                DB::beginTransaction();
+                    foreach ($detalle_articulos as $key => $detalle) {
+                        $articulo = new Articulo;
+                        $articulo = $articulo->find($detalle->idarticulo);
+                        $articulo->stock += $detalle->suma;
+                        $articulo->save();
+                     }
+                DB::commit();
+            }   
+        } catch (Exception $e) {
+            DB::rollback();
+        }
     }
 }

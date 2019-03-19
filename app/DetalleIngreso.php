@@ -3,6 +3,7 @@
 namespace SisVentas;
 
 use Illuminate\Database\Eloquent\Model;
+use DB;
 
 class DetalleIngreso extends Model
 {
@@ -24,17 +25,11 @@ class DetalleIngreso extends Model
     	
     ];
 
-    /*public static function UpdateArticuloCosto(){
-        $UpdateArticulo=DB::table('detalle_ingreso as di')
-            ->join('articulo as a','a.idcategoria','=','c.idcategoria')
-            ->select('a.idarticulo','a.nombre','a.codigo','a.stock','a.costo','c.nombre as categoria','a.descripcion','a.estado')
-            ->where('a.nombre','LIKE','%'.$query.'%') 
-            ->orwhere('a.codigo','LIKE','%'.$query.'%')            
-            ->orderBy('a.idarticulo','desc')
-            ->paginate(8);
-    }*/
+    public function scopeSumadetalleingreso($query,$ingreso_id){
+        return $query->select('idarticulo',DB::raw("SUM(cantidad) as suma"))
+                    ->where('idingreso',$ingreso_id)
+                    ->groupBy('idarticulo')
+                    ->get();
+    }
+    
 }
-/*
-UPDATE 
-detalle_ingreso di, articulo a SET a.costo = di.precio_venta
-WHERE a.idarticulo = di.idarticulo AND di.iddetalle_ingreso = (SELECT iddetalle_ingreso FROM detalle_ingreso WHERE detalle_ingreso.idarticulo = a.idarticulo AND detalle_ingreso.precio_venta > a.costo ORDER BY iddetalle_ingreso DESC LIMIT 1)*/
