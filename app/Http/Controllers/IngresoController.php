@@ -58,7 +58,7 @@ class IngresoController extends Controller
     }
     
     public function store(IngresoFormRequest $request)
-    {
+    { 
     	try{
     		DB::beginTransaction();
     			$ingreso = new Ingreso;
@@ -78,18 +78,18 @@ class IngresoController extends Controller
 		        $cont = 0;
               
 		        while($cont < count($idarticulo)){
-
 		        	$detalle = new DetalleIngreso();
 		        	$detalle->idingreso=$ingreso->idingreso;
 		        	$detalle->idarticulo=$idarticulo[$cont];
 		        	$detalle->cantidad=$cantidad[$cont];
 		        	$detalle->precio_compra=$precio_compra[$cont]; 
-                    $detalle->precio_venta=($precio_compra[$cont]+($precio_compra[$cont]*0.30));               	
+                    $detalle->precio_venta=($precio_compra[$cont]/0.70);               	
 		        	$detalle->save();	        	
 		        	$cont=$cont+1;
 		        }
             
     		DB::commit();
+
     	}catch(\Exception $e){
     		DB::rollback();
     	}

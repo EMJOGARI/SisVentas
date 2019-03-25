@@ -14,11 +14,15 @@ class UserAdminSeeder extends Seeder
     	\DB::table('tb_roles')->insert([            
             'name' => 'Administrador'            
         ]);
+
+        \DB::table('tb_roles')->insert([            
+            'name' => 'Usuario'            
+        ]);
         
         \DB::table('tb_users')->insert([
             'idrol' => '1',
             'name' => 'Administrador SisVentas',
-            'email' => 'admin@sisventa.com',
+            'email' => 'admin@sisventas.com',
             'password' => bcrypt('123456'),
         ]);          
     }

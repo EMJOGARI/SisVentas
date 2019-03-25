@@ -8,9 +8,10 @@ class Rol extends Model
 {
     protected $table='tb_roles';
 
-    protected $primaryKey='idrol';
+    protected $primaryKey='idrol';   
 
     protected $fillable = [
         'name',
     ];
+
 }

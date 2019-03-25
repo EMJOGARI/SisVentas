@@ -30,7 +30,6 @@
 						<th>Tipo Doc.</th>
 						<th>Numero Doc.</th>
 						<th>Telefono</th>
-						<th>Email</th>
 						<th>Tipo Persona</th>
 						<th>Opcions</th>
 					</thead>
@@ -40,8 +39,7 @@
 							<td>{{ $per->nombre }}</td>
 							<td>{{ $per->tipo_documento }}</td>
 							<td>{{ $per->num_documento }}</td>
-							<td>{{ $per->telefono }}</td>							
-							<td>{{ $per->email }}</td>
+							<td>{{ $per->telefono }}</td>
 							<td>{{ $per->tipo_persona }}</td>
 							<td>
 								<a href="{{ URL::action('PersonaController@edit',$per->idpersona) }}"><button class="btn btn-primary"><i class="fa fa-file-text-o"></i> Editar</button></a> 

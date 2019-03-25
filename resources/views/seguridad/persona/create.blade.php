@@ -13,7 +13,7 @@
 						@endforeach
 					</ul>
 				</div>
-			@endif paste
+			@endif
 
 			{!! Form::open(array('url'=>'seguridad/persona', 'method'=>'POST', 'autocomplete'=>'off')) !!}
 			{{ Form::token() }}
@@ -36,7 +36,7 @@
 	            </div>
 	            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
 	                <div class="form-group">
-	                    {!! Form::label('num_documento', 'Numero de Documento') !!}
+	                    {!! Form::label('num_documento', 'Nro. de Doc.') !!}
 	                    {!! Form::text('num_documento', null, ['class'=>'form-control', 'value'=>"{{ old('num_documento') }}", 'placeholder'=>'Numero de Documento...']) !!}
 	                </div>
 	            </div>
@@ -47,12 +47,7 @@
 	                    {!! Form::text('telefono', null, ['class'=>'form-control', 'value'=>"{{ old('telefono') }}", 'placeholder'=>'Nro de Telefono...']) !!}
 	                </div>
 	            </div>
-	            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-	                <div class="form-group">
-	                    {!! Form::label('email', 'Email') !!}
-	                    {!! Form::text('email', null, ['class'=>'form-control', 'value'=>"{{ old('email') }}", 'placeholder'=>'Email...']) !!}
-	                </div>
-	            </div>
+	           
 	            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
 	                <div class="form-group">
 	                    {!! Form::label('tipo_persona', 'Tipo Persona') !!}
@@ -63,6 +58,9 @@
 	                    </select>
 	                </div>
 	            </div>
+
+
+	            
 	            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 	                <div class="form-group">
 	                    {!! Form::label('direccion', 'Direccion') !!}

@@ -17,8 +17,7 @@ class CreateArticuloTable extends Migration
             $table->increments('idarticulo');
             $table->integer('idcategoria')->unsigned();
             $table->string('codigo',30);
-            $table->string('nombre',30);
-            $table->string('descripcion',150);            
+            $table->string('nombre',30);           
             $table->integer('stock');
             $table->string('estado',10);
         });

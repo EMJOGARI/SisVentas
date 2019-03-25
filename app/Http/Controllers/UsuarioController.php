@@ -35,8 +35,14 @@ class UsuarioController extends Controller
 
      public function create()
     {
-        $rol=DB::table('tb_roles')->where('idrol','>','1')->get();
-        return view("seguridad.usuario.create",["rol"=>$rol]);
+        $usuarios=DB::table('tb_users as u')
+                ->join('tb_roles as r','u.idrol','=','r.idrol')
+                ->select('u.id','u.name','u.email','r.name as tipo','r.idrol')
+                //->where('r.idrol','>','1')
+                ->get();
+
+        //$rol=DB::table('tb_roles')->where('idrol','>','1')->get(); "rol"=>$rol
+        return view("seguridad.usuario.create",["usuarios"=>$usuarios]);
     }
 
     public function store(UsuarioFormRequest $request)

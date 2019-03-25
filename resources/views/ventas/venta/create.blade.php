@@ -15,17 +15,25 @@
 
 			{!! Form::open(array('url'=>'ventas/venta', 'method'=>'POST', 'autocomplete'=>'off')) !!}
 			{{ Form::token() }}
-			<div class="row">	            
-	            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-	                <div class="form-group">
-	                    {!! Form::label('cliente', 'Cliente') !!}
-	                    <select name="idcliente" id="idcliente" class="form-control selectpicker" data-live-search="true">	                    	
-	                    	@foreach($personas as $persona)
-	                    		<option value="{{ $persona->idpersona }}">{{ $persona->nombre }}</option>
-	                    	@endforeach
-	                    </select>
-	                </div>
-	            </div>
+			<div class="row">	
+
+			 	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+			 		<div class="form-group">
+				 		{!! Form::label('cliente', 'Cliente') !!}
+		                <div class="input-group"> 
+		                    <select name="idcliente" id="idcliente" class="form-control selectpicker" data-live-search="true">
+		                    	<option value="">Seleccioné un Cliente</option>
+		                    	@foreach($personas as $persona)
+		                    		<option value="{{ $persona->idpersona }}">{{ $persona->nombre }}</option>
+		                    	@endforeach
+		                    </select>
+			                <div class="input-group-btn">
+			                	<a href="{{ url('seguridad/persona/create') }}" type="button" class="btn btn-success"><i class="fa fa-plus"></i> Nuevo Cliente</a>                  
+			                </div>
+		                </div> 
+			 		</div>	            	
+	            </div> 
+
 	            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
 	                <div class="form-group">
 	                    {!! Form::label('tipo_comprobante', 'Tipo Documento') !!}
@@ -72,7 +80,7 @@
 				            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
 				                <div class="form-group">				                	
 				                    {!! Form::label('precio_venta', 'Precio Venta') !!}
-				                    {!! Form::number('pprecio_venta', null, ['id'=>'pprecio_venta','class'=>'form-control']) !!} 
+				                    {!! Form::text('pprecio_venta', null, ['id'=>'pprecio_venta','class'=>'form-control']) !!} 
 				                </div>
 				            </div>
 				            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">

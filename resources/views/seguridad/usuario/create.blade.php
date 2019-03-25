@@ -37,8 +37,8 @@
                     <div class="form-group">
                         {!! Form::label('tipo_persona', 'Tipo Usuario') !!}
                         <select name="idrol" class="form-control"> 
-                            @foreach($rol as $r)
-                                <option value="{{ $r->idrol }}">{{ $r->name }}</option>
+                            @foreach($usuarios as $u)
+                                <option value="{{ $u->idrol }}">{{ $u->tipo }}</option>
                             @endforeach                          
                         </select>                        
                     </div>

@@ -21,7 +21,6 @@ class CreatePersonaTable extends Migration
             $table->string('num_documento',15);
             $table->string('direccion',150);
             $table->string('telefono',15);
-            $table->string('email',50);
         });
     }
 

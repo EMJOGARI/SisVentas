@@ -46,7 +46,6 @@ class PersonaController extends Controller
         $persona->num_documento=$request->get('num_documento');
         $persona->direccion=$request->get('direccion');
         $persona->telefono=$request->get('telefono');
-        $persona->email=$request->get('email');
         $persona->tipo_persona=$request->get('tipo_persona');        
         $persona->save();
         return Redirect::to('seguridad/persona');      
@@ -70,7 +69,6 @@ class PersonaController extends Controller
         $persona->num_documento=$request->get('num_documento');
         $persona->direccion=$request->get('direccion');
         $persona->telefono=$request->get('telefono');
-        $persona->email=$request->get('email');
         $persona->tipo_persona=$request->get('tipo_persona'); 
         $persona->update();
         return Redirect::to('seguridad/persona');

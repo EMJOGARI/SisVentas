@@ -17,15 +17,22 @@
 			{{ Form::token() }}
 			<div class="row">	            
 	            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-	                <div class="form-group">
-	                    {!! Form::label('proveedor', 'Proveedor') !!}
-	                    <select name="idproveedor" id="idproveedor" class="form-control selectpicker" data-live-search="true">
-	                    	@foreach($personas as $persona)
-	                    		<option value="{{ $persona->idpersona }}">{{ $persona->nombre }}</option>
-	                    	@endforeach
-	                    </select>
+	            	<div class="form-group">
+		            	{!! Form::label('proveedor', 'Proveedor') !!}
+		                <div class="input-group">	                    
+		                    <select name="idproveedor" id="idproveedor" class="form-control selectpicker" data-live-search="true">
+		                    	<option value="">Seleccioné un Proveedor</option>
+		                    	@foreach($personas as $persona)
+		                    		<option value="{{ $persona->idpersona }}">{{ $persona->nombre }}</option>
+		                    	@endforeach
+		                    </select>
+		                    <div class="input-group-btn">
+			                	<a href="{{ url('seguridad/persona/create') }}" type="button" class="btn btn-success"><i class="fa fa-plus"></i> Nuevo Proveedor</a>                  
+			                </div>
+		                </div>
 	                </div>
-	            </div>
+	            </div>					
+
 	            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
 	                <div class="form-group">
 	                    {!! Form::label('tipo_comprobante', 'Tipo Documento') !!}
@@ -55,6 +62,7 @@
 				                <div class="form-group">
 				                    {!! Form::label('articulo', 'Articulo') !!}
 				                    <select name="pidarticulo" id="pidarticulo" class="form-control selectpicker" data-live-search="true">
+				                    	<option value="">Seleccioné un Articulo</option>
 				                    	@foreach($articulos as $articulo)
 				                    		<option value="{{ $articulo->idarticulo }}">{{ $articulo->articulo }}</option>
 				                    	@endforeach

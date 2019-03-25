@@ -49,24 +49,24 @@ class AddForeignKeyTable extends Migration
     public function down()
     {
         Schema::table('tb_users', function (Blueprint $table) {
-            $table->dropForeign('users_idrol_foreign');
+            $table->dropForeign('tb_users_idrol_foreign');
         });
         Schema::table('tb_articulo', function (Blueprint $table) {
-            $table->dropForeign('articulo_idcategoria_foreign');
+            $table->dropForeign('tb_articulo_idcategoria_foreign');
         });
         Schema::table('tb_detalle_ingreso', function (Blueprint $table) {
-            $table->dropForeign('detalle_ingreso_idarticulo_foreign');
-            $table->dropForeign('detalle_ingreso_idingreso_foreign');
+            $table->dropForeign('tb_detalle_ingreso_idarticulo_foreign');
+            $table->dropForeign('tb_detalle_ingreso_idingreso_foreign');
         });
         Schema::table('tb_detalle_venta', function (Blueprint $table) {
-            $table->dropForeign('detalle_venta_idarticulo_foreign');
-            $table->dropForeign('detalle_venta_idventa_foreign');
+            $table->dropForeign('tb_detalle_venta_idarticulo_foreign');
+            $table->dropForeign('tb_detalle_venta_idventa_foreign');
         });
         Schema::table('tb_ingreso', function (Blueprint $table) {
-            $table->dropForeign('ingreso_idproveedor_foreign');
+            $table->dropForeign('tb_ingreso_idproveedor_foreign');
         });
         Schema::table('tb_venta', function (Blueprint $table) {
-            $table->dropForeign('venta_idcliente_foreign');
+            $table->dropForeign('tb_venta_idcliente_foreign');
         });   
     }
 }

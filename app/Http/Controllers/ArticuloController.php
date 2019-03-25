@@ -25,7 +25,7 @@ class ArticuloController extends Controller
             $query=trim($request->get('searchText'));
             $articulos=DB::table('tb_articulo as a')
                 ->join('tb_categoria as c','a.idcategoria','=','c.idcategoria')
-                ->select('a.idarticulo','a.nombre','a.codigo','a.stock','c.nombre as categoria','a.descripcion','a.estado')
+                ->select('a.idarticulo','a.nombre','a.codigo','a.stock','c.nombre as categoria','a.estado')
                 ->where('a.nombre','LIKE','%'.$query.'%') 
                 ->orwhere('a.codigo','LIKE','%'.$query.'%')            
                 ->orderBy('a.idarticulo','desc')
@@ -46,8 +46,7 @@ class ArticuloController extends Controller
         $articulo=new Articulo;
         $articulo->idcategoria=$request->get('idcategoria');
         $articulo->codigo=$request->get('codigo');
-        $articulo->nombre=$request->get('nombre');               
-        $articulo->descripcion=$request->get('descripcion');
+        $articulo->nombre=$request->get('nombre');
         $articulo->stock='0';
         $articulo->estado='Activo';
         $articulo->save();
@@ -72,8 +71,7 @@ class ArticuloController extends Controller
         $articulo->idcategoria=$request->get('idcategoria');
         $articulo->codigo=$request->get('codigo');
         $articulo->nombre=$request->get('nombre');
-        $articulo->stock='0';        
-        $articulo->descripcion=$request->get('descripcion');
+        $articulo->stock='0'; 
         $articulo->estado='Activo';
         $articulo->update();
         return Redirect::to('almacen/articulo');

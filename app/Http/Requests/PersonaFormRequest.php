@@ -28,8 +28,7 @@ class PersonaFormRequest extends FormRequest
             'tipo_documento'=>'required|max:20',
             'num_documento'=>'required|max:15',
             'direccion'=>'max:100',
-            'telefono'=>'max:15',
-            'email'=>'max:50|email'
+            'telefono'=>'max:15'
         ];
     }
 }

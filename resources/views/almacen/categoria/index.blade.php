@@ -13,7 +13,6 @@
 					<thead>
 						<th>Id</th>
 						<th>Nombre</th>
-						<th>Descripcion</th>
 						<th>Opcions</th>
 					</thead>
 					@foreach ($categorias as $cat)
@@ -21,7 +20,6 @@
 							
 							<td>{{ $cat->idcategoria }}</td>
 							<td>{{ $cat->nombre }}</td>
-							<td>{{ $cat->descripcion }}</td>
 							<td>
 								<a href="{{ URL::action('CategoriaController@edit',$cat->idcategoria) }}"><button class="btn btn-info"><i class="fa fa-file-text-o"></i> Editar</button></a> 
 								<a href="{{ URL::action('CategoriaController@destroy',$cat->idcategoria) }}" data-target="#modal-delete-{{ $cat->idcategoria }}" data-toggle="modal"> <button class="btn btn-danger"><i class="fa fa-close"></i> Eliminar</button></a>
