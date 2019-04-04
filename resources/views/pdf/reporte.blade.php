@@ -21,6 +21,7 @@
 	</style>
 </head>
 <body>
+	
 	<h2>Reporte de Articulos</h2>
 	<table>
 		<tr style="background-color: #dddddd;">

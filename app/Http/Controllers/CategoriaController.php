@@ -44,6 +44,7 @@ class CategoriaController extends Controller
         $categoria->nombre=$request->get('nombre');
         $categoria->condicion='1'; 
         $categoria->save();
+        //return response()->json($categoria);
         return Redirect::to('almacen/categoria');      
     }
    
