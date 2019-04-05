@@ -109,7 +109,7 @@ class ReporteController extends Controller
        $personas=DB::table('tb_persona')               
             ->where('tipo_persona','=','Vendedor')
             ->get();
-        $view = \View::make('pdf.reporteproveedor',compact('personas'))->render();
+        $view = \View::make('pdf.reportevendedor',compact('personas'))->render();
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadHTML($view); 
         return $pdf->stream('informe'.'.pdf');
@@ -122,6 +122,7 @@ class ReporteController extends Controller
         	->join('tb_detalle_venta as dv','v.idventa','=','dv.idventa')
             ->select('v.idventa','v.fecha_hora','p.nombre','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.estado','v.total_venta')
             ->groupBy('v.idventa','v.fecha_hora','p.nombre','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.estado','v.total_venta')
+            ->where('v.estado','=','A')
         	->get();
         $view = \View::make('pdf.reporteventa',compact('ventas'))->render();
         $pdf = \App::make('dompdf.wrapper');

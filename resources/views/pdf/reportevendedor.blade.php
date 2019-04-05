@@ -1,27 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends ('pdf.reporte')
 
-<head>
-	<meta charset="UTF-8">
-	<title>Lista de Clientes</title>
-	<style>
-		table{
-			font-family: arial, sans-serif;
-			border-collapse: collapse;
-			width: 100%;
-			font-size: 12px;
-			
-		}
-		td, th {
-			border: 1px solid #dddddd;
-			text-align: left;
-			padding: 8px;
-		}
-		
-	</style>
-</head>
-<body>
-	<h2>Listado de Clientes</h2>
+@section('title', "Listado de Vendedor")
+
+@section('content')
+	<h2>Listado de Vendedor</h2>
 	<table>
 		<tr style="background-color: #dddddd;">
 			<th>Id</th>
@@ -29,7 +11,6 @@
 			<th>Tipo Doc.</th>
 			<th>Numero Doc.</th>
 			<th>Telefono</th>
-			<th>Email</th>
 			<th>Tipo Persona</th>
 		</tr>		
 		@foreach ($personas as $per)
@@ -38,12 +19,9 @@
 				<td>{{ $per->nombre }}</td>
 				<td>{{ $per->tipo_documento }}</td>
 				<td>{{ $per->num_documento }}</td>
-				<td>{{ $per->telefono }}</td>							
-				<td>{{ $per->email }}</td>
+				<td>{{ $per->telefono }}</td>
 				<td>{{ $per->tipo_persona }}</td>							
 			</tr>						
 		@endforeach				
 	</table>
-	
-</body>
-</html>
+@endsection

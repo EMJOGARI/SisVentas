@@ -1,26 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends ('pdf.reporte')
 
-<head>
-	<meta charset="UTF-8">
-	<title>Reporte de Ingresos</title>
-	<style>
-		table{
-			font-family: arial, sans-serif;
-			border-collapse: collapse;
-			width: 100%;
-			font-size: 12px;
-			
-		}
-		td, th {
-			border: 1px solid #dddddd;
-			text-align: left;
-			padding: 8px;
-		}
-		
-	</style>
-</head>
-<body>
+@section('title', "Reporte de Ingresos")
+
+@section('content')
 	<h2>Reporte de Ingresos</h2>
 	<table>
 		<tr style="background-color: #dddddd;">
@@ -28,8 +10,7 @@
 			<th>Proveedor</th>
 			<th>Comprobante</th>
 			<th>Total</th>						
-			<th>Estado</th>
-						
+			<th>Estado</th>						
 		</tr>		
 		@foreach ($ingresos as $ing)
 			<tr>												
@@ -41,6 +22,4 @@
 			</tr>				
 		@endforeach				
 	</table>
-	
-</body>
-</html>
+@endsection

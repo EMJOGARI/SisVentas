@@ -1,27 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends ('pdf.reporte')
 
-<head>
-	<meta charset="UTF-8">
-	<title>Detalle Ingreso</title>
-	<style>
-		table{
-			font-family: arial, sans-serif;
-			border-collapse: collapse;
-			width: 100%;
-			font-size: 12px;
-			
-		}
-		td, th {
-			border: 1px solid #dddddd;
-			text-align: left;
-			padding: 8px;
-		}
-		
-	</style>
-</head>
-<body>
-	<h2>Detalle Ingreso</h2>
+@section('title', "Detalle del Ingreso")
+
+@section('content')
+<h2>Detalle del Ingreso</h2>
 	
 	<table>
 		<tr style="background-color: #dddddd;">
@@ -56,8 +38,5 @@
 	  		<th><h4>TOTAL:</h4></th>
 	  		<th><h4 id="total">{{ number_format($ingresos->total, 2, ',', '.') }}</h4></th>
 		</tr>
-	</table>
-	
-	
-</body>
-</html>
+	</table>	
+@endsection

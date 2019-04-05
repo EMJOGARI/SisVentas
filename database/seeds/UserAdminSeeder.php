@@ -24,6 +24,12 @@ class UserAdminSeeder extends Seeder
             'name' => 'Administrador SisVentas',
             'email' => 'admin@sisventas.com',
             'password' => bcrypt('123456'),
-        ]);          
+        ]);
+        \DB::table('tb_users')->insert([
+            'idrol' => '2',
+            'name' => 'Usuario SisVentas',
+            'email' => 'ausuario@sisventas.com',
+            'password' => bcrypt('123456'),
+        ]);         
     }
 }

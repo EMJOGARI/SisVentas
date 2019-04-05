@@ -1,26 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends ('pdf.reporte')
 
-<head>
-	<meta charset="UTF-8">
-	<title>Reporte de Ventas</title>
-	<style>
-		table{
-			font-family: arial, sans-serif;
-			border-collapse: collapse;
-			width: 100%;
-			font-size: 12px;
-			
-		}
-		td, th {
-			border: 1px solid #dddddd;
-			text-align: left;
-			padding: 8px;
-		}
-		
-	</style>
-</head>
-<body>
+@section('title', "Reporte de Ventas")
+
+@section('content')
 	<h2>Reporte de Ventas</h2>
 	<table>
 		<tr style="background-color: #dddddd;">
@@ -41,6 +23,4 @@
 			</tr>				
 		@endforeach				
 	</table>
-	
-</body>
-</html>
+@endsection
