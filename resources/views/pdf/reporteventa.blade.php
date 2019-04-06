@@ -15,7 +15,7 @@
 		</tr>		
 		@foreach ($ventas as $ven)
 			<tr>												
-				<td>{{ $ven->fecha_hora }}</td>
+				<td>{{ date('d/m/Y', strtotime($ven->fecha_hora)) }}</td>
 				<td>{{ $ven->nombre }}</td>
 				<td>{{ $ven->tipo_comprobante.': '.$ven->serie_comprobante.' - '.$ven->num_comprobante }}</td>
 				<td>{{ number_format($ven->total_venta, 2, ',', '.') }}</td>
