@@ -4,23 +4,21 @@
 
 @section('content')
 	<h2>Listado de Vendedor</h2>
-	<table>
+	<table width="100%">
 		<tr style="background-color: #dddddd;">
-			<th>Id</th>
-			<th>Nombre</th>
-			<th>Tipo Doc.</th>
-			<th>Numero Doc.</th>
-			<th>Telefono</th>
-			<th>Tipo Persona</th>
+			<th width="5%">Id</th>
+			<th width="50%">Nombre</th>
+			<th width="13%">Numero Doc.</th>
+			<th width="13%">Telefono</th>
+			<th width="13%">Tipo Persona</th>
 		</tr>		
 		@foreach ($personas as $per)
 			<tr>												
-				<td>{{ $per->idpersona }}</td>
+				<td style="text-align: center;">{{ $per->idpersona }}</td>
 				<td>{{ $per->nombre }}</td>
-				<td>{{ $per->tipo_documento }}</td>
-				<td>{{ $per->num_documento }}</td>
+				<td>{{ $per->tipo_documento.' - '.$per->num_documento }}</td>
 				<td>{{ $per->telefono }}</td>
-				<td>{{ $per->tipo_persona }}</td>							
+				<td style="text-align: center;">{{ $per->tipo_persona }}</td>							
 			</tr>						
 		@endforeach				
 	</table>
