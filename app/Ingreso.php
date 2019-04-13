@@ -18,6 +18,7 @@ class Ingreso extends Model
         'serie_comprobante',
         'num_comprobante',
         'fecha_hora',
+        'total_compra',
         'estado'
     ];
 

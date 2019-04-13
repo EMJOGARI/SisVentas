@@ -19,6 +19,7 @@ class CreateIngresoTable extends Migration
             $table->string('tipo_comprobante',10);
             $table->string('serie_comprobante',10);
             $table->string('num_comprobante',10);
+            $table->decimal('total_compra',11,2);
             $table->string('estado',10);
             $table->date('fecha_hora');                   
         });

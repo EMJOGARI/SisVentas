@@ -100,7 +100,7 @@
 								  		<th></th>
 								  		<th></th>
 								  		<th></th>
-								  		<th><h4 id="total">BsS. 0.00</h4></th>
+								  		<th><h4 id="total">BsS. 0.00</h4> <input type="hidden" name="total_compra" id="total_compra"></th>
 								  	</tfoot>
 								  	<tbody>
 								    
@@ -138,7 +138,8 @@ function agregar()
 	idarticulo=$("#pidarticulo").val();
 	articulo=$("#pidarticulo option:selected").text();
 	cantidad=$("#pcantidad").val();
-	precio_compra=$("#pprecio_compra").val();	
+	precio_compra=$("#pprecio_compra").val();
+	total=$("#total").val();	
 
 	if (idarticulo!="" && cantidad!="" && cantidad>0 && precio_compra!="")
 	{
@@ -155,6 +156,7 @@ function agregar()
 		cont++;
 		limpiar();
 		$("#total").html("BsS. " + total);
+		$("#total_compra").val(total);
 		evaluar();
 		$('#detalles').append(fila);
 	}

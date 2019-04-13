@@ -15,6 +15,7 @@ Route::get('/', function () {
     return view('auth/login');
 });
 
+Route::resource('principal/index', 'InicioController');
 Route::resource('seguridad/usuario', 'UsuarioController');
 Route::resource('seguridad/persona', 'PersonaController');
 Route::resource('almacen/categoria', 'CategoriaController');
@@ -28,6 +29,8 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/{slug?}', 'HomeController@index')->name('home');
 
 Route::get('pdf/reportearticulo', 'ReporteController@ReporteArticulo');
+Route::get('pdf/reportearticuloprecio', 'ReporteController@ReporteArticuloPrecio');
+
 
 Route::get('pdf/reporteingreso', 'ReporteController@ReporteIngreso');
 Route::get('pdf/reporteingresoid/{id}', 'ReporteController@ReporteIngresoID');

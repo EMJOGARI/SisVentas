@@ -25,9 +25,9 @@ class UsuarioController extends Controller
             $query=trim($request->get('searchText'));
             $usuarios=DB::table('tb_users as u')
                 ->join('tb_roles as r','u.idrol','=','r.idrol')
-                ->select('u.id','u.name','u.email','r.name as tipo')
+                ->select('u.id','u.name','u.email','r.description')
                 ->where('u.name','LIKE','%'.$query.'%')                         
-                ->orderBy('id','desc')
+                ->orderBy('id')
                 ->paginate(8);
             return view('seguridad.usuario.index',["usuarios"=>$usuarios,"searchText"=>$query]);
         }
@@ -37,11 +37,8 @@ class UsuarioController extends Controller
     {
         $usuarios=DB::table('tb_users as u')
                 ->join('tb_roles as r','u.idrol','=','r.idrol')
-                ->select('u.id','u.name','u.email','r.name as tipo','r.idrol')
-                //->where('r.idrol','>','1')
+                ->select('u.id','u.name','u.email','r.description as tipo','r.idrol')
                 ->get();
-
-        //$rol=DB::table('tb_roles')->where('idrol','>','1')->get(); "rol"=>$rol
         return view("seguridad.usuario.create",["usuarios"=>$usuarios]);
     }
 

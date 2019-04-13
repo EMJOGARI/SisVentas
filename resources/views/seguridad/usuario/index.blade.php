@@ -1,8 +1,7 @@
 @extends ('layouts.admin')
 @section('content')
 	<div class="row">
-		<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
-			<h3>Listado de Usuarios <a href="{{ url('seguridad/usuario/create') }}"><button class="btn btn-success">Nuevo</button></a></h3>
+		<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">			
 			@include('seguridad.usuario.search')			
 		</div>
 	</div>
@@ -15,7 +14,6 @@
 						<th>Nombre</th>
 						<th>Email</th>
 						<th>Usuario</th>
-						<th>Opcions</th>
 					</thead>
 					@foreach ($usuarios as $usu)
 						<tr>
@@ -23,11 +21,7 @@
 							<td>{{ $usu->id }}</td>
 							<td>{{ $usu->name }}</td>
 							<td>{{ $usu->email }}</td>
-							<td>{{ $usu->tipo }}</td>
-							<td>
-								<a href="{{ URL::action('UsuarioController@edit',$usu->id) }}"><button class="btn btn-info">Editar</button></a> 
-								<a href="{{ URL::action('UsuarioController@destroy',$usu->id) }}" data-target="#modal-delete-{{ $usu->id }}" data-toggle="modal"> <button class="btn btn-danger">Eliminar</button></a>
-							</td>
+							<td>{{ $usu->description }}</td>							
 						</tr>
 						@include('seguridad.usuario.modal')
 					@endforeach

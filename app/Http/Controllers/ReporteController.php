@@ -38,6 +38,21 @@ class ReporteController extends Controller
         return $pdf->stream('informe'.'.pdf');
     }
 
+     public function ReporteArticuloPrecio()
+    {
+        $articulos=DB::table('tb_articulo as art')
+            ->join('tb_detalle_ingreso as di','art.idarticulo','=','di.idarticulo')
+            ->select('art.codigo','art.nombre','art.stock', DB::raw("MAX(di.precio_venta) AS precio_venta"))
+            ->where('art.estado','=','Activo')
+            ->where('art.stock','>','0')
+            ->groupBy('art.codigo','art.nombre','art.stock')
+            ->get(); 
+        $view = \View::make('pdf.reportearticuloprecio',compact('articulos'))->render();
+        $pdf = \App::make('dompdf.wrapper');
+        $pdf->loadHTML($view); 
+        return $pdf->stream('informe'.'.pdf');
+    }
+
      public function ReporteIngreso()
     {
        $ingresos=DB::table('tb_ingreso as i')

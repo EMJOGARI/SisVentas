@@ -11,7 +11,6 @@ class Rol extends Model
     protected $primaryKey='idrol';   
 
     protected $fillable = [
-        'name',
+        'name','description',
     ];
-
 }

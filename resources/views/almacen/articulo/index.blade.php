@@ -5,10 +5,7 @@
 			<h3>Listado de Articulos
 				<a href="{{ url('almacen/articulo/create') }}">
 					<button class="btn btn-primary"><i class="fa fa-plus"></i> Nuevo Articulo</button>
-				</a>
-				<a href="{{ url('pdf/reportearticulo') }}" target="_blank">
-					<button class="btn btn-info"><i class="fa fa-print"></i> Reporte de Articulos</button>
-				</a>
+				</a>				
 			</h3>
 			@include('almacen.articulo.search')			
 		</div>
@@ -18,19 +15,17 @@
 			<div class="table-responsive">
 				<table class="table table-striped table-bordered table-condensed table-hover">
 					<thead>
-						<th>Id</th>
-						<th>Nombre</th>
 						<th>Codigo</th>
+						<th>Nombre</th>						
 						<th>Categoría</th>
 						<th>Stock</th>
 						<th>Estado</th>
 						<th>Opcions</th>
 					</thead>
 					@foreach ($articulos as $art)
-						<tr>												
-							<td>{{ $art->idarticulo }}</td>
-							<td>{{ $art->nombre }}</td>
+						<tr>
 							<td>{{ $art->codigo }}</td>
+							<td>{{ $art->nombre }}</td>							
 							<td>{{ $art->categoria }}</td>
 							<td>{{ $art->stock }}</td>						
 							<td>{{ $art->estado }}</td>

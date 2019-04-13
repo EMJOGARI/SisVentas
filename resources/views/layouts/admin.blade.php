@@ -20,13 +20,13 @@
     <link rel="shortcut icon" href="{{ asset('/assets/img/favicon.ico') }}">
 
   </head>
-  <body class="hold-transition skin-blue sidebar-mini">
+  <body class="hold-transition skin-green sidebar-mini">
     <div class="wrapper">
 
       <header class="main-header">
 
         <!-- Logo -->
-        <a href="{{ url('home') }}" class="logo">
+        <a href="{{ url('principal/index') }}" class="logo">
           <!-- mini logo for sidebar mini 50x50 pixels -->
           <span class="logo-mini"><b>S</b>V</span>
           <!-- logo for regular state and mobile devices -->
@@ -90,7 +90,7 @@
           <!-- sidebar menu: : style can be found in sidebar.less -->
           <ul class="sidebar-menu">
             <li class="header"></li>
-            
+            <li><a href="{{ url('principal/index') }}"><i class="fa fa-home"></i> {{ __('inicio') }}</a></li>
             <li class="treeview">
               <a href="#">
                 <i class="fa fa-laptop"></i>
@@ -126,6 +126,19 @@
                 <li><a href="{{ url('ventas/venta') }}"><i class="fa fa-list-alt"></i>Administrar Facturas</a></li>
               </ul>
             </li>
+            <li class="treeview">
+              <a href="#">
+                <i class="fa fa-signal"></i>
+                <span>Reportes</span>
+                 <i class="fa fa-angle-left pull-right"></i>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="{{ url('pdf/reportearticuloprecio') }}" target="_blank"><i class="fa fa-file-pdf-o"></i>Lista de Precio Productos</a></li>
+                <li><a href="{{ url('pdf/reportearticulo') }}" target="_blank"><i class="fa fa-file-pdf-o"></i>Reporte de Inventario</a></li>
+                <li><a href="{{ url('pdf/reporteventa') }}" target="_blank"><i class="fa fa-file-pdf-o"></i>Reporte de Ventas</a></li>
+                <li><a href="{{ url('pdf/reporteingreso') }}" target="_blank"><i class="fa fa-file-pdf-o"></i>Reporte de Ingresos</a></li>                
+              </ul>
+            </li>
             <li><a href="{{ url('seguridad/persona') }}"><i class="fa fa-user"></i><span>Personas</span></a></li>
             @if(Auth::user()->idrol=='1')
               <li class="treeview">
@@ -135,7 +148,8 @@
                   <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
-                  <li><a href="{{ url('seguridad/usuario') }}"><i class="fa fa-users"></i> {{ __('Agregar Usuarios') }}</a></li>
+                  <li><a href="{{ url('seguridad/usuario') }}"><i class="fa fa-users"></i> {{ __('Ver Usuarios') }}</a></li>
+                  <li><a href="{{ url('seguridad/usuario') }}"><i class="fa fa-refresh"></i> {{ __('Cambiar precio producto') }}</a></li>
                 </ul>
               </li>
             @endif
