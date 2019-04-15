@@ -57,6 +57,7 @@ class VentaController extends Controller
     		->where('art.estado','=','Activo')
     		->where('art.stock','>','0')
     		->groupBy('articulo','art.idarticulo','art.stock')
+            ->orderBy('art.codigo')
     		->get(); 
             //dd($personas, $articulos);
         return view("ventas.venta.create",["personas"=>$personas, "articulos"=>$articulos]);
@@ -115,7 +116,7 @@ class VentaController extends Controller
         $detalles=DB::table('tb_detalle_venta as d')
             ->join('tb_articulo as a', 'd.idarticulo', '=','a.idarticulo')
             ->select('a.nombre as articulo', 'd.cantidad', 'd.descuento','d.precio_venta')
-            ->where('d.idventa','=',$id)
+            ->where('d.idventa','=',$id)            
             ->get();
 
         return view("ventas.venta.show",["venta"=>$venta , "detalles"=>$detalles]);

@@ -16,8 +16,8 @@ class CreateArticuloTable extends Migration
         Schema::create('tb_articulo', function (Blueprint $table) {
             $table->increments('idarticulo');
             $table->integer('idcategoria')->unsigned();
-            $table->string('codigo',30);
-            $table->string('nombre',30);           
+            $table->string('codigo',10);
+            $table->string('nombre',50);           
             $table->integer('stock');
             $table->string('estado',10);
         });
