@@ -46,6 +46,7 @@ class ReporteController extends Controller
             ->where('art.estado','=','Activo')
             ->where('art.stock','>','0')
             ->groupBy('art.codigo','art.nombre','art.stock')
+            ->orderBy('art.codigo')
             ->get(); 
         $view = \View::make('pdf.reportearticuloprecio',compact('articulos'))->render();
         $pdf = \App::make('dompdf.wrapper');
