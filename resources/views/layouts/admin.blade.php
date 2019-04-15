@@ -149,7 +149,7 @@
                 </a>
                 <ul class="treeview-menu">
                   <li><a href="{{ url('seguridad/usuario') }}"><i class="fa fa-users"></i> {{ __('Ver Usuarios') }}</a></li>
-                  <li><a href="{{ url('seguridad/usuario') }}"><i class="fa fa-refresh"></i> {{ __('Cambiar precio producto') }}</a></li>
+                  <li><a href="{{ url('seguridad/precio_articulo') }}"><i class="fa fa-refresh"></i> {{ __('Cambiar precio producto') }}</a></li>
                 </ul>
               </li>
             @endif
