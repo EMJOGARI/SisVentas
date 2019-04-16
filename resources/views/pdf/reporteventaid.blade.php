@@ -37,7 +37,8 @@
 	    }
 	    .detalles .tabla3{
 	        margin-top: 0;
-	        padding: 0;        
+	        padding: 0;
+	        text-transform: uppercase;       
 	    }
 	    .tabla4{
 	        margin-top: 0;

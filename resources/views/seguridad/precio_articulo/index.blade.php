@@ -23,7 +23,7 @@
 							<td style="text-align: center;">{{ $art->codigo }}</td>
 							<td>{{ $art->nombre }}</td>
 							<td style="text-align: center;">{{ $art->stock }}</td>
-							<td style="text-align: right;">{{ $art->precio_venta }}</td>
+							<td style="text-align: right;">{{ number_format($art->precio_venta, 2, ',', '.') }}</td>
 							<td>
 								<a href="{{ URL::action('EditPrecioController@edit',$art->idarticulo) }}"><button class="btn btn-primary"><i class="fa fa-file-text-o"></i> Editar</button></a>
 							</td>

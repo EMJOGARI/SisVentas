@@ -15,11 +15,11 @@ class CreatePersonaTable extends Migration
     {
         Schema::create('tb_persona', function (Blueprint $table) {
             $table->increments('idpersona');
-            $table->string('tipo_persona',10);           
-            $table->string('nombre',30);
+            $table->string('tipo_persona',15);           
+            $table->string('nombre',50);
             $table->string('tipo_documento',10);
             $table->string('num_documento',15);
-            $table->string('direccion',150);
+            $table->string('direccion',255);
             $table->string('telefono',15);
         });
     }
