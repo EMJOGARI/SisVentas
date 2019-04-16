@@ -27,7 +27,7 @@ class PersonaController extends Controller
             $personas=DB::table('tb_persona')           
                 ->where('nombre','LIKE','%'.$query.'%')
                 ->orwhere('tipo_persona','LIKE','%'.$query.'%')                              
-                ->paginate(8);
+                ->paginate(10);
 
             return view('seguridad.persona.index',["personas"=>$personas,"searchText"=>$query]);
         }

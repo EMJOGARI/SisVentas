@@ -28,7 +28,7 @@ class CategoriaController extends Controller
                 ->where('nombre','LIKE','%'.$query.'%')
                 ->where('condicion','=','1')
                 ->orderBy('idcategoria','desc')
-                ->paginate(8);
+                ->paginate(10);
             return view('almacen.categoria.index',["categorias"=>$categorias,"searchText"=>$query]);
         }
     }

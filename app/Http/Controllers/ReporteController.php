@@ -31,6 +31,7 @@ class ReporteController extends Controller
         $articulos=DB::table('tb_articulo as a')
             ->join('tb_categoria as c','a.idcategoria','=','c.idcategoria')
             ->select('a.idarticulo','a.nombre','a.codigo','a.stock','c.nombre as categoria','a.estado')
+            ->orderBy('a.codigo')
             ->get();
         $view = \View::make('pdf.reportearticulo',compact('articulos'))->render();
         $pdf = \App::make('dompdf.wrapper');

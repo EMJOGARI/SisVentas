@@ -21,7 +21,7 @@
 					</thead>
 					@foreach ($ingresos as $ing)
 						<tr>
-							<td>{{ $ing->fecha_hora }}</td>
+							<td>{{ date('d-m-Y', strtotime($ing->fecha_hora)) }}</td>
 							<td>{{ $ing->nombre }}</td>
 							<td>{{ $ing->tipo_comprobante.': '.$ing->serie_comprobante.' - '.$ing->num_comprobante }}</td>
 							<td>{{ number_format($ing->total, 2, ',', '.') }}</td>

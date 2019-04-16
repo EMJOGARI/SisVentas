@@ -28,7 +28,7 @@ class UsuarioController extends Controller
                 ->select('u.id','u.name','u.email','r.description')
                 ->where('u.name','LIKE','%'.$query.'%')                         
                 ->orderBy('id')
-                ->paginate(8);
+                ->paginate(10);
             return view('seguridad.usuario.index',["usuarios"=>$usuarios,"searchText"=>$query]);
         }
     }
