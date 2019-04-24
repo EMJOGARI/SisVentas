@@ -37,8 +37,14 @@ class ArticuloController extends Controller
     
     public function create()
     {
+        $articulos=DB::table('tb_articulo as a')
+            ->select('codigo',DB::raw("MAX(idarticulo) AS id"))
+            ->groupBy('codigo')
+            ->get();
+
         $categorias=DB::table('tb_categoria')->where('condicion','=','1')->get();
-        return view("almacen.articulo.create",["categorias"=>$categorias]);
+
+        return view("almacen.articulo.create",["categorias"=>$categorias,"articulos"=>$articulos]);
     }
     
     public function store(ArticuloFormRequest $request)

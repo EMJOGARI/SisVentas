@@ -51,7 +51,7 @@
 	                    <button class="btn btn-primary" type="submit"><i class="fa fa-save"></i> Guardar</button>
 	                	<button class="btn btn-danger" onclick="location.href='{{ url('almacen/articulo/') }}'" type="reset"><i class="fa fa-close"></i> Cancelar</button>
 	                </div>
-	            </div>
+	            </div>	            	
 			</div>
 			{!! Form::close() !!}
 		</div>

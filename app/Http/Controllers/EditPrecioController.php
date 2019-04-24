@@ -59,7 +59,11 @@ class EditPrecioController extends Controller
             ->select('art.idarticulo','art.nombre','art.codigo','art.stock', DB::raw("MAX(di.precio_venta) AS precio_venta")) //probando esta linea
             ->where('art.idarticulo',$id)
             ->update(array('precio_venta' => Input::get('precio_venta')));
-       
+        
+        DB::table('tb_articulo')
+            ->where('idarticulo',$id)
+            ->update(array('stock' => Input::get('stock')));
+
         return Redirect::to('seguridad/precio_articulo');
     }
 }
