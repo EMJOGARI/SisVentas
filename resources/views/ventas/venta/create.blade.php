@@ -94,7 +94,7 @@
 				                    {!! Form::label('descuento', 'Descuento') !!}				                    
 				                    {!! Form::number('descuento', null, ['id'=>'pdescuento','class'=>'form-control','placeholder'=>'Descuento']) !!}
 				                </div>
-				            </div>		            
+				            </div>
 				            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
 				                <div class="form-group">
 				                    <button id="bt_add" class="btn btn-primary" type="button"><i class="fa fa-plus"></i> Agregar</button>				                    
@@ -171,34 +171,41 @@
 		
 		if (idarticulo!="" && cantidad!="" && cantidad>0 && precio_venta!="" && descuento!="")
 		{
-			if (stock>=cantidad)
+			if(cont<=6)
 			{
-				//subtotal[cont]=((cantidad*precio_venta)-descuento);
-				des=(descuento/100);
-				/*----------------*/
-				//neto[cont]=(cantidad*precio_venta);
-				subtotal[cont]=(cantidad*precio_venta);
-				subtotal[cont]=(subtotal[cont]-(subtotal[cont]*des));
-				total=total+subtotal[cont];
-				
-				var fila='<tr class="selected" id="fila'+cont+'">\n\
-					<td><button type="button" class="btn btn-warning" onclick="eliminar('+cont+')"><i class="fa fa-close"></i></button></td>\n\
-					<td><input type="hidden" name="idarticulo[]" value="'+idarticulo+'">'+articulo+'</td>\n\
-					<td><input type="hidden" name="cantidad[]" value="'+cantidad+'">'+cantidad+'</td>\n\
-					<td><input type="hidden" name="precio_venta[]" value="'+precio_venta+'">'+precio_venta+'</td>\n\
-					<td><input type="hidden" name="descuento[]" value="'+descuento+'">'+descuento+'</td>\n\
-					<td>'+subtotal[cont]+'</td></tr>';
-				
-				cont++;
-				limpiar();
-				$("#total").html("BsS. " + total); // number_format(total, 2, ',', '.')
-				$("#total_venta").val(total);
-				evaluar();
-				$('#detalles').append(fila);
+				if (stock>=cantidad)
+				{
+					//subtotal[cont]=((cantidad*precio_venta)-descuento);
+					des=(descuento/100);
+					/*----------------*/
+					//neto[cont]=(cantidad*precio_venta);
+					subtotal[cont]=(cantidad*precio_venta);
+					subtotal[cont]=(subtotal[cont]-(subtotal[cont]*des));
+					total=total+subtotal[cont];
+					
+					var fila='<tr class="selected" id="fila'+cont+'">\n\
+						<td><button type="button" class="btn btn-warning" onclick="eliminar('+cont+')"><i class="fa fa-close"></i></button></td>\n\
+						<td><input type="hidden" name="idarticulo[]" value="'+idarticulo+'">'+articulo+'</td>\n\
+						<td><input type="hidden" name="cantidad[]" value="'+cantidad+'">'+cantidad+'</td>\n\
+						<td><input type="hidden" name="precio_venta[]" value="'+precio_venta+'">'+precio_venta+'</td>\n\
+						<td><input type="hidden" name="descuento[]" value="'+descuento+'">'+descuento+'</td>\n\
+						<td>'+subtotal[cont]+'</td></tr>';
+					
+					cont++;
+					limpiar();
+					$("#total").html("BsS. " + total); // number_format(total, 2, ',', '.')
+					$("#total_venta").val(total);
+					evaluar();
+					$('#detalles').append(fila);
+				}
+				else
+				{
+					alert('La cantidad a vender supera el stock');
+				}
 			}
 			else
 			{
-				alert('La cantidad a vender supera el stock');
+				alert('Supera la cantidad de articulos permitidos en la factura');
 			}
 			
 		}
