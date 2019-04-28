@@ -170,7 +170,7 @@
 		stock=$("#pstock").val();
 		
 		if (idarticulo!="" && cantidad!="" && cantidad>0 && precio_venta!="" && descuento!="")
-		{
+		{   //CANTIDAD DE ITEMS EN LA FACTURA
 			if(cont<=6)
 			{
 				if (stock>=cantidad)
@@ -199,7 +199,7 @@
 					$('#detalles').append(fila);
 				}
 				else
-				{
+				{					
 					alert('La cantidad a vender supera el stock');
 				}
 			}

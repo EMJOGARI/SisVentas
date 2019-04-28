@@ -100,6 +100,7 @@ class VentaController extends Controller
     	}catch(\Exception $e){
     		DB::rollback();
     	}
+        flash('Venta Exitosa')->success();
         return Redirect::to('ventas/venta');   
 
     }

@@ -94,6 +94,7 @@ class IngresoController extends Controller
     	}catch(\Exception $e){
     		DB::rollback();
     	}
+        flash('Ingreso Exitoso')->success();
         return Redirect::to('compras/ingreso');      
     }
    

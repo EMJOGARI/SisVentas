@@ -24,7 +24,7 @@
 	    	font-size:20px;
 	    }
 	    .datos{
-	    	margin-top: 7rem
+	    	margin-top: 7.2rem
 	    } 
 	    .tabla2 tbody tr{
 	        margin-bottom: 20px;
@@ -75,28 +75,6 @@
 			</tbody>				    
 		</table>			
 	</div>
-{{--
-	<div class="datos" width="100%">
-		<table width="100%" class="tabla2">
-		    <tr>
-		    	<td width="5%"></td>		    		    		        
-		        <td width="80%"><span>{{ $venta->nombre }}</span></td>			                
-		    </tr>		    	    		    
-		</table>
-		<table width="100%" class="tabla2">		    
-		    <tr>		    			       
-		        <td width="50%"><span>{{ $venta->direccion }}</span></td>
-		        <td width="20%"></td>
-		        <td width="30%" class="fecha" align="center"><span><strong>{{ date('d/m/Y', strtotime($venta->fecha_hora)) }}</strong></span></td>
-		    </tr>
-		</table>
-		<table width="100%" class="tabla2">
-		    <tr>	        
-		        <td width="100%"><span>Cedula o RIF: {{ $venta->tipo_documento.'-'.$venta->num_documento }} / Telefono: {{ $venta->telefono }}</span></td>       
-		    </tr>		   
-		</table>		
-	</div>
---}}
 	<div class="detalles">
 		<table width="100%" class="tabla3">	   
 		    @foreach($detalles as $det)		
