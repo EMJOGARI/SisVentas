@@ -174,7 +174,7 @@
             <div class="col-md-12">
               <div class="box">
                 <div class="box-header with-border">
-                  <h3 class="box-title">SisVentas</h3>
+                  <h3 class="box-title"><strong>@yield('name')</strong></h3>
                   <div class="box-tools pull-right">
                     <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>                    
                     <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
@@ -212,11 +212,15 @@
     <!-- jQuery 2.1.4  new-ingreso.js-->
     <script src="{{ asset('/assets/js/jQuery-2.1.4.min.js') }}"></script>
     @stack('scripts')
+    <script>
+      $('div.alert').not('.alert-important').delay(3000).fadeOut(250);
+    </script>
     <!-- Bootstrap 3.3.5 -->
     <script src="{{ asset('/assets/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('/assets/js/bootstrap-select.min.js') }}"></script>
     <!-- AdminLTE App -->
     <script src="{{ asset('/assets/js/app.min.js') }}"></script>
+
     
   </body>
 </html>

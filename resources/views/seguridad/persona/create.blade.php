@@ -1,9 +1,8 @@
 @extends ('layouts.admin')
+@section('name', "Nueva Persona")
 @section('content')
 	<div class="row">
 		<div class="col-lg-offset-2 col-md-offset-2 col-sm-offset-2 col-lg-8 col-md-8 col-sm-8 col-xs-12">
-
-			<h3>Nuevo Persona</h3>
 			
 			@if (count($errors)>0)
 				<div class="alert alert-danger">
@@ -17,7 +16,7 @@
 
 			{!! Form::open(array('url'=>'seguridad/persona', 'method'=>'POST', 'autocomplete'=>'off')) !!}
 			{{ Form::token() }}
-			<div class="row">	            
+			<div class="row">
 	            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 	                <div class="form-group">
 	                    {!! Form::label('nombre', 'Nombre') !!}
@@ -28,11 +27,10 @@
 	                <div class="form-group">
 	                    {!! Form::label('tipo_documento', 'Tipo Documento') !!}
 	                    <select name="tipo_documento" class="form-control"> 
-	                    	<option value="V">Venezolana</option>
-	                    	<option value="J">Juridico</option>
-	                    	<option value="E">Extranjero</option>	                    	
+	                    	<option value="V">V-VENEZOLANO</option>
+	                    	<option value="J">J-JURIDICO</option>	                    	
 	                    </select>
-	                </div>
+	                </div>	                
 	            </div>
 	            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
 	                <div class="form-group">

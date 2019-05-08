@@ -29,7 +29,7 @@ class VentaController extends Controller
         if ($request)
         {
             // Variable de busqueda por categoria dond trim quita los espacios en blanco en el inicio y el final
-            $query=trim($request->get('searchText'));
+            $query=trim($request->get('searchText'));            
             $ventas=DB::table('tb_venta as v')
             	->join('tb_persona as p','v.idcliente','=','p.idpersona')
             	->join('tb_detalle_venta as dv','v.idventa','=','dv.idventa')
@@ -38,8 +38,7 @@ class VentaController extends Controller
                 ->where('v.estado','=','A')
             	->orderBy('idventa','desc')
                 ->groupBy('v.idventa','v.fecha_hora','p.nombre','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.estado','v.total_venta')
-                ->paginate(10); 
-                //dd($ventas);               
+                ->paginate(10);              
             return view('ventas.venta.index',["ventas"=>$ventas,"searchText"=>$query]);
         }
     }
@@ -47,8 +46,9 @@ class VentaController extends Controller
     public function create()
     {   
         $personas=DB::table('tb_persona')
-        	->where('tipo_persona','=','Cliente')
-            ->orwhere('tipo_persona','=','Proveedor')
+        	->where('tipo_persona','Cliente')
+            ->orwhere('tipo_persona','Proveedor')
+            ->orwhere('tipo_persona','Vendedor')
             ->get();    	
 
     	$articulos=DB::table('tb_articulo as art')
@@ -96,11 +96,13 @@ class VentaController extends Controller
 		        	$detalle->save();
 		        	$cont=$cont+1;
 		        }
+                flash('Venta Exitosa')->success();
     		DB::commit();
     	}catch(\Exception $e){
     		DB::rollback();
+            flash('Error a procesar la venta')->warning();
     	}
-        flash('Venta Exitosa')->success();
+        
         return Redirect::to('ventas/venta');   
 
     }

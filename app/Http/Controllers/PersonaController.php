@@ -40,14 +40,21 @@ class PersonaController extends Controller
     
     public function store(PersonaFormRequest $request)
     {
-        $persona=new Persona;        
-        $persona->nombre=$request->get('nombre');
-        $persona->tipo_documento=$request->get('tipo_documento');
-        $persona->num_documento=$request->get('num_documento');
-        $persona->direccion=$request->get('direccion');
-        $persona->telefono=$request->get('telefono');
-        $persona->tipo_persona=$request->get('tipo_persona');        
-        $persona->save();
+        try{
+            $persona=new Persona;        
+            $persona->nombre=$request->get('nombre');
+            $persona->tipo_documento=$request->get('tipo_documento');
+            $persona->num_documento=$request->get('num_documento');
+            $persona->direccion=$request->get('direccion');
+            $persona->telefono=$request->get('telefono');
+            $persona->tipo_persona=$request->get('tipo_persona');        
+            $persona->save();
+            flash('Agregado Exitosamente')->success();
+            DB::commit();
+        }catch(\Exception $e){
+            DB::rollback();
+            flash('Persona Duplicada')->error();
+        }       
         return Redirect::to('seguridad/persona');      
     }
    

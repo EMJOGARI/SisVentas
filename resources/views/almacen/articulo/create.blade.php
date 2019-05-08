@@ -1,10 +1,10 @@
 @extends ('layouts.admin')
+@section('name', "Nuevao Articulo")
 @section('content')
 	<div class="row">
 		<div class="col-lg-offset-2 col-md-offset-2 col-sm-offset-2 col-lg-8 col-md-8 col-sm-8 col-xs-12">
 
-			<h3>Nuevao Articulo</h3>
-			
+						
 			@if (count($errors)>0)
 				<div class="alert alert-danger">
 					<ul>

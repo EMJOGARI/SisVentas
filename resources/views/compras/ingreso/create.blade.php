@@ -1,7 +1,6 @@
 @extends ('layouts.admin')
+@section('name', "Nuevo Ingreso de Compras")
 @section('content')
-	
-			<h3>Nuevo Ingreso</h3>
 			
 			@if (count($errors)>0)
 				<div class="alert alert-danger">
@@ -16,7 +15,7 @@
 			{!! Form::open(array('url'=>'compras/ingreso', 'method'=>'POST', 'autocomplete'=>'off')) !!}
 			{{ Form::token() }}
 			<div class="row">	            
-	            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+	            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
 	            	<div class="form-group">
 		            	{!! Form::label('proveedor', 'Proveedor') !!}
 		                <div class="input-group">	                    
@@ -31,14 +30,24 @@
 			                </div>
 		                </div>
 	                </div>
-	            </div>					
+	            </div>
+
+	             <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+	            	{!! Form::label('','Fecha') !!}                    
+                    <div class="input-group">
+                        <input type="text" class="form-control datepicker" name="purchase_date" value="{{ date('d-m-Y') }}" disabled>
+                        <div class="input-group-addon">
+                            <a href="#"><i class="fa fa-calendar"></i></a>
+                        </div>
+                    </div>
+                </div>					
 
 	            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
 	                <div class="form-group">
 	                    {!! Form::label('tipo_comprobante', 'Tipo Documento') !!}
 	                    <select name="tipo_comprobante" class="form-control"> 
 	                    	<option value="factura">Factura</option>
-	                    	<option value="nota_entrega">Nota de Entrega</option>
+	                    	<option value="nota_entrega">Nota de Devolucion</option>
 	                    </select>
 	                </div>
 	            </div>
@@ -82,25 +91,26 @@
 				                </div>
 				            </div>				            		            
 				            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+				            	{!! Form::label('','') !!}
 				                <div class="form-group">
 				                	<button id="bt_add" class="btn btn-primary" type="button"><i class="fa fa-plus"></i> Agregar</button>          
 				                </div>
 				            </div>
 				            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 				            	<table id="detalles" class="table table-striped table-bordered table-condensed table-hover">
-								  	<thead style="background-color:#A9D0F5">									    
-									    <th scope="col">Opciones</th>
-									    <th scope="col">Articulo</th>
-									    <th scope="col">Cantidad</th>
-									    <th scope="col">Precio Unitario</th>							      
-									    <th scope="col">Subtotal</th>									    
+								  	<thead style="background-color:#f4f4f4">
+									    <th width="50%" scope="col">Articulo</th>
+									    <th width="5%" scope="col">Cantidad</th>
+									    <th width="15%" scope="col">Precio Unitario</th>							      
+									    <th width="15%" scope="col">Subtotal</th>
+									    <th width="5%" scope="col">Opciones</th>									    
 								  	</thead>
-								  	<tfoot>
-								  		<th><h4>TOTAL</h4></th>
+								  	<tfoot>								  		
 								  		<th></th>
 								  		<th></th>
+								  		<th><h4><strong>TOTAL</strong></h4></th>
+								  		<th><h4 id="total" style="font-weight: bold;">BsS. 0.00</h4> <input type="hidden" name="total_compra" id="total_compra"></th>
 								  		<th></th>
-								  		<th><h4 id="total">BsS. 0.00</h4> <input type="hidden" name="total_compra" id="total_compra"></th>
 								  	</tfoot>
 								  	<tbody>
 								    
@@ -147,11 +157,12 @@ function agregar()
 		total=total+subtotal[cont];
 		
 		var fila='<tr class="selected" id="fila'+cont+'">\n\
-			<td><button type="button" class="btn btn-warning" onclick="eliminar('+cont+')"><i class="fa fa-close"></i></button></td>\n\
-			<td><input type="hidden" name="idarticulo[]" value="'+idarticulo+'">'+articulo+'</td>\n\
-			<td><input type="hidden" name="cantidad[]" value="'+cantidad+'">'+cantidad+'</td>\n\
-			<td><input type="hidden" name="precio_compra[]" value="'+precio_compra+'">'+precio_compra+'</td>\n\
-			<td>'+subtotal[cont]+'</td></tr>';
+			<td align="left"><input type="hidden" name="idarticulo[]" value="'+idarticulo+'">'+articulo+'</td>\n\
+			<td align="right"><input type="hidden" name="cantidad[]" value="'+cantidad+'">'+cantidad+'</td>\n\
+			<td align="right"><input type="hidden" name="precio_compra[]" value="'+precio_compra+'">'+precio_compra+'</td>\n\
+			<td align="right">'+subtotal[cont]+'</td>\n\
+			<td><button type="button" class="btn btn-danger" onclick="eliminar('+cont+')"><i class="fa fa-close"></i></button></td>\n\
+			</tr>';
 		
 		cont++;
 		limpiar();

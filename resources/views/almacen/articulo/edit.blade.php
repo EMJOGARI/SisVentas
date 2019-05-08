@@ -1,9 +1,10 @@
 @extends ('layouts.admin')
+@section('name', "Editar Articulo")
 @section('content')
 	<div class="row">
 		<div class="col-lg-offset-2 col-md-offset-2 col-sm-offset-2 col-lg-8 col-md-8 col-sm-8 col-xs-12">
 
-			<h3>Editar Articulo: {{ $articulo->nombre }}</h3>
+			<h3>Articulo: {{ $articulo->nombre }}</h3>
 
 			@if (count($errors)>0)
 				<div class="alert alert-danger">

@@ -31,7 +31,7 @@ class EditPrecioController extends Controller
                 ->orwhere('art.codigo','LIKE','%'.$query.'%')  
                 ->groupBy('art.idarticulo','art.nombre','art.codigo','art.stock')
                 ->orderBy('art.codigo')
-                ->paginate(10);
+                ->paginate(20);
             return view("seguridad.precio_articulo.index",["articulos"=>$articulos,"searchText"=>$query]);
         }
     }

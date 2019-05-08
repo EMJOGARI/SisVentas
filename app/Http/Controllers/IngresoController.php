@@ -47,12 +47,14 @@ class IngresoController extends Controller
     public function create()
     {   
         $personas=DB::table('tb_persona')
-            ->where('tipo_persona','=','Proveedor')
+            ->where('tipo_persona','Proveedor')
+            ->orwhere('tipo_persona','Cliente')
             ->get();    	
 
     	$articulos=DB::table('tb_articulo as art')
     		->select(DB::raw("CONCAT(art.codigo,' - ',art.nombre) AS articulo"),'art.idarticulo')
     		->where('art.estado','=','Activo')
+            ->orderBy('art.codigo')
     		->get();
         return view("compras.ingreso.create",["personas"=>$personas, "articulos"=>$articulos]);
     }
@@ -88,13 +90,14 @@ class IngresoController extends Controller
 		        	$detalle->save();	        	
 		        	$cont=$cont+1;
 		        }
-            
+            flash('Ingreso Exitoso')->success();
     		DB::commit();
 
     	}catch(\Exception $e){
     		DB::rollback();
+            flash('Error a procesar el ingreso de la factura')->warning();
     	}
-        flash('Ingreso Exitoso')->success();
+        
         return Redirect::to('compras/ingreso');      
     }
    

@@ -1,9 +1,10 @@
 @extends ('layouts.admin')
+@section('name', "Editar Persona")
 @section('content')
 	<div class="row">
 		<div class="col-lg-offset-2 col-md-offset-2 col-sm-offset-2 col-lg-8 col-md-8 col-sm-8 col-xs-12">
 
-			<h3>Editar Persona: {{ $persona->nombre }}</h3>
+			<h3>Persona: {{ $persona->nombre }}</h3>
 
 			@if (count($errors)>0)
 				<div class="alert alert-danger">
@@ -29,17 +30,11 @@
 	                    {!! Form::label('tipo_documento', 'Tipo Documento') !!}
 	                    <select name="tipo_documento" class="form-control">	                    	
 	                    	@if($persona->tipo_documento=='V')
-	                    		<option value="V" selected>Venezolana</option>
-		                    	<option value="J">Juridico</option>
-		                    	<option value="E">Extranjero</option>	                    		
-	                    	@elseif($persona->tipo_documento=='J')
-	                    		<option value="V">Venezolana</option>
-		                    	<option value="J" selected>Juridico</option>
-		                    	<option value="E">Extranjero</option>
+	                    		<option value="V" selected>V-VENEZOLANO</option>
+		                    	<option value="J">J-JURIDICO</option>
 	                    	@else
-	                    		<option value="V">Venezolana</option>
-		                    	<option value="J">Juridico</option>
-		                    	<option value="E" selected>Extranjero</option>
+	                    		<option value="V">V-VENEZOLANO</option>
+		                    	<option value="J" selected>J-JURIDICO</option>
 	                    	@endif	                    	                   	
 	                    </select>
 	                </div>

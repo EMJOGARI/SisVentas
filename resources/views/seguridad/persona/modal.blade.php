@@ -8,7 +8,7 @@
 					aria-label="Close">
 	                     <span aria-hidden="true">×</span>
 	                </button>
-	                <h4 class="modal-title">Eliminar Persona</h4>
+	                <h4 class="modal-title"><strong>Eliminar Persona</strong></h4>
 				</div>
 				<div class="modal-body">
 					<p>Confirme si desea Eliminar a <strong>{{ $per->nombre }}</strong></p>

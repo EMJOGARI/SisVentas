@@ -1,4 +1,5 @@
 @extends ('layouts.admin')
+@section('name', "Lista de Usuarios")
 @section('content')
 	<div class="row">
 		<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">			
@@ -10,7 +11,7 @@
 			<div class="table-responsive">
 				<table class="table table-striped table-bordered table-condensed table-hover">
 					<thead>
-						<th>Id</th>
+						<th width="5%">Id</th>
 						<th>Nombre</th>
 						<th>Email</th>
 						<th>Usuario</th>
@@ -18,7 +19,7 @@
 					@foreach ($usuarios as $usu)
 						<tr>
 							
-							<td>{{ $usu->id }}</td>
+							<td align="center">{{ $usu->id }}</td>
 							<td>{{ $usu->name }}</td>
 							<td>{{ $usu->email }}</td>
 							<td>{{ $usu->description }}</td>							

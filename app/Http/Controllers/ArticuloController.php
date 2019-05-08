@@ -32,7 +32,6 @@ class ArticuloController extends Controller
                 ->paginate(10);
             return view('almacen.articulo.index',["articulos"=>$articulos,"searchText"=>$query]);
         }
-
     }
     
     public function create()
