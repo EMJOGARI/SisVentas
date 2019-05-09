@@ -12,9 +12,10 @@
 				<table class="table table-striped table-bordered table-condensed table-hover">
 					<thead>
 						<th width="5%">Codigo</th>
-						<th width="55%">Nombre</th>
+						<th width="50%">Nombre</th>
 						<th width="5%">Stock</th>
-						<th width="15%">Precio de Venta</th>
+						<th width="15%">Precio de <strong>CONTADO</strong></th>
+						<th width="15%">Precio a <strong>CREDITO</strong></th>
 						<th width="10%">Opcions</th>
 					</thead>
 					@foreach ($articulos as $art)
@@ -23,6 +24,7 @@
 							<td>{{ $art->nombre }}</td>
 							<td align="center">{{ $art->stock }}</td>
 							<td align="right">{{ number_format($art->precio_venta, 2, ',', '.') }}</td>
+							<td align="right">{{ number_format($art->precio_credito, 2, ',', '.') }}</td>
 							<td align="center">
 								<a href="{{ URL::action('EditPrecioController@edit',$art->idarticulo) }}"><button class="btn btn-primary"><i class="fa fa-edit"></i> Editar</button></a>
 							</td>

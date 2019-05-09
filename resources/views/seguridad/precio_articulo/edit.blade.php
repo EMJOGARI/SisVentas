@@ -19,7 +19,7 @@
 			{!! Form::model($articulos,['method'=>'PUT', 'route'=>['precio_articulo.update',$articulos->idarticulo], 'file'=>'true']) !!}
 			{{ Form::token() }}
 			<div class="row">	
-				<div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+				<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
 	                <div class="form-group">
 	                    {!! Form::label('codigo', 'Codigo') !!}
 	                    {!! Form::text('codigo', null, ['class'=>'form-control', 'value'=>'{{ $articulos->codigo }}', 'disabled']) !!}
@@ -32,17 +32,24 @@
 	                </div>
 	            </div>
 
-	            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+	            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
 	                <div class="form-group">
 	                    {!! Form::label('stock', 'Stock') !!}
 	                    {!! Form::text('stock', null, ['class'=>'form-control', 'value'=>'{{ $articulos->stock }}']) !!}
 	                </div>
 	            </div>
 	           
-	           <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+	           <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
 	                <div class="form-group">
-	                    {!! Form::label('precio_venta', 'Nombre') !!}
+	                    {!! Form::label('precio_venta', 'Precio de CONTADO') !!}
 	                    {!! Form::text('precio_venta', null, ['class'=>'form-control', 'value'=>'{{ $articulos->precio_venta }}']) !!}
+	                </div>
+	            </div>
+
+	            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+	                <div class="form-group">
+	                    {!! Form::label('precio_venta', 'Precio a CREDITO') !!}
+	                    {!! Form::text('precio_credito', null, ['class'=>'form-control', 'value'=>'{{ $articulos->precio_credito }}']) !!}
 	                </div>
 	            </div>
 

@@ -122,7 +122,8 @@
                  <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
-                <li><a href="{{ url('ventas/venta/create') }}"><i class="fa fa-cart-plus"></i>Nueva Venta</a></li>
+                <li><a href="{{ url('ventas/venta/create') }}"><i class="fa fa-cart-plus"></i>Nueva Venta <strong>DECONTADO</strong></a></li>
+                <li><a href="{{ url('ventas/venta/credito/create') }}"><i class="fa fa-cart-plus"></i>Nueva Venta <strong>CREDITO</strong></a></li>
                 <li><a href="{{ url('ventas/venta') }}"><i class="fa fa-list-alt"></i>Administrar Facturas</a></li>
               </ul>
             </li>

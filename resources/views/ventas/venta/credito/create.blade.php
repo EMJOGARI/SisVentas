@@ -1,6 +1,6 @@
 @extends ('layouts.admin')
 
-@section('name', "Nueva Venta de CONTADO")
+@section('name', "Nueva Venta a CREDITO")
 
 @section('content')
 			
@@ -14,7 +14,7 @@
 				</div>
 			@endif
 
-			{!! Form::open(array('url'=>'ventas/venta', 'method'=>'POST', 'autocomplete'=>'off')) !!}
+			{!! Form::open(array('url'=>'ventas/venta/credito', 'method'=>'POST', 'autocomplete'=>'off')) !!}
 			{{ Form::token() }}
 			<div class="row">	
 
@@ -90,7 +90,7 @@
 				            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
 				                <div class="form-group">				                	
 				                    {!! Form::label('precio_venta', 'Precio Venta') !!}
-				                    {!! Form::text('pprecio_venta', null, ['id'=>'pprecio_venta','class'=>'form-control']) !!} 
+				                    {!! Form::text('pprecio_venta', null, ['id'=>'pprecio_credito','class'=>'form-control']) !!} 
 				                </div>
 				            </div>
 				            {{--
@@ -188,7 +188,7 @@
 		articulo=$("#pidarticulo option:selected").text();
 		cantidad=$("#pcantidad").val();
 		descuento=$("#pdescuento").val();
-		precio_venta=$("#pprecio_venta").val();
+		precio_venta=$("#pprecio_credito").val();
 		stock=$("#pstock").val();
 		
 		if (idarticulo!="" && cantidad!="" && cantidad>0 && precio_venta!="" && descuento!="")
@@ -226,8 +226,7 @@
 			else
 			{
 				alert('Supera la cantidad de articulos permitidos en la factura');
-			}
-			
+			}			
 		}
 		else
 		{

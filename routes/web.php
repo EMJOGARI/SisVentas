@@ -22,6 +22,7 @@ Route::resource('seguridad/precio_articulo', 'EditPrecioController');
 Route::resource('almacen/categoria', 'CategoriaController');
 Route::resource('almacen/articulo', 'ArticuloController');
 Route::resource('ventas/venta', 'VentaController');
+Route::resource('ventas/venta/credito', 'VentaCreditoController');
 Route::resource('compras/ingreso', 'IngresoController');
 
 

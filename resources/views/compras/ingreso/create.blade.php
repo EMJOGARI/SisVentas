@@ -22,7 +22,7 @@
 		                    <select name="idproveedor" id="idproveedor" class="form-control selectpicker" data-live-search="true">
 		                    	<option value="">Seleccioné un Proveedor</option>
 		                    	@foreach($personas as $persona)
-		                    		<option value="{{ $persona->idpersona }}">{{ $persona->nombre }}</option>
+		                    		<option value="{{ $persona->idpersona }}">{{ str_pad($persona->idpersona, 3, "0", STR_PAD_LEFT).' - '.$persona->nombre }}</option>
 		                    	@endforeach
 		                    </select>
 		                    <div class="input-group-btn">

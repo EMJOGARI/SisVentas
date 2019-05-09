@@ -24,7 +24,7 @@ class EditPrecioController extends Controller
             $query=trim($request->get('searchText'));
             $articulos=DB::table('tb_articulo as art')
                 ->join('tb_detalle_ingreso as di','art.idarticulo','=','di.idarticulo')
-                ->select('art.idarticulo','art.nombre','art.codigo','art.stock', DB::raw("MAX(di.precio_venta) AS precio_venta"))
+                ->select('art.idarticulo','art.nombre','art.codigo','art.stock', DB::raw("MAX(di.precio_venta) AS precio_venta"), DB::raw("MAX(di.precio_credito) AS precio_credito"))
                 ->where('art.estado','=','Activo')
                 ->where('art.stock','>','0')
                 ->where('art.nombre','LIKE','%'.$query.'%') 
@@ -45,7 +45,7 @@ class EditPrecioController extends Controller
     {         
        $articulos=DB::table('tb_articulo as art')
             ->join('tb_detalle_ingreso as di','art.idarticulo','=','di.idarticulo')
-            ->select('art.idarticulo','art.nombre','art.codigo','art.stock', DB::raw("MAX(di.precio_venta) AS precio_venta")) 
+            ->select('art.idarticulo','art.nombre','art.codigo','art.stock', DB::raw("MAX(di.precio_venta) AS precio_venta"), DB::raw("MAX(di.precio_credito) AS precio_credito")) 
             ->groupBy('art.idarticulo','art.nombre','art.codigo','art.stock')
             ->where('art.idarticulo',$id)
             ->first();
@@ -59,7 +59,13 @@ class EditPrecioController extends Controller
             ->select('art.idarticulo','art.nombre','art.codigo','art.stock', DB::raw("MAX(di.precio_venta) AS precio_venta")) //probando esta linea
             ->where('art.idarticulo',$id)
             ->update(array('precio_venta' => Input::get('precio_venta')));
-        
+
+        DB::table('tb_detalle_ingreso as di')
+            ->join('tb_articulo as art','art.idarticulo','=','di.idarticulo')
+            ->select('art.idarticulo','art.nombre','art.codigo','art.stock', DB::raw("MAX(di.precio_credito) AS precio_credito")) //probando esta linea
+            ->where('art.idarticulo',$id)
+            ->update(array('precio_credito' => Input::get('precio_credito')));
+
         DB::table('tb_articulo')
             ->where('idarticulo',$id)
             ->update(array('stock' => Input::get('stock')));

@@ -35,7 +35,7 @@
 					</thead>
 					@foreach ($personas as $per)
 						<tr>												
-							<td align="center">{{ $per->idpersona }}</td>
+							<td align="center">{{ str_pad($per->idpersona, 3, "0", STR_PAD_LEFT) }}</td>
 							<td>{{ $per->nombre }}</td>
 							<td align="center">{{ $per->tipo_documento.'-'.$per->num_documento }}</td>
 							<td align="center">{{ $per->telefono }}</td>

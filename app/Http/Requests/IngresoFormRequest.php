@@ -32,7 +32,8 @@ class IngresoFormRequest extends FormRequest
             'cantidad'           => 'required',
             'precio_compra'      => 'required',
             'precio_venta'       => 'numeric',
-            'total_compra'      => 'required'                   
+            'precio_credito'     => 'numeric',
+            'total_compra'       => 'required'                   
         ];
     }
 }
