@@ -26,7 +26,7 @@ class ArticuloController extends Controller
             $articulos=DB::table('tb_articulo as a')
                 ->join('tb_categoria as c','a.idcategoria','=','c.idcategoria')
                 ->select('a.idarticulo','a.nombre','a.codigo','a.stock','c.nombre as categoria','a.estado')
-                ->where('a.nombre','LIKE','%'.$query.'%') 
+                ->where('a.codigo','LIKE','%'.$query.'%') //('a.nombre','LIKE','%'.$query.'%') 
                 ->orwhere('a.codigo','LIKE','%'.$query.'%')            
                 ->orderBy('a.idarticulo')
                 ->paginate(10);
@@ -76,7 +76,7 @@ class ArticuloController extends Controller
         $articulo->idcategoria=$request->get('idcategoria');
         $articulo->codigo=$request->get('codigo');
         $articulo->nombre=$request->get('nombre');
-        $articulo->stock='0'; 
+        //$articulo->stock='0'; 
         $articulo->estado='Activo';
         $articulo->update();
         return Redirect::to('almacen/articulo');
@@ -85,6 +85,7 @@ class ArticuloController extends Controller
     public function destroy($id)
     {
         $articulo=Articulo::findOrFail($id);
+        $articulo->stock='0';
         $articulo->estado='Inactivo';
         $articulo->update();
         return Redirect::to('almacen/articulo');
