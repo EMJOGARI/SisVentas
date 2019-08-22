@@ -7,7 +7,11 @@
 		<div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">			
 			<a href="{{ url('ventas/venta/create') }}"><button class="btn btn-primary"><i class="fa fa-plus"></i> Nueva Factura</button></a>
 		</div>
-		<div class="col-lg-offset-5 col-md-offset-5 col-sm-offset-5 col-lg-5 col-md-5 col-sm-5 col-xs-12">			
+		<div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">			
+			
+            
+		</div>
+		<div class="col-lg-offset-3 col-md-offset-3 col-sm-offset-3 col-lg-5 col-md-5 col-sm-5 col-xs-12">			
 			@include('ventas.venta.search')			
 		</div>		
 	</div>

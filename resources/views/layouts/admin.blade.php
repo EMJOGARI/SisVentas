@@ -216,12 +216,12 @@
     <script>
       $('div.alert').not('.alert-important').delay(3000).fadeOut(250);
     </script>
+   
     <!-- Bootstrap 3.3.5 -->
     <script src="{{ asset('/assets/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('/assets/js/bootstrap-select.min.js') }}"></script>
     <!-- AdminLTE App -->
     <script src="{{ asset('/assets/js/app.min.js') }}"></script>
-
-    
+   
   </body>
 </html>
