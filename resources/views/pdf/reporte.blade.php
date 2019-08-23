@@ -12,18 +12,19 @@
 		}
 		h2, h4{
 			text-align: : center;
+			padding: 0px;
 		}
 		table{
 			font-family: arial, sans-serif;
 			border-collapse: collapse;
 			width: 100%;
-			font-size: 12px;
+			font-size: 10px;
 			
 		}
 		td, th {
 			border: 1px solid #dddddd;
 			text-align: left;
-			padding: 3px;
+			padding: 2px;
 		}		
 	</style>
 </head>
@@ -36,11 +37,8 @@
 			<div class="col-6">
 				<h4 style="text-align: right;">Fecha: {{ date('d/m/Y') }}</h4> 
 			</div>
-
 			<div class="col-12">
-
-				@yield('content')
-					
+				@yield('content')					
 			</div>		
 		</div>
 	</div>

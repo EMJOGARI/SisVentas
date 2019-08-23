@@ -27,8 +27,7 @@ class EditPrecioController extends Controller
                 ->select('art.idarticulo','art.nombre','art.codigo','art.stock', DB::raw("MAX(di.precio_venta) AS precio_venta"), DB::raw("MAX(di.precio_credito) AS precio_credito"))
                 ->where('art.estado','=','Activo')
                 ->where('art.stock','>','0')
-                ->where('art.nombre','LIKE','%'.$query.'%') 
-                ->orwhere('art.codigo','LIKE','%'.$query.'%')  
+                ->where('art.codigo','LIKE','%'.$query.'%') 
                 ->groupBy('art.idarticulo','art.nombre','art.codigo','art.stock')
                 ->orderBy('art.codigo')
                 ->paginate(20);

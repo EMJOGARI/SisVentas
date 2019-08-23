@@ -15,22 +15,34 @@
 				<table class="table table-striped table-bordered table-condensed table-hover">
 					<thead>
 						<th width="5%">Codigo</th>
-						<th width="50%">Nombre</th>						
+						<th width="35%">Nombre</th>						
 						<th width="10%">Categoría</th>
 						<th width="5%">Stock</th>
-						<th width="10%">Estado</th>
-						<th width="20%">Opcions</th>
+						<th width="10%">Costo</th>
+						<th width="10%">Precio Venta</th>
+						<th width="10%">Utilidad</th>
+						<th width="5%">Estado</th>
+						<th width="10%">Opcions</th>
 					</thead>
 					@foreach ($articulos as $art)
 						<tr>
 							<td align="center">{{ $art->codigo }}</td>
 							<td>{{ $art->nombre }}</td>							
 							<td align="center">{{ $art->categoria }}</td>
-							<td align="center">{{ $art->stock }}</td>						
-							<td align="center">{{ $art->estado }}</td>
+							<td align="center">{{ $art->stock }}</td>
+							<td align="right">{{ number_format($art->precio_compra, 2, ',', '.') }}</td>
+							<td align="right">{{ number_format($art->precio_venta, 2, ',', '.') }}</td>
+							<td align="right">{{ number_format($art->precio_venta - $art->precio_compra, 2, ',', '.') }}</td>						
 							<td align="center">
-								<a href="{{ URL::action('ArticuloController@edit',$art->idarticulo) }}"><button class="btn btn-primary"><i class="fa fa-edit"></i> Editar</button></a> 
-								<a href="{{ URL::action('ArticuloController@destroy',$art->idarticulo) }}" data-target="#modal-delete-{{ $art->idarticulo }}" data-toggle="modal"><button class="btn btn-danger"><i class="fa fa-trash"></i> Eliminar</button></a>
+								<span class="label label-success"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ $art->estado }}</font></font></span></td>
+							<td align="center">
+								<div class="btn-group">
+									<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Acciones <span class="fa fa-caret-down"></span></button>
+									<ul class="dropdown-menu">
+										<li><a href="{{ URL::action('ArticuloController@edit',$art->idarticulo) }}"><i class="fa fa-edit"></i> Editar</a></li>
+										<li><a href="{{ URL::action('ArticuloController@destroy',$art->idarticulo) }}" data-target="#modal-delete-{{ $art->idarticulo }}" data-toggle="modal"><i class="fa fa-trash"></i> Eliminar</a></li>
+									</ul>
+								</div>								
 							</td>
 						</tr>
 						@include('almacen.articulo.modal')

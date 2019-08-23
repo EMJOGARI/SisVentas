@@ -25,11 +25,15 @@ class ArticuloController extends Controller
             $query=trim($request->get('searchText'));
             $articulos=DB::table('tb_articulo as a')
                 ->join('tb_categoria as c','a.idcategoria','=','c.idcategoria')
-                ->select('a.idarticulo','a.nombre','a.codigo','a.stock','c.nombre as categoria','a.estado')
+                ->join('tb_detalle_ingreso as di','a.idarticulo','=','di.idarticulo')
+                ->select('a.idarticulo','a.nombre','a.codigo','a.stock','c.nombre as categoria','a.estado', DB::raw("MAX(di.precio_venta) AS precio_venta"), DB::raw("MAX(di.precio_compra) AS precio_compra"))
                 ->where('a.codigo','LIKE','%'.$query.'%') //('a.nombre','LIKE','%'.$query.'%') 
-                ->orwhere('a.codigo','LIKE','%'.$query.'%')            
-                ->orderBy('a.idarticulo')
-                ->paginate(10);
+                ->orwhere('a.nombre','LIKE','%'.$query.'%')
+                ->groupBy('a.idarticulo','a.nombre','a.codigo','a.stock','a.estado','c.nombre')
+                ->where('a.estado','Activo')            
+                ->orderBy('categoria')
+                ->orderBy('a.nombre')
+                ->paginate(20);
             return view('almacen.articulo.index',["articulos"=>$articulos,"searchText"=>$query]);
         }
     }

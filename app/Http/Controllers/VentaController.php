@@ -38,7 +38,7 @@ class VentaController extends Controller
                 ->where('v.estado','=','A')
             	->orderBy('idventa','desc')
                 ->groupBy('v.idventa','v.fecha_hora','p.nombre','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.estado','v.total_venta')
-                ->paginate(10);              
+                ->paginate(20);              
             return view('ventas.venta.index',["ventas"=>$ventas,"searchText"=>$query]);
         }
     }
@@ -95,13 +95,13 @@ class VentaController extends Controller
 		        	$detalle->save();
 		        	$cont=$cont+1;
 		        }
-                flash('Venta Exitosa')->success();
+                
     		DB::commit();
     	}catch(\Exception $e){
     		DB::rollback();
             flash('Error a procesar la venta')->warning();
     	}
-        
+        flash('Venta Exitosa')->success();
         return Redirect::to('ventas/venta');   
 
     }
