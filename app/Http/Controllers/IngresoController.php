@@ -26,8 +26,14 @@ class IngresoController extends Controller
     public function index(Request $request)
     {
         //dd($request->all());
-        if ($request)
-        {
+       // if ($request)
+      //  {
+           $f1 = $f2 = date('d-m-Y');
+
+                if(! is_null($request->fechaInicial) && ! empty($request->fechaInicial) && ! is_null($request->fechaFinal) || ! empty($request->fechaFinal)) {
+                    $f1 = $request->fechaInicial;
+                    $f2 = $request->fechaFinal;
+                }
             // Variable de busqueda por categoria dond trim quita los espacios en blanco en el inicio y el final
             $query=trim($request->get('searchText'));
             $ingresos=DB::table('tb_ingreso as i')
@@ -35,13 +41,14 @@ class IngresoController extends Controller
             	->join('tb_detalle_ingreso as di','i.idingreso','=','di.idingreso')
             	->select('i.idingreso','i.fecha_hora','p.nombre','i.tipo_comprobante','i.serie_comprobante','i.num_comprobante','i.estado'
                     ,DB::raw('sum(di.cantidad*di.precio_compra) as total'))
+               // ->whereBetween('i.fecha_hora', [$f1, $f2])
             	->where('i.num_comprobante','LIKE','%'.$query.'%')
                 ->where('i.estado','=','A')
             	->orderBy('idingreso','desc')                
                 ->groupBy('i.idingreso','i.fecha_hora','p.nombre','i.tipo_comprobante','i.serie_comprobante','i.num_comprobante', 'i.estado')
                 ->paginate(20);                
-            return view('compras.ingreso.index',["ingresos"=>$ingresos,"searchText"=>$query]);
-        }
+            return view('compras.ingreso.index',["ingresos"=>$ingresos,"searchText"=>$query, "f1" => $f1, "f2" => $f2]);
+       // }
     }
     
     public function create()

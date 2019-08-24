@@ -5,7 +5,10 @@
 		<div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">			
 			<a href="{{ url('compras/ingreso/create') }}"><button class="btn btn-primary"><i class="fa fa-plus"></i> Nuevo Ingreso</button></a>
 		</div>
-		<div class="col-lg-offset-5 col-md-offset-5 col-sm-offset-5 col-lg-5 col-md-5 col-sm-5 col-xs-12">			
+		<div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">			
+			@include('compras.ingreso.fecha')			
+		</div>
+		<div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">			
 			@include('compras.ingreso.search')			
 		</div>		
 	</div>
