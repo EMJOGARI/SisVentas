@@ -23,6 +23,6 @@ class Ingreso extends Model
     ];
 
     protected $guarded =[
-    	
+
     ];
 }

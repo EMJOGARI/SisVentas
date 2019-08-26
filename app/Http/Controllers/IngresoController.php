@@ -22,18 +22,19 @@ class IngresoController extends Controller
     {
         $this->middleware('auth');
     }
-    
+
     public function index(Request $request)
     {
         //dd($request->all());
-       // if ($request)
-      //  {
-           $f1 = $f2 = date('d-m-Y');
+        if ($request)
+        {
+            $f1 = Carbon::now()->toDateString("FechaInicio");
+            $f2 = Carbon::now()->toDateString("FechaFinal");
+            //aqui los convierto de tipo string a date
 
-                if(! is_null($request->fechaInicial) && ! empty($request->fechaInicial) && ! is_null($request->fechaFinal) || ! empty($request->fechaFinal)) {
-                    $f1 = $request->fechaInicial;
-                    $f2 = $request->fechaFinal;
-                }
+            //$datos = DB::table('tb_ingreso')->whereBetween('fecha_hora',[$f1,$f2])->get();
+            $f1=$request->get('FechaInicio');
+            $f2=$request->get('FechaFinal');
             // Variable de busqueda por categoria dond trim quita los espacios en blanco en el inicio y el final
             $query=trim($request->get('searchText'));
             $ingresos=DB::table('tb_ingreso as i')
@@ -41,22 +42,22 @@ class IngresoController extends Controller
             	->join('tb_detalle_ingreso as di','i.idingreso','=','di.idingreso')
             	->select('i.idingreso','i.fecha_hora','p.nombre','i.tipo_comprobante','i.serie_comprobante','i.num_comprobante','i.estado'
                     ,DB::raw('sum(di.cantidad*di.precio_compra) as total'))
-               // ->whereBetween('i.fecha_hora', [$f1, $f2])
             	->where('i.num_comprobante','LIKE','%'.$query.'%')
                 ->where('i.estado','=','A')
-            	->orderBy('idingreso','desc')                
+                ->WhereBetween('i.fecha_hora', [$f1,$f2])
+            	->orderBy('idingreso','desc')
                 ->groupBy('i.idingreso','i.fecha_hora','p.nombre','i.tipo_comprobante','i.serie_comprobante','i.num_comprobante', 'i.estado')
-                ->paginate(20);                
-            return view('compras.ingreso.index',["ingresos"=>$ingresos,"searchText"=>$query, "f1" => $f1, "f2" => $f2]);
-       // }
+                ->paginate(50);
+            return view('compras.ingreso.index',["ingresos"=>$ingresos,"searchText"=>$query, "FechaInicio" => $f1, "FechaFinal" => $f2]);
+        }
     }
-    
+
     public function create()
-    {   
+    {
         $personas=DB::table('tb_persona')
             ->where('tipo_persona','Proveedor')
             ->orwhere('tipo_persona','Cliente')
-            ->get();    	
+            ->get();
 
     	$articulos=DB::table('tb_articulo as art')
     		->select(DB::raw("CONCAT(art.codigo,' - ',art.nombre) AS articulo"),'art.idarticulo')
@@ -65,9 +66,9 @@ class IngresoController extends Controller
     		->get();
         return view("compras.ingreso.create",["personas"=>$personas, "articulos"=>$articulos]);
     }
-    
+
     public function store(IngresoFormRequest $request)
-    {        
+    {
     	try{
     		DB::beginTransaction();
     			$ingreso = new Ingreso;
@@ -77,7 +78,7 @@ class IngresoController extends Controller
 		        $ingreso->num_comprobante=$request->get('num_comprobante');
                 $ingreso->total_compra=$request->get('total_compra');
 		          $mytime = Carbon::now('America/Caracas');
-		        $ingreso->fecha_hora=$mytime->toDateTimestring();		        
+		        $ingreso->fecha_hora=$mytime->toDateTimestring();
 		        $ingreso->estado='A';
 		        $ingreso->save();
 
@@ -86,16 +87,16 @@ class IngresoController extends Controller
 		        $precio_compra=$request->get('precio_compra');
 
 		        $cont = 0;
-              
+
 		        while($cont < count($idarticulo)){
 		        	$detalle = new DetalleIngreso();
 		        	$detalle->idingreso=$ingreso->idingreso;
 		        	$detalle->idarticulo=$idarticulo[$cont];
 		        	$detalle->cantidad=$cantidad[$cont];
-		        	$detalle->precio_compra=$precio_compra[$cont]; 
+		        	$detalle->precio_compra=$precio_compra[$cont];
                     $detalle->precio_venta=($precio_compra[$cont]/0.70);
-                    $detalle->precio_credito=(($precio_compra[$cont]/0.70)/0.85);               	
-		        	$detalle->save();	        	
+                    $detalle->precio_credito=(($precio_compra[$cont]/0.70)/0.85);
+		        	$detalle->save();
 		        	$cont=$cont+1;
 		        }
             flash('Ingreso Exitoso')->success();
@@ -105,10 +106,10 @@ class IngresoController extends Controller
     		DB::rollback();
             flash('Error a procesar el ingreso de la factura')->warning();
     	}
-        
-        return Redirect::to('compras/ingreso');      
+
+        return Redirect::to('compras/ingreso');
     }
-   
+
     public function show($id)
     {
        $ingreso=DB::table('tb_ingreso as i')
@@ -127,7 +128,7 @@ class IngresoController extends Controller
 
         return view("compras.ingreso.show",["ingreso"=>$ingreso , "detalles"=>$detalles]);
     }
-         
+
     public function destroy($id)
     {
         $ingreso=Ingreso::findOrFail($id);
@@ -147,10 +148,10 @@ class IngresoController extends Controller
                         $articulo->save();
                      }
                 DB::commit();
-            }   
+            }
         } catch (Exception $e) {
             DB::rollback();
-        }       
+        }
 
         return Redirect::to('compras/ingreso');
     }
@@ -169,7 +170,7 @@ class IngresoController extends Controller
                         $articulo->save();
                      }
                 DB::commit();
-            }   
+            }
         } catch (Exception $e) {
             DB::rollback();
         }

@@ -8,7 +8,8 @@
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.5 -->
     <link rel="stylesheet" href="{{ asset('/assets/css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('/assets/css/bootstrap-select.min.css') }}">   
+    <link rel="stylesheet" href="{{ asset('/assets/css/bootstrap-select.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('/assets/datetimepicker/css/bootstrap-datepicker3.min.css') }}">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{ asset('/assets/css/font-awesome.css') }}">
     <!-- Theme style -->
@@ -43,20 +44,20 @@
           <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
               <!-- Messages: style can be found in dropdown.less-->
-              
+
               <!-- User Account: style can be found in dropdown.less -->
               <li class="dropdown user user-menu">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">                  
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                   <i class="fa fa-user"></i><span class="hidden-xs">{{ Auth::user()->name }}</span>
                 </a>
                 <ul class="dropdown-menu">
                   <!-- User image -->
-                  <li class="user-header"> 
+                  <li class="user-header">
                     <p>
                       Desarrollando Software
                     </p>
                   </li>
-                  
+
                   <!-- Menu Footer-->
                   <li class="user-footer">
 
@@ -70,12 +71,12 @@
                       <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                           @csrf
                       </form>
-                      
+
                     </div>
                   </li>
                 </ul>
               </li>
-              
+
             </ul>
           </div>
 
@@ -86,7 +87,7 @@
         <!-- sidebar: style can be found in sidebar.less -->
         <section class="sidebar">
           <!-- Sidebar user panel -->
-                    
+
           <!-- sidebar menu: : style can be found in sidebar.less -->
           <ul class="sidebar-menu">
             <li class="header"></li>
@@ -103,7 +104,7 @@
                 <li><a href="{{ url('almacen/categoria') }}"><i class="fa fa-tag"></i> Categorías</a></li>
               </ul>
             </li>
-            
+
             <li class="treeview">
               <a href="#">
                 <i class="fa fa-truck"></i>
@@ -133,8 +134,8 @@
                 <span>Reportes</span>
                  <i class="fa fa-angle-left pull-right"></i>
               </a>
-              <ul class="treeview-menu">                  
-                  <li class="treeview-menu" style="display: block;">                      
+              <ul class="treeview-menu">
+                  <li class="treeview-menu" style="display: block;">
                     <li class="treeview">
                       <a href="#"><i class="fa fa-laptop"></i> Almacén
                         <span class="pull-right-container">
@@ -142,13 +143,13 @@
                         </span>
                       </a>
                       <ul class="treeview-menu">
-                        <li><a href="{{ url('pdf/reportearticuloprecio') }}" target="_blank"><i class="fa fa-file-pdf-o"></i>Lista de Precio Productos</a></li>                         
+                        <li><a href="{{ url('pdf/reportearticuloprecio') }}" target="_blank"><i class="fa fa-file-pdf-o"></i>Lista de Precio Productos</a></li>
                       </ul>
                     </li>
                   </li>
                 <li><a href="{{ url('pdf/reportearticulo') }}" target="_blank"><i class="fa fa-file-pdf-o"></i>Reporte de Inventario</a></li>
                 <li><a href="{{ url('pdf/reporteventa') }}" target="_blank"><i class="fa fa-file-pdf-o"></i>Reporte de Ventas</a></li>
-                <li><a href="{{ url('pdf/reporteingreso') }}" target="_blank"><i class="fa fa-file-pdf-o"></i>Reporte de Ingresos</a></li>                
+                <li><a href="{{ url('pdf/reporteingreso') }}" target="_blank"><i class="fa fa-file-pdf-o"></i>Reporte de Ingresos</a></li>
               </ul>
             </li>
             <li><a href="{{ url('seguridad/persona') }}"><i class="fa fa-user"></i><span>Personas</span></a></li>
@@ -178,17 +179,17 @@
        <!--Contenido-->
       <!-- Content Wrapper. Contains page content -->
       <div class="content-wrapper">
-        
+
         <!-- Main content -->
         <section class="content">
-          
+
           <div class="row">
             <div class="col-md-12">
               <div class="box">
                 <div class="box-header with-border">
                   <h3 class="box-title"><strong>@yield('name')</strong></h3>
                   <div class="box-tools pull-right">
-                    <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>                    
+                    <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                     <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
                   </div>
                 </div>
@@ -202,7 +203,7 @@
                           @yield('content')
                           <!--Fin Contenido-->
                       </div>
-                    </div>		                    
+                    </div>
                 </div>
                   	</div><!-- /.row -->
                 </div><!-- /.box-body -->
@@ -220,19 +221,39 @@
         <strong>Copyright &copy; 2015-2020 </strong> All rights reserved.
       </footer>
 
-      
+
     <!-- jQuery 2.1.4  new-ingreso.js-->
     <script src="{{ asset('/assets/js/jQuery-2.1.4.min.js') }}"></script>
     @stack('scripts')
     <script>
       $('div.alert').not('.alert-important').delay(3000).fadeOut(250);
     </script>
-   
+    <script src="{{ asset('/assets/datetimepicker/js/moment.min.js') }}"></script>
+    <script src="{{ asset('/assets/datetimepicker/js/locales/bootstrap-datepicker.es.min.js') }}"></script>
+    <script src="{{ asset('/assets/datetimepicker/js/bootstrap-datepicker.min.js') }}"></script>
+
+    <script type="text/javascript">
+      $('#FechaInicio').datepicker({
+        format: 'dd-mm-yyyy',
+        language: 'es',
+        clearBtn: true,
+        todayHighlight: true
+       //startDate: moment()
+
+      });
+      $('#FechaFinal').datepicker({
+          format: 'dd-mm-yyyy',
+          language: "es",
+          clearBtn: true,
+          todayHighlight: true
+          //endDate: moment()
+      });
+
+   </script>
     <!-- Bootstrap 3.3.5 -->
     <script src="{{ asset('/assets/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('/assets/js/bootstrap-select.min.js') }}"></script>
     <!-- AdminLTE App -->
     <script src="{{ asset('/assets/js/app.min.js') }}"></script>
-   
   </body>
 </html>

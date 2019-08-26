@@ -23,7 +23,7 @@ class DetalleIngreso extends Model
     ];
 
     protected $guarded =[
-    	
+
     ];
 
     public function scopeSumadetalleingreso($query,$ingreso_id){
@@ -32,5 +32,5 @@ class DetalleIngreso extends Model
                     ->groupBy('idarticulo')
                     ->get();
     }
-    
+
 }
