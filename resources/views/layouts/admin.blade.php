@@ -135,7 +135,8 @@
                  <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
-                <li><a href="{{ url('reporte/almacen') }}"><i class="fa fa-laptop"></i>Almacén</a></li>
+                <li><a href="{{ url('reporte/almacen') }}"><i class="fa fa-area-chart"></i>Almacén</a></li>
+                <li><a href="{{ url('reporte/venta') }}"><i class="fa fa-line-chart"></i>Ventas</a></li>
                 <li><a href="{{ url('pdf/reportearticuloprecio') }}" target="_blank"><i class="fa fa-file-pdf-o"></i>Lista de Precio Productos</a></li>
                 <li><a href="{{ url('pdf/reportearticulo') }}" target="_blank"><i class="fa fa-file-pdf-o"></i>Reporte de Inventario</a></li>
                 <li><a href="{{ url('pdf/reporteventa') }}" target="_blank"><i class="fa fa-file-pdf-o"></i>Reporte de Ventas</a></li>

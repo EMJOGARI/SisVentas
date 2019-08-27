@@ -25,6 +25,7 @@ Route::resource('ventas/venta', 'VentaController');
 Route::resource('ventas/venta/credito', 'VentaCreditoController');
 Route::resource('compras/ingreso', 'IngresoController');
 Route::get('reporte/almacen', 'ReporteController@reporte_almacen');
+Route::get('reporte/venta', 'ReporteController@reporte_venta');
 
 
 Auth::routes();

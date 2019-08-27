@@ -18,7 +18,7 @@ class ReporteController extends Controller
     {
         $this->middleware('auth');
     }
-     public function reporte_almacen(Request $request)
+    public function reporte_almacen(Request $request)
     {
         $stock = trim($request->get('searchList'));        
         $texto = trim($request->get('searchText'));
@@ -29,9 +29,7 @@ class ReporteController extends Controller
             ->select('a.idarticulo','a.nombre','a.codigo','a.stock','c.nombre as categoria','a.estado', DB::raw("MAX(di.precio_venta) AS precio_venta"), DB::raw("MAX(di.precio_compra) AS precio_compra"))
             ->groupBy('a.idarticulo','a.nombre','a.codigo','a.stock','a.estado','c.nombre')
             ->where(function($query) use ($texto, $stock){
-                
                 $query->where('a.codigo','LIKE','%'.$texto.'%');
-
                 if($stock){
                     if ($stock == 2) {
                         return $query->where('stock','<=','0');
@@ -45,6 +43,22 @@ class ReporteController extends Controller
             ->orderBy('a.nombre')
             ->paginate(200);
         return view('reporte.almacen.index',["articulos"=>$articulos,"searchText"=>$texto,"searchList"=>$stock]);
+    }
+    public function reporte_venta(Request $request)
+    {
+        $texto = trim($request->get('searchText'));
+            $ventas=DB::table('tb_venta as v')
+                ->join('tb_persona as p','v.idcliente','=','p.idpersona')
+                ->join('tb_detalle_venta as dv','v.idventa','=','dv.idventa')
+                ->select('v.idventa','v.fecha_hora','p.nombre','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.estado','v.total_venta')
+                ->groupBy('v.idventa','v.fecha_hora','p.nombre','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.estado','v.total_venta')
+                ->where(function($query) use ($texto){
+                    $query->where('v.num_comprobante','LIKE','%'.$texto.'%');                    
+                })                
+                ->where('v.estado','A')
+                ->orderBy('idventa','desc')                
+                ->paginate(20);
+            return view('reporte.venta.index',["ventas"=>$ventas,"searchText"=>$texto]);
     }
     public function generar()
     {
