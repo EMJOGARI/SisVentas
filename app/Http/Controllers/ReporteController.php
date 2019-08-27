@@ -20,7 +20,9 @@ class ReporteController extends Controller
     }
      public function reporte_almacen(Request $request)
     {
-        $query=trim($request->get('searchText'));
+
+        $signo = trim($request->get('searchList'));
+        $query = trim($request->get('searchText'));
         $articulos=DB::table('tb_articulo as a')
             ->join('tb_categoria as c','a.idcategoria','=','c.idcategoria')
             ->join('tb_detalle_ingreso as di','a.idarticulo','=','di.idarticulo')
@@ -31,7 +33,7 @@ class ReporteController extends Controller
             ->where('a.stock','>','0')
             ->orderBy('categoria')
             ->orderBy('a.nombre')
-            ->paginate(20);
+            ->paginate(50);
         return view('reporte.almacen.index',["articulos"=>$articulos,"searchText"=>$query]);
     }
     public function generar()

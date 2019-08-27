@@ -22,15 +22,16 @@ class VentaCreditoController extends Controller
     {
         $this->middleware('auth');
     }
-        
-    
+
+
     public function create()
-    {   
+    {
         $personas=DB::table('tb_persona')
         	->where('tipo_persona','Cliente')
             ->orwhere('tipo_persona','Proveedor')
             ->orwhere('tipo_persona','Vendedor')
-            ->get();    	
+            ->orderBy('idpersona')
+            ->get();
 
     	$articulos=DB::table('tb_articulo as art')
     		->join('tb_detalle_ingreso as di','art.idarticulo','=','di.idarticulo')
@@ -39,12 +40,12 @@ class VentaCreditoController extends Controller
     		->where('art.stock','>','0')
     		->groupBy('articulo','art.idarticulo','art.stock')
             ->orderBy('art.codigo')
-    		->get(); 
+    		->get();
             //dd($personas, $articulos);
         return view("ventas.venta.credito.create",["personas"=>$personas, "articulos"=>$articulos]);
-    }    
+    }
     public function store(VentaFormRequest $request)
-    {       
+    {
     	try{
     		DB::beginTransaction();
     			$venta = new Venta;
@@ -61,18 +62,18 @@ class VentaCreditoController extends Controller
 		        $idarticulo=$request->get('idarticulo');
 		        $cantidad=$request->get('cantidad');
 		        $descuento=$request->get('descuento');
-		        $precio_venta=$request->get('precio_venta');		       
+		        $precio_venta=$request->get('precio_venta');
 
 		        $cont = 0;
 
 		        while($cont < count($idarticulo))
-                { // count($idarticulo)) -> recorre todos los articulos recibidos en el detalle                   
+                { // count($idarticulo)) -> recorre todos los articulos recibidos en el detalle
 		        	$detalle = new DetalleVenta();
 		        	$detalle->idventa=$venta->idventa;
 		        	$detalle->idarticulo=$idarticulo[$cont];
 		        	$detalle->cantidad=$cantidad[$cont];
                     $detalle->precio_venta=$precio_venta[$cont];
-		        	$detalle->descuento=$descuento[$cont];		        			        	
+		        	$detalle->descuento=$descuento[$cont];
 		        	$detalle->save();
 		        	$cont=$cont+1;
 		        }
@@ -82,8 +83,8 @@ class VentaCreditoController extends Controller
     		DB::rollback();
             flash('Error a procesar la venta')->warning();
     	}
-        
-        return Redirect::to('ventas/venta');   
 
-    }  
+        return Redirect::to('ventas/venta');
+
+    }
 }

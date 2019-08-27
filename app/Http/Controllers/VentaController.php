@@ -22,14 +22,14 @@ class VentaController extends Controller
     {
         $this->middleware('auth');
     }
-    
+
     public function index(Request $request)
     {
         //dd($request->all());
         if ($request)
         {
             // Variable de busqueda por categoria dond trim quita los espacios en blanco en el inicio y el final
-            $query=trim($request->get('searchText'));            
+            $query=trim($request->get('searchText'));
             $ventas=DB::table('tb_venta as v')
             	->join('tb_persona as p','v.idcliente','=','p.idpersona')
             	->join('tb_detalle_venta as dv','v.idventa','=','dv.idventa')
@@ -38,18 +38,19 @@ class VentaController extends Controller
                 ->where('v.estado','=','A')
             	->orderBy('idventa','desc')
                 ->groupBy('v.idventa','v.fecha_hora','p.nombre','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.estado','v.total_venta')
-                ->paginate(20);              
+                ->paginate(20);
             return view('ventas.venta.index',["ventas"=>$ventas,"searchText"=>$query]);
         }
     }
-    
+
     public function create()
-    {   
+    {
         $personas=DB::table('tb_persona')
         	->where('tipo_persona','Cliente')
             ->orwhere('tipo_persona','Proveedor')
             ->orwhere('tipo_persona','Vendedor')
-            ->get();    	
+            ->orderBy('idpersona')
+            ->get();
 
     	$articulos=DB::table('tb_articulo as art')
     		->join('tb_detalle_ingreso as di','art.idarticulo','=','di.idarticulo')
@@ -58,12 +59,12 @@ class VentaController extends Controller
     		->where('art.stock','>','0')
     		->groupBy('articulo','art.idarticulo','art.stock')
             ->orderBy('art.codigo')
-    		->get(); 
+    		->get();
             //dd($personas, $articulos);
         return view("ventas.venta.create",["personas"=>$personas, "articulos"=>$articulos]);
-    }    
+    }
     public function store(VentaFormRequest $request)
-    {       
+    {
     	try{
     		DB::beginTransaction();
     			$venta = new Venta;
@@ -80,32 +81,32 @@ class VentaController extends Controller
 		        $idarticulo=$request->get('idarticulo');
 		        $cantidad=$request->get('cantidad');
 		        $descuento=$request->get('descuento');
-		        $precio_venta=$request->get('precio_venta');		       
+		        $precio_venta=$request->get('precio_venta');
 
 		        $cont = 0;
 
 		        while($cont < count($idarticulo))
-                { // count($idarticulo)) -> recorre todos los articulos recibidos en el detalle                   
+                { // count($idarticulo)) -> recorre todos los articulos recibidos en el detalle
 		        	$detalle = new DetalleVenta();
 		        	$detalle->idventa=$venta->idventa;
 		        	$detalle->idarticulo=$idarticulo[$cont];
 		        	$detalle->cantidad=$cantidad[$cont];
                     $detalle->precio_venta=$precio_venta[$cont];
-		        	$detalle->descuento=$descuento[$cont];		        			        	
+		        	$detalle->descuento=$descuento[$cont];
 		        	$detalle->save();
 		        	$cont=$cont+1;
 		        }
-                
+
     		DB::commit();
     	}catch(\Exception $e){
     		DB::rollback();
             flash('Error a procesar la venta')->warning();
     	}
         flash('Venta Exitosa')->success();
-        return Redirect::to('ventas/venta');   
+        return Redirect::to('ventas/venta');
 
     }
-   
+
     public function show($id)
     {
        $venta=DB::table('tb_venta as v')
@@ -118,13 +119,13 @@ class VentaController extends Controller
         $detalles=DB::table('tb_detalle_venta as d')
             ->join('tb_articulo as a', 'd.idarticulo', '=','a.idarticulo')
             ->select('a.nombre as articulo', 'd.cantidad', 'd.descuento','d.precio_venta')
-            ->where('d.idventa','=',$id)            
+            ->where('d.idventa','=',$id)
             ->get();
 
         return view("ventas.venta.show",["venta"=>$venta , "detalles"=>$detalles]);
     }
-   
-      
+
+
     public function destroy($id)
     {
         $venta=Venta::findOrFail($id);
@@ -144,7 +145,7 @@ class VentaController extends Controller
                         $articulo->save();
                      }
                 DB::commit();
-            }   
+            }
         } catch (Exception $e) {
             DB::rollback();
         }
@@ -166,7 +167,7 @@ class VentaController extends Controller
                         $articulo->save();
                      }
                 DB::commit();
-            }   
+            }
         } catch (Exception $e) {
             DB::rollback();
         }

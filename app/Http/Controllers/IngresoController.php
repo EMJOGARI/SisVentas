@@ -57,6 +57,7 @@ class IngresoController extends Controller
         $personas=DB::table('tb_persona')
             ->where('tipo_persona','Proveedor')
             ->orwhere('tipo_persona','Cliente')
+            ->orderBy('idpersona')
             ->get();
 
     	$articulos=DB::table('tb_articulo as art')

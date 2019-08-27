@@ -34,4 +34,16 @@ class Articulo extends Model
 
     }
 
+    public function scopeBuscarstock ($query, $searchList)
+    {
+        dd($searchList);
+        if ($searchList = 2)
+        {
+            return $query->where('stock','<=',$searchList);
+        }else{
+            return $query->where('stock','>',$searchList);
+        }
+
+    }
+
 }

@@ -1,7 +1,3 @@
-{{--
-
-	--}}
-
 @extends ('layouts.admin')
 @section('name', "Reportes de Almacén")
 @section('content')
