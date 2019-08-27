@@ -20,21 +20,31 @@ class ReporteController extends Controller
     }
      public function reporte_almacen(Request $request)
     {
+        $stock = trim($request->get('searchList'));        
+        $texto = trim($request->get('searchText'));
 
-        $signo = trim($request->get('searchList'));
-        $query = trim($request->get('searchText'));
         $articulos=DB::table('tb_articulo as a')
             ->join('tb_categoria as c','a.idcategoria','=','c.idcategoria')
             ->join('tb_detalle_ingreso as di','a.idarticulo','=','di.idarticulo')
             ->select('a.idarticulo','a.nombre','a.codigo','a.stock','c.nombre as categoria','a.estado', DB::raw("MAX(di.precio_venta) AS precio_venta"), DB::raw("MAX(di.precio_compra) AS precio_compra"))
-            ->where('a.codigo','LIKE','%'.$query.'%') //('a.nombre','LIKE','%'.$query.'%')
             ->groupBy('a.idarticulo','a.nombre','a.codigo','a.stock','a.estado','c.nombre')
+            ->where(function($query) use ($texto, $stock){
+                
+                $query->where('a.codigo','LIKE','%'.$texto.'%');
+
+                if($stock){
+                    if ($stock == 2) {
+                        return $query->where('stock','<=','0');
+                    }else{
+                        return $query->where('stock','>','0');
+                    }
+                }
+            })
             ->where('a.estado','Activo')
-            ->where('a.stock','>','0')
             ->orderBy('categoria')
             ->orderBy('a.nombre')
-            ->paginate(50);
-        return view('reporte.almacen.index',["articulos"=>$articulos,"searchText"=>$query]);
+            ->paginate(200);
+        return view('reporte.almacen.index',["articulos"=>$articulos,"searchText"=>$texto,"searchList"=>$stock]);
     }
     public function generar()
     {

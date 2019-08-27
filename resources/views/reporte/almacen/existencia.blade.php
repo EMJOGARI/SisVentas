@@ -1,21 +1,11 @@
 <div class="row">
-		<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+	<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+			@include('reporte.almacen.list')
+		</div>
+		<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
 			@include('reporte.almacen.search')
-		</div>
-		<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-			{!! Form::open(array('url'=>'reporte/almacen', 'method'=>'GET', 'autocomplete'=>'off', 'role'=>'search' )) !!}
-				<div class="input-group">
-					<select name="searchList" class="form-control">
-						<option value="1">Listado Productos en Existencia</option>
-						<option value="2">Listado Productos sin Existencia</option>
-					</select>
-					<span class="input-group-btn">
-						<button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
-					</span>
-				</div>
-			{{ Form::close() }}
-		</div>
-		<div class="col-lg-offset-2 col-md-offset-2 col-sm-offset-2 col-lg-2 col-md-2 col-sm-2 col-xs-12">
+		</div>		
+		<div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 pull-right">
 			<a href="{{ url('pdf/reportearticuloprecio') }}"><button class="btn btn-primary"><i class="fa fa-print"></i> Imprimir Reporte</button></a>
 		</div>
 	</div>
