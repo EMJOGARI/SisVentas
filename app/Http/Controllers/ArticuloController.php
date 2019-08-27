@@ -16,28 +16,29 @@ class ArticuloController extends Controller
     {
         $this->middleware('auth');
     }
-    
+
     public function index(Request $request)
     {
-        //dd($request->all());
+
         if ($request)
-        {           
-            $query=trim($request->get('searchText'));
+        {
+           $query = $request->get('searchText');
+           // $query=trim($request->get('searchText'));
+
             $articulos=DB::table('tb_articulo as a')
                 ->join('tb_categoria as c','a.idcategoria','=','c.idcategoria')
                 ->join('tb_detalle_ingreso as di','a.idarticulo','=','di.idarticulo')
-                ->select('a.idarticulo','a.nombre','a.codigo','a.stock','c.nombre as categoria','a.estado', DB::raw("MAX(di.precio_venta) AS precio_venta"), DB::raw("MAX(di.precio_compra) AS precio_compra"))
-                ->where('a.codigo','LIKE','%'.$query.'%') //('a.nombre','LIKE','%'.$query.'%') 
-                ->orwhere('a.nombre','LIKE','%'.$query.'%')
+                ->select('a.idarticulo','a.nombre','a.codigo','a.stock','c.nombre as categoria','a.estado', DB::raw("MAX(di.precio_venta) AS precio_venta"))
                 ->groupBy('a.idarticulo','a.nombre','a.codigo','a.stock','a.estado','c.nombre')
-                ->where('a.estado','Activo')            
+                ->where('a.codigo','LIKE','%'.$query.'%')
+                ->where('a.estado','Activo')
                 ->orderBy('categoria')
                 ->orderBy('a.nombre')
-                ->paginate(20);
+                ->paginate(30);
             return view('almacen.articulo.index',["articulos"=>$articulos,"searchText"=>$query]);
         }
     }
-    
+
     public function create()
     {
         $articulos=DB::table('tb_articulo as a')
@@ -49,7 +50,7 @@ class ArticuloController extends Controller
 
         return view("almacen.articulo.create",["categorias"=>$categorias,"articulos"=>$articulos]);
     }
-    
+
     public function store(ArticuloFormRequest $request)
     {
         $articulo=new Articulo;
@@ -59,33 +60,33 @@ class ArticuloController extends Controller
         $articulo->stock='0';
         $articulo->estado='Activo';
         $articulo->save();
-        return Redirect::to('almacen/articulo');      
+        return Redirect::to('almacen/articulo');
     }
-   
+
     public function show($id)
     {
         return view("almacen.articulo.show",["articulo"=>Categoria::findOrFail($id)]);
     }
-   
+
     public function edit($id)
     {
         $articulo=Articulo::findOrFail($id);
         $categorias=DB::table('tb_categoria')->where('condicion','=','1')->get();
         return view("almacen.articulo.edit",["articulo"=>$articulo,"categorias"=>$categorias]);
     }
-   
+
     public function update(ArticuloFormRequest $request, $id)
     {
         $articulo=Articulo::findOrFail($id);
         $articulo->idcategoria=$request->get('idcategoria');
         $articulo->codigo=$request->get('codigo');
         $articulo->nombre=$request->get('nombre');
-        //$articulo->stock='0'; 
+        //$articulo->stock='0';
         $articulo->estado='Activo';
         $articulo->update();
         return Redirect::to('almacen/articulo');
     }
-   
+
     public function destroy($id)
     {
         $articulo=Articulo::findOrFail($id);

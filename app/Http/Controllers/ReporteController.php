@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Input;
 
+use SisVentas\Http\Requests;
+use SisVentas\Articulo;
+use SisVentas\Http\Requests\ArticuloFormRequest;
 use DB;
 
 class ReporteController extends Controller
@@ -14,15 +17,31 @@ class ReporteController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-    }    
+    }
+     public function reporte_almacen(Request $request)
+    {
+        $query=trim($request->get('searchText'));
+        $articulos=DB::table('tb_articulo as a')
+            ->join('tb_categoria as c','a.idcategoria','=','c.idcategoria')
+            ->join('tb_detalle_ingreso as di','a.idarticulo','=','di.idarticulo')
+            ->select('a.idarticulo','a.nombre','a.codigo','a.stock','c.nombre as categoria','a.estado', DB::raw("MAX(di.precio_venta) AS precio_venta"), DB::raw("MAX(di.precio_compra) AS precio_compra"))
+            ->where('a.codigo','LIKE','%'.$query.'%') //('a.nombre','LIKE','%'.$query.'%')
+            ->groupBy('a.idarticulo','a.nombre','a.codigo','a.stock','a.estado','c.nombre')
+            ->where('a.estado','Activo')
+            ->where('a.stock','>','0')
+            ->orderBy('categoria')
+            ->orderBy('a.nombre')
+            ->paginate(20);
+        return view('reporte.almacen.index',["articulos"=>$articulos,"searchText"=>$query]);
+    }
     public function generar()
-    {        
+    {
               	//dd($ingresos);
         $view = \View::make('pdf.reporte',compact('tb_articulos'))->render();
         $pdf = \App::make('dompdf.wrapper');
-        $pdf->loadHTML($view); 
+        $pdf->loadHTML($view);
         return $pdf->stream('informe'.'.pdf');
-    }  
+    }
 
     public function ReporteArticulo()
     {
@@ -34,7 +53,7 @@ class ReporteController extends Controller
             ->get();
         $view = \View::make('pdf.reportearticulo',compact('articulos'))->render();
         $pdf = \App::make('dompdf.wrapper');
-        $pdf->loadHTML($view); 
+        $pdf->loadHTML($view);
         return $pdf->stream('informe'.'.pdf');
     }
 
@@ -49,10 +68,10 @@ class ReporteController extends Controller
             ->groupBy('art.codigo','art.nombre','art.stock', 'categoria')
             ->orderBy('categoria')
             ->orderBy('art.nombre')
-            ->get(); 
+            ->get();
         $view = \View::make('pdf.reportearticuloprecio',compact('articulos'))->render();
         $pdf = \App::make('dompdf.wrapper');
-        $pdf->loadHTML($view); 
+        $pdf->loadHTML($view);
         return $pdf->stream('informe'.'.pdf');
     }
 
@@ -61,14 +80,14 @@ class ReporteController extends Controller
        $ingresos=DB::table('tb_ingreso as i')
         	->join('tb_persona as p','i.idproveedor','=','p.idpersona')
         	->join('tb_detalle_ingreso as di','i.idingreso','=','di.idingreso')
-            ->select('i.idingreso','i.fecha_hora','p.nombre','i.tipo_comprobante','i.serie_comprobante','i.num_comprobante','i.estado',DB::raw('sum(di.cantidad*di.precio_compra) as total')) 
-            ->groupBy('i.idingreso','i.fecha_hora','p.nombre','i.tipo_comprobante','i.serie_comprobante','i.num_comprobante', 'i.estado')           
+            ->select('i.idingreso','i.fecha_hora','p.nombre','i.tipo_comprobante','i.serie_comprobante','i.num_comprobante','i.estado',DB::raw('sum(di.cantidad*di.precio_compra) as total'))
+            ->groupBy('i.idingreso','i.fecha_hora','p.nombre','i.tipo_comprobante','i.serie_comprobante','i.num_comprobante', 'i.estado')
         	->get();
         	//dd($ingresos);
         $view = \View::make('pdf.reporteingreso',compact('ingresos'))->render();
         $pdf = \App::make('dompdf.wrapper');
-        $pdf->loadHTML($view); 
-        return $pdf->stream('informe'.'.pdf');       
+        $pdf->loadHTML($view);
+        return $pdf->stream('informe'.'.pdf');
     }
 
     public function ReporteIngresoID($id)
@@ -77,18 +96,18 @@ class ReporteController extends Controller
         	->join('tb_persona as p','i.idproveedor','=','p.idpersona')
         	->join('tb_detalle_ingreso as di','i.idingreso','=','di.idingreso')
             ->select('i.idingreso','i.fecha_hora','p.nombre','i.tipo_comprobante','i.serie_comprobante','i.num_comprobante','i.estado',DB::raw('sum(di.cantidad*di.precio_compra) as total'))
-            ->groupBy('i.idingreso','i.fecha_hora','p.nombre','i.tipo_comprobante','i.serie_comprobante','i.num_comprobante', 'i.estado')          
+            ->groupBy('i.idingreso','i.fecha_hora','p.nombre','i.tipo_comprobante','i.serie_comprobante','i.num_comprobante', 'i.estado')
             ->where('di.idingreso','=',$id)
-            ->first();                   	
-           
+            ->first();
+
        $detalles=DB::table('tb_detalle_ingreso as d')
             ->join('tb_articulo as a', 'd.idarticulo', '=','a.idarticulo')
             ->select('a.nombre as articulo', 'd.cantidad', 'd.precio_compra')
-            ->where('d.idingreso','=',$id)            
+            ->where('d.idingreso','=',$id)
             ->get();
         $view = \View::make('pdf.reporteingresoid',compact('ingresos','detalles'))->render();
         $pdf = \App::make('dompdf.wrapper');
-        $pdf->loadHTML($view); 
+        $pdf->loadHTML($view);
         return $pdf->stream('informe'.'.pdf');
     }
 
@@ -98,41 +117,41 @@ class ReporteController extends Controller
             ->get();
         $view = \View::make('pdf.reportepersona',compact('personas'))->render();
         $pdf = \App::make('dompdf.wrapper');
-        $pdf->loadHTML($view); 
+        $pdf->loadHTML($view);
         return $pdf->stream('informe'.'.pdf');
-    } 
+    }
 
     public function ReporteCliente()
     {
-       $personas=DB::table('tb_persona')               
-            ->where('tipo_persona','=','Cliente')            
+       $personas=DB::table('tb_persona')
+            ->where('tipo_persona','=','Cliente')
             ->get();
         $view = \View::make('pdf.reportecliente',compact('personas'))->render();
         $pdf = \App::make('dompdf.wrapper');
-        $pdf->loadHTML($view); 
+        $pdf->loadHTML($view);
         return $pdf->stream('informe'.'.pdf');
     }
     public function ReporteProveedor()
     {
-       $personas=DB::table('tb_persona')               
+       $personas=DB::table('tb_persona')
             ->where('tipo_persona','=','Proveedor')
             ->get();
         $view = \View::make('pdf.reporteproveedor',compact('personas'))->render();
         $pdf = \App::make('dompdf.wrapper');
-        $pdf->loadHTML($view); 
+        $pdf->loadHTML($view);
         return $pdf->stream('informe'.'.pdf');
     }
     public function ReporteVendedor()
     {
-       $personas=DB::table('tb_persona')               
+       $personas=DB::table('tb_persona')
             ->where('tipo_persona','=','Vendedor')
             ->get();
         $view = \View::make('pdf.reportevendedor',compact('personas'))->render();
         $pdf = \App::make('dompdf.wrapper');
-        $pdf->loadHTML($view); 
+        $pdf->loadHTML($view);
         return $pdf->stream('informe'.'.pdf');
-    }     
-   
+    }
+
     public function ReporteVenta()
     {
        $ventas=DB::table('tb_venta as v')
@@ -144,7 +163,7 @@ class ReporteController extends Controller
         	->get();
         $view = \View::make('pdf.reporteventa',compact('ventas'))->render();
         $pdf = \App::make('dompdf.wrapper');
-        $pdf->loadHTML($view); 
+        $pdf->loadHTML($view);
         return $pdf->stream('informe'.'.pdf');
     }
 
@@ -164,10 +183,10 @@ class ReporteController extends Controller
             ->get();
 
         $view = \View::make('pdf.reporteventaid',compact('venta','detalles'))->render();
-        $paper_size = array(0,0,623.622,433.701); // 'portrait' or 'landscape' 
+        $paper_size = array(0,0,623.622,433.701); // 'portrait' or 'landscape'
 
-        $pdf = \App::make('dompdf.wrapper');        
-        $pdf->loadHTML($view)->setPaper('landscape'); 
+        $pdf = \App::make('dompdf.wrapper');
+        $pdf->loadHTML($view)->setPaper('landscape');
         return $pdf->stream('informe'.'.pdf');
     }
 }

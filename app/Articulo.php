@@ -22,6 +22,16 @@ class Articulo extends Model
     ];
 /*configurado*/
     protected $guarded =[
-    	
+
     ];
+    public function scopeBuscartext ($query, $searchText)
+    {
+        //dd($searchText);
+        if ($searchText != "")
+        {
+            return $query->where('codigo','=',$searchText);
+        }
+
+    }
+
 }
