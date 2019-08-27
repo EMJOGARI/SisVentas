@@ -40,8 +40,7 @@
 									</ul>
 								</div>								
 							</td>
-						</tr>
-						@include('ventas.venta.modal')						
+						</tr>					
 					@endforeach
 				</table>
 			</div>
