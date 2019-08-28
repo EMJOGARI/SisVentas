@@ -20,7 +20,7 @@ class ReporteController extends Controller
     }
     public function reporte_almacen(Request $request)
     {
-        $stock = trim($request->get('searchList'));        
+        $stock = trim($request->get('searchList'));
         $texto = trim($request->get('searchText'));
 
         $articulos=DB::table('tb_articulo as a')
@@ -46,19 +46,45 @@ class ReporteController extends Controller
     }
     public function reporte_venta(Request $request)
     {
+        $clientes=DB::table('tb_persona')
+            ->orderBy('idpersona')
+            ->get();
+
+        $vendedor=DB::table('tb_persona')
+            ->where('tipo_persona','Vendedor')
+            ->orderBy('idpersona')
+            ->get();
+
+        $muni = $request->get('municipio');
+        $vende = $request->get('vendedor');
+        $clien = $request->get('cliente');
         $texto = trim($request->get('searchText'));
             $ventas=DB::table('tb_venta as v')
                 ->join('tb_persona as p','v.idcliente','=','p.idpersona')
                 ->join('tb_detalle_venta as dv','v.idventa','=','dv.idventa')
-                ->select('v.idventa','v.fecha_hora','p.nombre','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.estado','v.total_venta')
-                ->groupBy('v.idventa','v.fecha_hora','p.nombre','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.estado','v.total_venta')
-                ->where(function($query) use ($texto){
-                    $query->where('v.num_comprobante','LIKE','%'.$texto.'%');                    
-                })                
+                ->select('v.idventa','v.fecha_hora','p.nombre','p.municipio','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.estado','v.total_venta')
+                ->groupBy('v.idventa','v.fecha_hora','p.nombre','p.municipio','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.estado','v.total_venta')
+                ->where(function($query) use ($texto,$clien,$vende,$muni){
+                    if($clien){
+                        if ($clien != "") {
+                             return $query->where('p.idpersona',$clien);
+                        }
+                    }
+                    if($vende){
+                        if ($vende != "") {
+                             return $query->where('p.idpersona',$vende);
+                        }
+                    }
+                    if($muni){
+                        if ($muni != "") {
+                             return $query->where('p.municipio',$muni);
+                        }
+                    }
+                })
                 ->where('v.estado','A')
-                ->orderBy('idventa','desc')                
-                ->paginate(20);
-            return view('reporte.venta.index',["ventas"=>$ventas,"searchText"=>$texto]);
+                ->orderBy('idventa','desc')
+                ->paginate(200);
+            return view('reporte.venta.index',["ventas"=>$ventas,"clientes"=>$clientes,"vendedor"=>$vendedor]);
     }
     public function generar()
     {

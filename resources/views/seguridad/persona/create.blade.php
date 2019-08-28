@@ -3,7 +3,7 @@
 @section('content')
 	<div class="row">
 		<div class="col-lg-offset-2 col-md-offset-2 col-sm-offset-2 col-lg-8 col-md-8 col-sm-8 col-xs-12">
-			
+
 			@if (count($errors)>0)
 				<div class="alert alert-danger">
 					<ul>
@@ -26,11 +26,11 @@
 	            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
 	                <div class="form-group">
 	                    {!! Form::label('tipo_documento', 'Tipo Documento') !!}
-	                    <select name="tipo_documento" class="form-control"> 
+	                    <select name="tipo_documento" class="form-control">
 	                    	<option value="V">V-VENEZOLANO</option>
-	                    	<option value="J">J-JURIDICO</option>	                    	
+	                    	<option value="J">J-JURIDICO</option>
 	                    </select>
-	                </div>	                
+	                </div>
 	            </div>
 	            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
 	                <div class="form-group">
@@ -38,27 +38,48 @@
 	                    {!! Form::text('num_documento', null, ['class'=>'form-control', 'value'=>"{{ old('num_documento') }}", 'placeholder'=>'Numero de Documento...']) !!}
 	                </div>
 	            </div>
-	            
+
 	            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
 	                <div class="form-group">
 	                    {!! Form::label('telefono', 'Nro. Telefonico') !!}
 	                    {!! Form::text('telefono', null, ['class'=>'form-control', 'value'=>"{{ old('telefono') }}", 'placeholder'=>'Nro de Telefono...']) !!}
 	                </div>
 	            </div>
-	           
+
 	            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
 	                <div class="form-group">
 	                    {!! Form::label('tipo_persona', 'Tipo Persona') !!}
-	                    <select name="tipo_persona" class="form-control"> 
+	                    <select name="tipo_persona" class="form-control">
+	                    	<option value="">Tipo Persona...</option>
 	                    	<option value="Proveedor">Proveedor</option>
 	                    	<option value="Cliente">Cliente</option>
-	                    	<option value="Vendedor">Vendedor</option>	                    	
+	                    	<option value="Vendedor">Vendedor</option>
+	                    </select>
+	                </div>
+	            </div>
+
+	             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+	                <div class="form-group">
+	                    {!! Form::label('municipio', 'Municipio') !!}
+	                    <select name="municipio" class="form-control">
+	                    	<option value="">Buscar...</option>
+	                    	<option value="Arismendi">Arismendi</option>
+	                    	<option value="Antolin del Campo">Antolin del Campo</option>
+	                    	<option value="Díaz">Díaz</option>
+	                    	<option value="García">García</option>
+	                    	<option value="Gómez">Gómez</option>
+	                    	<option value="Maneiro">Maneiro</option>
+	                    	<option value="Marcano">Marcano</option>
+	                    	<option value="Mariño">Mariño</option>
+	                    	<option value="Península de Macanao">Península de Macanao</option>
+	                    	<option value="Tubares">Tubares</option>
+	                    	<option value="Villalba">Villalba</option>
 	                    </select>
 	                </div>
 	            </div>
 
 
-	            
+
 	            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 	                <div class="form-group">
 	                    {!! Form::label('direccion', 'Direccion') !!}
