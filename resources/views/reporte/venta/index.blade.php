@@ -1,17 +1,29 @@
 @extends ('layouts.admin')
 @section('name', "Reportes de Ventas")
 @section('content')
-<div class="row">
-	<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-			@include('reporte.venta.cliente')
-	</div>
-	<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-			@include('reporte.venta.vendedor')
-	</div>
-	<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-			@include('reporte.venta.municipio')
-	</div>
-	<div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 pull-right">
+
+<div class="row" style="margin-bottom: 2rem;">
+	<div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+		<div class="row">
+			<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+					@include('reporte.venta.fecha')
+			</div>
+			<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+				@include('reporte.venta.cliente')
+			</div>
+			<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+					@include('reporte.venta.vendedor')
+			</div>
+			<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+					@include('reporte.venta.municipio')
+			</div>
+		</div>
+
+
+
+		</div>
+
+	<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 pull-right">
 		<a href="{{ url('pdf/reportearticuloprecio') }}"><button class="btn btn-primary"><i class="fa fa-print"></i> Imprimir</button></a>
 	</div>
 </div>

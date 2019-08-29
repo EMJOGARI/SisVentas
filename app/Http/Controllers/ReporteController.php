@@ -12,6 +12,10 @@ use SisVentas\Articulo;
 use SisVentas\Http\Requests\ArticuloFormRequest;
 use DB;
 
+use Carbon\Carbon;
+use Response;
+use Illuminate\Support\Collection;
+
 class ReporteController extends Controller
 {
     public function __construct()
@@ -55,6 +59,12 @@ class ReporteController extends Controller
             ->orderBy('idpersona')
             ->get();
 
+            $f1 = Carbon::now()->toDateString("FechaInicio");
+            $f2 = Carbon::now()->toDateString("FechaFinal");
+
+            $f1=$request->get('FechaInicio');
+            $f2=$request->get('FechaFinal');
+
         $muni = $request->get('municipio');
         $vende = $request->get('vendedor');
         $clien = $request->get('cliente');
@@ -64,20 +74,25 @@ class ReporteController extends Controller
                 ->join('tb_detalle_venta as dv','v.idventa','=','dv.idventa')
                 ->select('v.idventa','v.fecha_hora','p.nombre','p.municipio','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.estado','v.total_venta')
                 ->groupBy('v.idventa','v.fecha_hora','p.nombre','p.municipio','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.estado','v.total_venta')
-                ->where(function($query) use ($texto,$clien,$vende,$muni){
-                    if($clien){
+                ->where(function($query) use ($texto,$clien,$vende,$muni,$f1,$f2){
+                    if ($clien) {
                         if ($clien != "") {
                              return $query->where('p.idpersona',$clien);
                         }
                     }
-                    if($vende){
+                    if ($vende) {
                         if ($vende != "") {
                              return $query->where('p.idpersona',$vende);
                         }
                     }
-                    if($muni){
+                    if ($muni) {
                         if ($muni != "") {
                              return $query->where('p.municipio',$muni);
+                        }
+                    }
+                    if (($f1) & ($f2)) {
+                        if (($f1 != "") & ($f2 != "")) {
+                            return $query->WhereBetween('v.fecha_hora', [$f1,$f2]);
                         }
                     }
                 })

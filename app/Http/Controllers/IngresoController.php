@@ -28,14 +28,6 @@ class IngresoController extends Controller
         //dd($request->all());
         if ($request)
         {
-            $f1 = Carbon::now()->toDateString("FechaInicio");
-            $f2 = Carbon::now()->toDateString("FechaFinal");
-            //aqui los convierto de tipo string a date
-
-            //$datos = DB::table('tb_ingreso')->whereBetween('fecha_hora',[$f1,$f2])->get();
-            $f1=$request->get('FechaInicio');
-            $f2=$request->get('FechaFinal');
-            // Variable de busqueda por categoria dond trim quita los espacios en blanco en el inicio y el final
             $query=trim($request->get('searchText'));
             $ingresos=DB::table('tb_ingreso as i')
             	->join('tb_persona as p','i.idproveedor','=','p.idpersona')
@@ -44,11 +36,10 @@ class IngresoController extends Controller
                     ,DB::raw('sum(di.cantidad*di.precio_compra) as total'))
             	->where('i.num_comprobante','LIKE','%'.$query.'%')
                 ->where('i.estado','=','A')
-                ->WhereBetween('i.fecha_hora', [$f1,$f2])
             	->orderBy('idingreso','desc')
                 ->groupBy('i.idingreso','i.fecha_hora','p.nombre','i.tipo_comprobante','i.serie_comprobante','i.num_comprobante', 'i.estado')
                 ->paginate(50);
-            return view('compras.ingreso.index',["ingresos"=>$ingresos,"searchText"=>$query, "FechaInicio" => $f1, "FechaFinal" => $f2]);
+            return view('compras.ingreso.index',["ingresos"=>$ingresos,"searchText"=>$query]);
         }
     }
 
