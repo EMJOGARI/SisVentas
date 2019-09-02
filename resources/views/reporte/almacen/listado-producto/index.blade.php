@@ -1,8 +1,14 @@
-<div class="row">
-		<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-			@include('reporte.almacen.search')
+@extends ('layouts.admin')
+@section('name', "Reportes de Almacén Listado de Productos")
+@section('content')
+	<div class="row">
+		<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+			@include('reporte.almacen.listado-producto.list')
 		</div>
-		<div class="col-lg-offset-6 col-md-offset-6 col-sm-offset-6 col-lg-2 col-md-2 col-sm-2 col-xs-12">
+		<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+			@include('reporte.almacen.listado-producto.search')
+		</div>
+		<div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 pull-right">
 			<a href="{{ url('pdf/reportearticuloprecio') }}"><button class="btn btn-primary"><i class="fa fa-print"></i> Imprimir Reporte</button></a>
 		</div>
 	</div>
@@ -17,7 +23,6 @@
 						<th width="5%">Stock</th>
 						<th width="10%">Costo</th>
 						<th width="10%">Precio Venta</th>
-						<th width="10%">Utilidad</th>
 					</thead>
 					@foreach ($articulos as $art)
 						<tr>
@@ -27,7 +32,6 @@
 							<td align="center">{{ $art->stock }}</td>
 							<td align="right">{{ number_format($art->precio_compra, 2, ',', '.') }}</td>
 							<td align="right">{{ number_format($art->precio_venta, 2, ',', '.') }}</td>
-							<td align="right">{{ number_format($art->precio_venta - $art->precio_compra, 2, ',', '.') }}</td>
 						</tr>
 					@endforeach
 				</table>
@@ -35,3 +39,4 @@
 			{{ $articulos->render() }}
 		</div>
 	</div>
+@endsection

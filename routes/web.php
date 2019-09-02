@@ -24,7 +24,8 @@ Route::resource('almacen/articulo', 'ArticuloController');
 Route::resource('ventas/venta', 'VentaController');
 Route::resource('ventas/venta/credito', 'VentaCreditoController');
 Route::resource('compras/ingreso', 'IngresoController');
-Route::get('reporte/almacen', 'ReporteController@reporte_almacen');
+Route::get('reporte/almacen/listado-producto', 'ReporteController@reporte_almacen');
+Route::get('reporte/almacen/margen-utilidad', 'ReporteController@reporte_almacen_utilidad');
 Route::get('reporte/venta', 'ReporteController@reporte_venta');
 
 

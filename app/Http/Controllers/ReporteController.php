@@ -14,7 +14,7 @@ use DB;
 
 use Carbon\Carbon;
 use Response;
-use Illuminate\Support\Collection;
+use Illuminate\Support\Collection as Collection;
 
 class ReporteController extends Controller
 {
@@ -24,13 +24,16 @@ class ReporteController extends Controller
     }
     public function reporte_almacen(Request $request)
     {
-        $stock = trim($request->get('searchList'));
         $texto = trim($request->get('searchText'));
+        $stock = trim($request->get('searchList'));
 
         $articulos=DB::table('tb_articulo as a')
             ->join('tb_categoria as c','a.idcategoria','=','c.idcategoria')
             ->join('tb_detalle_ingreso as di','a.idarticulo','=','di.idarticulo')
-            ->select('a.idarticulo','a.nombre','a.codigo','a.stock','c.nombre as categoria','a.estado', DB::raw("MAX(di.precio_venta) AS precio_venta"), DB::raw("MAX(di.precio_compra) AS precio_compra"))
+            ->select('a.idarticulo','a.nombre','a.codigo','a.stock','c.nombre as categoria','a.estado',
+                DB::raw("MAX(di.precio_venta) AS precio_venta"),
+                DB::raw("MAX(di.precio_compra) AS precio_compra")
+            )
             ->groupBy('a.idarticulo','a.nombre','a.codigo','a.stock','a.estado','c.nombre')
             ->where(function($query) use ($texto, $stock){
                 $query->where('a.codigo','LIKE','%'.$texto.'%');
@@ -46,7 +49,42 @@ class ReporteController extends Controller
             ->orderBy('categoria')
             ->orderBy('a.nombre')
             ->paginate(200);
-        return view('reporte.almacen.index',["articulos"=>$articulos,"searchText"=>$texto,"searchList"=>$stock]);
+            //dd($articulos);
+        return view('reporte.almacen.listado-producto.index',["articulos"=>$articulos,"searchText"=>$texto,"searchList"=>$stock]);
+    }
+    public function reporte_almacen_utilidad(Request $request)
+    {
+        //$query->withCount([ 'activity AS paid_sum' => function ($query) { $query->select(DB::raw("SUM(amount_total) as paidsum"))->where('status', 'paid'); } ]);
+        $categorias=DB::table('tb_categoria')->where('condicion','=','1')->get();
+        $texto = trim($request->get('searchText'));
+        $cat = trim($request->get('searchCategoria'));
+
+        $articulos=DB::table('tb_articulo as a')
+            ->join('tb_categoria as c','a.idcategoria','=','c.idcategoria')
+            ->join('tb_detalle_ingreso as di','a.idarticulo','=','di.idarticulo')
+            ->select('a.idarticulo','a.nombre','a.codigo','a.stock','c.nombre as categoria','a.estado',
+                DB::raw("MAX(di.precio_venta) AS precio_venta"),
+                DB::raw("SUM(di.precio_venta) AS precio_total_venta"),
+                DB::raw("MAX(di.precio_compra) AS precio_compra"),
+                DB::raw("SUM(di.precio_compra) AS precio_total_compra"),
+                DB::raw("SUM(a.stock) AS total_stock")
+            )
+            ->groupBy('a.idarticulo','a.nombre','a.codigo','a.stock','a.estado','c.nombre')
+            ->where(function($query) use ($texto, $cat){
+                $query->where('a.codigo','LIKE','%'.$texto.'%');
+                if($cat){
+                    if ($cat != "") {
+                        return $query->where('c.idcategoria',$cat);
+                    }
+                }
+            })
+            ->where('stock','>','0')
+            ->where('a.estado','Activo')
+            ->orderBy('categoria')
+            ->orderBy('a.nombre')
+            ->paginate(200);
+            dd($articulos);
+        return view('reporte.almacen.margen-utilidad.index',["articulos"=>$articulos,"categorias"=>$categorias,"searchText"=>$texto]);
     }
     public function reporte_venta(Request $request)
     {

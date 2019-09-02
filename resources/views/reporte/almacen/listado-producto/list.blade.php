@@ -1,4 +1,4 @@
-{!! Form::open(array('url'=>'reporte/almacen', 'method'=>'GET', 'autocomplete'=>'off', 'role'=>'search' )) !!}
+{!! Form::open(array('url'=>'reporte/almacen/listado-producto', 'method'=>'GET', 'autocomplete'=>'off', 'role'=>'search' )) !!}
 	<div class="input-group">
 		<select name="searchList" class="form-control">
 			<option value="" selected>Seleccioné un metodo</option>
