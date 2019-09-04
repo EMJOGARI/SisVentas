@@ -36,11 +36,11 @@
 						<tr>
 							<td></td>
 							<td></td>
-							<td align="center"><strong>TOTAL:</strong></td>
-							<td align="center"><strong>{{ $art->stock }}</strong></td>
-							<td align="right"><strong>{{ number_format($art->precio_compra, 2, ',', '.') }}</strong></td>
-							<td align="right"><strong>{{ number_format($art->precio_venta, 2, ',', '.') }}</strong></td>
-							<td align="right"><strong>{{ number_format(($art->precio_venta - $art->precio_compra), 2, ',', '.') }}</strong></td>
+							<td align="center"><strong>TOTAL:</strong></td>							
+							<td align="center"><strong>{{ $sum_stock }}</strong></td>							
+							<td align="right"><strong>{{ number_format($sum_precio_compra, 2, ',', '.') }}</strong></td>
+							<td align="right"><strong>{{ number_format($sum_precio_venta, 2, ',', '.') }}</strong></td>
+							<td align="right"><strong>{{ number_format($sum_precio_utilidad, 2, ',', '.') }}</strong></td>
 						</tr>
 				</table>
 			</div>

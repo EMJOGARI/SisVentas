@@ -53,7 +53,6 @@ class ReporteController extends Controller
     }
     public function reporte_almacen_utilidad(Request $request)
     {
-        //$query->withCount([ 'activity AS paid_sum' => function ($query) { $query->select(DB::raw("SUM(amount_total) as paidsum"))->where('status', 'paid'); } ]);
         $categorias=DB::table('tb_categoria')->where('condicion','=','1')->get();
         $texto = trim($request->get('searchText'));
         $cat = trim($request->get('searchCategoria'));
@@ -64,9 +63,6 @@ class ReporteController extends Controller
             ->select('a.idarticulo','a.nombre','a.codigo','a.stock','c.nombre as categoria','a.estado',
                 DB::raw("MAX(di.precio_venta) AS precio_venta"),               
                 DB::raw("MAX(di.precio_compra) AS precio_compra")
-                //DB::raw("SUM(di.precio_venta) AS precio_total_venta"),
-                //DB::raw("SUM(di.precio_compra) AS precio_total_compra"),
-                //DB::raw("SUM(a.stock) AS total_stock")
             )
             ->groupBy('a.idarticulo','a.nombre','a.codigo','a.stock','a.estado','c.nombre')
             ->where(function($query) use ($texto, $cat){
@@ -82,8 +78,19 @@ class ReporteController extends Controller
             ->orderBy('categoria')
             ->orderBy('a.nombre')
             ->paginate(200);
-            //dd($articulos);
-        return view('reporte.almacen.margen-utilidad.index',["articulos"=>$articulos,"categorias"=>$categorias,"searchText"=>$texto]);
+            
+            $sum_stock = 0;
+            $sum_precio_venta = 0;
+            $sum_precio_compra = 0;
+            $sum_precio_utilidad = 0;
+            foreach ($articulos as $art) {
+                $sum_stock += $art->stock;
+                $sum_precio_compra += ($art->precio_compra * $art->stock);
+                $sum_precio_venta += ($art->precio_venta * $art->stock);
+                $sum_precio_utilidad += (($art->precio_venta - $art->precio_compra) * $art->stock);
+            }
+            //dd($sum_stock);
+        return view('reporte.almacen.margen-utilidad.index',["articulos"=>$articulos,"categorias"=>$categorias,"searchText"=>$texto,"sum_stock"=>$sum_stock,"sum_precio_compra"=>$sum_precio_compra,"sum_precio_venta"=>$sum_precio_venta,"sum_precio_utilidad"=>$sum_precio_utilidad]);
     }
     public function reporte_venta(Request $request)
     {
