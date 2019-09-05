@@ -20,7 +20,6 @@ class CreateDetalleIngresoTable extends Migration
             $table->integer('cantidad');
             $table->decimal('precio_compra',11,2);
             $table->decimal('precio_venta',11,2);
-            $table->decimal('precio_credito',11,2);
         });
     }
 

@@ -14,6 +14,7 @@ class Venta extends Model
 
     protected $fillable =[
     	'idcliente',
+        'idvendedor',
         'tipo_comprobante',
         'serie_comprobante',
         'num_comprobante',
@@ -24,6 +25,6 @@ class Venta extends Model
     ];
 
     protected $guarded =[
-    	
+
     ];
 }

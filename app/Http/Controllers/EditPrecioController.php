@@ -16,7 +16,7 @@ use Illuminate\Support\Collection;
 
 class EditPrecioController extends Controller
 {
-    
+
     public function index(Request $request)
     {//dd($request->all());
         if ($request)
@@ -24,27 +24,27 @@ class EditPrecioController extends Controller
             $query=trim($request->get('searchText'));
             $articulos=DB::table('tb_articulo as art')
                 ->join('tb_detalle_ingreso as di','art.idarticulo','=','di.idarticulo')
-                ->select('art.idarticulo','art.nombre','art.codigo','art.stock', DB::raw("MAX(di.precio_venta) AS precio_venta"), DB::raw("MAX(di.precio_credito) AS precio_credito"))
+                ->select('art.idarticulo','art.nombre','art.codigo','art.stock', DB::raw("MAX(di.precio_venta) AS precio_venta"),DB::raw("MAX(di.precio_compra) AS precio_compra"))
                 ->where('art.estado','=','Activo')
                 ->where('art.stock','>','0')
-                ->where('art.codigo','LIKE','%'.$query.'%') 
+                ->where('art.codigo','LIKE','%'.$query.'%')
                 ->groupBy('art.idarticulo','art.nombre','art.codigo','art.stock')
                 ->orderBy('art.codigo')
                 ->paginate(20);
             return view("seguridad.precio_articulo.index",["articulos"=>$articulos,"searchText"=>$query]);
         }
     }
-    
+
     public function show($id)
     {
          return view("seguridad.precio_articulo.show",["articulo"=>Articulo::findOrFail($id)]);
     }
-    
+
     public function edit($id)
-    {         
+    {
        $articulos=DB::table('tb_articulo as art')
             ->join('tb_detalle_ingreso as di','art.idarticulo','=','di.idarticulo')
-            ->select('art.idarticulo','art.nombre','art.codigo','art.stock', DB::raw("MAX(di.precio_venta) AS precio_venta"), DB::raw("MAX(di.precio_credito) AS precio_credito")) 
+            ->select('art.idarticulo','art.nombre','art.codigo','art.stock',DB::raw("MAX(di.precio_compra) AS precio_compra"), DB::raw("MAX(di.precio_compra / 0.55) AS precio_venta"))
             ->groupBy('art.idarticulo','art.nombre','art.codigo','art.stock')
             ->where('art.idarticulo',$id)
             ->first();
@@ -58,12 +58,6 @@ class EditPrecioController extends Controller
             ->select('art.idarticulo','art.nombre','art.codigo','art.stock', DB::raw("MAX(di.precio_venta) AS precio_venta")) //probando esta linea
             ->where('art.idarticulo',$id)
             ->update(array('precio_venta' => Input::get('precio_venta')));
-
-        DB::table('tb_detalle_ingreso as di')
-            ->join('tb_articulo as art','art.idarticulo','=','di.idarticulo')
-            ->select('art.idarticulo','art.nombre','art.codigo','art.stock', DB::raw("MAX(di.precio_credito) AS precio_credito")) //probando esta linea
-            ->where('art.idarticulo',$id)
-            ->update(array('precio_credito' => Input::get('precio_credito')));
 
         DB::table('tb_articulo')
             ->where('idarticulo',$id)

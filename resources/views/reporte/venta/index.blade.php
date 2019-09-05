@@ -8,20 +8,17 @@
 			<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 					@include('reporte.venta.fecha')
 			</div>
-			<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+			<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 				@include('reporte.venta.cliente')
 			</div>
-			<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+			<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 					@include('reporte.venta.vendedor')
 			</div>
-			<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+			<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 					@include('reporte.venta.municipio')
 			</div>
 		</div>
-
-
-
-		</div>
+	</div>
 
 	<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 pull-right">
 		<a href="{{ url('pdf/reportearticuloprecio') }}"><button class="btn btn-primary"><i class="fa fa-print"></i> Imprimir</button></a>
@@ -45,7 +42,7 @@
 						<td>{{ $ven->serie_comprobante.' - '.$ven->num_comprobante }}</td>
 						<td>{{ $ven->nombre }}</td>
 						<td>{{ $ven->municipio }}</td>
-						<td>por crear</td>
+						<td>{{ $ven->idvendedor}}</td>
 						<td align="right">{{ number_format($ven->total_venta, 2, ',', '.') }}</td>
 					</tr>
 				@endforeach

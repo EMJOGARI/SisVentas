@@ -52,6 +52,11 @@ class VentaController extends Controller
             ->orderBy('idpersona')
             ->get();
 
+        $vendedores=DB::table('tb_persona')
+            ->where('tipo_persona','Vendedor')
+            ->orderBy('idpersona')
+            ->get();
+
     	$articulos=DB::table('tb_articulo as art')
     		->join('tb_detalle_ingreso as di','art.idarticulo','=','di.idarticulo')
     		->select(DB::raw("CONCAT(art.codigo,' - ',art.nombre) AS articulo"),'art.idarticulo','art.stock', DB::raw("MAX(di.precio_venta) AS precio_venta"),DB::raw("MAX(di.precio_credito) AS precio_credito"))
@@ -61,7 +66,7 @@ class VentaController extends Controller
             ->orderBy('art.codigo')
     		->get();
             //dd($personas, $articulos);
-        return view("ventas.venta.create",["personas"=>$personas, "articulos"=>$articulos]);
+        return view("ventas.venta.create",["personas"=>$personas, "articulos"=>$articulos, "vendedores"=>$vendedores]);
     }
     public function store(VentaFormRequest $request)
     {
@@ -69,6 +74,7 @@ class VentaController extends Controller
     		DB::beginTransaction();
     			$venta = new Venta;
     			$venta->idcliente=$request->get('idcliente');
+                $venta->idvendedor=$request->get('idvendedor');
 		        $venta->tipo_comprobante=$request->get('tipo_comprobante');
 		        $venta->serie_comprobante=$request->get('serie_comprobante');
 		        $venta->num_comprobante=$request->get('num_comprobante');
@@ -109,9 +115,15 @@ class VentaController extends Controller
 
     public function show($id)
     {
+        $vendedor=DB::table('tb_venta as v')
+            ->join('tb_persona as p','p.idpersona','v.idvendedor')
+            ->select('p.nombre')
+            ->where('v.idventa','=',$id)
+            ->first();
+
        $venta=DB::table('tb_venta as v')
-            ->join('tb_persona as p','v.idcliente','=','p.idpersona')
-            ->join('tb_detalle_venta as dv','v.idventa','=','dv.idventa')
+            ->join('tb_persona as p','p.idpersona','v.idcliente')
+            ->join('tb_detalle_venta as dv','dv.idventa','v.idventa')
             ->select('v.idventa','v.fecha_hora','p.nombre','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.estado','v.total_venta')
             ->where('v.idventa','=',$id)
             ->first();
@@ -122,7 +134,8 @@ class VentaController extends Controller
             ->where('d.idventa','=',$id)
             ->get();
 
-        return view("ventas.venta.show",["venta"=>$venta , "detalles"=>$detalles]);
+//dd($venta, $detalles, $vendedor);
+        return view("ventas.venta.show",["venta"=>$venta , "detalles"=>$detalles, "vendedor"=>$vendedor]);
     }
 
 

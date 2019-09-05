@@ -18,13 +18,13 @@
 
 			{!! Form::model($articulos,['method'=>'PUT', 'route'=>['precio_articulo.update',$articulos->idarticulo], 'file'=>'true']) !!}
 			{{ Form::token() }}
-			<div class="row">	
+			<div class="row">
 				<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
 	                <div class="form-group">
 	                    {!! Form::label('codigo', 'Codigo') !!}
 	                    {!! Form::text('codigo', null, ['class'=>'form-control', 'value'=>'{{ $articulos->codigo }}', 'disabled']) !!}
 	                </div>
-	            </div>            
+	            </div>
 	            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 	                <div class="form-group">
 	                    {!! Form::label('nombre', 'Nombre') !!}
@@ -38,21 +38,19 @@
 	                    {!! Form::text('stock', null, ['class'=>'form-control', 'value'=>'{{ $articulos->stock }}']) !!}
 	                </div>
 	            </div>
-	           
+	            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+	                <div class="form-group">
+	                    {!! Form::label('precio_compra', 'Costo') !!}
+	                    {!! Form::text('precio_compra', null, ['class'=>'form-control', 'value'=>'{{ $articulos->precio_compra }}']) !!}
+	                </div>
+	            </div>
+
 	           <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
 	                <div class="form-group">
-	                    {!! Form::label('precio_venta', 'Precio de CONTADO') !!}
+	                    {!! Form::label('precio_venta', 'Precio de Venta') !!}
 	                    {!! Form::text('precio_venta', null, ['class'=>'form-control', 'value'=>'{{ $articulos->precio_venta }}']) !!}
 	                </div>
 	            </div>
-
-	            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-	                <div class="form-group">
-	                    {!! Form::label('precio_venta', 'Precio a CREDITO') !!}
-	                    {!! Form::text('precio_credito', null, ['class'=>'form-control', 'value'=>'{{ $articulos->precio_credito }}']) !!}
-	                </div>
-	            </div>
-
 	            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 	                <div class="form-group">
 	                    <button class="btn btn-primary" type="submit"><i class="fa fa-save"></i> Guardar</button>

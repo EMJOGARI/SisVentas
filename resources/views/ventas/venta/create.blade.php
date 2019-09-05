@@ -18,20 +18,31 @@
 			{{ Form::token() }}
 			<div class="row">
 
-			 	<div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+			 	<div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
 			 		<div class="form-group">
 				 		{!! Form::label('cliente', 'Cliente') !!}
-		                <div class="input-group">
-		                    <select name="idcliente" id="idcliente" class="form-control selectpicker" data-live-search="true">
+				 		 <select name="idcliente" id="idcliente" class="form-control selectpicker" data-live-search="true">
 		                    	<option value="">Seleccioné un Cliente</option>
 		                    	@foreach($personas as $persona)
 		                    		<option value="{{ $persona->idpersona }}">{{ str_pad($persona->idpersona, 3, "0", STR_PAD_LEFT).' - '.$persona->nombre }}</option>
 		                    	@endforeach
 		                    </select>
+		                {{--<div class="input-group">
 			                <div class="input-group-btn">
 			                	<a href="{{ url('seguridad/persona/create') }}" type="button" class="btn btn-success"><i class="fa fa-plus"></i> Nuevo Cliente</a>
 			                </div>
-		                </div>
+		                </div>--}}
+			 		</div>
+	            </div>
+	            <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+			 		<div class="form-group">
+				 		{!! Form::label('cliente', 'Vendedor') !!}
+				 		<select name="idvendedor" id="idvendedor" class="form-control selectpicker" data-live-search="true">
+	                    	<option value="">Seleccioné un Vendedor</option>
+	                    	@foreach($vendedores as $persona)
+	                    		<option value="{{ $persona->idpersona }}">{{ str_pad($persona->idpersona, 3, "0", STR_PAD_LEFT).' - '.$persona->nombre }}</option>
+	                    	@endforeach
+		                </select>
 			 		</div>
 	            </div>
 	            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
@@ -185,8 +196,8 @@
 
 		if (idarticulo!="" && cantidad!="" && cantidad>0 && precio_venta!="" && descuento!="")
 		{   //CANTIDAD DE ITEMS EN LA FACTURA
-			if(cont<=6)
-			{
+			//if(cont<=6)
+			//{
 				if (stock>=cantidad)
 				{
 					des=(descuento/100);
@@ -214,11 +225,11 @@
 				{
 					alert('La cantidad a vender supera el stock');
 				}
-			}
-			else
-			{
-				alert('Supera la cantidad de articulos permitidos en la factura');
-			}
+			//}
+			//else
+			//{
+			//	alert('Supera la cantidad de articulos permitidos en la factura');
+			//}
 
 		}
 		else

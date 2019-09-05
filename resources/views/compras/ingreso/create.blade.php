@@ -1,7 +1,7 @@
 @extends ('layouts.admin')
 @section('name', "Nuevo Ingreso de Compras")
 @section('content')
-			
+
 			@if (count($errors)>0)
 				<div class="alert alert-danger">
 					<ul>
@@ -14,11 +14,11 @@
 
 			{!! Form::open(array('url'=>'compras/ingreso', 'method'=>'POST', 'autocomplete'=>'off')) !!}
 			{{ Form::token() }}
-			<div class="row">	            
+			<div class="row">
 	            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
 	            	<div class="form-group">
 		            	{!! Form::label('proveedor', 'Proveedor') !!}
-		                <div class="input-group">	                    
+		                <div class="input-group">
 		                    <select name="idproveedor" id="idproveedor" class="form-control selectpicker" data-live-search="true">
 		                    	<option value="">Seleccioné un Proveedor</option>
 		                    	@foreach($personas as $persona)
@@ -26,26 +26,26 @@
 		                    	@endforeach
 		                    </select>
 		                    <div class="input-group-btn">
-			                	<a href="{{ url('seguridad/persona/create') }}" type="button" class="btn btn-success"><i class="fa fa-plus"></i> Nuevo Proveedor</a>                  
+			                	<a href="{{ url('seguridad/persona/create') }}" type="button" class="btn btn-success"><i class="fa fa-plus"></i> Nuevo Proveedor</a>
 			                </div>
 		                </div>
 	                </div>
 	            </div>
 
 	             <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
-	            	{!! Form::label('','Fecha') !!}                    
+	            	{!! Form::label('','Fecha') !!}
                     <div class="input-group">
                         <input type="text" class="form-control datepicker" name="purchase_date" value="{{ date('d-m-Y') }}" disabled>
                         <div class="input-group-addon">
                             <a href="#"><i class="fa fa-calendar"></i></a>
                         </div>
                     </div>
-                </div>					
+                </div>
 
 	            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
 	                <div class="form-group">
 	                    {!! Form::label('tipo_comprobante', 'Tipo Documento') !!}
-	                    <select name="tipo_comprobante" class="form-control"> 
+	                    <select name="tipo_comprobante" class="form-control">
 	                    	<option value="factura">Factura</option>
 	                    	<option value="nota_entrega">Nota de Devolucion</option>
 	                    </select>
@@ -62,11 +62,11 @@
 	                    {!! Form::label('num_comprobante', 'Número de Control') !!}
 	                    {!! Form::text('num_comprobante', null, ['required','class'=>'form-control', 'placeholder'=>'Número de Control']) !!}
 	                </div>
-	            </div>	            
+	            </div>
 	    	</div>
 	    	<div class="row">
 	            <div class="panel panel-primary">
-	            	<div class="panel-body">	            			            
+	            	<div class="panel-body">
 				            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
 				                <div class="form-group">
 				                    {!! Form::label('articulo', 'Articulo') !!}
@@ -89,11 +89,11 @@
 				                    {!! Form::label('precio_compra', 'Precio Unitario') !!}
 				                    {!! Form::number('precio_compra', null, ['id'=>'pprecio_compra','class'=>'form-control','placeholder'=>'P. Unidad']) !!}
 				                </div>
-				            </div>				            		            
+				            </div>
 				            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
 				            	{!! Form::label('','') !!}
 				                <div class="form-group">
-				                	<button id="bt_add" class="btn btn-primary" type="button"><i class="fa fa-plus"></i> Agregar</button>          
+				                	<button id="bt_add" class="btn btn-primary" type="button"><i class="fa fa-plus"></i> Agregar</button>
 				                </div>
 				            </div>
 				            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -101,11 +101,11 @@
 								  	<thead style="background-color:#f4f4f4">
 									    <th width="50%" scope="col">Articulo</th>
 									    <th width="5%" scope="col">Cantidad</th>
-									    <th width="15%" scope="col">Precio Unitario</th>							      
+									    <th width="15%" scope="col">Precio Unitario</th>
 									    <th width="15%" scope="col">Subtotal</th>
-									    <th width="5%" scope="col">Opciones</th>									    
+									    <th width="5%" scope="col">Opciones</th>
 								  	</thead>
-								  	<tfoot>								  		
+								  	<tfoot>
 								  		<th></th>
 								  		<th></th>
 								  		<th><h4><strong>TOTAL</strong></h4></th>
@@ -113,10 +113,10 @@
 								  		<th></th>
 								  	</tfoot>
 								  	<tbody>
-								    
+
 								  	</tbody>
-								</table>												                
-				            </div>  		
+								</table>
+				            </div>
 	            	</div>
 	            </div>
 	            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="guardar">
@@ -127,7 +127,7 @@
 	            </div>
 			</div>
 			{!! Form::close() !!}
-	
+
 
 @push('scripts')
 
@@ -149,13 +149,13 @@ function agregar()
 	articulo=$("#pidarticulo option:selected").text();
 	cantidad=$("#pcantidad").val();
 	precio_compra=$("#pprecio_compra").val();
-	total=$("#total").val();	
+	total=$("#total").val();
 
 	if (idarticulo!="" && cantidad!="" && cantidad>0 && precio_compra!="")
 	{
 		subtotal[cont]=(cantidad*precio_compra);
 		total=total+subtotal[cont];
-		
+
 		var fila='<tr class="selected" id="fila'+cont+'">\n\
 			<td align="left"><input type="hidden" name="idarticulo[]" value="'+idarticulo+'">'+articulo+'</td>\n\
 			<td align="right"><input type="hidden" name="cantidad[]" value="'+cantidad+'">'+cantidad+'</td>\n\
@@ -163,7 +163,7 @@ function agregar()
 			<td align="right">'+subtotal[cont]+'</td>\n\
 			<td><button type="button" class="btn btn-danger" onclick="eliminar('+cont+')"><i class="fa fa-close"></i></button></td>\n\
 			</tr>';
-		
+
 		cont++;
 		limpiar();
 		$("#total").html("BsS. " + total);
@@ -180,7 +180,7 @@ function agregar()
 function limpiar()
 {
 	$("#pcantidad").val("");
-	$("#pprecio_compra").val("");	
+	$("#pprecio_compra").val("");
 }
 
 function evaluar()
@@ -191,7 +191,7 @@ function evaluar()
 	}
 	else
 	{
-		$("#guardar").hide();	
+		$("#guardar").hide();
 	}
 }
 
@@ -202,7 +202,7 @@ function eliminar(index)
 	$("#fila" + index).remove();
 	evaluar();
 }
-	
+
 </script>
 @endpush
 

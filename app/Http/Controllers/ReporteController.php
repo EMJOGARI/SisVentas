@@ -61,7 +61,7 @@ class ReporteController extends Controller
             ->join('tb_categoria as c','a.idcategoria','=','c.idcategoria')
             ->join('tb_detalle_ingreso as di','a.idarticulo','=','di.idarticulo')
             ->select('a.idarticulo','a.nombre','a.codigo','a.stock','c.nombre as categoria','a.estado',
-                DB::raw("MAX(di.precio_venta) AS precio_venta"),               
+                DB::raw("MAX(di.precio_venta) AS precio_venta"),
                 DB::raw("MAX(di.precio_compra) AS precio_compra")
             )
             ->groupBy('a.idarticulo','a.nombre','a.codigo','a.stock','a.estado','c.nombre')
@@ -78,7 +78,7 @@ class ReporteController extends Controller
             ->orderBy('categoria')
             ->orderBy('a.nombre')
             ->paginate(200);
-            
+
             $sum_stock = 0;
             $sum_precio_venta = 0;
             $sum_precio_compra = 0;
@@ -103,20 +103,23 @@ class ReporteController extends Controller
             ->orderBy('idpersona')
             ->get();
 
-            $f1 = Carbon::now()->toDateString("FechaInicio");
-            $f2 = Carbon::now()->toDateString("FechaFinal");
+        $f1 = Carbon::now()->toDateString("FechaInicio");
+        $f2 = Carbon::now()->toDateString("FechaFinal");
 
-            $f1=$request->get('FechaInicio');
-            $f2=$request->get('FechaFinal');
+        $f1=$request->get('FechaInicio');
+        $f2=$request->get('FechaFinal');
 
         $muni = $request->get('municipio');
         $vende = $request->get('vendedor');
         $clien = $request->get('cliente');
         $texto = trim($request->get('searchText'));
+
+
+
             $ventas=DB::table('tb_venta as v')
                 ->join('tb_persona as p','v.idcliente','=','p.idpersona')
                 ->join('tb_detalle_venta as dv','v.idventa','=','dv.idventa')
-                ->select('v.idventa','v.fecha_hora','p.nombre','p.municipio','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.estado','v.total_venta')
+                ->select('v.idventa','v.idvendedor','v.fecha_hora','p.nombre','p.municipio','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.estado','v.total_venta')
                 ->groupBy('v.idventa','v.fecha_hora','p.nombre','p.municipio','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.estado','v.total_venta')
                 ->where(function($query) use ($texto,$clien,$vende,$muni,$f1,$f2){
                     if ($clien) {
@@ -126,7 +129,7 @@ class ReporteController extends Controller
                     }
                     if ($vende) {
                         if ($vende != "") {
-                             return $query->where('p.idpersona',$vende);
+                             return $query->where('v.idvendedor',$vende);
                         }
                     }
                     if ($muni) {
@@ -143,6 +146,7 @@ class ReporteController extends Controller
                 ->where('v.estado','A')
                 ->orderBy('idventa','desc')
                 ->paginate(200);
+                //dd($ventas);
         return view('reporte.venta.index',["ventas"=>$ventas,"clientes"=>$clientes,"vendedor"=>$vendedor]);
     }
     public function generar()

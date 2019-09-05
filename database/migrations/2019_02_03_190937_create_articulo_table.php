@@ -17,7 +17,7 @@ class CreateArticuloTable extends Migration
             $table->increments('idarticulo');
             $table->integer('idcategoria')->unsigned();
             $table->integer('codigo',10);
-            $table->string('nombre',100);           
+            $table->string('nombre',100);
             $table->integer('stock');
             $table->string('estado',10);
         });
@@ -29,7 +29,7 @@ class CreateArticuloTable extends Migration
      * @return void
      */
     public function down()
-    {       
+    {
         Schema::dropIfExists('tb_articulo');
     }
 }
