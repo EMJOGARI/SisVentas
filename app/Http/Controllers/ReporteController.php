@@ -24,8 +24,11 @@ class ReporteController extends Controller
     }
     public function reporte_almacen(Request $request)
     {
-        $texto = trim($request->get('searchText'));
+        $codigo =$request->get('searchText');
         $stock = trim($request->get('searchList'));
+        $cat = trim($request->get('searchCategoria'));
+
+        $categorias=DB::table('tb_categoria')->where('condicion','=','1')->get();
 
         $articulos=DB::table('tb_articulo as a')
             ->join('tb_categoria as c','a.idcategoria','=','c.idcategoria')
@@ -35,8 +38,17 @@ class ReporteController extends Controller
                 DB::raw("MAX(di.precio_compra) AS precio_compra")
             )
             ->groupBy('a.idarticulo','a.nombre','a.codigo','a.stock','a.estado','c.nombre')
-            ->where(function($query) use ($texto, $stock){
-                $query->where('a.codigo','LIKE','%'.$texto.'%');
+            ->where(function($query) use ($codigo, $stock, $cat){
+                if($codigo){
+                    if ($codigo != "") {
+                        return $query->where('a.codigo',$codigo);
+                    }
+                }
+                if($cat){
+                    if ($cat != "") {
+                        return $query->where('c.idcategoria',$cat);
+                    }
+                }
                 if($stock){
                     if ($stock == 2) {
                         return $query->where('stock','<=','0');
@@ -49,13 +61,14 @@ class ReporteController extends Controller
             ->orderBy('categoria')
             ->orderBy('a.nombre')
             ->paginate(200);
-        return view('reporte.almacen.listado-producto.index',["articulos"=>$articulos,"searchText"=>$texto,"searchList"=>$stock]);
+        return view('reporte.almacen.listado-producto.index',["articulos"=>$articulos,"searchText"=>$codigo,"searchList"=>$stock,"categorias"=>$categorias]);
     }
     public function reporte_almacen_utilidad(Request $request)
     {
-        $categorias=DB::table('tb_categoria')->where('condicion','=','1')->get();
-        $texto = trim($request->get('searchText'));
+        $codigo = $request->get('searchText');
         $cat = trim($request->get('searchCategoria'));
+
+        $categorias=DB::table('tb_categoria')->where('condicion','=','1')->get();
 
         $articulos=DB::table('tb_articulo as a')
             ->join('tb_categoria as c','a.idcategoria','=','c.idcategoria')
@@ -65,8 +78,12 @@ class ReporteController extends Controller
                 DB::raw("MAX(di.precio_compra) AS precio_compra")
             )
             ->groupBy('a.idarticulo','a.nombre','a.codigo','a.stock','a.estado','c.nombre')
-            ->where(function($query) use ($texto, $cat){
-                $query->where('a.codigo','LIKE','%'.$texto.'%');
+            ->where(function($query) use ($codigo, $cat){
+                if($codigo){
+                    if ($codigo != "") {
+                        return $query->where('a.codigo',$codigo);
+                    }
+                }
                 if($cat){
                     if ($cat != "") {
                         return $query->where('c.idcategoria',$cat);
@@ -90,7 +107,7 @@ class ReporteController extends Controller
                 $sum_precio_utilidad += (($art->precio_venta - $art->precio_compra) * $art->stock);
             }
             //dd($sum_stock);
-        return view('reporte.almacen.margen-utilidad.index',["articulos"=>$articulos,"categorias"=>$categorias,"searchText"=>$texto,"sum_stock"=>$sum_stock,"sum_precio_compra"=>$sum_precio_compra,"sum_precio_venta"=>$sum_precio_venta,"sum_precio_utilidad"=>$sum_precio_utilidad]);
+        return view('reporte.almacen.margen-utilidad.index',["articulos"=>$articulos,"categorias"=>$categorias,"searchText"=>$codigo,"sum_stock"=>$sum_stock,"sum_precio_compra"=>$sum_precio_compra,"sum_precio_venta"=>$sum_precio_venta,"sum_precio_utilidad"=>$sum_precio_utilidad]);
     }
     public function reporte_venta(Request $request)
     {

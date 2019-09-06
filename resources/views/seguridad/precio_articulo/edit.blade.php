@@ -44,11 +44,24 @@
 	                    {!! Form::text('precio_compra', null, ['class'=>'form-control', 'value'=>'{{ $articulos->precio_compra }}']) !!}
 	                </div>
 	            </div>
-
+				 <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+	                <div class="form-group">
+	                    {!! Form::label('precio_venta_actual', 'Precio de Venta Actual') !!}
+	                    {!! Form::text('precio_venta_actual', null, ['class'=>'form-control', 'value'=>'{{ $articulos->precio_venta_actual }}', 'disabled']) !!}
+	                </div>
+	            </div>
 	           <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
 	                <div class="form-group">
-	                    {!! Form::label('precio_venta', 'Precio de Venta') !!}
-	                    {!! Form::text('precio_venta', null, ['class'=>'form-control', 'value'=>'{{ $articulos->precio_venta }}']) !!}
+	                	{!! Form::label('precio_venta', 'Precio de Venta') !!}
+	                	<div class="input-group">
+	                        <span class="input-group-addon">
+								{!! Form::checkbox('up_precio_venta') !!}
+	                        </span>
+
+	                    	{!! Form::text('precio_venta', null, ['class'=>'form-control', 'value'=>'{{ $articulos->precio_venta }}']) !!}
+	                  	</div>
+	                    {{--
+	                    {!! Form::text('precio_venta', null, ['class'=>'form-control', 'value'=>'{{ $articulos->precio_venta }}']) !!}--}}
 	                </div>
 	            </div>
 	            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">

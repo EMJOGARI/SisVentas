@@ -86,7 +86,7 @@ class IngresoController extends Controller
 		        	$detalle->idarticulo=$idarticulo[$cont];
 		        	$detalle->cantidad=$cantidad[$cont];
 		        	$detalle->precio_compra=$precio_compra[$cont];
-                    $detalle->precio_venta=($precio_compra[$cont]/0.55);
+                    $detalle->precio_venta=($precio_compra[$cont]/0.70);
 		        	$detalle->save();
 		        	$cont=$cont+1;
 		        }

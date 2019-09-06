@@ -2,10 +2,7 @@
 @section('name', "Reportes de Almacén Listado de Productos")
 @section('content')
 	<div class="row">
-		<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-			@include('reporte.almacen.listado-producto.list')
-		</div>
-		<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+		<div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
 			@include('reporte.almacen.listado-producto.search')
 		</div>
 		<div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 pull-right">

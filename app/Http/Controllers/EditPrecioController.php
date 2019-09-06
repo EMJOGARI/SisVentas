@@ -44,20 +44,30 @@ class EditPrecioController extends Controller
     {
        $articulos=DB::table('tb_articulo as art')
             ->join('tb_detalle_ingreso as di','art.idarticulo','=','di.idarticulo')
-            ->select('art.idarticulo','art.nombre','art.codigo','art.stock',DB::raw("MAX(di.precio_compra) AS precio_compra"), DB::raw("MAX(di.precio_compra / 0.55) AS precio_venta"))
+            ->select('art.idarticulo','art.nombre','art.codigo','art.stock',DB::raw("MAX(di.precio_compra) AS precio_compra"), DB::raw("MAX(di.precio_venta / 0.70) AS precio_venta"),DB::raw("MAX(di.precio_venta) AS precio_venta_actual"))
             ->groupBy('art.idarticulo','art.nombre','art.codigo','art.stock')
             ->where('art.idarticulo',$id)
             ->first();
+
             return view("seguridad.precio_articulo.edit",["articulos"=>$articulos]);
     }
 
     public function update(Request $request, $id)
     {
+        $pv = $request->get('up_precio_venta');
+        if ($pv == 1) {
+             DB::table('tb_detalle_ingreso as di')
+                ->join('tb_articulo as art','art.idarticulo','=','di.idarticulo')
+                ->select('art.idarticulo','art.nombre','art.codigo','art.stock', DB::raw("MAX(di.precio_venta) AS precio_venta")) //probando esta linea
+                ->where('art.idarticulo',$id)
+                ->update(array('precio_venta' => Input::get('precio_venta')));
+        } else {
         DB::table('tb_detalle_ingreso as di')
             ->join('tb_articulo as art','art.idarticulo','=','di.idarticulo')
-            ->select('art.idarticulo','art.nombre','art.codigo','art.stock', DB::raw("MAX(di.precio_venta) AS precio_venta")) //probando esta linea
+            ->select('art.idarticulo','art.nombre','art.codigo','art.stock', DB::raw("MAX(di.precio_compra) AS precio_compra")) //probando esta linea
             ->where('art.idarticulo',$id)
-            ->update(array('precio_venta' => Input::get('precio_venta')));
+            ->update(array('precio_compra' => Input::get('precio_compra')));
+        }
 
         DB::table('tb_articulo')
             ->where('idarticulo',$id)
