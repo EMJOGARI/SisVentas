@@ -41,12 +41,12 @@ class ReporteController extends Controller
             ->where(function($query) use ($codigo, $stock, $cat){
                 if($codigo){
                     if ($codigo != "") {
-                        return $query->where('a.codigo',$codigo);
+                        return $query->Where('a.codigo',$codigo);
                     }
                 }
                 if($cat){
                     if ($cat != "") {
-                        return $query->where('c.idcategoria',$cat);
+                        return $query->Where('c.idcategoria',$cat);
                     }
                 }
                 if($stock){

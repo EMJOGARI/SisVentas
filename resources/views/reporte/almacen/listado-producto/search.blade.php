@@ -7,13 +7,19 @@
 				<option value="1">Productos en Existencia</option>
 				<option value="2">Productos sin Existencia</option>
 			</select>
+			<span class="input-group-btn">
+				<button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
+			</span>
 		</div>
 	</div>
 	<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
 		<div class="form-group">
 			<div class="input-group">
 				<input type="text" class="form-control" name="searchText" placeholder="Buscar por código..." value="{{ $searchText }}">
-			</div>
+				<span class="input-group-btn">
+					<button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
+				</span>
+			</div>			
 		</div>
 	</div>
 	<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
@@ -24,10 +30,10 @@
 		    		<option value="{{ $cat->idcategoria }}">{{ $cat->nombre }}</option>
 				@endforeach
 		    </select>
+		    <span class="input-group-btn">
+				<button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
+			</span>
 		</div>
-	</div>
-	<div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 pull-right">
-		<button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> Buscar</button>
-	</div>
+	</div>	
 </div>
 {{ Form::close() }}
