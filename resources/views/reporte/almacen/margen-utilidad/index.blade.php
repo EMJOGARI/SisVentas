@@ -2,9 +2,9 @@
 @section('name', "Reportes de Almacén Margen Utilidad")
 @section('content')
         <div class="row">
-		<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-			@include('reporte.almacen.margen-utilidad.searchcategoria')
-		</div>
+			<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+				@include('reporte.almacen.margen-utilidad.searchcategoria')
+			</div>
 		<div class="col-lg-offset-6 col-md-offset-6 col-sm-offset-6 col-lg-2 col-md-2 col-sm-2 col-xs-12">
 			<a href="{{ url('pdf/reportearticuloprecio') }}"><button class="btn btn-primary"><i class="fa fa-print"></i> Imprimir Reporte</button></a>
 		</div>
@@ -36,8 +36,8 @@
 						<tr>
 							<td></td>
 							<td></td>
-							<td align="center"><strong>TOTAL:</strong></td>							
-							<td align="center"><strong>{{ $sum_stock }}</strong></td>							
+							<td align="center"><strong>TOTAL:</strong></td>
+							<td align="center"><strong>{{ $sum_stock }}</strong></td>
 							<td align="right"><strong>{{ number_format($sum_precio_compra, 2, ',', '.') }}</strong></td>
 							<td align="right"><strong>{{ number_format($sum_precio_venta, 2, ',', '.') }}</strong></td>
 							<td align="right"><strong>{{ number_format($sum_precio_utilidad, 2, ',', '.') }}</strong></td>

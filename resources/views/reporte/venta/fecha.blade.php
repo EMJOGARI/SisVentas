@@ -8,8 +8,5 @@
           <i class="fa fa-calendar"></i>
       </div>
       <input type="text" id="FechaFinal" name="FechaFinal" class="form-control pull-right" data-date-end-date="0d">
-      <span class="input-group-btn">
-        <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
-      </span>
   </div>
  {{ Form::close() }}

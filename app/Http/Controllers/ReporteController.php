@@ -131,13 +131,12 @@ class ReporteController extends Controller
         $clien = $request->get('cliente');
         $texto = trim($request->get('searchText'));
 
-
-
             $ventas=DB::table('tb_venta as v')
                 ->join('tb_persona as p','v.idcliente','=','p.idpersona')
+                ->join('tb_persona as p2','v.idvendedor','=','p2.idpersona')
                 ->join('tb_detalle_venta as dv','v.idventa','=','dv.idventa')
-                ->select('v.idventa','v.idvendedor','v.fecha_hora','p.nombre','p.municipio','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.estado','v.total_venta')
-                ->groupBy('v.idventa','v.fecha_hora','p.nombre','p.municipio','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.estado','v.total_venta')
+                ->select('v.idventa','v.idvendedor','v.fecha_hora','p.nombre','p2.nombre as vendedor','p.municipio','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.estado','v.total_venta')
+                ->groupBy('v.idventa','v.fecha_hora','p.nombre','p2.nombre','p.municipio','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.estado','v.total_venta')
                 ->where(function($query) use ($texto,$clien,$vende,$muni,$f1,$f2){
                     if ($clien) {
                         if ($clien != "") {
@@ -164,7 +163,13 @@ class ReporteController extends Controller
                 ->orderBy('idventa','desc')
                 ->paginate(200);
                 //dd($ventas);
-        return view('reporte.venta.index',["ventas"=>$ventas,"clientes"=>$clientes,"vendedor"=>$vendedor]);
+
+            $sum_total_venta = 0;
+            foreach ($ventas as $venta) {
+                $sum_total_venta += $venta->total_venta;
+
+            }
+        return view('reporte.venta.index',["ventas"=>$ventas,"clientes"=>$clientes,"vendedor"=>$vendedor,"sum_total_venta"=>$sum_total_venta]);
     }
     public function generar()
     {

@@ -1,6 +1,6 @@
 @extends ('layouts.admin')
 
-@section('name', "Nueva Venta de CONTADO")
+@section('name', "Nueva Venta")
 
 @section('content')
 
