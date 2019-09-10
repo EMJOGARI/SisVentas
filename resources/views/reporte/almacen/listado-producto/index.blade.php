@@ -31,6 +31,14 @@
 							<td align="right">{{ number_format($art->precio_venta, 2, ',', '.') }}</td>
 						</tr>
 					@endforeach
+						<tr>
+							<td></td>
+							<td></td>
+							<td align="center"><strong>TOTAL:</strong></td>
+							<td align="center"><strong>{{ $sum_stock }}</strong></td>
+							<td align="right"><strong>------</strong></td>
+							<td align="right"><strong>------</strong></td>						
+						</tr>
 				</table>
 			</div>
 			{{ $articulos->render() }}

@@ -43,17 +43,28 @@ class ReporteController extends Controller
                     if ($codigo != "") {
                         return $query->Where('a.codigo',$codigo);
                     }
-                }
-                if($cat){
-                    if ($cat != "") {
-                        return $query->Where('c.idcategoria',$cat);
+                }              
+
+                if($stock){
+                    if ($stock != "") {
+                        if ($stock == 2) {
+                            return $query->where('stock','<=','0');
+                        }else{
+                            if ($stock == 1 && $cat != ""){
+                                 return $query->where('stock','>','0')
+                                            ->where(function($q) use ($cat){
+                                                $q->orwhere('c.idcategoria',$cat);
+                                            });
+                            }else{
+                                 return $query->where('stock','>','0');
+                            }                                                     
+                        }
                     }
                 }
-                if($stock){
-                    if ($stock == 2) {
-                        return $query->where('stock','<=','0');
-                    }else{
-                        return $query->where('stock','>','0');
+
+                if($cat){
+                    if ($cat != "") {
+                        return $query->orWhere('c.idcategoria',$cat);
                     }
                 }
             })
@@ -61,7 +72,13 @@ class ReporteController extends Controller
             ->orderBy('categoria')
             ->orderBy('a.nombre')
             ->paginate(200);
-        return view('reporte.almacen.listado-producto.index',["articulos"=>$articulos,"searchText"=>$codigo,"searchList"=>$stock,"categorias"=>$categorias]);
+
+            $sum_stock = 0;           
+            foreach ($articulos as $art) {
+                $sum_stock += $art->stock;
+            }               
+
+        return view('reporte.almacen.listado-producto.index',["articulos"=>$articulos,"searchText"=>$codigo,"searchList"=>$stock,"categorias"=>$categorias,"sum_stock"=>$sum_stock]);
     }
     public function reporte_almacen_utilidad(Request $request)
     {
@@ -106,7 +123,7 @@ class ReporteController extends Controller
                 $sum_precio_venta += ($art->precio_venta * $art->stock);
                 $sum_precio_utilidad += (($art->precio_venta - $art->precio_compra) * $art->stock);
             }
-            //dd($sum_stock);
+            
         return view('reporte.almacen.margen-utilidad.index',["articulos"=>$articulos,"categorias"=>$categorias,"searchText"=>$codigo,"sum_stock"=>$sum_stock,"sum_precio_compra"=>$sum_precio_compra,"sum_precio_venta"=>$sum_precio_venta,"sum_precio_utilidad"=>$sum_precio_utilidad]);
     }
     public function reporte_venta(Request $request)
@@ -162,7 +179,6 @@ class ReporteController extends Controller
                 ->where('v.estado','A')
                 ->orderBy('idventa','desc')
                 ->paginate(200);
-                //dd($ventas);
 
             $sum_total_venta = 0;
             foreach ($ventas as $venta) {

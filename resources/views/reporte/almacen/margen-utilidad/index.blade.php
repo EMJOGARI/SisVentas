@@ -1,5 +1,5 @@
 @extends ('layouts.admin')
-@section('name', "Reportes de Almacén Margen Utilidad")
+@section('name', "Reportes de Almacén Margen Utilidad por Categoría")
 @section('content')
         <div class="row">
 			<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
