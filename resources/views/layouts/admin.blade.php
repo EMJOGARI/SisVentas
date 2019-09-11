@@ -134,7 +134,7 @@
                  <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
-                <li class="treeview menu-open">
+                <li class="treeview menu-close">
                   <a href="#"><i class="fa fa-area-chart"></i> Almacén
                     <span class="pull-right-container">
                       <i class="fa fa-angle-left pull-right"></i>
@@ -143,6 +143,17 @@
                   <ul class="treeview-menu" style="display: block;">
                     <li><a href="{{ url('reporte/almacen/listado-producto') }}"><i class="fa fa-th"></i>Listado de Productos</a></li>
                     <li><a href="{{ url('reporte/almacen/margen-utilidad') }}"><i class="fa fa-th"></i>Margen de Utilidad</a></li>
+                  </ul>
+                </li>
+                <li class="treeview menu-open">
+                  <a href="#"><i class="fa fa-line-chart"></i> Ventas
+                    <span class="pull-right-container">
+                      <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                  </a>
+                  <ul class="treeview-menu" style="display: block;">
+                    <li><a href="{{ url('reporte/venta/venta-cliente') }}"><i class="fa fa-th"></i>Vetas por Clientes</a></li>
+                    <li><a href="{{ url('reporte/venta/venta-vendedor') }}"><i class="fa fa-th"></i>Vetas por Vendedor</a></li>
                   </ul>
                 </li>
                 <li><a href="{{ url('reporte/venta') }}"><i class="fa fa-line-chart"></i>Ventas</a></li>

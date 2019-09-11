@@ -5,7 +5,6 @@
 <div class="row" style="margin-bottom: 2rem;">
 	<div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
 		<div class="row">
-			{{--
 			<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
 				@include('reporte.venta.fecha')
 			</div>
@@ -21,7 +20,6 @@
 			<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
 				@include('reporte.venta.municipio')
 			</div>
-			--}}
 		</div>
 	</div>
 

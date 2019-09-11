@@ -23,9 +23,13 @@ Route::resource('almacen/categoria', 'CategoriaController');
 Route::resource('almacen/articulo', 'ArticuloController');
 Route::resource('ventas/venta', 'VentaController');
 Route::resource('compras/ingreso', 'IngresoController');
+/* REPORTES ALMACEN */
 Route::get('reporte/almacen/listado-producto', 'ReporteController@reporte_almacen');
 Route::get('reporte/almacen/margen-utilidad', 'ReporteController@reporte_almacen_utilidad');
+/* REPORTES VENTAS */
 Route::get('reporte/venta', 'ReporteController@reporte_venta');
+Route::get('reporte/venta/venta-cliente', 'ReporteController@reporte_venta_cliente');
+Route::get('reporte/venta/venta-vendedor', 'ReporteController@reporte_venta_vendedor');
 
 
 Auth::routes();
@@ -35,7 +39,6 @@ Route::get('/{slug?}', 'HomeController@index')->name('home');
 
 Route::get('pdf/reportearticulo', 'ReporteController@ReporteArticulo');
 Route::get('pdf/reportearticuloprecio', 'ReporteController@ReporteArticuloPrecio');
-
 
 Route::get('pdf/reporteingreso', 'ReporteController@ReporteIngreso');
 Route::get('pdf/reporteingresoid/{id}', 'ReporteController@ReporteIngresoID');
