@@ -53,7 +53,7 @@ class ReporteController extends Controller
                             if ($stock == 1 && $cat != ""){
                                  return $query->where('stock','>','0')
                                             ->where(function($q) use ($cat){
-                                                $q->orwhere('c.idcategoria',$cat);
+                                                $q->where('c.idcategoria',$cat);
                                             });
                             }else{
                                  return $query->where('stock','>','0');
@@ -71,7 +71,7 @@ class ReporteController extends Controller
             ->where('a.estado','Activo')
             ->orderBy('categoria')
             ->orderBy('a.nombre')
-            ->paginate(200);
+            ->paginate(50);
 
             $sum_stock = 0;
             foreach ($articulos as $art) {
@@ -260,14 +260,21 @@ class ReporteController extends Controller
                 ->where(function($query) use ($vende,$cat,$f1,$f2){
 
                     if (($f1) & ($f2)) {
-                        if (($f1 != "") & ($f2 != "") & ($vende != "")) {
+                        if (($f1 != "") & ($f2 != "") & ($vende != "") & ($cat != "")) {
                             return $query->WhereBetween('v.fecha_hora', [$f1,$f2])
                                             ->where(function($q) use ($vende,$cat){
-                                                $q->orWhere('p2.idpersona',$vende)
-                                                ->orwhere('c.idcategoria',$cat);
+                                                $q->Where('p2.idpersona',$vende)
+                                                    ->where('c.idcategoria',$cat);
                                             });
                         }else{
+                            if (($f1 != "") & ($f2 != "") & ($vende != "")) {
+                                return $query->WhereBetween('v.fecha_hora', [$f1,$f2])
+                                            ->where(function($q) use ($vende){
+                                                $q->orWhere('p2.idpersona',$vende);
+                                            });
+                            }else{
                              return $query->WhereBetween('v.fecha_hora', [$f1,$f2]);
+                            }
                         }
                     }
                     if ($vende) {

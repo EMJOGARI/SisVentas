@@ -41,7 +41,7 @@
 						</tr>
 				</table>
 			</div>
-			{{ $articulos->render() }}
+			{{ $articulos->appends(Request::all())->render() }}
 		</div>
 	</div>
 @endsection

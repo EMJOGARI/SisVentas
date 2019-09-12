@@ -204,19 +204,18 @@
                     <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
                   </div>
                 </div>
-                <!-- /.box-header -->
-                <div class="box-body">
-                  	<div class="row">
-
-	                  	<div class="col-md-12">
-                          <!--Contenido-->
-                          @include('flash::message')
-                          @yield('content')
-                          <!--Fin Contenido-->
-                      </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                      	<div class="row">
+    	                  	<div class="col-md-12">
+                              <!--Contenido-->
+                              @include('flash::message')
+                              @yield('content')
+                              <!--Fin Contenido-->
+                          </div>
+                        </div>
                     </div>
-                </div>
-                  	</div><!-- /.row -->
+                  </div><!-- /.row -->
                 </div><!-- /.box-body -->
               </div><!-- /.box -->
             </div><!-- /.col -->

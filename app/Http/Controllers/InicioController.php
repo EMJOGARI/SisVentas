@@ -30,9 +30,22 @@ class InicioController extends Controller
         $articulos=DB::table('tb_articulo') 
             ->select(DB::raw("sum(stock) AS total"))                     
             ->where('estado','Activo')            
-            ->get();        
+            ->get(); 
 
-        return view('principal/index', ["personas"=>$personas,"ingresos"=>$ingresos,"ventas"=>$ventas,"articulos"=>$articulos]); 
+        $ranking=DB::table('tb_venta as v')
+            ->join('tb_persona as p','p.idpersona','v.idcliente')
+            ->select('v.idcliente','p.nombre',DB::raw("SUM(v.total_venta) as total"))
+            ->where('v.fecha_hora','>=','2019-09-01')
+            ->groupBy('v.idcliente','p.nombre')                    
+            ->orderBy('total','desc')
+            ->paginate(50);
+            $sum_total = 0; 
+            $k =0;          
+            foreach ($ranking as $rank) {
+                $sum_total += $rank->total;
+            }
+//dd($ranking);
+        return view('principal/index', ["personas"=>$personas,"ingresos"=>$ingresos,"ventas"=>$ventas,"articulos"=>$articulos,"ranking"=>$ranking,"sum_total"=>$sum_total,"k"=>$k]); 
     }
     
 }
