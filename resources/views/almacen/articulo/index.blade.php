@@ -19,7 +19,6 @@
 						<th width="10%">Categoría</th>
 						<th width="5%">Estado</th>
 						<th width="5%">Stock</th>
-						<th width="10%">Precio Venta</th>
 						<th width="10%"></th>
 					</thead>
 					@foreach ($articulos as $art)
@@ -31,7 +30,6 @@
 								<span class="label label-success"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ $art->estado }}</font></font></span>
 							</td>
 							<td align="center">{{ $art->stock }}</td>
-							<td align="right">{{ number_format($art->precio_venta, 2, ',', '.') }}</td>
 							<td align="center">
 								<div class="btn-group">
 									<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Acciones <span class="fa fa-caret-down"></span></button>

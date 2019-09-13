@@ -201,7 +201,6 @@ class ReporteController extends Controller
                 ->select('v.idventa','v.idvendedor','v.fecha_hora','p.nombre','p2.nombre as vendedor','p.municipio','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.estado','v.total_venta')
                 ->groupBy('v.idventa','v.fecha_hora','p.nombre','p2.nombre','p.municipio','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.estado','v.total_venta')
                 ->where(function($query) use ($clien,$muni,$f1,$f2){
-
                     if (($f1) & ($f2)) {
                         if (($f1 != "") & ($f2 != "") & ($clien != "")) {
                             return $query->WhereBetween('v.fecha_hora', [$f1,$f2])
@@ -237,11 +236,7 @@ class ReporteController extends Controller
     }
     public function reporte_venta_vendedor(Request $request)
     {
-        //dd($request);
-        $categorias=DB::table('tb_categoria')->where('condicion','=','1')->get();
-        $cat = trim($request->get('searchCategoria'));
-
-        $vendedor=DB::table('tb_persona')->where('tipo_persona','Vendedor')->get();
+        $vendedores=DB::table('tb_persona')->where('tipo_persona','Vendedor')->get();
         $vende = trim($request->get('searchVendedor'));
 
         $f1 = Carbon::now()->toDateString("FechaInicio");
@@ -252,58 +247,50 @@ class ReporteController extends Controller
 
             $ventas=DB::table('tb_venta as v')
                 ->join('tb_detalle_venta as dv','v.idventa','=','dv.idventa')
-                ->join('tb_persona as p','v.idcliente','=','p.idpersona')
-                ->join('tb_persona as p2','v.idvendedor','=','p2.idpersona')
+                ->join('tb_persona as p','p.idpersona','=','v.idvendedor')
                 ->join('tb_articulo as a','a.idarticulo','dv.idarticulo')
                 ->join('tb_categoria as c','c.idcategoria','a.idcategoria')
-                ->select('v.idventa','v.idcliente','v.idvendedor','p2.nombre as vendedor','v.serie_comprobante','v.num_comprobante','v.estado','v.fecha_hora','dv.idarticulo','c.nombre as categoria','dv.cantidad','dv.precio_venta')               
-                ->where(function($query) use ($vende,$cat,$f1,$f2){
-
+                ->select('v.idvendedor','p.nombre as vendedor','c.nombre as categorias',
+                            DB::raw("SUM(dv.cantidad) AS cantidad"),
+                            DB::raw("SUM(dv.cantidad * dv.precio_venta) AS neto")
+                        )
+                ->where(function($query) use ($vende,$f1,$f2){
                     if (($f1) & ($f2)) {
-                        if (($f1 != "") & ($f2 != "") & ($vende != "") & ($cat != "")) {
+                        if (($f1 != "") & ($f2 != "") & ($vende != "")) {
                             return $query->WhereBetween('v.fecha_hora', [$f1,$f2])
-                                            ->where(function($q) use ($vende,$cat){
-                                                $q->Where('p2.idpersona',$vende)
-                                                    ->where('c.idcategoria',$cat);
+                                            ->where(function($q) use ($vende){
+                                                $q->Where('p.idpersona',$vende);
+                                            });
+                        }
+                    }else{
+                        if ($vende != "") {
+                            return $query->where('p.idpersona',$vende)
+                                        ->where(function($q){
+                                                $q->whereMonth('v.fecha_hora', date('m'));
                                             });
                         }else{
-                            if (($f1 != "") & ($f2 != "") & ($vende != "")) {
-                                return $query->WhereBetween('v.fecha_hora', [$f1,$f2])
-                                            ->where(function($q) use ($vende){
-                                                $q->orWhere('p2.idpersona',$vende);
-                                            });
-                            }else{
-                             return $query->WhereBetween('v.fecha_hora', [$f1,$f2]);
-                            }
+                            return $query->whereMonth('v.fecha_hora', date('m'));
                         }
                     }
-                    if ($vende) {
-                        if ($vende != "") {
-                             return $query->where('p2.idpersona',$vende);
-                        }
-                    }
-                    if($cat){
-                        if ($cat != "") {
-                            return $query->where('c.idcategoria',$cat);
-                        }
-                    }
-                   
                 })
                 ->where('v.estado','A')
-                ->orderBy('idventa','desc')
-                ->paginate(200);
-//dd($ventas);
-          /*  $sum_total_venta = 0;
+                ->groupBy('v.idvendedor','p.nombre','c.nombre')
+                ->orderBy('v.idvendedor')
+                ->orderBy('c.nombre')
+                ->get();
+            $sum_total = 0;
+            $sum_neto = 0;
             foreach ($ventas as $venta) {
-                $sum_total_venta += $venta->total_venta;
+                $sum_total += $venta->cantidad;
+                $sum_neto += $venta->neto;
 
-            }*/
-        return view('reporte.venta.venta-vendedor.index',["ventas"=>$ventas,"vendedor"=>$vendedor,"categorias"=>$categorias/*,"sum_total_venta"=>$sum_total_venta*/]);
+            }
+        return view('reporte.venta.venta-vendedor.index',["ventas"=>$ventas,"vendedores"=>$vendedores,"sum_total"=>$sum_total,"sum_neto"=>$sum_neto]);
     }
 
     public function generar()
     {
-              	//dd($ingresos);
+        //dd($ingresos);
         $view = \View::make('pdf.reporte',compact('tb_articulos'))->render();
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadHTML($view);

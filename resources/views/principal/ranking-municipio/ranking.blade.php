@@ -2,7 +2,7 @@
   <div class="box-header">
     <div class="row">
       <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-          <h3 class="box-title"><strong>Ranking Clientes</strong></h3>
+          <h3 class="box-title"><strong>Ranking Municipios</strong></h3>
       </div>
     </div>
   </div>
@@ -12,13 +12,13 @@
       <tbody>
           <tr>
             <th width="10%">#</th>
-            <th width="70%">Nombre</th>
+            <th width="70%">Municippio</th>
             <th width="20%">Acumulado</th>
           </tr>
-          @foreach ($ranking as $rank)
+          @foreach ($ranking_municipio as $rank)
               <tr>
                 <td align="center"><strong>{{$k = $k + 1}}</strong></td>
-                <td>{{ $rank->nombre }}</td>
+                <td>{{ $rank->municipio }}</td>
                 <td align="right">{{ number_format($rank->total, 2, ',', '.') }}</td>
               </tr>
           @endforeach
@@ -30,6 +30,5 @@
       </tbody>
     </table>
   </div>
-  {{ $ranking->appends(Request::all())->render() }}
   <!-- /.box-body -->
 </div>

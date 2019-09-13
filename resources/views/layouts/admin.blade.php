@@ -153,7 +153,7 @@
                   </a>
                   <ul class="treeview-menu" style="display: block;">
                     <li><a href="{{ url('reporte/venta/venta-cliente') }}"><i class="fa fa-th"></i>Vetas por Clientes</a></li>
-                    <li><a href="{{ url('reporte/venta/venta-vendedor') }}"><i class="fa fa-th"></i>Vetas por Vendedor</a></li>
+                    <li><a href="{{ url('reporte/venta/venta-vendedor') }}"><i class="fa fa-th"></i>Vetas por Categoria</a></li>
                   </ul>
                 </li>
                 <li><a href="{{ url('reporte/venta') }}"><i class="fa fa-line-chart"></i>Ventas</a></li>

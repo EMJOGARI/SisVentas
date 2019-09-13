@@ -1,11 +1,11 @@
 @extends ('layouts.admin')
-@section('name', "Reportes de Ventas")
+@section('name', "Reportes de Ventas - Vendedor por Categorias")
 @section('content')
 
 <div class="row" style="margin-bottom: 2rem;">
 	<div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
-		<div class="row">			
-			@include('reporte.venta.venta-vendedor.search')	
+		<div class="row">
+			@include('reporte.venta.venta-vendedor.search')
 		</div>
 	</div>
 
@@ -19,36 +19,28 @@
 		<div class="table-responsive">
 			<table class="table table-striped table-bordered table-condensed table-hover">
 				<thead>
-					<th width="10%">Fecha</th>
-					<th width="10%">Factura Nº</th>
-					<th width="30%">Vendedor</th>
-					<th width="15%">Categoria</th>
+					<th width="50%">Vendedor</th>
+					<th width="10%">Categoria</th>
 					<th width="5%">Cantidad</th>
-					<th width="10%">Precio Venta</th>
 					<th width="10%">Neto</th>
 				</thead>
-				@foreach ($ventas as $ven)
-					<tr>
-						<td align="center">{{ date('d-m-Y', strtotime($ven->fecha_hora)) }}</td>
-						<td>{{ $ven->serie_comprobante.' - '.$ven->num_comprobante }}</td>						
-						<td>{{ $ven->vendedor}}</td>
-						<td>{{ $ven->categoria }}</td>
-						<td align="center">{{ $ven->cantidad }}</td>
-						<td align="right">{{ number_format($ven->precio_venta, 2, ',', '.') }}</td>
-						<td align="right">{{ number_format($ven->cantidad * $ven->precio_venta, 2, ',', '.') }}</td>
-					</tr>
-				@endforeach
-					<tr>
-						<td></td>
-						<td></td>
-						<td></td>						
-						<td align="center"><strong>TOTAL:</strong></td>
-						<td></td>
-						<td align="right"><strong></strong></td>
-					</tr>
+					@foreach ($ventas as $ven)
+						<tr>
+							<td>{{ $ven->vendedor }}</td>
+							<td>{{ $ven->categorias }}</td>
+							<td align="center">{{ $ven->cantidad }}</td>
+							<td align="right">{{ number_format($ven->neto, 2, ',', '.') }}</td>
+						</tr>
+					@endforeach
+						<tr>
+							<td></td>
+							<td align="center"><strong>TOTAL:</strong></td>
+							<td align="right"><strong>{{ $sum_total }}</strong></td>
+							<td align="right"><strong>{{ number_format($sum_neto, 2, ',', '.') }}</strong></td>
+						</tr>
 			</table>
 		</div>
-		{{ $ventas->render() }}
+		{{-- $ventas->render() --}}
 	</div>
 </div>
 @endsection

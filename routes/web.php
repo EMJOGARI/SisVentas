@@ -32,6 +32,8 @@ Route::get('reporte/venta/venta-cliente', 'ReporteController@reporte_venta_clien
 Route::get('reporte/venta/venta-vendedor', 'ReporteController@reporte_venta_vendedor');
 
 
+
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
