@@ -94,7 +94,6 @@ class ReporteController extends Controller
                 DB::raw("MAX(di.precio_venta) AS precio_venta"),
                 DB::raw("MAX(di.precio_compra) AS precio_compra")
             )
-            ->groupBy('a.idarticulo','a.nombre','a.codigo','a.stock','a.estado','c.nombre')
             ->where(function($query) use ($codigo, $cat){
                 if($codigo){
                     if ($codigo != "") {
@@ -109,6 +108,7 @@ class ReporteController extends Controller
             })
             ->where('stock','>','0')
             ->where('a.estado','Activo')
+            ->groupBy('a.idarticulo','a.nombre','a.codigo','a.stock','a.estado','c.nombre')
             ->orderBy('categoria')
             ->orderBy('a.nombre')
             ->paginate(200);
