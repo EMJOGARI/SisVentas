@@ -17,7 +17,7 @@
           </tr>
           @foreach ($ranking_municipio as $rank)
               <tr>
-                <td align="center"><strong>{{$k = $k + 1}}</strong></td>
+                <td align="center"><strong>{{$m = $m + 1}}</strong></td>
                 <td>{{ $rank->municipio }}</td>
                 <td align="right">{{ number_format($rank->total, 2, ',', '.') }}</td>
               </tr>
@@ -25,7 +25,7 @@
           <tr>
             <td></td>
             <td align="center"><strong>TOTAL:</strong></td>
-            <td align="right"><strong>{{ number_format($sum_total, 2, ',', '.') }}</strong></td>
+            <td align="right"><strong>{{ number_format($sum_total_municipio, 2, ',', '.') }}</strong></td>
           </tr>
       </tbody>
     </table>

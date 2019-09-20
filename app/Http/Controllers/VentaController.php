@@ -35,7 +35,7 @@ class VentaController extends Controller
             	->join('tb_detalle_venta as dv','v.idventa','=','dv.idventa')
             	->select('v.idventa','v.fecha_hora','p.nombre','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.estado','v.total_venta')
             	->where('v.num_comprobante','LIKE','%'.$query.'%')
-                ->where('v.estado','=','A')
+                //->where('v.estado','=','A')
             	->orderBy('idventa','desc')
                 ->groupBy('v.idventa','v.fecha_hora','p.nombre','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.estado','v.total_venta')
                 ->paginate(20);
@@ -81,7 +81,7 @@ class VentaController extends Controller
 				$venta->total_venta=$request->get('total_venta');
 		        	$mytime = Carbon::now('America/Caracas');
 		        $venta->fecha_hora=$mytime->toDateTimestring();
-		        $venta->estado='A';
+		        $venta->estado=$request->get('estado');;
 		        $venta->save();
 
 		        $idarticulo=$request->get('idarticulo');
@@ -104,11 +104,11 @@ class VentaController extends Controller
 		        }
 
     		DB::commit();
+            flash('Venta Exitosa')->success();
     	}catch(\Exception $e){
     		DB::rollback();
             flash('Error a procesar la venta')->warning();
-    	}
-        flash('Venta Exitosa')->success();
+    	}        
         return Redirect::to('ventas/venta');
 
     }
@@ -138,11 +138,15 @@ class VentaController extends Controller
         return view("ventas.venta.show",["venta"=>$venta , "detalles"=>$detalles, "vendedor"=>$vendedor]);
     }
 
+    public function update(ArticuloFormRequest $request, $id)
+    {
+        /*-----*/
+    }
 
     public function destroy($id)
     {
         $venta=Venta::findOrFail($id);
-        $venta->estado='C';
+        $venta->estado='Anulada';
         $venta->save();
 
         try {

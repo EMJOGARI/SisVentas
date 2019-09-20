@@ -170,7 +170,7 @@ class ReporteController extends Controller
                         }
                     }
                 })
-                ->where('v.estado','A')
+                ->where('v.estado','Pagada')
                 ->orderBy('idventa','desc')
                 ->paginate(200);
 
@@ -223,7 +223,7 @@ class ReporteController extends Controller
                         }
                     }
                 })
-                ->where('v.estado','A')
+                ->where('v.estado','<>','Anulada')
                 ->orderBy('idventa','desc')
                 ->paginate(200);
 
@@ -273,7 +273,7 @@ class ReporteController extends Controller
                         }
                     }
                 })
-                ->where('v.estado','A')
+                ->where('v.estado','<>','Anulada')
                 ->groupBy('v.idvendedor','p.nombre','c.nombre')
                 ->orderBy('v.idvendedor')
                 ->orderBy('c.nombre')

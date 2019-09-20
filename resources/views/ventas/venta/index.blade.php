@@ -24,7 +24,7 @@
 						<th width="40%">Cliente</th>
 						<th width="15%">Comprobante</th>
 						<th width="10%">Total</th>						
-						<th width="5%">Estado</th>
+						<th width="10%">Estado</th>
 						<th width="15%"></th>
 					</thead>
 					@foreach ($ventas as $ven)
@@ -33,7 +33,14 @@
 							<td>{{ $ven->nombre }}</td>
 							<td>{{ $ven->tipo_comprobante.': '.$ven->serie_comprobante.' - '.$ven->num_comprobante }}</td>
 							<td align="right">{{ number_format($ven->total_venta, 2, ',', '.') }}</td>
-							<td align="center">{{ $ven->estado }}</td>							
+							<td align="center">
+								@if($ven->estado == 'Pagada')
+									<span class="badge bg-green">{{ $ven->estado }}</span></td>
+								@elseif($ven->estado == 'Anulada')
+									<span class="badge bg-red">{{ $ven->estado }}</span></td>
+								@else
+									<span class="badge bg-yellow">{{ $ven->estado }}</span></td>
+								@endif						
 							<td>								
 								<div class="btn-group">
 									<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Acciones <span class="fa fa-caret-down"></span></button>

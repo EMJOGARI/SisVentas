@@ -30,6 +30,6 @@
       </tbody>
     </table>
   </div>
-  {{ $ranking->appends(Request::all())->render() }}
+  {{-- $ranking->appends(Request::all())->render() --}}
   <!-- /.box-body -->
 </div>

@@ -38,10 +38,10 @@ class InicioController extends Controller
             ->join('tb_persona as p','p.idpersona','v.idcliente')
             ->select('v.idcliente','p.nombre',DB::raw("SUM(v.total_venta) as total"))
             ->whereMonth('v.fecha_hora', date('m'))
-            ->where('v.estado','A')
+            ->where('v.estado','<>','Anulada')
             ->groupBy('v.idcliente','p.nombre')
             ->orderBy('total','desc')
-            ->paginate(50);
+            ->get();
             $sum_total = 0;
             $k =0;
             foreach ($ranking as $rank) {
@@ -54,16 +54,16 @@ class InicioController extends Controller
             ->join('tb_persona as p','p.idpersona','v.idcliente')
             ->select('p.municipio',DB::raw("SUM(v.total_venta) as total"))
             ->whereMonth('v.fecha_hora', date('m'))
-            ->where('v.estado','A')
+            ->where('v.estado','<>','Anulada')
             ->groupBy('p.municipio')
             ->orderBy('total','desc')
             ->get();
             $sum_total_municipio = 0;
-            $k =0;
+            $m =0;
             foreach ($ranking_municipio as $rank) {
                 $sum_total_municipio += $rank->total;
             }
-        return view('principal/index', ["personas"=>$personas,"ingresos"=>$ingresos,"ventas"=>$ventas,"articulos"=>$articulos,"ranking"=>$ranking,"sum_total"=>$sum_total,"k"=>$k,"ranking_municipio"=>$ranking_municipio,"sum_total_municipio"=>$sum_total_municipio]);
+        return view('principal/index', ["personas"=>$personas,"ingresos"=>$ingresos,"ventas"=>$ventas,"articulos"=>$articulos,"ranking"=>$ranking,"sum_total"=>$sum_total,"k"=>$k,"m"=>$m,"ranking_municipio"=>$ranking_municipio,"sum_total_municipio"=>$sum_total_municipio]);
     }
 
 }
