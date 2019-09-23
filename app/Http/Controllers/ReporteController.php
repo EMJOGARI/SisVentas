@@ -258,7 +258,7 @@ class ReporteController extends Controller
                     if (($f1) & ($f2)) {
                         if (($f1 != "") & ($f2 != "") & ($vende != "")) {
                             return $query->WhereBetween('v.fecha_hora', [$f1,$f2])
-                                            ->where(function($q) use ($vende){
+                                            ->Where(function($q) use ($vende){
                                                 $q->Where('p.idpersona',$vende);
                                             });
                         }

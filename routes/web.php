@@ -22,6 +22,8 @@ Route::resource('seguridad/precio_articulo', 'EditPrecioController');
 Route::resource('almacen/categoria', 'CategoriaController');
 Route::resource('almacen/articulo', 'ArticuloController');
 Route::resource('ventas/venta', 'VentaController');
+Route::resource('cobranza/banco', 'BancoController');
+Route::resource('cobranza/cuenta-por-cobrar', 'CuentasporcobrarController');
 Route::resource('compras/ingreso', 'IngresoController');
 /* REPORTES ALMACEN */
 Route::get('reporte/almacen/listado-producto', 'ReporteController@reporte_almacen');

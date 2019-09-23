@@ -1,11 +1,11 @@
 @extends ('layouts.admin')
 
-@section('name', "Banco")
+@section('name', "Cuentas por Cobrar")
 
 @section('content')
 	<div class="row">		
 		<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 pull-right">
-			@include('cobranza.banco.search')
+			@include('cobranza.cuenta-por-cobrar.search')
 		</div>
 	</div>
 	<div class="row">
@@ -24,7 +24,7 @@
 					@foreach ($ventas as $ven)
 						<tr>
 							<td align="center">{{ date('d-m-Y', strtotime($ven->fecha_hora)) }}</td>
-							<td>{{ $ven->nombre }}</td>
+							<td>{{ $ven->nombre }}</td>							
 							<td>{{ $ven->vendedor }}</td>
 							<td>{{ $ven->tipo_comprobante.': '.$ven->serie_comprobante.' - '.$ven->num_comprobante }}</td>
 							<td align="right">{{ number_format($ven->total_venta, 2, ',', '.') }}</td>
@@ -41,12 +41,15 @@
 									<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Acciones <span class="fa fa-caret-down"></span></button>
 									<ul class="dropdown-menu">
 										<li><a href="{{ URL::action('VentaController@show',$ven->idventa) }}"><i class="fa fa-file-text-o"></i> Detalle Factura</a></li>
-
-										<li><a href="{{ URL::action('ReporteController@ReporteVentaID',$ven->idventa) }}" target="_blank"><i class="fa fa-file-pdf-o"></i> Ver PDF</a></li>		
+										<li><a href="#" data-target="#modal-delete-{{ $ven->idventa }}" data-toggle="modal"><i class="fa fa-trash"></i> Anular Factura</a></li>
+										<li><a href="#" data-target="#modal-pagar-{{ $ven->idventa }}" data-toggle="modal"><i class="fa fa-trash"></i> Pagar Factura</a></li>
 									</ul>
 								</div>
 							</td>
-						</tr>
+						</tr>{{--
+						@include('ventas.venta.modal')
+						@include('ventas.venta.modal-pagar')
+						--}}
 					@endforeach
 				</table>
 			</div>

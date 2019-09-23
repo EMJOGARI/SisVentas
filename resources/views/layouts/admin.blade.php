@@ -91,7 +91,20 @@
           <!-- sidebar menu: : style can be found in sidebar.less -->
           <ul class="sidebar-menu">
             <li class="header"></li>
-            <li><a href="{{ url('principal/index') }}"><i class="fa fa-home"></i> {{ __('inicio') }}</a></li>
+            <li><a href="{{ url('principal/index') }}"><i class="fa fa-home"></i> Inicio</a></li>
+
+            <li class="treeview">
+              <a href="#">
+                <i class="fa fa-edit"></i>
+                <span>Cobranza</span>
+                 <i class="fa fa-angle-left pull-right"></i>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="{{ url('cobranza/cuenta-por-cobrar/') }}"><i class="fa fa-archive"></i>Cuentas por Cobrar</a></li>
+                <li><a href="{{ url('cobranza/banco/') }}"><i class="fa fa-bank"></i>Banco</a></li>
+              </ul>
+            </li>
+
             <li class="treeview">
               <a href="#">
                 <i class="fa fa-laptop"></i>

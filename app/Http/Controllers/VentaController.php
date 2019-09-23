@@ -34,7 +34,7 @@ class VentaController extends Controller
             	->join('tb_persona as p','v.idcliente','=','p.idpersona')
             	->join('tb_detalle_venta as dv','v.idventa','=','dv.idventa')
             	->select('v.idventa','v.fecha_hora','p.nombre','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.estado','v.total_venta')
-            	->where('v.num_comprobante','LIKE','%'.$query.'%')
+            	->where('v.serie_comprobante','LIKE','%'.$query.'%')
                 //->where('v.estado','=','A')
             	->orderBy('idventa','desc')
                 ->groupBy('v.idventa','v.fecha_hora','p.nombre','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.estado','v.total_venta')
