@@ -12,17 +12,20 @@
       <tbody>
           <tr>
             <th width="10%">#</th>
-            <th width="70%">Municippio</th>
-            <th width="20%">Acumulado</th>
+            <th width="30%">Municippio</th>
+            <th width="50%">Vendedor</th>
+            <th width="10%">Acumulado</th>
           </tr>
           @foreach ($ranking_municipio as $rank)
               <tr>
                 <td align="center"><strong>{{$m = $m + 1}}</strong></td>
                 <td>{{ $rank->municipio }}</td>
+                <td>{{ $rank->nombre }}</td>
                 <td align="right">{{ number_format($rank->total, 2, ',', '.') }}</td>
               </tr>
           @endforeach
           <tr>
+            <td></td>
             <td></td>
             <td align="center"><strong>TOTAL:</strong></td>
             <td align="right"><strong>{{ number_format($sum_total_municipio, 2, ',', '.') }}</strong></td>

@@ -17,7 +17,7 @@ class CreateVentaTable extends Migration
             $table->increments('idventa');
             $table->integer('idcliente')->unsigned();
             $table->integer('idvendedor')->unsigned();
-            $table->string('tipo_comprobante',10);
+            $table->string('tipo_comprobante',15);
             $table->string('serie_comprobante',10);
             $table->string('num_comprobante',10);
             $table->decimal('total_venta',11,2);

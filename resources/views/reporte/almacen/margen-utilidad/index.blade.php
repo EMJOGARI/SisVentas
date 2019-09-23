@@ -21,6 +21,7 @@
 						<th width="10%">Costo</th>
 						<th width="10%">Precio Venta</th>
 						<th width="10%">Utilidad</th>
+						<th width="10%">% Utilidad</th>
 					</thead>
 					@foreach ($articulos as $art)
 						<tr>
@@ -31,6 +32,7 @@
 							<td align="right">{{ number_format($art->precio_compra * $art->stock, 2, ',', '.') }}</td>
 							<td align="right">{{ number_format($art->precio_venta * $art->stock, 2, ',', '.') }}</td>
 							<td align="right">{{ number_format((($art->precio_venta - $art->precio_compra) * $art->stock), 2, ',', '.') }}</td>
+							<td align="right">{{ number_format((1-($art->precio_compra/$art->precio_venta))*100, 0, ',', '.') }} <strong>%</strong></td>
 						</tr>
 					@endforeach
 						<tr>

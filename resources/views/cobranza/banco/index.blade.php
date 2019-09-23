@@ -50,11 +50,13 @@
 										<li><a href="{{ URL::action('ReporteController@ReporteVentaID',$ven->idventa) }}" target="_blank"><i class="fa fa-file-pdf-o"></i> Ver PDF</a></li>
 
 										<li><a href="#" data-target="#modal-delete-{{ $ven->idventa }}" data-toggle="modal"><i class="fa fa-trash"></i> Anular Factura</a></li>
+										<li><a href="#" data-target="#modal-pagar-{{ $ven->idventa }}" data-toggle="modal"><i class="fa fa-trash"></i> Pagar Factura</a></li>
 									</ul>
 								</div>
 							</td>
 						</tr>
 						@include('ventas.venta.modal')
+						@include('ventas.venta.modal-pagar')
 					@endforeach
 				</table>
 			</div>

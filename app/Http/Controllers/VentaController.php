@@ -70,6 +70,7 @@ class VentaController extends Controller
     }
     public function store(VentaFormRequest $request)
     {
+       // dd($request->all());
     	try{
     		DB::beginTransaction();
     			$venta = new Venta;
@@ -81,7 +82,7 @@ class VentaController extends Controller
 				$venta->total_venta=$request->get('total_venta');
 		        	$mytime = Carbon::now('America/Caracas');
 		        $venta->fecha_hora=$mytime->toDateTimestring();
-		        $venta->estado=$request->get('estado');;
+		        $venta->estado=$request->get('estado');
 		        $venta->save();
 
 		        $idarticulo=$request->get('idarticulo');
@@ -106,9 +107,10 @@ class VentaController extends Controller
     		DB::commit();
             flash('Venta Exitosa')->success();
     	}catch(\Exception $e){
+            dd($e);
     		DB::rollback();
             flash('Error a procesar la venta')->warning();
-    	}        
+    	}
         return Redirect::to('ventas/venta');
 
     }
@@ -130,18 +132,24 @@ class VentaController extends Controller
 
         $detalles=DB::table('tb_detalle_venta as d')
             ->join('tb_articulo as a', 'd.idarticulo', '=','a.idarticulo')
-            ->select('a.nombre as articulo', 'd.cantidad', 'd.descuento','d.precio_venta')
+            ->select('a.idarticulo','a.nombre as articulo', 'd.cantidad', 'd.descuento','d.precio_venta')
             ->where('d.idventa','=',$id)
             ->get();
 
-//dd($venta, $detalles, $vendedor);
         return view("ventas.venta.show",["venta"=>$venta , "detalles"=>$detalles, "vendedor"=>$vendedor]);
     }
 
-    public function update(ArticuloFormRequest $request, $id)
+    /*public function update(Request $request, $id)
     {
-        /*-----*/
-    }
+        $up = $request->get('up_stado');
+        if ($up == 1) {
+            $venta=Venta::findOrFail($id);
+            $venta->estado=$request->get('estado');
+            $venta->save();
+        }
+        return Redirect::to('ventas/venta');
+
+    }*/
 
     public function destroy($id)
     {

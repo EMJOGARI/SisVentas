@@ -52,12 +52,14 @@ class InicioController extends Controller
 /*************************/
         $ranking_municipio=DB::table('tb_venta as v')
             ->join('tb_persona as p','p.idpersona','v.idcliente')
-            ->select('p.municipio',DB::raw("SUM(v.total_venta) as total"))
+            ->join('tb_persona as p2','p2.idpersona','v.idvendedor')
+            ->select('p.municipio','p2.nombre',DB::raw("SUM(v.total_venta) as total"))
             ->whereMonth('v.fecha_hora', date('m'))
             ->where('v.estado','<>','Anulada')
-            ->groupBy('p.municipio')
+            ->groupBy('p.municipio','p2.nombre')
             ->orderBy('total','desc')
             ->get();
+           // dd($ranking_municipio);
             $sum_total_municipio = 0;
             $m =0;
             foreach ($ranking_municipio as $rank) {
