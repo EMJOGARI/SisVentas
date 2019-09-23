@@ -24,7 +24,7 @@ class CuentasporcobrarController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
-    {
+    {        
         $fact=trim($request->get('searchText'));
         $ventas=DB::table('tb_venta as v')
             ->join('tb_persona as p','p.idpersona','v.idcliente')
@@ -39,10 +39,11 @@ class CuentasporcobrarController extends Controller
                 }               
             })
             ->where('v.estado','Pendiente')
+            ->groupBy('v.idventa','v.fecha_hora','p.nombre','p2.nombre','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.estado','v.total_venta')
             ->orderBy('idventa','desc')
             ->paginate(20);
-            dd($ventas);
-        return view('cobranza.cuenta-por-cobrar.index',["ventas"=>$ventas,"searchText"=>$fact]);
+            //dd($ventas);
+        return view('cobranza.cuenta-por-cobrar.index',["ventas"=>$ventas,"searchText"=>$fact]);       
     }
 
     /**

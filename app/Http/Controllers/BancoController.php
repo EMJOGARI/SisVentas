@@ -39,6 +39,7 @@ class BancoController extends Controller
                 }               
             })
             ->where('v.estado','Pagada')
+            ->groupBy('v.idventa','v.fecha_hora','p.nombre','p2.nombre','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.estado','v.total_venta')
             ->orderBy('idventa','desc')
             ->paginate(20);
             //dd($ventas);
