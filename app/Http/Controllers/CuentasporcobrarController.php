@@ -24,7 +24,10 @@ class CuentasporcobrarController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
-    {        
+    {
+        //$date = Carbon::now();
+        //$date = $date->format('d-m-Y');
+
         $fact=trim($request->get('searchText'));
         $ventas=DB::table('tb_venta as v')
             ->join('tb_persona as p','p.idpersona','v.idcliente')
@@ -36,77 +39,54 @@ class CuentasporcobrarController extends Controller
                     if ($fact != "") {
                         return $query->where('v.serie_comprobante',$fact);
                     }
-                }               
+                }
             })
             ->where('v.estado','Pendiente')
             ->groupBy('v.idventa','v.fecha_hora','p.nombre','p2.nombre','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.estado','v.total_venta')
             ->orderBy('idventa','desc')
             ->paginate(20);
-            //dd($ventas);
-        return view('cobranza.cuenta-por-cobrar.index',["ventas"=>$ventas,"searchText"=>$fact]);       
+
+            /*foreach ($ventas as $ven) {
+                $date = Carbon::parse($ven->fecha_hora);
+                $now = Carbon::now();
+                $diff = $date->diffInDays($now);
+            }*/
+
+
+            //dd($diff);
+        return view('cobranza.cuenta-por-cobrar.index',["ventas"=>$ventas,"searchText"=>$fact/*,"diff"=>$diff*/]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function create()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function store(Request $request)
     {
         //
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function show($id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function update(Request $request, $id)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function destroy($id)
     {
         //

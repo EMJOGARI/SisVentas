@@ -57,23 +57,14 @@
 
 	            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
 	                <div class="form-group">
-	                    {!! Form::label('tipo_comprobante', 'Tipo Documento') !!}
-	                    <select name="tipo_comprobante" class="form-control">
-	                    	<option value="factura">Factura</option>
-	                    	<option value="nota_entrega">Nota de Entrega</option>
-	                    </select>
-	                </div>
-	            </div>
-	            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-	                <div class="form-group">
 	                    {!! Form::label('serie_comprobante', 'Número de Factura') !!}
-	                    {!! Form::text('serie_comprobante', null, ['class'=>'form-control', 'placeholder'=>'Número de Factura']) !!}
+	                    {!! Form::number('serie_comprobante', null, ['class'=>'form-control', 'placeholder'=>'Número de Factura']) !!}
 	                </div>
 	            </div>
 	            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
 	                <div class="form-group">
 	                    {!! Form::label('num_comprobante', 'Número de Control') !!}
-	                    {!! Form::text('num_comprobante', null, ['required','class'=>'form-control', 'placeholder'=>'Número de Control']) !!}
+	                    {!! Form::number('num_comprobante', null, ['required','class'=>'form-control', 'placeholder'=>'Número de Control']) !!}
 	                </div>
 	            </div>
 	            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">

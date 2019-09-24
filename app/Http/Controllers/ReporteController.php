@@ -140,6 +140,7 @@ class ReporteController extends Controller
         $muni = $request->get('municipio');
         $vende = $request->get('vendedor');
         $clien = $request->get('cliente');
+
         $texto = trim($request->get('searchText'));
 
             $ventas=DB::table('tb_venta as v')

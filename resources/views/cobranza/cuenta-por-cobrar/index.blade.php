@@ -3,8 +3,8 @@
 @section('name', "Cuentas por Cobrar")
 
 @section('content')
-	<div class="row">		
-		<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 pull-right">
+	<div class="row">
+		<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 pull-right">
 			@include('cobranza.cuenta-por-cobrar.search')
 		</div>
 	</div>
@@ -18,16 +18,18 @@
 						<th width="20%">Vendedor</th>
 						<th width="15%">Comprobante</th>
 						<th width="10%">Total</th>
+						<th width="10%">Dias Vencida</th>
 						<th width="10%">Estado</th>
 						<th width="15%"></th>
 					</thead>
 					@foreach ($ventas as $ven)
 						<tr>
 							<td align="center">{{ date('d-m-Y', strtotime($ven->fecha_hora)) }}</td>
-							<td>{{ $ven->nombre }}</td>							
+							<td>{{ $ven->nombre }}</td>
 							<td>{{ $ven->vendedor }}</td>
 							<td>{{ $ven->tipo_comprobante.': '.$ven->serie_comprobante.' - '.$ven->num_comprobante }}</td>
 							<td align="right">{{ number_format($ven->total_venta, 2, ',', '.') }}</td>
+							<td align="right">{{ (strtotime(date('d-m-Y'))-strtotime($ven->fecha_hora))/86400 }}</td>
 							<td align="center">
 								@if($ven->estado == 'Pagada')
 									<span class="label label-success">{{ $ven->estado }}</span></td>

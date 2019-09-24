@@ -65,7 +65,7 @@ class IngresoController extends Controller
     		DB::beginTransaction();
     			$ingreso = new Ingreso;
     			$ingreso->idproveedor=$request->get('idproveedor');
-		        $ingreso->tipo_comprobante=$request->get('tipo_comprobante');
+		        $ingreso->tipo_comprobante='Factura';
 		        $ingreso->serie_comprobante=$request->get('serie_comprobante');
 		        $ingreso->num_comprobante=$request->get('num_comprobante');
                 $ingreso->total_compra=$request->get('total_compra');

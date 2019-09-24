@@ -25,7 +25,7 @@ class IngresoFormRequest extends FormRequest
     {
         return [
             'idproveedor'        => 'required',
-            'tipo_comprobante'   => 'required|max:20',
+            'tipo_comprobante'   => 'max:20',
             'serie_comprobante'  => 'max:7',
             'num_comprobante'    => 'required|max:10',
             'idarticulo'         => 'required',
@@ -33,7 +33,7 @@ class IngresoFormRequest extends FormRequest
             'precio_compra'      => 'required',
             'precio_venta'       => 'numeric',
             'precio_credito'     => 'numeric',
-            'total_compra'       => 'required'                   
+            'total_compra'       => 'required'
         ];
     }
 }

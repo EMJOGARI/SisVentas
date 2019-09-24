@@ -242,10 +242,12 @@
             <div class="col-md-4">
                 <strong>Copyright &copy; 2015-2020 </strong> All rights reserved.
             </div>
-            <div class="col-md-8">
+            <div class="col-md-6">
               <p>Para Mayor Informacion: <strong><i class="fa fa-envelope"></i> ejgameror@gmail.com</strong> //  <strong><i class="fa fa-phone-square" ></i> (+58) 412-0948332</strong></p>
             </div>
-
+            <div class="col-md-2">
+                <strong style="font-size: 20px">{{ date('d-m-Y') }}</strong>
+            </div>
         </div>
 
 

@@ -3,10 +3,8 @@
 @section('name', "Banco")
 
 @section('content')
-	<div class="row">		
-		<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 pull-right">
-			@include('cobranza.banco.search')
-		</div>
+	<div class="row">
+		@include('cobranza.banco.search')
 	</div>
 	<div class="row">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -42,7 +40,7 @@
 									<ul class="dropdown-menu">
 										<li><a href="{{ URL::action('VentaController@show',$ven->idventa) }}"><i class="fa fa-file-text-o"></i> Detalle Factura</a></li>
 
-										<li><a href="{{ URL::action('ReporteController@ReporteVentaID',$ven->idventa) }}" target="_blank"><i class="fa fa-file-pdf-o"></i> Ver PDF</a></li>		
+										<li><a href="{{ URL::action('ReporteController@ReporteVentaID',$ven->idventa) }}" target="_blank"><i class="fa fa-file-pdf-o"></i> Ver PDF</a></li>
 									</ul>
 								</div>
 							</td>
