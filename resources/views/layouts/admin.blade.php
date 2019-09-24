@@ -100,7 +100,7 @@
                  <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
-                <li><a href="{{ url('cobranza/cuenta-por-cobrar/') }}"><i class="fa fa-archive"></i>Cuentas por Cobrar</a></li>
+                <li><a href="{{ url('cobranza/cuenta-por-cobrar/') }}"><i class="fa fa-briefcase"></i>Cuentas por Cobrar</a></li>
                 <li><a href="{{ url('cobranza/banco/') }}"><i class="fa fa-bank"></i>Banco</a></li>
               </ul>
             </li>

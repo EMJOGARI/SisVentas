@@ -11,13 +11,13 @@
 			<div class="table-responsive">
 				<table class="table table-striped table-bordered table-condensed table-hover">
 					<thead>
-						<th width="10%">Fecha</th>
+						<th width="8%">Fecha</th>
 						<th width="30%">Cliente</th>
 						<th width="20%">Vendedor</th>
-						<th width="15%">Comprobante</th>
-						<th width="10%">Total</th>
-						<th width="10%">Estado</th>
-						<th width="15%"></th>
+						<th width="13%">Comprobante</th>
+						<th width="8%">Total</th>
+						<th width="8%">Estado</th>
+						<th width="13%"></th>
 					</thead>
 					@foreach ($ventas as $ven)
 						<tr>
@@ -48,7 +48,7 @@
 					@endforeach
 				</table>
 			</div>
-			{{ $ventas->render() }}
+			{{ $ventas->appends(Request::all())render() }}
 		</div>
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"></div>
 	</div>

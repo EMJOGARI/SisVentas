@@ -1,5 +1,5 @@
 <div class="modal fade modal-slide-in-right" aria-hidden="true" role="dialog" tabindex="-1" id="modal-pagar-{{ $ven->idventa }}">
-	{{ Form::open(['method'=>'PUT', 'route'=>['venta.update', $ven->idventa]]) }}
+	{{ Form::open(['method'=>'PUT', 'route'=>['cuenta-por-cobrar.update', $ven->idventa]]) }}
 
 		<div class="modal-dialog">
 			<div class="modal-content">
