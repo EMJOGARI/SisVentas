@@ -9,7 +9,9 @@ use Illuminate\Support\Facades\Input;
 use SisVentas\Venta;
 use SisVentas\DetalleVenta;
 use SisVentas\Articulo;
-use SisVentas\Http\Requests\VentaFormRequest;
+use SisVentas\NotaDebito;
+use SisVentas\Http\Requests\NotaDebitoFormRequest;
+
 use DB;
 
 use Carbon\Carbon;
@@ -51,6 +53,11 @@ class CuentasporcobrarController extends Controller
 
     public function create()
     {
+        $ventas=DB::table('tb_venta as v')
+            ->where('estado','Pendiente')
+            ->orderBy('idventa','desc')
+            ->get();
+
         $personas=DB::table('tb_persona')
             ->where('tipo_persona','Cliente')
             ->orwhere('tipo_persona','Proveedor')
@@ -71,13 +78,52 @@ class CuentasporcobrarController extends Controller
             ->groupBy('articulo','art.idarticulo','art.stock')
             ->orderBy('art.codigo')
             ->get();
-            //dd($personas, $articulos);
-        return view("cobranza.cuenta-por-cobrar.create",["personas"=>$personas, "articulos"=>$articulos, "vendedores"=>$vendedores]);        
+            //dd($ventas);
+        return view("cobranza.cuenta-por-cobrar.create",["personas"=>$personas, "articulos"=>$articulos, "vendedores"=>$vendedores,"ventas"=>$ventas]);        
     }
 
-    public function store(Request $request)
+    public function store(NotaDebitoFormRequest $request)
     {
-       
+       // dd($request->all());
+        try{
+            DB::beginTransaction();
+                $ND = new NotaDebito;
+                $ND->idventa=$request->get('idventa');
+                $ND->tipo_comprobante='Nota de Debito';
+                $ND->num_comprobante=$request->get('num_comprobante');
+                $ND->total_debito=0;//$request->get('total_venta');
+                    $mytime = Carbon::now('America/Caracas');
+                $ND->fecha=$mytime->toDateTimestring();
+                $ND->estado=$request->get('estado');
+                $ND->save();
+             /*
+                $idarticulo=$request->get('idarticulo');
+                $cantidad=$request->get('cantidad');
+                $descuento=$request->get('descuento');
+                $precio_venta=$request->get('precio_venta');
+
+                $cont = 0;
+
+                while($cont < count($idarticulo))
+                { // count($idarticulo)) -> recorre todos los articulos recibidos en el detalle
+                    $detalle = new DetalleVenta();
+                    $detalle->idventa=$venta->idventa;
+                    $detalle->idarticulo=$idarticulo[$cont];
+                    $detalle->cantidad=$cantidad[$cont];
+                    $detalle->precio_venta=$precio_venta[$cont];
+                    $detalle->descuento=$descuento[$cont];
+                    $detalle->save();
+                    $cont=$cont+1;
+                }*/
+
+            DB::commit();
+            flash('Nota de Debito Agregada')->success();
+        }catch(\Exception $e){
+            dd($e);
+            DB::rollback();
+            flash('Error a procesar la venta')->warning();
+        }
+        return Redirect::to('ventas/venta');
     }
 
     public function show($id)

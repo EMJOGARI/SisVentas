@@ -14,38 +14,22 @@
 				</div>
 			@endif
 
-			{!! Form::open(array('url'=>'ventas/venta', 'method'=>'POST', 'autocomplete'=>'off')) !!}
+			{!! Form::open(array('url'=>'cobranza/cuenta-por-cobrar', 'method'=>'POST', 'autocomplete'=>'off')) !!}
 			{{ Form::token() }}
 			<div class="row">
 
-			 	<div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+			 	<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
 			 		<div class="form-group">
-				 		{!! Form::label('cliente', 'Cliente') !!}
-				 		 <select name="idcliente" id="idcliente" class="form-control selectpicker" data-live-search="true">
-		                    	<option value="">Seleccioné un Cliente</option>
-		                    	@foreach($personas as $persona)
-		                    		<option value="{{ $persona->idpersona }}">{{ str_pad($persona->idpersona, 3, "0", STR_PAD_LEFT).' - '.$persona->nombre }}</option>
+				 		{!! Form::label('cliente', 'Nº de Factura') !!}
+				 		 	<select name="idventa" id="idventa" class="form-control selectpicker" data-live-search="true">
+		                    	<option value="">Nº de Factura</option>
+		                    	@foreach($ventas as $ven)
+		                    		<option value="{{ $ven->idventa }}">{{ $ven->tipo_comprobante.': '.$ven->serie_comprobante.' - '.$ven->num_comprobante }}</option>
 		                    	@endforeach
-		                    </select>
-		                {{--<div class="input-group">
-			                <div class="input-group-btn">
-			                	<a href="{{ url('seguridad/persona/create') }}" type="button" class="btn btn-success"><i class="fa fa-plus"></i> Nuevo Cliente</a>
-			                </div>
-		                </div>--}}
+		                 	</select>		               
 			 		</div>
-	            </div>
-	            <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
-			 		<div class="form-group">
-				 		{!! Form::label('cliente', 'Vendedor') !!}
-				 		<select name="idvendedor" id="idvendedor" class="form-control selectpicker" data-live-search="true">
-	                    	<option value="">Seleccioné un Vendedor</option>
-	                    	@foreach($vendedores as $persona)
-	                    		<option value="{{ $persona->idpersona }}">{{ str_pad($persona->idpersona, 3, "0", STR_PAD_LEFT).' - '.$persona->nombre }}</option>
-	                    	@endforeach
-		                </select>
-			 		</div>
-	            </div>
-	            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+	            </div>	           
+	            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 pull-right">
 	            	{!! Form::label('','Fecha') !!}
                     <div class="input-group">
                         <input type="text" class="form-control datepicker" name="purchase_date" value="{{ date('d-m-Y') }}" disabled>
@@ -54,13 +38,6 @@
                         </div>
                     </div>
                 </div>
-
-	            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-	                <div class="form-group">
-	                    {!! Form::label('serie_comprobante', 'Número de Factura') !!}
-	                    {!! Form::number('serie_comprobante', null, ['class'=>'form-control', 'placeholder'=>'Número de Factura']) !!}
-	                </div>
-	            </div>
 	            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
 	                <div class="form-group">
 	                    {!! Form::label('num_comprobante', 'Número de Control') !!}
@@ -77,7 +54,7 @@
 	                </div>
 	            </div>
 	    	</div>
-	    	<div class="row">
+	    	<div class="row">{{--
 	            <div class="panel panel-primary">
 	            	<div class="panel-body">
 				            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
@@ -146,7 +123,7 @@
 								</table>
 				            </div>
 	            	</div>
-	            </div>
+	            </div>--}}
 	            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="guardar">
 	                <div class="form-group">
 	                	<button class="btn btn-primary" type="submit"><i class="fa fa-save"></i> Confirmar e Imprimir</button>
@@ -159,9 +136,6 @@
 
 @push('scripts')
 <script>
-	/*function tax_value(value){
-			$("#resultados" ).load( "./ajax/agregar_tmp.php?tax="+value );
-		}*/
 	$(document).ready(function(){
 		$('#bt_add').click(function(){
 			agregar();
@@ -171,7 +145,7 @@
 	var cont=0;
 	total=0;
 	subtotal=[];
-	$("#guardar").hide();
+	//$("#guardar").hide();
 	$("#pidarticulo").change(mostrarArticulo);
 
 	function mostrarArticulo()
