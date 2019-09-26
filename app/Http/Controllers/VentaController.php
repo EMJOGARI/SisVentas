@@ -35,7 +35,7 @@ class VentaController extends Controller
             	->join('tb_detalle_venta as dv','v.idventa','=','dv.idventa')
             	->select('v.idventa','v.fecha_hora','p.nombre','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.estado','v.total_venta')
             	->where('v.serie_comprobante','LIKE','%'.$query.'%')
-                //->where('v.estado','=','A')
+                ->where('v.estado','<>','Eliminada')
             	->orderBy('idventa','desc')
                 ->groupBy('v.idventa','v.fecha_hora','p.nombre','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.estado','v.total_venta')
                 ->paginate(20);
@@ -139,23 +139,20 @@ class VentaController extends Controller
         return view("ventas.venta.show",["venta"=>$venta , "detalles"=>$detalles, "vendedor"=>$vendedor]);
     }
 
-    /*public function update(Request $request, $id)
+    public function destroy(Request $request, $id)
     {
-        $up = $request->get('up_stado');
-        if ($up == 1) {
+        $del = $request->get('delete');
+        if ($del == 1) {
             $venta=Venta::findOrFail($id);
-            $venta->estado=$request->get('estado');
+            $venta->estado='Eliminada';
+            $venta->detalle=$request->get('detalle');
+            $venta->save();
+        }else{
+            $venta=Venta::findOrFail($id);
+            $venta->estado='Anulada';
+            $venta->detalle=$request->get('detalle');
             $venta->save();
         }
-        return Redirect::to('ventas/venta');
-
-    }*/
-
-    public function destroy($id)
-    {
-        $venta=Venta::findOrFail($id);
-        $venta->estado='Anulada';
-        $venta->save();
 
         try {
             $detalleventa       = new DetalleVenta;
@@ -174,7 +171,6 @@ class VentaController extends Controller
         } catch (Exception $e) {
             DB::rollback();
         }
-
         return Redirect::to('ventas/venta');
     }
 

@@ -39,6 +39,7 @@ class InicioController extends Controller
             ->select('v.idcliente','p.nombre',DB::raw("SUM(v.total_venta) as total"))
             ->whereMonth('v.fecha_hora', date('m'))
             ->where('v.estado','<>','Anulada')
+            ->where('v.estado','<>','Eliminada')
             ->groupBy('v.idcliente','p.nombre')
             ->orderBy('total','desc')
             ->get();
@@ -56,6 +57,7 @@ class InicioController extends Controller
             ->select('p.municipio','p2.nombre',DB::raw("SUM(v.total_venta) as total"))
             ->whereMonth('v.fecha_hora', date('m'))
             ->where('v.estado','<>','Anulada')
+            ->where('v.estado','<>','Eliminada')
             ->groupBy('p.municipio','p2.nombre')
             ->orderBy('total','desc')
             ->get();

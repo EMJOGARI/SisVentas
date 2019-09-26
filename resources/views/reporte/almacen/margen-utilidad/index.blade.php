@@ -16,11 +16,11 @@
 					<thead>
 						<th width="5%">Codigo</th>
 						<th width="35%">Nombre</th>
-						<th width="10%">Categoría</th>
+						<th width="15%">Categoría</th>
 						<th width="5%">Stock</th>
-						<th width="10%">Costo</th>
-						<th width="10%">Precio Venta</th>
-						<th width="10%">Utilidad</th>
+						<th width="15%">Total Costo</th>
+						<th width="15%">Total Precio Venta</th>
+						{{--<th width="10%">Utilidad</th>--}}
 						<th width="10%">% Utilidad</th>
 					</thead>
 					@foreach ($articulos as $art)
@@ -31,8 +31,8 @@
 							<td align="center">{{ $art->stock }}</td>
 							<td align="right">{{ number_format($art->precio_compra * $art->stock, 2, ',', '.') }}</td>
 							<td align="right">{{ number_format($art->precio_venta * $art->stock, 2, ',', '.') }}</td>
-							<td align="right">{{ number_format((($art->precio_venta - $art->precio_compra) * $art->stock), 2, ',', '.') }}</td>
-							<td align="right">{{ number_format((1-($art->precio_compra/$art->precio_venta))*100, 0, ',', '.') }} <strong>%</strong></td>
+							{{--<td align="right">{{ number_format((($art->precio_venta - $art->precio_compra) * $art->stock), 2, ',', '.') }}</td>--}}
+							<td align="center">{{ number_format((1-($art->precio_compra/$art->precio_venta))*100, 0, ',', '.') }} <strong>%</strong></td>
 						</tr>
 					@endforeach
 						<tr>
@@ -42,7 +42,7 @@
 							<td align="center"><strong>{{ $sum_stock }}</strong></td>
 							<td align="right"><strong>{{ number_format($sum_precio_compra, 2, ',', '.') }}</strong></td>
 							<td align="right"><strong>{{ number_format($sum_precio_venta, 2, ',', '.') }}</strong></td>
-							<td align="right"><strong>{{ number_format($sum_precio_utilidad, 2, ',', '.') }}</strong></td>
+							{{--<td align="right"><strong>{{ number_format($sum_precio_utilidad, 2, ',', '.') }}</strong></td>--}}
 						</tr>
 				</table>
 			</div>

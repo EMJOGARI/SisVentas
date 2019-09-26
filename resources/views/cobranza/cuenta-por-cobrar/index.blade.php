@@ -3,8 +3,8 @@
 @section('name', "Cuentas por Cobrar")
 
 @section('content')
-	<div class="row">		
-		@include('cobranza.cuenta-por-cobrar.search')		
+	<div class="row">
+		@include('cobranza.cuenta-por-cobrar.search')
 	</div>
 	<div class="row">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -30,12 +30,13 @@
 							<td align="center">{{ (strtotime(date('d-m-Y'))-strtotime($ven->fecha_hora))/86400 }}</td>
 							<td align="center">
 								@if($ven->estado == 'Pagada')
-									<span class="label label-success">{{ $ven->estado }}</span></td>
+									<span class="label label-success">{{ $ven->estado }}</span>
 								@elseif($ven->estado == 'Anulada')
-									<span class="label bg-red">{{ $ven->estado }}</span></td>
+									<span class="label bg-red">{{ $ven->estado }}</span>
 								@else
-									<span class="label bg-yellow">{{ $ven->estado }}</span></td>
+									<span class="label bg-yellow">{{ $ven->estado }}</span>
 								@endif
+							</td>
 							<td>
 								<div class="btn-group">
 									<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Acciones <span class="fa fa-caret-down"></span></button>
@@ -49,7 +50,7 @@
 						</tr>{{--
 						@include('ventas.venta.modal')--}}
 						@include('cobranza.cuenta-por-cobrar.modal-pagar')
-						
+
 					@endforeach
 				</table>
 			</div>

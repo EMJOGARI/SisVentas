@@ -21,7 +21,8 @@ class Venta extends Model
         'fecha_hora',
         'impuesto',
         'total_venta',
-        'estado'
+        'estado',
+        'detalle'
     ];
 
     protected $guarded =[

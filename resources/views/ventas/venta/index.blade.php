@@ -35,12 +35,13 @@
 							<td align="right">{{ number_format($ven->total_venta, 2, ',', '.') }}</td>
 							<td align="center">
 								@if($ven->estado == 'Pagada')
-									<span class="label label-success">{{ $ven->estado }}</span></td>
+									<span class="label label-success">{{ $ven->estado }}</span>
 								@elseif($ven->estado == 'Anulada')
-									<span class="label bg-red">{{ $ven->estado }}</span></td>
+									<span class="label bg-red">{{ $ven->estado }}</span>
 								@else
-									<span class="label bg-yellow">{{ $ven->estado }}</span></td>
+									<span class="label bg-yellow">{{ $ven->estado }}</span>
 								@endif
+							</td>
 							<td>
 								<div class="btn-group">
 									<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Acciones <span class="fa fa-caret-down"></span></button>

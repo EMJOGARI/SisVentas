@@ -44,7 +44,6 @@
 										{!! Form::checkbox('up_stado') !!}
 			                        </span>
 		                    		<select name="estado" class="form-control">
-				                    	<option value="Pendiente">Pendiente</option>
 				                    	<option value="Pagada">Pagada</option>
 				                    </select>
 		                  		</div>

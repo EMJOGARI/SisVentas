@@ -126,62 +126,7 @@ class ReporteController extends Controller
 
         return view('reporte.almacen.margen-utilidad.index',["articulos"=>$articulos,"categorias"=>$categorias,"searchText"=>$codigo,"sum_stock"=>$sum_stock,"sum_precio_compra"=>$sum_precio_compra,"sum_precio_venta"=>$sum_precio_venta,"sum_precio_utilidad"=>$sum_precio_utilidad]);
     }
-    public function reporte_venta(Request $request)
-    {
-        $clientes=DB::table('tb_persona')->orderBy('idpersona')->get();
-        $vendedor=DB::table('tb_persona')->where('tipo_persona','Vendedor')->get();
 
-        $f1 = Carbon::now()->toDateString("FechaInicio");
-        $f2 = Carbon::now()->toDateString("FechaFinal");
-
-        $f1=$request->get('FechaInicio');
-        $f2=$request->get('FechaFinal');
-
-        $muni = $request->get('municipio');
-        $vende = $request->get('vendedor');
-        $clien = $request->get('cliente');
-
-        $texto = trim($request->get('searchText'));
-
-            $ventas=DB::table('tb_venta as v')
-                ->join('tb_persona as p','v.idcliente','=','p.idpersona')
-                ->join('tb_persona as p2','v.idvendedor','=','p2.idpersona')
-                ->join('tb_detalle_venta as dv','v.idventa','=','dv.idventa')
-                ->select('v.idventa','v.idvendedor','v.fecha_hora','p.nombre','p2.nombre as vendedor','p.municipio','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.estado','v.total_venta')
-                ->groupBy('v.idventa','v.fecha_hora','p.nombre','p2.nombre','p.municipio','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.estado','v.total_venta')
-                ->where(function($query) use ($texto,$clien,$vende,$muni,$f1,$f2){
-                    if ($clien) {
-                        if ($clien != "") {
-                             return $query->where('p.idpersona',$clien);
-                        }
-                    }
-                    if ($vende) {
-                        if ($vende != "") {
-                             return $query->where('v.idvendedor',$vende);
-                        }
-                    }
-                    if ($muni) {
-                        if ($muni != "") {
-                             return $query->where('p.municipio',$muni);
-                        }
-                    }
-                    if (($f1) & ($f2)) {
-                        if (($f1 != "") & ($f2 != "")) {
-                            return $query->WhereBetween('v.fecha_hora', [$f1,$f2]);
-                        }
-                    }
-                })
-                ->where('v.estado','Pagada')
-                ->orderBy('idventa','desc')
-                ->paginate(200);
-
-            $sum_total_venta = 0;
-            foreach ($ventas as $venta) {
-                $sum_total_venta += $venta->total_venta;
-
-            }
-        return view('reporte.venta.index',["ventas"=>$ventas,"clientes"=>$clientes,"vendedor"=>$vendedor,"sum_total_venta"=>$sum_total_venta]);
-    }
     public function reporte_venta_cliente(Request $request)
     {
         $clientes=DB::table('tb_persona')->orderBy('idpersona')->get();
@@ -199,8 +144,7 @@ class ReporteController extends Controller
                 ->join('tb_persona as p','v.idcliente','=','p.idpersona')
                 ->join('tb_persona as p2','v.idvendedor','=','p2.idpersona')
                 ->join('tb_detalle_venta as dv','v.idventa','=','dv.idventa')
-                ->select('v.idventa','v.idvendedor','v.fecha_hora','p.nombre','p2.nombre as vendedor','p.municipio','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.estado','v.total_venta')
-                ->groupBy('v.idventa','v.fecha_hora','p.nombre','p2.nombre','p.municipio','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.estado','v.total_venta')
+                ->select('v.idventa','v.idvendedor','v.fecha_hora','v.idcliente','p.nombre','p2.nombre as vendedor','p.municipio','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.estado','v.total_venta')
                 ->where(function($query) use ($clien,$muni,$f1,$f2){
                     if (($f1) & ($f2)) {
                         if (($f1 != "") & ($f2 != "") & ($clien != "")) {
@@ -210,12 +154,19 @@ class ReporteController extends Controller
                                                 ->orWhere('p.municipio',$muni);
                                             });
                         }else{
-                             return $query->WhereBetween('v.fecha_hora', [$f1,$f2]);
+                            if (($f1 != "") & ($f2 != "")){
+                                return $query->WhereBetween('v.fecha_hora', [$f1,$f2]);
+                            }else{
+                                return $query->whereMonth('v.fecha_hora', date('m'));//WhereBetween('v.fecha_hora', [$f1,$f2]);
+                            }
                         }
                     }
                     if ($clien) {
                         if ($clien != "") {
-                             return $query->where('p.idpersona',$clien);
+                             return $query->where('p.idpersona',$clien)
+                                        ->where(function($q){
+                                            $q->whereMonth('v.fecha_hora', date('m'));
+                                        });
                         }
                     }
                      if ($muni) {
@@ -224,7 +175,9 @@ class ReporteController extends Controller
                         }
                     }
                 })
+                ->groupBy('v.idventa','v.fecha_hora','p.nombre','v.idcliente','p2.nombre','p.municipio','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.estado','v.total_venta')
                 ->where('v.estado','<>','Anulada')
+                ->where('v.estado','<>','Eliminada')
                 ->orderBy('idventa','desc')
                 ->paginate(200);
 
@@ -233,9 +186,68 @@ class ReporteController extends Controller
                 $sum_total_venta += $venta->total_venta;
 
             }
+            //dd($ventas);
         return view('reporte.venta.venta-cliente.index',["ventas"=>$ventas,"clientes"=>$clientes,"sum_total_venta"=>$sum_total_venta]);
     }
-    public function reporte_venta_vendedor(Request $request)
+
+     public function reporte_venta_vendedor(Request $request)
+    {
+        $vendedores=DB::table('tb_persona')->where('tipo_persona','Vendedor')->get();
+        $vende = trim($request->get('searchVendedor'));
+
+        $f1 = Carbon::now()->toDateString("FechaInicio");
+        $f2 = Carbon::now()->toDateString("FechaFinal");
+
+        $f1=$request->get('FechaInicio');
+        $f2=$request->get('FechaFinal');
+
+        $muni = $request->get('municipio');
+
+            $ventas=DB::table('tb_venta as v')
+                ->join('tb_persona as p','v.idcliente','=','p.idpersona')
+                ->join('tb_persona as p2','v.idvendedor','=','p2.idpersona')
+                ->join('tb_detalle_venta as dv','v.idventa','=','dv.idventa')
+                ->select('v.idventa','v.idvendedor','v.fecha_hora','v.idcliente','p.nombre','p2.nombre as vendedor','p.municipio','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.estado','v.total_venta')
+                ->where(function($query) use ($vende,$muni,$f1,$f2){
+                    if (($f1) & ($f2)) {
+                        if (($f1 != "") & ($f2 != "") & ($vende != "")) {
+                            return $query->WhereBetween('v.fecha_hora', [$f1,$f2])
+                                            ->where(function($q) use ($vende,$muni){
+                                                $q->Where('v.idvendedor',$vende);
+                                            });
+                        }else{
+                            if (($f1 != "") & ($f2 != "")){
+                                return $query->WhereBetween('v.fecha_hora', [$f1,$f2]);
+                            }else{
+                                return $query->whereMonth('v.fecha_hora', date('m'));//WhereBetween('v.fecha_hora', [$f1,$f2]);
+                            }
+                        }
+                    }
+                    if ($vende) {
+                        if ($vende != "") {
+                             return $query->where('v.idvendedor',$vende)
+                                        ->where(function($q){
+                                            $q->whereMonth('v.fecha_hora', date('m'));
+                                        });
+                        }
+                    }
+
+                })
+                ->groupBy('v.idventa','v.fecha_hora','p.nombre','v.idcliente','p2.nombre','p.municipio','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.estado','v.total_venta')
+                ->where('v.estado','<>','Anulada')
+                ->where('v.estado','<>','Eliminada')
+                ->orderBy('idventa','desc')
+                ->paginate(200);
+
+            $sum_total_venta = 0;
+            foreach ($ventas as $venta) {
+                $sum_total_venta += $venta->total_venta;
+
+            }
+            //dd($ventas);
+        return view('reporte.venta.venta-vendedor.index',["ventas"=>$ventas,"vendedores"=>$vendedores,"sum_total_venta"=>$sum_total_venta]);
+    }
+    public function reporte_venta_categoria(Request $request)
     {
         $vendedores=DB::table('tb_persona')->where('tipo_persona','Vendedor')->get();
         $vende = trim($request->get('searchVendedor'));
@@ -267,14 +279,15 @@ class ReporteController extends Controller
                         if ($vende != "") {
                             return $query->where('p.idpersona',$vende)
                                         ->where(function($q){
-                                                $q->whereMonth('v.fecha_hora', date('m'));
-                                            });
+                                            $q->whereMonth('v.fecha_hora', date('m'));
+                                        });
                         }else{
                             return $query->whereMonth('v.fecha_hora', date('m'));
                         }
                     }
                 })
                 ->where('v.estado','<>','Anulada')
+                ->where('v.estado','<>','Eliminada')
                 ->groupBy('v.idvendedor','p.nombre','c.nombre')
                 ->orderBy('v.idvendedor')
                 ->orderBy('c.nombre')
@@ -286,7 +299,7 @@ class ReporteController extends Controller
                 $sum_neto += $venta->neto;
 
             }
-        return view('reporte.venta.venta-vendedor.index',["ventas"=>$ventas,"vendedores"=>$vendedores,"sum_total"=>$sum_total,"sum_neto"=>$sum_neto]);
+        return view('reporte.venta.venta-categoria.index',["ventas"=>$ventas,"vendedores"=>$vendedores,"sum_total"=>$sum_total,"sum_neto"=>$sum_neto]);
     }
 
     public function generar()

@@ -1,5 +1,5 @@
 @extends ('layouts.admin')
-@section('name', "Reportes de Ventas")
+@section('name', "Reportes de Ventas por Clientes")
 @section('content')
 
 <div class="row" style="margin-bottom: 2rem;">
@@ -19,21 +19,29 @@
 				<thead>
 					<th width="10%">Fecha</th>
 					<th width="10%">Factura Nº</th>
-					<th width="55%">Cliente</th>
+					<th width="45%">Cliente</th>
 					<th width="15%">Municipio</th>
+					<th width="10%">Estado</th>
 					<th width="10%">Neto</th>
 				</thead>
 				@foreach ($ventas as $ven)
 					<tr>
 						<td align="center">{{ date('d-m-Y', strtotime($ven->fecha_hora)) }}</td>
 						<td>{{ $ven->serie_comprobante.' - '.$ven->num_comprobante }}</td>
-						<td>{{ $ven->nombre }}</td>
+						<td>{{ str_pad($ven->idcliente, 3, "0", STR_PAD_LEFT).' - '.$ven->nombre }}</td>
 						<td>{{ $ven->municipio }}</td>
+						<td align="center">
+								@if($ven->estado == 'Pagada')
+									<span class="label label-success">{{ $ven->estado }}</span>
+								@else
+									<span class="label bg-yellow">{{ $ven->estado }}</span>
+								@endif
+						</td>
 						<td align="right">{{ number_format($ven->total_venta, 2, ',', '.') }}</td>
 					</tr>
 				@endforeach
 					<tr>
-
+						<td></td>
 						<td></td>
 						<td></td>
 						<td></td>

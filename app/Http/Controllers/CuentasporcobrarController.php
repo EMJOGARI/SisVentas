@@ -24,7 +24,7 @@ class CuentasporcobrarController extends Controller
     {
         $vendedores=DB::table('tb_persona')->where('tipo_persona','Vendedor')->get();
         $vende = $request->get('searchVendedor');
- 
+
         $fact=trim($request->get('searchText'));
         $ventas=DB::table('tb_venta as v')
             ->join('tb_persona as p','p.idpersona','v.idcliente')
@@ -79,7 +79,7 @@ class CuentasporcobrarController extends Controller
             ->orderBy('art.codigo')
             ->get();
             //dd($ventas);
-        return view("cobranza.cuenta-por-cobrar.create",["personas"=>$personas, "articulos"=>$articulos, "vendedores"=>$vendedores,"ventas"=>$ventas]);        
+        return view("cobranza.cuenta-por-cobrar.create",["personas"=>$personas, "articulos"=>$articulos, "vendedores"=>$vendedores,"ventas"=>$ventas]);
     }
 
     public function store(NotaDebitoFormRequest $request)
@@ -133,7 +133,7 @@ class CuentasporcobrarController extends Controller
 
     public function update(Request $request, $id)
     {
-         $up = $request->get('up_stado');
+        $up = $request->get('up_stado');
         if ($up == 1) {
             $venta=Venta::findOrFail($id);
             $venta->estado=$request->get('estado');

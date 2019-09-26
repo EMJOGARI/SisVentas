@@ -147,7 +147,7 @@
                  <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
-                <li class="treeview menu-close">
+                <li class="treeview menu">
                   <a href="#"><i class="fa fa-area-chart"></i> Almacén
                     <span class="pull-right-container">
                       <i class="fa fa-angle-left pull-right"></i>
@@ -165,11 +165,11 @@
                     </span>
                   </a>
                   <ul class="treeview-menu" style="display: block;">
-                    <li><a href="{{ url('reporte/venta/venta-cliente') }}"><i class="fa fa-th"></i>Vetas por Clientes</a></li>
-                    <li><a href="{{ url('reporte/venta/venta-vendedor') }}"><i class="fa fa-th"></i>Vetas por Categoria</a></li>
+                    <li><a href="{{ url('reporte/venta/venta-cliente') }}"><i class="fa fa-th"></i>Ventas por Clientes</a></li>
+                    <li><a href="{{ url('reporte/venta/venta-vendedor') }}"><i class="fa fa-th"></i>Ventas por Vendedor</a></li>
+                    <li><a href="{{ url('reporte/venta/venta-categoria') }}"><i class="fa fa-th"></i>Ventas por Categoria</a></li>
                   </ul>
                 </li>
-                <li><a href="{{ url('reporte/venta') }}"><i class="fa fa-line-chart"></i>Ventas</a></li>
                 <li><a href="{{ url('pdf/reportearticuloprecio') }}" target="_blank"><i class="fa fa-file-pdf-o"></i>Lista de Precio Productos</a></li>
                 <li><a href="{{ url('pdf/reportearticulo') }}" target="_blank"><i class="fa fa-file-pdf-o"></i>Reporte de Inventario</a></li>
                 <li><a href="{{ url('pdf/reporteventa') }}" target="_blank"><i class="fa fa-file-pdf-o"></i>Reporte de Ventas</a></li>
