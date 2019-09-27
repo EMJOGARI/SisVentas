@@ -36,16 +36,19 @@
 				                <p>{{ number_format($ven->total_venta, 2, ',', '.') }}</p>
 				            </div>
 				        </div>
-				        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+				        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+				            <div class="form-group">
+				                {!! Form::label('detalle', 'Nota') !!}
+				                {!! Form::textarea('detalle', null, ['class'=>'form-control', 'rows' => 4, 'cols' => 54, 'placeholder'=>'Nota', 'required']) !!}
+				            </div>
+				        </div>
+				         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 pull-right">
 			                <div class="form-group">
-			                	{!! Form::label('precio_venta', 'Estado') !!}
 			                	<div class="input-group">
 			                        <span class="input-group-addon">
 										{!! Form::checkbox('up_stado') !!}
 			                        </span>
-		                    		<select name="estado" class="form-control">
-				                    	<option value="Pagada">Pagada</option>
-				                    </select>
+									<p class="form-control"><strong> Pagar factura</strong></p>
 		                  		</div>
 		                	</div>
 	            		</div>

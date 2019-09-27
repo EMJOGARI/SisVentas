@@ -78,7 +78,6 @@ class CuentasporcobrarController extends Controller
             ->groupBy('articulo','art.idarticulo','art.stock')
             ->orderBy('art.codigo')
             ->get();
-            //dd($ventas);
         return view("cobranza.cuenta-por-cobrar.create",["personas"=>$personas, "articulos"=>$articulos, "vendedores"=>$vendedores,"ventas"=>$ventas]);
     }
 
@@ -137,6 +136,7 @@ class CuentasporcobrarController extends Controller
         if ($up == 1) {
             $venta=Venta::findOrFail($id);
             $venta->estado=$request->get('estado');
+            $venta->detalle=$request->get('detalle');
             $venta->save();
         }
         return Redirect::to('cobranza/cuenta-por-cobrar');
