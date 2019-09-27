@@ -21,17 +21,26 @@ class EditPrecioController extends Controller
     {//dd($request->all());
         if ($request)
         {
-            $query=trim($request->get('searchText'));
+            $codigo = $request->get('searchCodigo');
+            $text=trim($request->get('searchText'));
             $articulos=DB::table('tb_articulo as art')
                 ->join('tb_detalle_ingreso as di','art.idarticulo','=','di.idarticulo')
                 ->select('art.idarticulo','art.nombre','art.codigo','art.stock', DB::raw("MAX(di.precio_venta) AS precio_venta"),DB::raw("MAX(di.precio_compra) AS precio_compra"))
+                ->where(function($query) use ($codigo, $text){                    
+                        if ($codigo != "") {
+                            return $query->where('art.codigo',$codigo);
+                        }
+                    else{
+                        return $query->where('art.nombre','LIKE','%'.$text.'%');
+                    }
+                    
+                })
                 ->where('art.estado','=','Activo')
                 ->where('art.stock','>=','0')
-                ->where('art.codigo','LIKE','%'.$query.'%')
                 ->groupBy('art.idarticulo','art.nombre','art.codigo','art.stock')
                 ->orderBy('art.codigo')
                 ->paginate(20);
-            return view("seguridad.precio_articulo.index",["articulos"=>$articulos,"searchText"=>$query]);
+            return view("seguridad.precio_articulo.index",["articulos"=>$articulos,"searchText"=>$text,"searchCodigo"=>$codigo]);
         }
     }
 

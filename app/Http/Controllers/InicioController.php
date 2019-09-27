@@ -24,7 +24,8 @@ class InicioController extends Controller
 
         $ventas=DB::table('tb_venta')
             ->select(DB::raw("count(estado) AS ventas"))
-            ->where('estado','A')
+            ->where('estado','<>','Anulada')
+            ->where('estado','<>','Eliminada')
             ->get();
 
         $articulos=DB::table('tb_articulo')
