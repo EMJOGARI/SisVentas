@@ -36,7 +36,7 @@
 					  	<tbody>
 					  		@foreach($detalles as $det)
 			                    <tr>
-			                    	<td>{{ $det->articulo }}</td>
+			                    	<td>{{ str_pad($det->idarticulo, 3, "0", STR_PAD_LEFT).' - '.$det->articulo }}</td>
 			                    	<td align="center">{{ $det->cantidad }}</td>
 			                    	<td align="right">{{ number_format($det->precio_compra, 2, ',', '.') }}</td>
 			                    	<td align="right">{{ number_format($det->cantidad*$det->precio_compra, 2, ',', '.') }}</td>

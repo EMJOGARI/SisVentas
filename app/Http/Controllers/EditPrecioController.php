@@ -26,7 +26,7 @@ class EditPrecioController extends Controller
                 ->join('tb_detalle_ingreso as di','art.idarticulo','=','di.idarticulo')
                 ->select('art.idarticulo','art.nombre','art.codigo','art.stock', DB::raw("MAX(di.precio_venta) AS precio_venta"),DB::raw("MAX(di.precio_compra) AS precio_compra"))
                 ->where('art.estado','=','Activo')
-                ->where('art.stock','>','0')
+                ->where('art.stock','>=','0')
                 ->where('art.codigo','LIKE','%'.$query.'%')
                 ->groupBy('art.idarticulo','art.nombre','art.codigo','art.stock')
                 ->orderBy('art.codigo')
