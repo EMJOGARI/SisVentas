@@ -22,6 +22,9 @@ class ReporteController extends Controller
     {
         $this->middleware('auth');
     }
+    /**************************/
+    /** REPORTES DEL ALMACEN **/
+    /**************************/
     public function reporte_almacen(Request $request)
     {
         $categorias=DB::table('tb_categoria')->where('condicion','=','1')->get();
@@ -77,7 +80,7 @@ class ReporteController extends Controller
             foreach ($articulos as $art) {
                 $sum_stock += $art->stock;
             }
-
+            //dd($articulos,$categorias);
         return view('reporte.almacen.listado-producto.index',["articulos"=>$articulos,"searchText"=>$codigo,"searchList"=>$stock,"categorias"=>$categorias,"sum_stock"=>$sum_stock]);
     }
     public function reporte_almacen_utilidad(Request $request)
@@ -126,7 +129,9 @@ class ReporteController extends Controller
 
         return view('reporte.almacen.margen-utilidad.index',["articulos"=>$articulos,"categorias"=>$categorias,"searchText"=>$codigo,"sum_stock"=>$sum_stock,"sum_precio_compra"=>$sum_precio_compra,"sum_precio_venta"=>$sum_precio_venta,"sum_precio_utilidad"=>$sum_precio_utilidad]);
     }
-
+    /************************/
+    /** REPORTES DE VENTAS **/
+    /************************/
     public function reporte_venta_cliente(Request $request)
     {
         $clientes=DB::table('tb_persona')->orderBy('idpersona')->get();
@@ -186,7 +191,6 @@ class ReporteController extends Controller
                 $sum_total_venta += $venta->total_venta;
 
             }
-            //dd($ventas);
         return view('reporte.venta.venta-cliente.index',["ventas"=>$ventas,"clientes"=>$clientes,"sum_total_venta"=>$sum_total_venta]);
     }
 
@@ -244,7 +248,6 @@ class ReporteController extends Controller
                 $sum_total_venta += $venta->total_venta;
 
             }
-            //dd($ventas);
         return view('reporte.venta.venta-vendedor.index',["ventas"=>$ventas,"vendedores"=>$vendedores,"sum_total_venta"=>$sum_total_venta]);
     }
     public function reporte_venta_categoria(Request $request)
@@ -301,7 +304,9 @@ class ReporteController extends Controller
             }
         return view('reporte.venta.venta-categoria.index',["ventas"=>$ventas,"vendedores"=>$vendedores,"sum_total"=>$sum_total,"sum_neto"=>$sum_neto]);
     }
-
+    /**************************/
+    /**************************/
+    /**************************/
     public function generar()
     {
         //dd($ingresos);
@@ -327,6 +332,7 @@ class ReporteController extends Controller
 
      public function ReporteArticuloPrecio()
     {
+        $categorias=DB::table('tb_categoria')->where('condicion','=','1')->get();
         $articulos=DB::table('tb_articulo as art')
             ->join('tb_categoria as c','art.idcategoria','=','c.idcategoria')
             ->join('tb_detalle_ingreso as di','art.idarticulo','=','di.idarticulo')
@@ -337,7 +343,7 @@ class ReporteController extends Controller
             ->orderBy('categoria')
             ->orderBy('art.nombre')
             ->get();
-        $view = \View::make('pdf.reportearticuloprecio',compact('articulos'))->render();
+        $view = \View::make('pdf.reportearticuloprecio',compact('articulos','categorias'))->render();
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadHTML($view);
         return $pdf->stream('informe'.'.pdf');

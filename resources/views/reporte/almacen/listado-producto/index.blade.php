@@ -11,7 +11,7 @@
 	</div>
 	<div class="row">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-			<div class="table-responsive">
+			<div class="table-responsive">						
 				<table class="table table-striped table-bordered table-condensed table-hover">
 					<thead>
 						<th width="5%">Codigo</th>
@@ -20,8 +20,8 @@
 						<th width="5%">Stock</th>
 						<th width="10%">Costo</th>
 						<th width="10%">Precio Venta</th>
-					</thead>
-					@foreach ($articulos as $art)
+					</thead>					
+					@foreach ($articulos as $art)													
 						<tr>
 							<td align="center">{{ $art->codigo }}</td>
 							<td>{{ $art->nombre }}</td>
@@ -29,17 +29,17 @@
 							<td align="center">{{ $art->stock }}</td>
 							<td align="right">{{ number_format($art->precio_compra, 2, ',', '.') }}</td>
 							<td align="right">{{ number_format($art->precio_venta, 2, ',', '.') }}</td>
-						</tr>
+						</tr>													
 					@endforeach
-						<tr>
-							<td></td>
-							<td></td>
-							<td align="center"><strong>TOTAL:</strong></td>
-							<td align="center"><strong>{{ $sum_stock }}</strong></td>
-							<td align="right"><strong>------</strong></td>
-							<td align="right"><strong>------</strong></td>						
-						</tr>
-				</table>
+					<tr>
+						<td></td>
+						<td></td>
+						<td align="center"><strong>TOTAL:</strong></td>
+						<td align="center"><strong>{{ $sum_stock }}</strong></td>
+						<td align="right"><strong>------</strong></td>
+						<td align="right"><strong>------</strong></td>						
+					</tr>
+				</table>			
 			</div>
 			{{ $articulos->appends(Request::all())->render() }}
 		</div>
