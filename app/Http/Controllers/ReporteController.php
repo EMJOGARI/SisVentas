@@ -318,13 +318,15 @@ class ReporteController extends Controller
 
     public function ReporteArticulo()
     {
+        $categorias=DB::table('tb_categoria')->where('condicion','=','1')->get();
         $articulos=DB::table('tb_articulo as a')
             ->join('tb_categoria as c','a.idcategoria','=','c.idcategoria')
             ->select('a.idarticulo','a.nombre','a.codigo','a.stock','c.nombre as categoria','a.estado')
+            ->where('a.estado','Activo')
             ->orderBy('categoria')
             ->orderBy('a.nombre')
             ->get();
-        $view = \View::make('pdf.reportearticulo',compact('articulos'))->render();
+        $view = \View::make('pdf.reportearticulo',compact('articulos','categorias'))->render();
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadHTML($view);
         return $pdf->stream('informe'.'.pdf');
@@ -337,7 +339,7 @@ class ReporteController extends Controller
             ->join('tb_categoria as c','art.idcategoria','=','c.idcategoria')
             ->join('tb_detalle_ingreso as di','art.idarticulo','=','di.idarticulo')
             ->select('art.codigo','art.nombre','art.stock', DB::raw("MAX(di.precio_venta) AS precio_venta"),'c.nombre as categoria')
-            ->where('art.estado','=','Activo')
+            ->where('art.estado','Activo')
             ->where('art.stock','>','0')
             ->groupBy('art.codigo','art.nombre','art.stock', 'categoria')
             ->orderBy('categoria')

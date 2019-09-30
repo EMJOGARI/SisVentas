@@ -93,17 +93,7 @@
             <li class="header"></li>
             <li><a href="{{ url('principal/index') }}"><i class="fa fa-home"></i> Inicio</a></li>
 
-            <li class="treeview">
-              <a href="#">
-                <i class="fa fa-edit"></i>
-                <span>Cobranza</span>
-                 <i class="fa fa-angle-left pull-right"></i>
-              </a>
-              <ul class="treeview-menu">
-                <li><a href="{{ url('cobranza/cuenta-por-cobrar/') }}"><i class="fa fa-briefcase"></i>Cuentas por Cobrar</a></li>
-                <li><a href="{{ url('cobranza/banco/') }}"><i class="fa fa-bank"></i>Banco</a></li>
-              </ul>
-            </li>
+
 
             <li class="treeview">
               <a href="#">
@@ -138,6 +128,17 @@
               <ul class="treeview-menu">
                 <li><a href="{{ url('ventas/venta/create') }}"><i class="fa fa-cart-plus"></i>Nueva Venta</a></li>
                 <li><a href="{{ url('ventas/venta') }}"><i class="fa fa-list-alt"></i>Administrar Facturas</a></li>
+              </ul>
+            </li>
+             <li class="treeview">
+              <a href="#">
+                <i class="fa fa-edit"></i>
+                <span>Cobranza</span>
+                 <i class="fa fa-angle-left pull-right"></i>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="{{ url('cobranza/cuenta-por-cobrar/') }}"><i class="fa fa-briefcase"></i>Cuentas por Cobrar</a></li>
+                <li><a href="{{ url('cobranza/banco/') }}"><i class="fa fa-bank"></i>Banco</a></li>
               </ul>
             </li>
             <li class="treeview">
