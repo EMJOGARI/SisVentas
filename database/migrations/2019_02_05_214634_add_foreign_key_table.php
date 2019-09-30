@@ -26,9 +26,17 @@ class AddForeignKeyTable extends Migration
             $table->foreign('idarticulo')->references('idarticulo')->on('tb_articulo')->onDelete('cascade');
             $table->foreign('idingreso')->references('idingreso')->on('tb_ingreso')->onDelete('cascade');
         });
-        /**/
+        /**/        
         Schema::table('tb_detalle_venta', function (Blueprint $table) {            
             $table->foreign('idarticulo')->references('idarticulo')->on('tb_articulo')->onDelete('cascade');
+            $table->foreign('idventa')->references('idventa')->on('tb_venta')->onDelete('cascade');
+        });
+        /* VERIFICAR Q FUNCIONE */
+        Schema::table('tb_detalle_node', function (Blueprint $table) {            
+            $table->foreign('idarticulo')->references('idarticulo')->on('tb_articulo')->onDelete('cascade');
+            $table->foreign('id_nota_debito')->references('id_nota_debito')->on('tb_nota_debito')->onDelete('cascade');
+        });
+         Schema::table('tb_nota_debito', function (Blueprint $table) {            
             $table->foreign('idventa')->references('idventa')->on('tb_venta')->onDelete('cascade');
         });
         /**/

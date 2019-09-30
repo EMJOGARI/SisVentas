@@ -29,15 +29,15 @@ class NotaDebitoFormRequest extends FormRequest
             'estado'            => 'required',
             //'fecha',
 
-           /* 'idcliente'             => 'required',
+          
             'tipo_comprobante'      => 'max:20',
-            'serie_comprobante'     => 'max:7',
+            'serie_comprobante'     => 'max:10',
             'num_comprobante'       => 'required|max:10',
             'idarticulo'            => 'required',
             'cantidad'              => 'required',
             'precio_venta'          => 'required',
             'descuento'             => 'required',
-            'total_venta'           => 'required'*/
+            'total_debito'           => 'required'
         ];
     }
 }

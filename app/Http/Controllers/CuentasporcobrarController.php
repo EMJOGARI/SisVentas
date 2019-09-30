@@ -6,10 +6,9 @@ use Illuminate\Http\Request;
 use SisVentas\Http\Requests;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Input;
-use SisVentas\Venta;
-use SisVentas\DetalleVenta;
 use SisVentas\Articulo;
 use SisVentas\NotaDebito;
+use SisVentas\DetalleNotaDebito;
 use SisVentas\Http\Requests\NotaDebitoFormRequest;
 
 use DB;
@@ -52,7 +51,7 @@ class CuentasporcobrarController extends Controller
 
 
     public function create()
-    {
+    {        
         $ventas=DB::table('tb_venta as v')
             ->where('estado','Pendiente')
             ->orderBy('idventa','desc')
@@ -83,19 +82,19 @@ class CuentasporcobrarController extends Controller
 
     public function store(NotaDebitoFormRequest $request)
     {
-       // dd($request->all());
+        //dd($request->all());
         try{
             DB::beginTransaction();
                 $ND = new NotaDebito;
                 $ND->idventa=$request->get('idventa');
                 $ND->tipo_comprobante='Nota de Debito';
                 $ND->num_comprobante=$request->get('num_comprobante');
-                $ND->total_debito=0;//$request->get('total_venta');
+                $ND->total_debito=$request->get('total_debito');
                     $mytime = Carbon::now('America/Caracas');
                 $ND->fecha=$mytime->toDateTimestring();
                 $ND->estado=$request->get('estado');
                 $ND->save();
-             /*
+            
                 $idarticulo=$request->get('idarticulo');
                 $cantidad=$request->get('cantidad');
                 $descuento=$request->get('descuento');
@@ -105,15 +104,15 @@ class CuentasporcobrarController extends Controller
 
                 while($cont < count($idarticulo))
                 { // count($idarticulo)) -> recorre todos los articulos recibidos en el detalle
-                    $detalle = new DetalleVenta();
-                    $detalle->idventa=$venta->idventa;
+                    $detalle = new DetalleNotaDebito();
+                    $detalle->id_detalle_node=$ND->id_nota_debito;
                     $detalle->idarticulo=$idarticulo[$cont];
                     $detalle->cantidad=$cantidad[$cont];
                     $detalle->precio_venta=$precio_venta[$cont];
                     $detalle->descuento=$descuento[$cont];
                     $detalle->save();
                     $cont=$cont+1;
-                }*/
+                }
 
             DB::commit();
             flash('Nota de Debito Agregada')->success();
@@ -122,7 +121,7 @@ class CuentasporcobrarController extends Controller
             DB::rollback();
             flash('Error a procesar la venta')->warning();
         }
-        return Redirect::to('ventas/venta');
+        return Redirect::to('cobranza/cuenta-por-cobrar');
     }
 
     public function show($id)
@@ -135,7 +134,7 @@ class CuentasporcobrarController extends Controller
         $up = $request->get('up_stado');
         if ($up == 1) {
             $venta=Venta::findOrFail($id);
-            $venta->estado=$request->get('estado');
+            $venta->estado='Pagada';
             $venta->detalle=$request->get('detalle');
             $venta->save();
         }

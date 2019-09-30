@@ -86,7 +86,7 @@
 				                    <select name="pidarticulo" id="pidarticulo" class="form-control selectpicker" data-live-search="true">
 				                    	<option value="">Seleccioné un Articulo</option>
 				                    	@foreach($articulos as $art)
-				                    		<option value="{{ $art->idarticulo }}_{{ $art->stock }}_{{ $art->precio_venta }}_{{ $art->precio_credito }}">{{ $art->articulo }}</option>
+				                    		<option value="{{ $art->idarticulo }}_{{ $art->stock }}_{{ $art->precio_venta }}">{{ $art->articulo }}</option>
 				                    	@endforeach
 				                    </select>
 				                </div>
@@ -179,7 +179,6 @@
 		datosArticulos=document.getElementById('pidarticulo').value.split('_');
 		$("#pstock").val(datosArticulos[1]);
 		$("#pprecio_venta").val(datosArticulos[2]);
-		$("#pprecio_credito").val(datosArticulos[3]);
 	}
 
 	function agregar()

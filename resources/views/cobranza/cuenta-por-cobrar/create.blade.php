@@ -54,7 +54,7 @@
 	                </div>
 	            </div>
 	    	</div>
-	    	<div class="row">{{--
+	    	<div class="row">
 	            <div class="panel panel-primary">
 	            	<div class="panel-body">
 				            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
@@ -63,7 +63,7 @@
 				                    <select name="pidarticulo" id="pidarticulo" class="form-control selectpicker" data-live-search="true">
 				                    	<option value="">Seleccioné un Articulo</option>
 				                    	@foreach($articulos as $art)
-				                    		<option value="{{ $art->idarticulo }}_{{ $art->stock }}_{{ $art->precio_venta }}_{{ $art->precio_credito }}">{{ $art->articulo }}</option>
+				                    		<option value="{{ $art->idarticulo }}_{{ $art->stock }}_{{ $art->precio_venta }}">{{ $art->articulo }}</option>
 				                    	@endforeach
 				                    </select>
 				                </div>
@@ -114,7 +114,7 @@
 								  		<th></th>
 								  		<th></th>
 								  		<th><h4><strong>TOTAL</strong></h4></th>
-								  		<th><h4 id="total" style="font-weight: bold;">BsS. 0.00</h4> <input type="hidden" name="total_venta" id="total_venta"></th>
+								  		<th><h4 id="total" style="font-weight: bold;">BsS. 0.00</h4> <input type="hidden" name="total_debito" id="total_debito"></th>
 								  		<th></th>
 								  	</tfoot>
 								  	<tbody>
@@ -123,7 +123,7 @@
 								</table>
 				            </div>
 	            	</div>
-	            </div>--}}
+	            </div>
 	            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="guardar">
 	                <div class="form-group">
 	                	<button class="btn btn-primary" type="submit"><i class="fa fa-save"></i> Confirmar e Imprimir</button>
@@ -145,7 +145,7 @@
 	var cont=0;
 	total=0;
 	subtotal=[];
-	//$("#guardar").hide();
+	$("#guardar").hide();
 	$("#pidarticulo").change(mostrarArticulo);
 
 	function mostrarArticulo()
@@ -153,7 +153,6 @@
 		datosArticulos=document.getElementById('pidarticulo').value.split('_');
 		$("#pstock").val(datosArticulos[1]);
 		$("#pprecio_venta").val(datosArticulos[2]);
-		$("#pprecio_credito").val(datosArticulos[3]);
 	}
 
 	function agregar()
