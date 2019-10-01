@@ -14,37 +14,37 @@ class AddForeignKeyTable extends Migration
     public function up()
     {
         /**/
-        Schema::table('tb_users', function (Blueprint $table) {            
+        Schema::table('tb_users', function (Blueprint $table) {
             $table->foreign('idrol')->references('idrol')->on('tb_roles')->onDelete('cascade');
         });
         /**/
-        Schema::table('tb_articulo', function (Blueprint $table) {            
+        Schema::table('tb_articulo', function (Blueprint $table) {
             $table->foreign('idcategoria')->references('idcategoria')->on('tb_categoria')->onDelete('cascade');
         });
         /**/
-        Schema::table('tb_detalle_ingreso', function (Blueprint $table) {            
+        Schema::table('tb_detalle_ingreso', function (Blueprint $table) {
             $table->foreign('idarticulo')->references('idarticulo')->on('tb_articulo')->onDelete('cascade');
             $table->foreign('idingreso')->references('idingreso')->on('tb_ingreso')->onDelete('cascade');
         });
-        /**/        
-        Schema::table('tb_detalle_venta', function (Blueprint $table) {            
+        /**/
+        Schema::table('tb_detalle_venta', function (Blueprint $table) {
             $table->foreign('idarticulo')->references('idarticulo')->on('tb_articulo')->onDelete('cascade');
             $table->foreign('idventa')->references('idventa')->on('tb_venta')->onDelete('cascade');
         });
         /* VERIFICAR Q FUNCIONE */
-        Schema::table('tb_detalle_node', function (Blueprint $table) {            
+        Schema::table('tb_detalle_node', function (Blueprint $table) {
             $table->foreign('idarticulo')->references('idarticulo')->on('tb_articulo')->onDelete('cascade');
             $table->foreign('id_nota_debito')->references('id_nota_debito')->on('tb_nota_debito')->onDelete('cascade');
         });
-         Schema::table('tb_nota_debito', function (Blueprint $table) {            
+        Schema::table('tb_nota_debito', function (Blueprint $table) {
             $table->foreign('idventa')->references('idventa')->on('tb_venta')->onDelete('cascade');
         });
         /**/
-        Schema::table('tb_ingreso', function (Blueprint $table) {            
+        Schema::table('tb_ingreso', function (Blueprint $table) {
             $table->foreign('idproveedor')->references('idpersona')->on('tb_persona')->onDelete('cascade');
         });
         /**/
-        Schema::table('tb_venta', function (Blueprint $table) {            
+        Schema::table('tb_venta', function (Blueprint $table) {
             $table->foreign('idcliente')->references('idpersona')->on('tb_persona')->onDelete('cascade');
         });
     }
@@ -75,6 +75,6 @@ class AddForeignKeyTable extends Migration
         });
         Schema::table('tb_venta', function (Blueprint $table) {
             $table->dropForeign('tb_venta_idcliente_foreign');
-        });   
+        });
     }
 }

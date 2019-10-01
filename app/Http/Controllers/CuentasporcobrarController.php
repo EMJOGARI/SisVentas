@@ -51,7 +51,7 @@ class CuentasporcobrarController extends Controller
 
 
     public function create()
-    {        
+    {
         $ventas=DB::table('tb_venta as v')
             ->where('estado','Pendiente')
             ->orderBy('idventa','desc')
@@ -94,7 +94,7 @@ class CuentasporcobrarController extends Controller
                 $ND->fecha=$mytime->toDateTimestring();
                 $ND->estado=$request->get('estado');
                 $ND->save();
-            
+
                 $idarticulo=$request->get('idarticulo');
                 $cantidad=$request->get('cantidad');
                 $descuento=$request->get('descuento');
@@ -105,7 +105,7 @@ class CuentasporcobrarController extends Controller
                 while($cont < count($idarticulo))
                 { // count($idarticulo)) -> recorre todos los articulos recibidos en el detalle
                     $detalle = new DetalleNotaDebito();
-                    $detalle->id_detalle_node=$ND->id_nota_debito;
+                    $detalle->id_node=$ND->id_node;
                     $detalle->idarticulo=$idarticulo[$cont];
                     $detalle->cantidad=$cantidad[$cont];
                     $detalle->precio_venta=$precio_venta[$cont];

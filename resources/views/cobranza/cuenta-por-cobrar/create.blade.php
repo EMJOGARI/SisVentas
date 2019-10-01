@@ -26,9 +26,9 @@
 		                    	@foreach($ventas as $ven)
 		                    		<option value="{{ $ven->idventa }}">{{ $ven->tipo_comprobante.': '.$ven->serie_comprobante.' - '.$ven->num_comprobante }}</option>
 		                    	@endforeach
-		                 	</select>		               
+		                 	</select>
 			 		</div>
-	            </div>	           
+	            </div>
 	            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 pull-right">
 	            	{!! Form::label('','Fecha') !!}
                     <div class="input-group">
@@ -123,7 +123,7 @@
 								</table>
 				            </div>
 	            	</div>
-	            </div>
+	            </div>{{----}}
 	            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="guardar">
 	                <div class="form-group">
 	                	<button class="btn btn-primary" type="submit"><i class="fa fa-save"></i> Confirmar e Imprimir</button>
@@ -190,7 +190,7 @@
 					cont++;
 					limpiar();
 					$("#total").html("BsS. " + total); // number_format(total, 2, ',', '.')
-					$("#total_venta").val(total);
+					$("#total_debito").val(total);
 					evaluar();
 					$('#detalles').append(fila);
 				}
@@ -234,7 +234,7 @@
 	{
 		total=total-subtotal[index];
 		$("#total").html("BsS. " + total);
-		$("#total_venta").val(total);
+		$("#total_debito").val(total);
 		$("#fila" + index).remove();
 		evaluar();
 	}

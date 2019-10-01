@@ -13,14 +13,14 @@ class DetalleNotaDebito extends Model
     public $timestamps=false;
 
     protected $fillable =[
-        'id_nota_debito',
+        'id_node',
         'idarticulo',
         'cantidad',
         'descuento',
-        'precio_venta'        
+        'precio_venta'
     ];
 
     protected $guarded =[
-        
+
     ];
 }

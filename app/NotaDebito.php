@@ -8,7 +8,7 @@ class NotaDebito extends Model
 {
     protected $table='tb_nota_debito';
 
-    protected $primaryKey='id_nota_debito';
+    protected $primaryKey='id_node';
 
     public $timestamps=false;
 
