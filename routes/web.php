@@ -33,6 +33,9 @@ Route::get('reporte/almacen/margen-utilidad', 'ReporteController@reporte_almacen
 Route::get('reporte/venta/venta-cliente', 'ReporteController@reporte_venta_cliente');
 Route::get('reporte/venta/venta-vendedor', 'ReporteController@reporte_venta_vendedor');
 Route::get('reporte/venta/venta-categoria', 'ReporteController@reporte_venta_categoria');
+/* RANKING */
+Route::get('reporte/ranking/cliente', 'RankingController@ranking_cliente');
+Route::get('reporte/ranking/municipio', 'RankingController@ranking_municipio');
 
 
 

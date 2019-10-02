@@ -11,3 +11,16 @@ where v.fecha_hora >= '2019-09-01' and v.estado <> 'Anulada' and v.estado <> 'El
 
 group by dv.idarticulo,a.nombre
 order by cantidad desc
+
+/*rankin cliente*/
+select v.idcliente,	
+	(select sum(total_venta) from tb_venta where estado = 'Pagada' and idcliente = v.idcliente and fecha_hora >= '2019-09-01') as pagadas,
+	(select sum(total_venta) from tb_venta where estado = 'Pendiente' and idcliente = v.idcliente) as pendientes,
+	sum(total_venta) as neto
+	
+from tb_venta as v
+
+where fecha_hora >= '2019-09-01' and estado <> 'Anulada' and estado <> 'Eliminada'--and idcliente = 89 
+ 
+GROUP BY idcliente
+order by neto desc

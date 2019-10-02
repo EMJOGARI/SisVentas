@@ -140,7 +140,7 @@
                 <li><a href="{{ url('cobranza/cuenta-por-cobrar/') }}"><i class="fa fa-briefcase"></i>Cuentas por Cobrar</a></li>
                 <li><a href="{{ url('cobranza/banco/') }}"><i class="fa fa-bank"></i>Banco</a></li>
               </ul>
-            </li>
+            </li>            
             <li class="treeview">
               <a href="#">
                 <i class="fa fa-signal"></i>
@@ -154,7 +154,7 @@
                       <i class="fa fa-angle-left pull-right"></i>
                     </span>
                   </a>
-                  <ul class="treeview-menu" style="display: block;">
+                  <ul class="treeview-menu" style="display: auto;">
                     <li><a href="{{ url('reporte/almacen/listado-producto') }}"><i class="fa fa-th"></i>Listado de Productos</a></li>
                     <li><a href="{{ url('reporte/almacen/margen-utilidad') }}"><i class="fa fa-th"></i>Margen de Utilidad</a></li>
                   </ul>
@@ -165,10 +165,21 @@
                       <i class="fa fa-angle-left pull-right"></i>
                     </span>
                   </a>
-                  <ul class="treeview-menu" style="display: block;">
+                  <ul class="treeview-menu" style="display: auto;">
                     <li><a href="{{ url('reporte/venta/venta-cliente') }}"><i class="fa fa-th"></i>Ventas por Clientes</a></li>
                     <li><a href="{{ url('reporte/venta/venta-vendedor') }}"><i class="fa fa-th"></i>Ventas por Vendedor</a></li>
                     <li><a href="{{ url('reporte/venta/venta-categoria') }}"><i class="fa fa-th"></i>Ventas por Categoria</a></li>
+                  </ul>
+                </li>
+                <li class="treeview menu">
+                  <a href="#"><i class="fa fa-area-chart"></i> Ranking
+                    <span class="pull-right-container">
+                      <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                  </a>
+                  <ul class="treeview-menu" style="display: auto;">
+                    <li><a href="{{ url('reporte/ranking/municipio') }}"><i class="fa fa-th"></i>Ranking por Municipios</a></li>
+                    <li><a href="{{ url('reporte/ranking/cliente') }}"><i class="fa fa-th"></i>Ranking por Clientes</a></li>
                   </ul>
                 </li>
                 <li><a href="{{ url('pdf/reportearticuloprecio') }}" target="_blank"><i class="fa fa-file-pdf-o"></i>Lista de Precio Productos</a></li>
