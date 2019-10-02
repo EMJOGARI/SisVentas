@@ -20,7 +20,7 @@
 				            <th width="20%">Vendedor</th>
 				            <th width="10%">Fact. Pagadas</th>
 				            <th width="10%">Fact. Pendientes</th>
-				            <th width="10%">Acumulado</th>
+				            <th width="10%">Fact. Neta</th>
 
 				          </tr>
 				          @foreach ($ranking as $rank)

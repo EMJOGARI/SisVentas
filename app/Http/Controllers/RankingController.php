@@ -11,9 +11,8 @@ class RankingController extends Controller
 	/* RANKING DE CLIENTES */
 	/***********************/
     public function ranking_cliente()
-    {  
-    	//$x = date('m');
-    	$fecha = date("Y-m-d");
+    {      	
+    	$fecha = date("Y-m-d",strtotime('-1 month'));
         $ranking=DB::table('tb_venta as v')
             ->join('tb_persona as p','p.idpersona','v.idcliente')
             ->select('v.idcliente','p.nombre',
@@ -38,7 +37,7 @@ class RankingController extends Controller
                 $sum_total_c += $rank->pagadas;
                 $sum_total_p += $rank->pendientes;
             }
-            dd($ranking);
+            //dd($ranking);
 
         return view('reporte.ranking.cliente.index', ["ranking"=>$ranking,"sum_total"=>$sum_total,"sum_total_c"=>$sum_total_c,"sum_total_p"=>$sum_total_p,"k"=>$k]);
     }
