@@ -55,7 +55,7 @@ class InicioController extends Controller
         $ranking_municipio=DB::table('tb_venta as v')
             ->join('tb_persona as p','p.idpersona','v.idcliente')
             ->select('p.municipio',DB::raw("SUM(v.total_venta) as total"))
-            ->whereMonth('v.fecha_hora', date('m')-1)
+            ->whereMonth('v.fecha_hora', date('m'))
             ->where('v.estado','<>','Anulada')
             ->where('v.estado','<>','Eliminada')
             ->groupBy('p.municipio')

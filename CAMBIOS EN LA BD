@@ -24,3 +24,5 @@ where fecha_hora >= '2019-09-01' and estado <> 'Anulada' and estado <> 'Eliminad
  
 GROUP BY idcliente
 order by neto desc
+
+https://aprendible.com/series/laravel-excel

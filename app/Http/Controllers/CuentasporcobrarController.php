@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use SisVentas\Http\Requests;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Input;
+use SisVentas\Venta;
+use SisVentas\DetalleVenta;
 use SisVentas\Articulo;
 use SisVentas\NotaDebito;
 use SisVentas\DetalleNotaDebito;
