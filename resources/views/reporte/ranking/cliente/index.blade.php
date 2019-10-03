@@ -11,7 +11,7 @@
 	</div>
 	<div class="row">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-			<div class="table-responsive">						
+			<div class="table-responsive">
 				<table class="table table-striped table-bordered table-condensed table-hover">
 					<tbody>
 				          <tr>
@@ -27,7 +27,7 @@
 				              <tr>
 				                <td align="center"><strong>{{$k = $k + 1}}</strong></td>
 				                <td>{{ $rank->nombre }}</td>
-				                <td></td>
+				                <td>{{ $rank->vendedor }}</td>
 				                <td align="right">{{ number_format($rank->pagadas, 2, ',', '.') }}</td>
 				                <td align="right">{{ number_format($rank->pendientes, 2, ',', '.') }}</td>
 				                <td align="right">{{ number_format($rank->total, 2, ',', '.') }}</td>
@@ -38,11 +38,11 @@
 				            <td></td>
 				            <td align="center"><strong>TOTAL:</strong></td>
 				            <td align="right"><strong>{{ number_format($sum_total_c, 2, ',', '.') }}</strong></td>
-				            <td align="right"><strong>{{ number_format($sum_total_p, 2, ',', '.') }}</strong></td>				            
+				            <td align="right"><strong>{{ number_format($sum_total_p, 2, ',', '.') }}</strong></td>
 				            <td align="right"><strong>{{ number_format($sum_total, 2, ',', '.') }}</strong></td>
 				          </tr>
 				    </tbody>
-				</table>			
+				</table>
 			</div>
 			{{-- $articulos->appends(Request::all())->render() --}}
 		</div>

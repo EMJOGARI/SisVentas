@@ -11,11 +11,12 @@ class RankingController extends Controller
 	/* RANKING DE CLIENTES */
 	/***********************/
     public function ranking_cliente()
-    {      	
-    	$fecha = date("Y-m-d",strtotime('-1 month'));
+    {
+    	$fecha = date("Y-m-01",strtotime('-1 month'));
         $ranking=DB::table('tb_venta as v')
             ->join('tb_persona as p','p.idpersona','v.idcliente')
-            ->select('v.idcliente','p.nombre',
+            ->join('tb_persona as p2','p2.idpersona','v.idvendedor')
+            ->select('v.idcliente','p.nombre','p2.nombre as vendedor',
             	DB::raw("SUM(v.total_venta) as total")
             	,DB::raw("(select sum(total_venta) from tb_venta where estado = 'Pagada' and idcliente = v.idcliente and fecha_hora >= '$fecha') as pagadas")
             	,DB::raw("(select sum(total_venta) from tb_venta where estado = 'Pendiente' and idcliente = v.idcliente) as pendientes")
@@ -24,8 +25,8 @@ class RankingController extends Controller
 			->where([
 			    ['v.estado','<>','Anulada'],
 			    ['v.estado','<>','Eliminada'],
-			])           
-            ->groupBy('v.idcliente','p.nombre')
+			])
+            ->groupBy('v.idcliente','p.nombre','p2.nombre')
             ->orderBy('total','desc')
             ->get();
             $sum_total = 0;
@@ -45,7 +46,7 @@ class RankingController extends Controller
 /* RANKING POR MUNICIPIO */
 /*************************/
     public function ranking_municipio()
-    {  
+    {
         $ranking_municipios=DB::table('tb_venta as v')
             ->join('tb_persona as p','p.idpersona','v.idcliente')
             ->join('tb_persona as p2','p2.idpersona','v.idvendedor')

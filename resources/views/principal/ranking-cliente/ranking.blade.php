@@ -3,6 +3,7 @@
     <div class="row">
       <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
           <h3 class="box-title"><strong>Ranking Clientes</strong></h3>
+          <a class="btn btn-primary btn-xs pull-right" href="{{ url('reporte/ranking/cliente') }}">Ver mas</a>
       </div>
     </div>
   </div>
