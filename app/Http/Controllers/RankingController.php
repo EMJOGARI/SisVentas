@@ -80,8 +80,6 @@ class RankingController extends Controller
                 $sum_total_c += $rank->pagadas;
                 $sum_total_p += $rank->pendientes;
             }
-            //dd($ranking);
-
         return view('reporte.ranking.cliente.index', ["ranking"=>$ranking,"sum_total"=>$sum_total,"sum_total_c"=>$sum_total_c,"sum_total_p"=>$sum_total_p,"k"=>$k,"vendedores"=>$vendedores]);
     }
 /*************************/
