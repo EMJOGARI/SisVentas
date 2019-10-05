@@ -17,7 +17,9 @@ Route::get('/', function () {
 
 Route::resource('principal/index', 'InicioController');
 Route::resource('seguridad/usuario', 'UsuarioController');
+/**/
 Route::resource('seguridad/persona', 'PersonaController');
+/**/
 Route::resource('seguridad/precio_articulo', 'EditPrecioController');
 Route::resource('almacen/categoria', 'CategoriaController');
 Route::resource('almacen/articulo', 'ArticuloController');

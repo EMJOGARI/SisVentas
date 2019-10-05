@@ -16,20 +16,20 @@
 					<thead>
 						<th width="5%">Id</th>
 						<th width="40%">Nombre</th>
-						<th width="13%">Contacto</th>
-						<th width="32%">Direccíon</th>						
+						<th width="15%">Municipio</th>
+						<th width="10%">Numero Doc.</th>
+						<th width="10%">Telefono</th>
+						<th width="10%">Tipo Persona</th>
 						<th width="10%"></th>
 					</thead>
 					@foreach ($personas as $per)
 						<tr>
 							<td align="center">{{ str_pad($per->idpersona, 3, "0", STR_PAD_LEFT) }}</td>
 							<td>{{ $per->nombre }}</td>
-							<td>
-								<i class="fa fa-fw fa-user"></i>	{{ $per->tipo_documento.'-'.$per->num_documento }}	
-									<br>					
-								<i class="fa fa-fw fa-phone"></i> {{ $per->telefono }}
-							</td>
-							<td>{{ $per->municipio.' - '.$per->direccion }}</td>							
+							<td>{{ $per->municipio }}</td>
+							<td align="center">{{ $per->tipo_documento.'-'.$per->num_documento }}</td>
+							<td align="center">{{ $per->telefono }}</td>
+							<td align="center">{{ $per->tipo_persona }}</td>
 							<td align="center">
 								<div class="btn-group">
 									<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Acciones <span class="fa fa-caret-down"></span></button>

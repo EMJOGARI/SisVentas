@@ -21,6 +21,57 @@ class PersonaController extends Controller
     {
         //dd($request->all());
         if ($request)
+        {   
+            //$mayuscula = Str::upper($request->get('searchText'));
+            $codigo = $request->get('searchCodigo');
+            $text= trim($request->get('searchText')); 
+            // Variable de busqueda por categoria dond trim quita los espacios en blanco en el inicio y el final
+            
+            $personas=DB::table('tb_persona')
+                ->where(function($query) use ($codigo, $text){                    
+                    if ($codigo != "") {
+                        return $query->where('idpersona',$codigo);
+                    }
+                    else{
+                        return $query->where('nombre','LIKE','%'.$text.'%');
+                    }                    
+                })
+                //->where('tipo_persona','Cliente')               
+                ->orderBy('nombre')
+                ->paginate(50);
+
+            return view('seguridad.persona.index',["personas"=>$personas,/*"searchText"=>$query*/"searchText"=>$text,"searchCodigo"=>$codigo]);
+        }
+    }
+   /* public function index_cliente(Request $request)
+    {
+        //dd($request->all());
+        if ($request)
+        {
+            $codigo = $request->get('searchCodigo');
+            $text=trim($request->get('searchText')); 
+            // Variable de busqueda por categoria dond trim quita los espacios en blanco en el inicio y el final
+            
+            $personas=DB::table('tb_persona')
+                ->where(function($query) use ($codigo, $text){                    
+                    if ($codigo != "") {
+                        return $query->where('idpersona',$codigo);
+                    }
+                    else{
+                        return $query->where('nombre','LIKE','%'.$text.'%');
+                    }                    
+                })
+                ->where()               
+                ->orderBy('nombre')
+                ->paginate(50);
+
+            return view('seguridad.persona.cliente.index',["personas"=>$personas,"searchText"=>$text,"searchCodigo"=>$codigo]);
+        }
+    }
+    public function index_proveedor(Request $request)
+    {
+        //dd($request->all());
+        if ($request)
         {
             // Variable de busqueda por categoria dond trim quita los espacios en blanco en el inicio y el final
             $query=trim($request->get('searchText'));
@@ -30,14 +81,14 @@ class PersonaController extends Controller
                 ->orderBy('nombre')
                 ->paginate(50);
 
-            return view('seguridad.persona.index',["personas"=>$personas,"searchText"=>$query]);
+            return view('seguridad.persona.proveedor.index',["personas"=>$personas,"searchText"=>$query]);
         }
     }
 
     public function create()
     {
         return view("seguridad.persona.create");
-    }
+    }*/
 
     public function store(PersonaFormRequest $request)
     {
