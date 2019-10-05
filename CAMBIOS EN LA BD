@@ -1,6 +1,51 @@
-tb_venta
-	* detalle
+CREATE TABLE tb_nota_debito
+(
+  id_node serial NOT NULL,
+  idventa integer,
+  tipo_comprobante character varying(15),
+  num_comprobante integer,
+  total_debito numeric(11,2),
+  estado character varying(10),
+  fecha date,
+  CONSTRAINT tb_nota_debito_pkey PRIMARY KEY (id_node),
+  CONSTRAINT tb_nota_debito_idventa_foreing FOREIGN KEY (idventa)
+      REFERENCES tb_venta (idventa) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE tb_nota_debito
+  OWNER TO postgres;
+-----------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------
+CREATE TABLE tb_detalle_node
+(
+  id_detalle_node serial NOT NULL,
+  id_node integer,
+  idarticulo integer,
+  cantidad integer,
+  descuento integer,
+  precio_venta numeric(11,2),
+  CONSTRAINT tb_detalle_node_pkey PRIMARY KEY (id_detalle_node),
+  CONSTRAINT tb_detalle_node_idarticulo_foreign FOREIGN KEY (idarticulo)
+      REFERENCES tb_articulo (idarticulo) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT tb_detalle_node_idnode_foreign FOREIGN KEY (id_node)
+      REFERENCES tb_nota_debito (id_node) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE tb_detalle_node
+  OWNER TO postgres;
+------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------
 
+
+------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------
 /*Articulos mas vendidos*/
 select dv.idarticulo,a.nombre,sum(cantidad) as cantidad
 from tb_detalle_venta as dv
@@ -11,18 +56,27 @@ where v.fecha_hora >= '2019-09-01' and v.estado <> 'Anulada' and v.estado <> 'El
 
 group by dv.idarticulo,a.nombre
 order by cantidad desc
-
+------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------
 /*rankin cliente*/
-select v.idcliente,	
+select v.idcliente,
 	(select sum(total_venta) from tb_venta where estado = 'Pagada' and idcliente = v.idcliente and fecha_hora >= '2019-09-01') as pagadas,
 	(select sum(total_venta) from tb_venta where estado = 'Pendiente' and idcliente = v.idcliente) as pendientes,
 	sum(total_venta) as neto
-	
+
 from tb_venta as v
 
-where fecha_hora >= '2019-09-01' and estado <> 'Anulada' and estado <> 'Eliminada'--and idcliente = 89 
- 
+where fecha_hora >= '2019-09-01' and estado <> 'Anulada' and estado <> 'Eliminada'--and idcliente = 89
+
 GROUP BY idcliente
 order by neto desc
 
 https://aprendible.com/series/laravel-excel
+
+chars
+
+https://charts.erik.cat/installation.html#composer
+https://www.codermen.com/blog/84/how-to-use-charts-in-laravel-5-7-using-charts-package
+https://hdtuto.com/article/laravel-56-generate-free-charts-and-graphs-example
+https://www.agiratech.com/generate-charts-graphs-using-laravel/
+https://laravel-news.com/laravel-charts
