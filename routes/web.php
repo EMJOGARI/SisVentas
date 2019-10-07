@@ -19,6 +19,7 @@ Route::resource('principal/index', 'InicioController');
 Route::resource('seguridad/usuario', 'UsuarioController');
 /**/
 Route::resource('seguridad/persona', 'PersonaController');
+//Route::get('seguridad/persona/cliente', 'PersonaController@index_cliente');
 /**/
 Route::resource('seguridad/precio_articulo', 'EditPrecioController');
 Route::resource('almacen/categoria', 'CategoriaController');

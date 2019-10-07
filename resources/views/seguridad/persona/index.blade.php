@@ -3,7 +3,7 @@
 @section('content')
 	<div class="row">
 		<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-			<a href="{{ url('seguridad/persona/create') }}"><button class="btn btn-primary"><i class="fa fa-plus"></i> Nuevo</button></a>		
+			<a href="{{ url('seguridad/persona/create') }}"><button class="btn btn-primary"><i class="fa fa-plus"></i> Nuevo</button></a>
 		</div>
 		<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
 			@include('seguridad.persona.search')
@@ -17,7 +17,7 @@
 						<th width="5%">Id</th>
 						<th width="40%">Nombre</th>
 						<th width="13%">Contacto</th>
-						<th width="32%">Direccíon</th>						
+						<th width="32%">Direccíon</th>
 						<th width="10%"></th>
 					</thead>
 					@foreach ($personas as $per)
@@ -25,11 +25,11 @@
 							<td align="center">{{ str_pad($per->idpersona, 3, "0", STR_PAD_LEFT) }}</td>
 							<td>{{ $per->nombre }}</td>
 							<td>
-								<i class="fa fa-fw fa-user"></i>	{{ $per->tipo_documento.'-'.$per->num_documento }}	
-									<br>					
+								<i class="fa fa-fw fa-user"></i> {{ $per->tipo_documento.'-'.$per->num_documento }}
+									<br>
 								<i class="fa fa-fw fa-phone"></i> {{ $per->telefono }}
 							</td>
-							<td>{{ $per->municipio.' - '.$per->direccion }}</td>							
+							<td> Municipio {{ $per->municipio.' - '.$per->direccion }}</td>
 							<td align="center">
 								<div class="btn-group">
 									<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Acciones <span class="fa fa-caret-down"></span></button>

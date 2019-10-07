@@ -1,9 +1,9 @@
 @extends ('layouts.admin')
-@section('name', "Lista de Personas")
+@section('name', "Lista de Clientes")
 @section('content')
 	<div class="row">
 		<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-			<a href="{{ url('seguridad/persona/create') }}"><button class="btn btn-primary"><i class="fa fa-plus"></i> Nuevo</button></a>		
+			<a href="{{ url('seguridad/persona/create') }}"><button class="btn btn-primary"><i class="fa fa-plus"></i> Nuevo</button></a>
 		</div>
 		<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
 			@include('seguridad.persona.search')

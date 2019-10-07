@@ -139,6 +139,8 @@ class CuentasporcobrarController extends Controller
             $venta->estado='Pagada';
             $venta->detalle=$request->get('detalle');
             $venta->save();
+
+            flash('Pago Agregada')->success();
         }
         return Redirect::to('cobranza/cuenta-por-cobrar');
     }
