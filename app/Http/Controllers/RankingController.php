@@ -24,10 +24,12 @@ class RankingController extends Controller
 
         $date = Carbon::now();
 
-    	if($f1 != ""){
-    		$fecha = $request->get('FechaInicio');    		
+    	if(($f1 != "") & ($f2 != "")){
+    		$date_1 = $request->get('FechaInicio');
+            $date_2 = $request->get('FechaFinal');    		
     	}else{
-    		$fecha = $date->format('Y-m-01');
+    		$date_1 = $date->format('Y-m-01');
+            $date_2 = $date;//$date->format('Y-m-d');
     	}
     	
         $ranking=DB::table('tb_venta as v')
@@ -35,8 +37,8 @@ class RankingController extends Controller
             ->join('tb_persona as p2','p2.idpersona','v.idvendedor')
             ->select('v.idcliente','p.nombre','p2.nombre as vendedor',
             	DB::raw("SUM(v.total_venta) as total")
-            ,DB::raw("(select sum(total_venta) from tb_venta where estado = 'Pagada' and idcliente = v.idcliente and fecha_hora >= '$fecha') as pagadas")
-            	,DB::raw("(select sum(total_venta) from tb_venta where estado = 'Pendiente' and idcliente = v.idcliente) as pendientes")
+            ,DB::raw("(select sum(total_venta) from tb_venta where estado = 'Pagada' and idcliente = v.idcliente and fecha_hora >= '$date_1' and fecha_hora <= '$date_2') as pagadas")
+            	,DB::raw("(select sum(total_venta) from tb_venta where estado = 'Pendiente' and idcliente = v.idcliente and fecha_hora >= '$date_1' and fecha_hora <= '$date_2') as pendientes")
             )
            	->where(function($query) use ($vende, $f1, $f2){           		
                 if (($f1) & ($f2)) {
