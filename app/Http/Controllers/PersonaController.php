@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Redirect;
 use SisVentas\Persona;
 use SisVentas\Http\Requests\PersonaFormRequest;
 use DB;
+use Illuminate\Support\Str;
 
 class PersonaController extends Controller
 {
@@ -22,9 +23,9 @@ class PersonaController extends Controller
         //dd($request->all());
         if ($request)
         {
-            //$mayuscula = Str::upper($request->get('searchText'));
+
             $codigo = $request->get('searchCodigo');
-            $text= trim($request->get('searchText'));
+            $text= Str::upper($request->get('searchText'));//trim($request->get('searchText'));
 
             $personas=DB::table('tb_persona')
                 ->where(function($query) use ($codigo, $text){
