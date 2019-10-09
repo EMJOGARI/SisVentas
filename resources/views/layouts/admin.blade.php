@@ -140,14 +140,14 @@
                 <li><a href="{{ url('cobranza/cuenta-por-cobrar/') }}"><i class="fa fa-briefcase"></i>Cuentas por Cobrar</a></li>
                 <li><a href="{{ url('cobranza/banco/') }}"><i class="fa fa-bank"></i>Banco</a></li>
               </ul>
-            </li>            
+            </li>
             <li class="treeview">
               <a href="#">
                 <i class="fa fa-signal"></i>
                 <span>Reportes</span>
                  <i class="fa fa-angle-left pull-right"></i>
               </a>
-              <ul class="treeview-menu">                
+              <ul class="treeview-menu">
                 <li class="treeview menu">
                   <a href="#"><i class="fa fa-area-chart"></i> Almacén
                     <span class="pull-right-container">
@@ -157,6 +157,7 @@
                   <ul class="treeview-menu" style="display: auto;">
                     <li><a href="{{ url('reporte/almacen/listado-producto') }}"><i class="fa fa-th"></i>Listado de Productos</a></li>
                     <li><a href="{{ url('reporte/almacen/margen-utilidad') }}"><i class="fa fa-th"></i>Margen de Utilidad</a></li>
+                    <li><a href="{{ url('reporte/almacen/resumen-inventario') }}"><i class="fa fa-th"></i>Resumen Almacen</a></li>
                   </ul>
                 </li>
                 <li class="treeview menu-open">

@@ -1,5 +1,5 @@
 <div class="small-box bg-purple">
-    <div class="inner">            	
+    <div class="inner">
       	@foreach($articulos as $art)
       		<h3>{{ $art->total }}</h3>
         @endforeach
@@ -8,7 +8,7 @@
     <div class="icon">
       <i class="fa fa-tags"></i>
     </div>
-    <a href="{{ url('almacen/articulo/') }}" class="small-box-footer">
+    <a href="{{ url('reporte/almacen/resumen-inventario') }}" class="small-box-footer">
       Mas info <i class="fa fa-arrow-circle-right"></i>
     </a>
 </div>

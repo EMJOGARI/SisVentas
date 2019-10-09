@@ -129,6 +129,23 @@ class ReporteController extends Controller
 
         return view('reporte.almacen.margen-utilidad.index',["articulos"=>$articulos,"categorias"=>$categorias,"searchText"=>$codigo,"sum_stock"=>$sum_stock,"sum_precio_compra"=>$sum_precio_compra,"sum_precio_venta"=>$sum_precio_venta,"sum_precio_utilidad"=>$sum_precio_utilidad]);
     }
+
+    public function resumen_almacen(Request $request){
+        $articulos=DB::table('tb_articulo as a')
+            ->join('tb_categoria as c','c.idcategoria','a.idcategoria')
+            ->select('c.idcategoria','c.nombre',DB::raw("SUM(a.stock) AS stock"))
+            ->where('a.estado','Activo')
+            ->where('a.stock','>','0')
+            ->groupBy('c.idcategoria','c.nombre')
+            ->orderBy('c.idcategoria')
+            ->get();
+            //dd($articulos);
+            $sum_stock = 0;
+            foreach ($articulos as $art) {
+                $sum_stock += $art->stock;
+            }
+        return view('reporte.almacen.resumen-inventario.index',["articulos"=>$articulos,"sum_stock"=>$sum_stock]);
+    }
     /************************/
     /** REPORTES DE VENTAS **/
     /************************/
@@ -300,7 +317,6 @@ class ReporteController extends Controller
             foreach ($ventas as $venta) {
                 $sum_total += $venta->cantidad;
                 $sum_neto += $venta->neto;
-
             }
         return view('reporte.venta.venta-categoria.index',["ventas"=>$ventas,"vendedores"=>$vendedores,"sum_total"=>$sum_total,"sum_neto"=>$sum_neto]);
     }

@@ -32,6 +32,7 @@ Route::resource('compras/ingreso', 'IngresoController');
 /* REPORTES ALMACEN */
 Route::get('reporte/almacen/listado-producto', 'ReporteController@reporte_almacen');
 Route::get('reporte/almacen/margen-utilidad', 'ReporteController@reporte_almacen_utilidad');
+Route::get('reporte/almacen/resumen-inventario', 'ReporteController@resumen_almacen');
 /* REPORTES VENTAS */
 Route::get('reporte/venta/venta-cliente', 'ReporteController@reporte_venta_cliente');
 Route::get('reporte/venta/venta-vendedor', 'ReporteController@reporte_venta_vendedor');
