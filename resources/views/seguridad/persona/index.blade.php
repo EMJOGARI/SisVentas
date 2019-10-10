@@ -45,7 +45,7 @@
 					@endforeach
 				</table>
 			</div>
-			{{ $personas->render() }}
+			{{ $personas->appends(Request::all())->render() }}
 		</div>
 	</div>
 @endsection

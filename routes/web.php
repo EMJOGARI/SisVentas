@@ -19,7 +19,6 @@ Route::resource('principal/index', 'InicioController');
 Route::resource('seguridad/usuario', 'UsuarioController');
 /**/
 Route::resource('seguridad/persona', 'PersonaController');
-//Route::get('seguridad/persona/cliente', 'PersonaController@index_cliente');
 /**/
 Route::resource('seguridad/precio_articulo', 'EditPrecioController');
 Route::resource('almacen/categoria', 'CategoriaController');
@@ -27,7 +26,6 @@ Route::resource('almacen/articulo', 'ArticuloController');
 Route::resource('ventas/venta', 'VentaController');
 Route::resource('cobranza/banco', 'BancoController');
 Route::resource('cobranza/cuenta-por-cobrar', 'CuentasporcobrarController');
-//Route::get('cobranza/cuenta-por-cobrar/{id}/create', 'CuentasporcobrarController@create');
 Route::resource('compras/ingreso', 'IngresoController');
 /* REPORTES ALMACEN */
 Route::get('reporte/almacen/listado-producto', 'ReporteController@reporte_almacen');

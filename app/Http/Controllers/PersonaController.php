@@ -20,70 +20,30 @@ class PersonaController extends Controller
 
     public function index(Request $request)
     {
-        //dd($request->all());
-        if ($request)
-        {
+        $tipos= DB::table('tb_persona')
+            ->select('tipo_persona')
+            ->groupBy('tipo_persona')
+            ->get();
 
-            $codigo = $request->get('searchCodigo');
-            $text= Str::upper($request->get('searchText'));//trim($request->get('searchText'));
+        $codigo = $request->get('searchCodigo');
+        $perso = $request->get('searchPersona');
+        $text= Str::upper($request->get('searchText'));//trim($request->get('searchText'));
 
-            $personas=DB::table('tb_persona')
-                ->where(function($query) use ($codigo, $text){
-                    if ($codigo != "") {
-                        return $query->where('idpersona',$codigo);
-                    }
-                    else{
-                        return $query->where('nombre','LIKE','%'.$text.'%');
-                    }
-                })
-                ->orderBy('nombre')
-                ->paginate(50);
+        $personas=DB::table('tb_persona')
+            ->where(function($query) use ($codigo, $text, $perso){
+                if ($codigo != "") {
+                    return $query->where('idpersona',$codigo);
+                }               
+                if ($perso != "") {
+                    return $query->where('tipo_persona',$perso);
+                }
+                return $query->where('nombre','LIKE','%'.$text.'%');
+            })
+            ->orderBy('nombre')
+            ->paginate(20);
 
-            return view('seguridad.persona.index',["personas"=>$personas,"searchText"=>$text,"searchCodigo"=>$codigo]);
-        }
-    }
-   /* public function index_cliente(Request $request)
-    {
-        //dd($request->all());
-        if ($request)
-        {
-            $codigo = $request->get('searchCodigo');
-            $text=trim($request->get('searchText'));
-            // Variable de busqueda por categoria dond trim quita los espacios en blanco en el inicio y el final
-
-            $personas=DB::table('tb_persona')
-                ->where(function($query) use ($codigo, $text){
-                    if ($codigo != "") {
-                        return $query->where('idpersona',$codigo);
-                    }
-                    else{
-                        return $query->where('nombre','LIKE','%'.$text.'%');
-                    }
-                })
-                ->where('tipo_persona','=','Cliente')
-                ->orderBy('nombre')
-                ->paginate(50);
-
-            return view('seguridad.persona.cliente.index',["personas"=>$personas,"searchText"=>$text,"searchCodigo"=>$codigo]);
-        }
-    }
-    public function index_proveedor(Request $request)
-    {
-        //dd($request->all());
-        if ($request)
-        {
-            // Variable de busqueda por categoria dond trim quita los espacios en blanco en el inicio y el final
-            $query=trim($request->get('searchText'));
-            $personas=DB::table('tb_persona')
-                ->where('nombre','LIKE','%'.$query.'%')
-                ->orwhere('tipo_persona','LIKE','%'.$query.'%')
-                ->orderBy('nombre')
-                ->paginate(50);
-
-            return view('seguridad.persona.proveedor.index',["personas"=>$personas,"searchText"=>$query]);
-        }
-    }*/
-
+        return view('seguridad.persona.index',["personas"=>$personas,"tipos"=>$tipos,"searchText"=>$text,"searchCodigo"=>$codigo]);
+    }  
     public function create()
     {
         return view("seguridad.persona.create");
@@ -137,8 +97,7 @@ class PersonaController extends Controller
     public function destroy($id)
     {
         $persona=Persona::findOrFail($id);
-        $persona->tipo_persona='Inactivo';
-        $persona->update();
+        $persona->delete();
         return Redirect::to('seguridad/persona');
     }
 }
