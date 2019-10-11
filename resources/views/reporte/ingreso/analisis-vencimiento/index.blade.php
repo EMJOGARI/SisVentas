@@ -28,7 +28,7 @@
 							<td>{{ $ven->tipo_comprobante.': '.$ven->serie_comprobante.' - '.$ven->num_comprobante }}</td>
 							<td align="right">{{ number_format($ven->total_venta, 2, ',', '.') }}</td>
 							<td align="center">
-								@if(($ven->dia = 0) & ($ven->dia <= 3)) 
+								@if(($ven->dia === 0) & ($ven->dia <= 3)) 
 									{{ $ven->dia }}							
 								@endif
 							</td>
