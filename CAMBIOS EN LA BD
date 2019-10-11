@@ -14,6 +14,23 @@ trigun
  Campione
 Tales of Zestiria the X
 -------------------------------------------------------------------
+-------------------------------------------------------------------
+select v.fecha_hora,
+  v.idventa,
+  v.idcliente,
+  v.tipo_comprobante,
+  nd.id_node,
+  nd.tipo_comprobante,
+  v.total_venta,
+  nd.total_debito,
+  (v.total_venta - nd.total_debito) as pagar,
+  v.estado
+
+
+from tb_venta as v
+join tb_nota_debito as nd on nd.idventa = v.idventa
+-------------------------------------------------------------------
+-------------------------------------------------------------------
 CREATE TABLE tb_nota_debito
 (
   id_node serial NOT NULL,
