@@ -1,11 +1,11 @@
 @extends ('layouts.admin')
-@section('name', "Reportes de Ventas por Clientes y Municipio")
+@section('name', "Volumen de Cobranzas por Clientes y Municipio")
 @section('content')
 
 <div class="row" style="margin-bottom: 2rem;">
 	<div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
 		<div class="row">
-			@include('reporte.venta.venta-cliente.search')
+			@include('reporte.ingreso.ingreso-cliente.search')
 		</div>
 	</div>
 	<div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 pull-right">

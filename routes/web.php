@@ -28,13 +28,16 @@ Route::resource('cobranza/banco', 'BancoController');
 Route::resource('cobranza/cuenta-por-cobrar', 'CuentasporcobrarController');
 Route::resource('compras/ingreso', 'IngresoController');
 /* REPORTES ALMACEN */
-Route::get('reporte/almacen/listado-producto', 'ReporteController@reporte_almacen');
-Route::get('reporte/almacen/margen-utilidad', 'ReporteController@reporte_almacen_utilidad');
-Route::get('reporte/almacen/resumen-inventario', 'ReporteController@resumen_almacen');
+Route::get('reporte/almacen/listado-producto', 'ReportealmacenController@reporte_almacen');
+Route::get('reporte/almacen/margen-utilidad', 'ReportealmacenController@reporte_almacen_utilidad');
+Route::get('reporte/almacen/resumen-inventario', 'ReportealmacenController@resumen_almacen');
 /* REPORTES VENTAS */
-Route::get('reporte/venta/venta-cliente', 'ReporteController@reporte_venta_cliente');
-Route::get('reporte/venta/venta-vendedor', 'ReporteController@reporte_venta_vendedor');
-Route::get('reporte/venta/venta-categoria', 'ReporteController@reporte_venta_categoria');
+Route::get('reporte/venta/venta-cliente', 'ReporteventaController@reporte_venta_cliente');
+Route::get('reporte/venta/venta-vendedor', 'ReporteventaController@reporte_venta_vendedor');
+Route::get('reporte/venta/venta-categoria', 'ReporteventaController@reporte_venta_categoria');
+/* REPORTES INGRESO */
+Route::get('reporte/ingreso/ingreso-cliente', 'ReporteingresoController@reporte_ingreso_cliente');
+Route::get('reporte/ingreso/analisis-vencimiento', 'ReporteingresoController@reporte_analisis_vencimiento');
 /* RANKING */
 Route::get('reporte/ranking/cliente', 'RankingController@ranking_cliente');
 Route::get('reporte/ranking/municipio', 'RankingController@ranking_municipio');

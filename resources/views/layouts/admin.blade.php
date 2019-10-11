@@ -172,6 +172,17 @@
                     <li><a href="{{ url('reporte/venta/venta-categoria') }}"><i class="fa fa-th"></i>Ventas por Categoria</a></li>
                   </ul>
                 </li>
+                 <li class="treeview menu-open">
+                  <a href="#"><i class="fa fa-line-chart"></i> Ingresos
+                    <span class="pull-right-container">
+                      <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                  </a>
+                  <ul class="treeview-menu" style="display: auto;">
+                    <li><a href="{{ url('reporte/ingreso/ingreso-cliente') }}"><i class="fa fa-th"></i>Volumen de Cobranzas</a></li>
+                    <li><a href="{{ url('reporte/ingreso/analisis-vencimiento') }}"><i class="fa fa-th"></i>Analisis de Vencimiento</a></li>
+                  </ul>
+                </li>
                 <li class="treeview menu">
                   <a href="#"><i class="fa fa-area-chart"></i> Ranking
                     <span class="pull-right-container">
@@ -183,6 +194,7 @@
                     <li><a href="{{ url('reporte/ranking/cliente') }}"><i class="fa fa-th"></i>Ranking por Clientes</a></li>
                   </ul>
                 </li>
+
                 <li><a href="{{ url('pdf/reportearticuloprecio') }}" target="_blank"><i class="fa fa-file-pdf-o"></i>Lista de Precio Productos</a></li>
                 <li><a href="{{ url('pdf/reportearticulo') }}" target="_blank"><i class="fa fa-file-pdf-o"></i>Reporte de Inventario</a></li>
                 <li><a href="{{ url('pdf/reporteventa') }}" target="_blank"><i class="fa fa-file-pdf-o"></i>Reporte de Ventas</a></li>
