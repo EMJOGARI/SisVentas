@@ -4,7 +4,7 @@
 
 @section('content')
 	<div class="row">
-		@include('cobranza.cuenta-por-cobrar.search')
+		@include('reporte.ingreso.analisis-vencimiento.search'){{--cobranza.cuenta-por-cobrar--}}
 	</div>
 	<div class="row">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -15,10 +15,9 @@
 						<th width="0%">Cliente</th>
 						<th width="0%">Vendedor</th>
 						<th width="0%">Comprobante</th>
-						<th width="0%">Total</th>
-						<th width="0%">0 - 3</th>
-						<th width="0%">4 - 7</th>
-						<th width="0%">8 +</th>
+						<th width="0%">0 - 3 Días</th>
+						<th width="0%">4 - 7 Días</th>
+						<th width="0%">8 + Días</th>
 					</thead>
 					@foreach ($ventas as $ven)
 						<tr>
@@ -26,23 +25,22 @@
 							<td>{{ $ven->nombre }}</td>
 							<td>{{ $ven->vendedor }}</td>
 							<td>{{ $ven->tipo_comprobante.': '.$ven->serie_comprobante.' - '.$ven->num_comprobante }}</td>
-							<td align="right">{{ number_format($ven->total_venta, 2, ',', '.') }}</td>
 							<td align="center">
-								@if(($ven->dia === 0) & ($ven->dia <= 3)) 
-									{{ $ven->dia }}							
+								@if(($ven->dia === 0) & ($ven->dia <= 3))
+									{{ number_format($ven->total_venta, 2, ',', '.') }}
 								@endif
 							</td>
 							<td align="center">
 								@if(($ven->dia >= 4) && ($ven->dia <= 7))
-									{{ $ven->dia }}							
+									{{ number_format($ven->total_venta, 2, ',', '.') }}
 								@endif
 							</td>
 							<td align="center">
-								@if($ven->dia >= 8) 
-									{{ $ven->dia }}							
+								@if($ven->dia >= 8)
+									{{ number_format($ven->total_venta, 2, ',', '.') }}
 								@endif
-							</td>							
-							
+							</td>
+
 						</tr>
 						@include('cobranza.cuenta-por-cobrar.modal-pagar')
 
