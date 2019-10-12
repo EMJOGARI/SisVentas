@@ -35,6 +35,7 @@ Route::get('reporte/almacen/resumen-inventario', 'ReportealmacenController@resum
 Route::get('reporte/venta/venta-cliente', 'ReporteventaController@reporte_venta_cliente');
 Route::get('reporte/venta/venta-vendedor', 'ReporteventaController@reporte_venta_vendedor');
 Route::get('reporte/venta/venta-categoria', 'ReporteventaController@reporte_venta_categoria');
+Route::get('reporte/venta/facturas-anuladas', 'ReporteventaController@reporte_factura_anulada');
 /* REPORTES INGRESO */
 Route::get('reporte/ingreso/ingreso-cliente', 'ReporteingresoController@reporte_ingreso_cliente');
 Route::get('reporte/ingreso/analisis-vencimiento', 'ReporteingresoController@reporte_analisis_vencimiento');

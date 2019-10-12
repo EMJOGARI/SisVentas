@@ -52,7 +52,7 @@ class ReporteventaController extends Controller
                             if (($f1 != "") & ($f2 != "")){
                                 return $query->WhereBetween('v.fecha_hora', [$f1,$f2]);
                             }else{
-                                return $query->whereMonth('v.fecha_hora', date('m'));//WhereBetween('v.fecha_hora', [$f1,$f2]);
+                                return $query->whereMonth('v.fecha_hora', date('m'));
                             }
                         }
                     }
@@ -112,7 +112,7 @@ class ReporteventaController extends Controller
                             if (($f1 != "") & ($f2 != "")){
                                 return $query->WhereBetween('v.fecha_hora', [$f1,$f2]);
                             }else{
-                                return $query->whereMonth('v.fecha_hora', date('m'));//WhereBetween('v.fecha_hora', [$f1,$f2]);
+                                return $query->whereMonth('v.fecha_hora', date('m'));
                             }
                         }
                     }
@@ -189,5 +189,59 @@ class ReporteventaController extends Controller
                 $sum_neto += $venta->neto;
             }
         return view('reporte.venta.venta-categoria.index',["ventas"=>$ventas,"vendedores"=>$vendedores,"sum_total"=>$sum_total,"sum_neto"=>$sum_neto]);
+    }
+
+     public function reporte_factura_anulada(Request $request)
+    {
+        $vendedores=DB::table('tb_persona')->where('tipo_persona','Vendedor')->get();
+        $vende = trim($request->get('searchVendedor'));
+
+        $f1 = Carbon::now()->toDateString("FechaInicio");
+        $f2 = Carbon::now()->toDateString("FechaFinal");
+
+        $f1=$request->get('FechaInicio');
+        $f2=$request->get('FechaFinal');
+
+        $muni = $request->get('municipio');
+
+            $ventas=DB::table('tb_venta as v')
+                ->join('tb_persona as p','v.idcliente','=','p.idpersona')
+                ->join('tb_persona as p2','v.idvendedor','=','p2.idpersona')
+                ->join('tb_detalle_venta as dv','v.idventa','=','dv.idventa')
+                ->select('v.idventa','v.idvendedor','v.fecha_hora','v.idcliente','p.nombre','p2.nombre as vendedor','p.municipio','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.estado','v.total_venta')
+                ->where(function($query) use ($vende,$muni,$f1,$f2){
+                    if (($f1) & ($f2)) {
+                        if (($f1 != "") & ($f2 != "") & ($vende != "")) {
+                            return $query->WhereBetween('v.fecha_hora', [$f1,$f2])
+                                            ->where(function($q) use ($vende,$muni){
+                                                $q->Where('v.idvendedor',$vende);
+                                            });
+                        }else{
+                            if (($f1 != "") & ($f2 != "")){
+                                return $query->WhereBetween('v.fecha_hora', [$f1,$f2]);
+                            }else{
+                                return $query->whereMonth('v.fecha_hora', date('m'));
+                            }
+                        }
+                    }
+                    if ($vende) {
+                        if ($vende != "") {
+                             return $query->where('v.idvendedor',$vende)
+                                       /* ->where(function($q){
+                                            $q->whereMonth('v.fecha_hora', date('m'));
+                                        })*/;
+                        }
+                    }
+                })
+                ->groupBy('v.idventa','v.fecha_hora','p.nombre','v.idcliente','p2.nombre','p.municipio','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.estado','v.total_venta')
+                ->where('v.estado','Anulada')
+                ->orderBy('idventa','desc')
+                ->paginate(200);
+
+            $sum_total_venta = 0;
+            foreach ($ventas as $venta) {
+                $sum_total_venta += $venta->total_venta;
+            }
+        return view('reporte.venta.facturas-anuladas.index',["ventas"=>$ventas,"vendedores"=>$vendedores,"sum_total_venta"=>$sum_total_venta]);
     }
 }

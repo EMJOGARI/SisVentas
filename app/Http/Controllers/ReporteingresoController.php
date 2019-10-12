@@ -88,7 +88,7 @@ class ReporteingresoController extends Controller
             ->join('tb_persona as p','p.idpersona','v.idcliente')
             ->join('tb_persona as p2','p2.idpersona','v.idvendedor')
             ->join('tb_detalle_venta as dv','v.idventa','dv.idventa')
-            ->select('v.idventa','v.fecha_hora','p.nombre','p2.nombre as vendedor','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.estado','v.total_venta',DB::raw("(current_date - v.fecha_hora) AS dia"))
+            ->select('v.idcliente','v.idvendedor','v.idventa','v.fecha_hora','p.nombre','p2.nombre as vendedor','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.estado','v.total_venta',DB::raw("(current_date - v.fecha_hora) AS dia"))
             ->where(function($query) use ($fact,$vende){
                 if($fact){
                     if ($fact != "") {
@@ -102,7 +102,7 @@ class ReporteingresoController extends Controller
                 }
             })
             ->where('v.estado','Pendiente')
-            ->groupBy('v.idventa','v.fecha_hora','p.nombre','p2.nombre','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.estado','v.total_venta')
+            ->groupBy('v.idcliente','v.idvendedor','v.idventa','v.fecha_hora','p.nombre','p2.nombre','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.estado','v.total_venta')
             ->orderBy('idventa','desc')
             ->paginate(20);
             $tiempo = 0;

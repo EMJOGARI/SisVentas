@@ -22,20 +22,20 @@
 					@foreach ($ventas as $ven)
 						<tr>
 							<td align="center">{{ date('d-m-Y', strtotime($ven->fecha_hora)) }}</td>
-							<td>{{ $ven->nombre }}</td>
-							<td>{{ $ven->vendedor }}</td>
+							<td>{{ str_pad($ven->idcliente, 3, "0", STR_PAD_LEFT).' - '.$ven->nombre }}</td>
+							<td>{{ str_pad($ven->idvendedor, 3, "0", STR_PAD_LEFT).' - '.$ven->vendedor }}</td>
 							<td>{{ $ven->tipo_comprobante.': '.$ven->serie_comprobante.' - '.$ven->num_comprobante }}</td>
-							<td align="center">
+							<td align="right">
 								@if(($ven->dia === 0) & ($ven->dia <= 3))
 									{{ number_format($ven->total_venta, 2, ',', '.') }}
 								@endif
 							</td>
-							<td align="center">
+							<td align="right">
 								@if(($ven->dia >= 4) && ($ven->dia <= 7))
 									{{ number_format($ven->total_venta, 2, ',', '.') }}
 								@endif
 							</td>
-							<td align="center">
+							<td align="right">
 								@if($ven->dia >= 8)
 									{{ number_format($ven->total_venta, 2, ',', '.') }}
 								@endif

@@ -26,7 +26,7 @@ class ArticuloFormRequest extends FormRequest
         return [
             'idcategoria'  => 'required',
             'codigo'       => 'required|max:50',
-            'nombre'       => 'required|max:100',
+            'nombre'       => 'required|max:255',
             'stock'        => 'numeric',            
             'costo'        => 'numeric'
             //'imagen'       => 'mimes:jpg,jpeg,png'
