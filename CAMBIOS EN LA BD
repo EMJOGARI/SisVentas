@@ -1,6 +1,14 @@
 https://github.com/fxcosta/laravel-chartjs
 https://appdividend.com/2017/07/13/add-charts-laravel-using-chartjs/
 
+https://dev.to/arielsalvadordev/use-laravel-charts-in-laravel-5bbm
+-------------------------------------------------------------------
+-------------------------------------------------------------------
+POSGRETS SQL FUNCIONES
+
+http://www.postgresqltutorial.com/postgresql-extract/
+-------------------------------------------------------------------
+-------------------------------------------------------------------
 
 The King’s Avatar
 https://www6.doramasmp4.com/the-kings-avatar-capitulo-1/?fbclid=IwAR3VMApRxkcykFBC9gyppBQYrUN5gUV2EXy8RDAJzz91QcX-QXehkJ_W2yk
@@ -17,6 +25,14 @@ desetsu no yuusha
 trigun
  Campione
 Tales of Zestiria the X
+-------------------------------------------------------------------
+-------------------------------------------------------------------
+SELECT SUM(total_venta) as total,
+       EXTRACT(MONTH FROM fecha_hora) as mes
+FROM tb_venta
+WHERE estado = 'Pagada' 
+GROUP BY EXTRACT(MONTH FROM fecha_hora)
+ORDER BY mes
 -------------------------------------------------------------------
 -------------------------------------------------------------------
 select v.fecha_hora,
