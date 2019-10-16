@@ -3,6 +3,51 @@ https://appdividend.com/2017/07/13/add-charts-laravel-using-chartjs/
 
 https://dev.to/arielsalvadordev/use-laravel-charts-in-laravel-5bbm
 -------------------------------------------------------------------
+$ventas = DB::table('tb_venta')
+                ->select(
+                    DB::raw("SUM(total_venta) as total"),
+                    DB::raw("EXTRACT(MONTH FROM fecha_hora) as mes")
+                )
+                ->where('estado','Pagada')
+                ->whereYear('fecha_hora',date('Y'))
+                ->groupBy(DB::raw("EXTRACT(MONTH FROM fecha_hora)"))
+                ->orderBy('mes')
+                ->get();
+
+        $compras = DB::table('tb_ingreso')
+                ->select(
+                    DB::raw("SUM(total_compra) as total"),
+                    DB::raw("EXTRACT(MONTH FROM fecha_hora) as mes")
+                )
+                ->where('estado','A')
+                ->whereYear('fecha_hora',date('Y'))
+                ->groupBy(DB::raw("EXTRACT(MONTH FROM fecha_hora)"))
+                ->orderBy('mes')
+                ->get();
+        
+        $data_pag = [];
+        $data_pen = []; 
+        $mes = [];
+        foreach($ventas as $ven){
+            $mes[] = $ven->mes;  
+            $data_pag[] = $ven->total;
+        }        
+        foreach($compras as $comp){
+            $data_pen[] = $comp->total;
+        }
+
+        $usersChart = new VentaChart;
+        $usersChart->title('Compras & Ventas '.date('Y'), 30, "rgba(34,198,246, 1.0)", true, 'Helvetica Neue');
+        $usersChart->displaylegend(false);
+        $usersChart->labels($mes);
+
+        $usersChart->dataset('Compras', 'bar', $data_pen)
+            ->color("rgba(255, 205, 86, 1.0)")
+            ->backgroundcolor("rgba(255, 205, 86, 0.5)");
+
+        $usersChart->dataset('Ventas', 'bar', $data_pag)
+            ->color("rgba(22,160,133, 1.0)")
+            ->backgroundcolor("rgba(22,160,133, 0.5)");
 -------------------------------------------------------------------
 POSGRETS SQL FUNCIONES
 
