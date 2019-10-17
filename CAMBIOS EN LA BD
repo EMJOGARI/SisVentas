@@ -41,8 +41,16 @@ Tales of Zestiria the X
 
 ------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------
-
-
+/*Articulos no vendidos*/
+select *
+from tb_articulo
+where stock > 0 and estado = 'Activo' and idarticulo not in (select dv.idarticulo
+						from tb_detalle_venta as dv
+						join tb_venta as v on v.idventa = dv.idventa
+						join tb_articulo as a on a.idarticulo = dv.idarticulo
+						where v.fecha_hora >= '2019-09-01' and v.fecha_hora <= '2019-09-30' and v.estado <> 'Anulada' and v.estado <> 'Eliminada'					
+					      )
+order by idarticulo
 ------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------
 /*Articulos mas vendidos*/

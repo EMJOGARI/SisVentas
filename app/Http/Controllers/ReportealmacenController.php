@@ -127,7 +127,8 @@ class ReportealmacenController extends Controller
         return view('reporte.almacen.margen-utilidad.index',["articulos"=>$articulos,"categorias"=>$categorias,"searchText"=>$codigo,"sum_stock"=>$sum_stock,"sum_precio_compra"=>$sum_precio_compra,"sum_precio_venta"=>$sum_precio_venta,"sum_precio_utilidad"=>$sum_precio_utilidad]);
     }
 
-    public function resumen_almacen(Request $request){
+    public function resumen_almacen(Request $request)
+    {
         $neto=DB::table('tb_articulo as a')
             ->join('tb_detalle_ingreso as di','di.idarticulo','a.idarticulo')
             ->select('a.idcategoria',
@@ -135,7 +136,7 @@ class ReportealmacenController extends Controller
             )
             ->where([
                     ['a.estado','Activo'],
-                    ['a.stock','>',0]
+                    ['a.stock','>','0']
                 ])
             ->groupBy('a.idcategoria','a.stock','a.idarticulo')
             ->orderBy('a.idcategoria')
@@ -175,13 +176,13 @@ class ReportealmacenController extends Controller
                 }
             }
             $total_catgoria = $sum_cat_2 + $sum_cat_3 + $sum_cat_4 + $sum_cat_5 + $sum_cat_6 + $sum_cat_7 + $sum_cat_8 + $sum_cat_10 + $sum_cat_11;
-            //dd($total_catgoria);
+
         $articulos=DB::table('tb_articulo as a')
             ->join('tb_categoria as c','c.idcategoria','a.idcategoria')
             ->select('c.idcategoria','c.nombre',DB::raw("SUM(a.stock) AS stock"))
             ->where([
                     ['a.estado','Activo'],
-                    ['a.stock','>',0]
+                    ['a.stock','>','0']
                 ])
             ->groupBy('c.idcategoria','c.nombre')
             ->orderBy('c.idcategoria')
@@ -192,5 +193,56 @@ class ReportealmacenController extends Controller
             }
 
         return view('reporte.almacen.resumen-inventario.index',compact('articulos','sum_stock','sum_cat_2','sum_cat_3','sum_cat_4','sum_cat_5','sum_cat_6','sum_cat_7','sum_cat_8','sum_cat_10','sum_cat_11','total_catgoria'));
+    }
+    public function articulo_menos_vendido(Request $request)
+    {
+        $f1 = Carbon::now()->toDateString("FechaInicio");
+        $f2 = Carbon::now()->toDateString("FechaFinal");
+
+        $f1=$request->get('FechaInicio');
+        $f2=$request->get('FechaFinal');
+
+        $date = Carbon::now();
+
+        if(($f1 != "") & ($f2 != "")){
+            $date_1 = $request->get('FechaInicio');
+            $date_2 = $request->get('FechaFinal');          
+        }else{
+            $date_1 = $date->format('Y-m-01');
+            $date_2 = $date;//$date->format('Y-m-d');
+        }
+
+        $art_venta=DB::table('tb_detalle_venta as dv')
+            ->join('tb_venta as v','v.idventa','dv.idventa')
+            ->join('tb_articulo as a','a.idarticulo','dv.idarticulo')
+            ->select('dv.idarticulo')            
+            ->where([
+                    ['v.fecha_hora','>=',$date_1],
+                    ['v.fecha_hora','<=',$date_2],
+                    ['v.estado','<>','Anulada'],
+                    ['v.estado','<>','Eliminada']
+                ])
+            ->groupBy('dv.idarticulo')
+            ->orderBy('dv.idarticulo')
+            ->get();
+
+        $data = [];
+        foreach($art_venta as $ven){
+            $data[] = $ven->idarticulo;
+        }
+
+        $articulos=DB::table('tb_articulo as a')
+            ->where([
+                ['stock','>','0'],
+                ['estado','Activo']
+            ])
+            ->whereNotIn('idarticulo',$data)
+            ->orderBy('idarticulo')
+            ->get();
+
+
+
+
+        return view('reporte.almacen.producto-menos-vendido.index',compact('articulos'));
     }
 }

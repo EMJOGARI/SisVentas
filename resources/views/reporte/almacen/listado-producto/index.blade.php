@@ -8,7 +8,7 @@
 		<div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 pull-right">
 			<a href="{{ url('pdf/reportearticuloprecio') }}"><button class="btn btn-primary"><i class="fa fa-print"></i> Imprimir Reporte</button></a>
 		</div>
-	</div>
+	</div>	
 	<div class="row">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 			<div class="table-responsive">						

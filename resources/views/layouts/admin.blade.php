@@ -159,6 +159,7 @@
                     <li><a href="{{ url('reporte/almacen/listado-producto') }}"><i class="fa fa-th"></i>Listado de Productos</a></li>
                     <li><a href="{{ url('reporte/almacen/margen-utilidad') }}"><i class="fa fa-th"></i>Margen de Utilidad</a></li>
                     <li><a href="{{ url('reporte/almacen/resumen-inventario') }}"><i class="fa fa-th"></i>Resumen Almacen</a></li>
+                    <li><a href="{{ url('reporte/almacen/producto-menos-vendido') }}"><i class="fa fa-th"></i>Menos Vendidos</a></li>
                   </ul>
                 </li>
                 <li class="treeview menu-open">
