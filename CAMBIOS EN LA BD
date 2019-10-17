@@ -1,53 +1,14 @@
+-------------------------------------------------------------------
+-------------------------------------------------------------------
+agregar fecha creacion a la base de datos en persona
+-------------------------------------------------------------------
+-------------------------------------------------------------------
 https://github.com/fxcosta/laravel-chartjs
 https://appdividend.com/2017/07/13/add-charts-laravel-using-chartjs/
 
 https://dev.to/arielsalvadordev/use-laravel-charts-in-laravel-5bbm
 -------------------------------------------------------------------
-$ventas = DB::table('tb_venta')
-                ->select(
-                    DB::raw("SUM(total_venta) as total"),
-                    DB::raw("EXTRACT(MONTH FROM fecha_hora) as mes")
-                )
-                ->where('estado','Pagada')
-                ->whereYear('fecha_hora',date('Y'))
-                ->groupBy(DB::raw("EXTRACT(MONTH FROM fecha_hora)"))
-                ->orderBy('mes')
-                ->get();
 
-        $compras = DB::table('tb_ingreso')
-                ->select(
-                    DB::raw("SUM(total_compra) as total"),
-                    DB::raw("EXTRACT(MONTH FROM fecha_hora) as mes")
-                )
-                ->where('estado','A')
-                ->whereYear('fecha_hora',date('Y'))
-                ->groupBy(DB::raw("EXTRACT(MONTH FROM fecha_hora)"))
-                ->orderBy('mes')
-                ->get();
-        
-        $data_pag = [];
-        $data_pen = []; 
-        $mes = [];
-        foreach($ventas as $ven){
-            $mes[] = $ven->mes;  
-            $data_pag[] = $ven->total;
-        }        
-        foreach($compras as $comp){
-            $data_pen[] = $comp->total;
-        }
-
-        $usersChart = new VentaChart;
-        $usersChart->title('Compras & Ventas '.date('Y'), 30, "rgba(34,198,246, 1.0)", true, 'Helvetica Neue');
-        $usersChart->displaylegend(false);
-        $usersChart->labels($mes);
-
-        $usersChart->dataset('Compras', 'bar', $data_pen)
-            ->color("rgba(255, 205, 86, 1.0)")
-            ->backgroundcolor("rgba(255, 205, 86, 0.5)");
-
-        $usersChart->dataset('Ventas', 'bar', $data_pag)
-            ->color("rgba(22,160,133, 1.0)")
-            ->backgroundcolor("rgba(22,160,133, 0.5)");
 -------------------------------------------------------------------
 POSGRETS SQL FUNCIONES
 
@@ -70,74 +31,14 @@ desetsu no yuusha
 trigun
  Campione
 Tales of Zestiria the X
--------------------------------------------------------------------
--------------------------------------------------------------------
-SELECT SUM(total_venta) as total,
-       EXTRACT(MONTH FROM fecha_hora) as mes
-FROM tb_venta
-WHERE estado = 'Pagada' 
-GROUP BY EXTRACT(MONTH FROM fecha_hora)
-ORDER BY mes
--------------------------------------------------------------------
--------------------------------------------------------------------
-select v.fecha_hora,
-  v.idventa,
-  v.idcliente,
-  v.tipo_comprobante,
-  nd.id_node,
-  nd.tipo_comprobante,
-  v.total_venta,
-  nd.total_debito,
-  (v.total_venta - nd.total_debito) as pagar,
-  v.estado
 
 
-from tb_venta as v
-join tb_nota_debito as nd on nd.idventa = v.idventa
 -------------------------------------------------------------------
 -------------------------------------------------------------------
-CREATE TABLE tb_nota_debito
-(
-  id_node serial NOT NULL,
-  idventa integer,
-  tipo_comprobante character varying(15),
-  num_comprobante integer,
-  total_debito numeric(11,2),
-  estado character varying(10),
-  fecha date,
-  CONSTRAINT tb_nota_debito_pkey PRIMARY KEY (id_node),
-  CONSTRAINT tb_nota_debito_idventa_foreing FOREIGN KEY (idventa)
-      REFERENCES tb_venta (idventa) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION
-)
-WITH (
-  OIDS=FALSE
-);
-ALTER TABLE tb_nota_debito
-  OWNER TO postgres;
------------------------------------------------------------------------------------
------------------------------------------------------------------------------------
-CREATE TABLE tb_detalle_node
-(
-  id_detalle_node serial NOT NULL,
-  id_node integer,
-  idarticulo integer,
-  cantidad integer,
-  descuento integer,
-  precio_venta numeric(11,2),
-  CONSTRAINT tb_detalle_node_pkey PRIMARY KEY (id_detalle_node),
-  CONSTRAINT tb_detalle_node_idarticulo_foreign FOREIGN KEY (idarticulo)
-      REFERENCES tb_articulo (idarticulo) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION,
-  CONSTRAINT tb_detalle_node_idnode_foreign FOREIGN KEY (id_node)
-      REFERENCES tb_nota_debito (id_node) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION
-)
-WITH (
-  OIDS=FALSE
-);
-ALTER TABLE tb_detalle_node
-  OWNER TO postgres;
+
+-------------------------------------------------------------------
+-------------------------------------------------------------------
+
 ------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------
 
@@ -157,16 +58,6 @@ order by cantidad desc
 ------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------
 /*rankin cliente*/
-select v.idcliente,
-	(select sum(total_venta) from tb_venta where estado = 'Pagada' and idcliente = v.idcliente and fecha_hora >= '2019-09-01') as pagadas,
-	(select sum(total_venta) from tb_venta where estado = 'Pendiente' and idcliente = v.idcliente) as pendientes,
-	sum(total_venta) as neto
 
-from tb_venta as v
-
-where fecha_hora >= '2019-09-01' and estado <> 'Anulada' and estado <> 'Eliminada'--and idcliente = 89
-
-GROUP BY idcliente
-order by neto desc
 
 https://aprendible.com/series/laravel-excel

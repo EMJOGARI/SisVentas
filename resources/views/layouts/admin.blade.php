@@ -6,6 +6,7 @@
     <title>SisVentas</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js" charset="utf-8"></script>
     <!-- Bootstrap 3.3.5 -->
     <link rel="stylesheet" href="{{ asset('/assets/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('/assets/css/bootstrap-select.min.css') }}">
@@ -229,7 +230,6 @@
        <!--Contenido-->
       <!-- Content Wrapper. Contains page content -->
       <div class="content-wrapper">
-
         <!-- Main content -->
         <section class="content">
 
@@ -252,10 +252,8 @@
                               @yield('content')
                               <!--Fin Contenido-->
                           </div>
-                        </div>
-                    </div>
-                  </div><!-- /.row -->
-                </div><!-- /.box-body -->
+                        </div><!-- /.row -->
+                    </div><!-- /.box-body -->
               </div><!-- /.box -->
             </div><!-- /.col -->
           </div><!-- /.row -->

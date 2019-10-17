@@ -23,14 +23,10 @@
                 <td align="right">{{ number_format($rank->total, 2, ',', '.') }}</td>
               </tr>
           @endforeach
-          <tr>
-            <td></td>
-            <td align="center"><strong>TOTAL:</strong></td>
-            <td align="right"><strong>{{ number_format($sum_total, 2, ',', '.') }}</strong></td>
-          </tr>
+
       </tbody>
     </table>
   </div>
-  {{-- $ranking->appends(Request::all())->render() --}}
+  {{ $ranking->appends(Request::all())->render() }}
   <!-- /.box-body -->
 </div>

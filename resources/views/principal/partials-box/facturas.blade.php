@@ -1,15 +1,19 @@
-<div class="small-box bg-green">
-    <div class="inner">            	
-    	@foreach($ventas as $ven)
-    		<h3>{{ $ven->ventas }}</h3>
-      @endforeach
-      	<p class="info-box-text">Facturas emitidas</p>
-    </div>
-    <div class="icon">
-      <i class="fa fa-money"></i>
-    </div>
-    <a href="{{ url('ventas/venta') }}" class="small-box-footer">
-      Mas info <i class="fa fa-arrow-circle-right"></i>
-    </a>
-</div>
-
+<div class="info-box bg-green">
+    <span class="info-box-icon"><i class="fa fa-money"></i></span>
+    <div class="info-box-content">
+        <span class="info-box-text">Ventas {{ date('Y') }}</span>
+        <span class="info-box-number">
+            @foreach($venta_total as $ven)
+                {{ number_format($ven->ventas, 2, ',', '.') }}</h3>
+            @endforeach
+        </span>
+        <div class="progress">
+            <div class="progress-bar" style="width: 100%"></div>
+        </div>
+        <span class="progress-description">
+            @foreach($ventas as $ven)
+                Facturas emitidas: {{ $ven->ventas }}</h3>
+            @endforeach
+        </span>
+    </div><!-- /.info-box-content -->
+</div><!-- /.info-box -->

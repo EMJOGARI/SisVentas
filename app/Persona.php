@@ -19,7 +19,8 @@ class Persona extends Model
     	'num_documento',
     	'direccion',
     	'telefono',
-        'municipio'
+        'municipio',
+        'fecha_creacion'
     ];
 
     protected $guarded =[

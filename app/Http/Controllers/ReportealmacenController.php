@@ -76,7 +76,7 @@ class ReportealmacenController extends Controller
             foreach ($articulos as $art) {
                 $sum_stock += $art->stock;
             }
-            
+
         return view('reporte.almacen.listado-producto.index',["articulos"=>$articulos,"searchText"=>$codigo,"searchList"=>$stock,"categorias"=>$categorias,"sum_stock"=>$sum_stock]);
     }
 
@@ -128,11 +128,61 @@ class ReportealmacenController extends Controller
     }
 
     public function resumen_almacen(Request $request){
+        $neto=DB::table('tb_articulo as a')
+            ->join('tb_detalle_ingreso as di','di.idarticulo','a.idarticulo')
+            ->select('a.idcategoria',
+                DB::raw("MAX(precio_venta * a.stock) AS precio")
+            )
+            ->where([
+                    ['a.estado','Activo'],
+                    ['a.stock','>',0]
+                ])
+            ->groupBy('a.idcategoria','a.stock','a.idarticulo')
+            ->orderBy('a.idcategoria')
+            ->get();
+
+            $sum_cat_2 = 0; $sum_cat_3 = 0; $sum_cat_4 = 0; $sum_cat_5 = 0; $sum_cat_6 = 0;
+            $sum_cat_7 = 0; $sum_cat_8 = 0; $sum_cat_10 = 0; $sum_cat_10 = 0; $sum_cat_11 = 0;
+            foreach ($neto as $net) {
+                switch ($net->idcategoria) {
+                    case 2:
+                        $sum_cat_2 += $net->precio;
+                        break;
+                    case 3:
+                        $sum_cat_3 += $net->precio;
+                        break;
+                    case 4:
+                        $sum_cat_4 += $net->precio;
+                        break;
+                    case 5:
+                        $sum_cat_5 += $net->precio;
+                        break;
+                    case 6:
+                        $sum_cat_6 += $net->precio;
+                        break;
+                    case 7:
+                        $sum_cat_7 += $net->precio;
+                        break;
+                    case 8:
+                        $sum_cat_8 += $net->precio;
+                        break;
+                    case 10:
+                        $sum_cat_10 += $net->precio;
+                        break;
+                    case 11:
+                        $sum_cat_11 += $net->precio;
+                        break;
+                }
+            }
+            $total_catgoria = $sum_cat_2 + $sum_cat_3 + $sum_cat_4 + $sum_cat_5 + $sum_cat_6 + $sum_cat_7 + $sum_cat_8 + $sum_cat_10 + $sum_cat_11;
+            //dd($total_catgoria);
         $articulos=DB::table('tb_articulo as a')
             ->join('tb_categoria as c','c.idcategoria','a.idcategoria')
             ->select('c.idcategoria','c.nombre',DB::raw("SUM(a.stock) AS stock"))
-            ->where('a.estado','Activo')
-            ->where('a.stock','>','0')
+            ->where([
+                    ['a.estado','Activo'],
+                    ['a.stock','>',0]
+                ])
             ->groupBy('c.idcategoria','c.nombre')
             ->orderBy('c.idcategoria')
             ->get();
@@ -141,6 +191,6 @@ class ReportealmacenController extends Controller
                 $sum_stock += $art->stock;
             }
 
-        return view('reporte.almacen.resumen-inventario.index',["articulos"=>$articulos,"sum_stock"=>$sum_stock]);
+        return view('reporte.almacen.resumen-inventario.index',compact('articulos','sum_stock','sum_cat_2','sum_cat_3','sum_cat_4','sum_cat_5','sum_cat_6','sum_cat_7','sum_cat_8','sum_cat_10','sum_cat_11','total_catgoria'));
     }
 }

@@ -11,6 +11,10 @@ use SisVentas\Http\Requests\PersonaFormRequest;
 use DB;
 use Illuminate\Support\Str;
 
+use Carbon\Carbon;
+use Response;
+use Illuminate\Support\Collection;
+
 class PersonaController extends Controller
 {
      public function __construct()
@@ -33,7 +37,7 @@ class PersonaController extends Controller
             ->where(function($query) use ($codigo, $text, $perso){
                 if ($codigo != "") {
                     return $query->where('idpersona',$codigo);
-                }               
+                }
                 if ($perso != "") {
                     return $query->where('tipo_persona',$perso);
                 }
@@ -43,7 +47,7 @@ class PersonaController extends Controller
             ->paginate(20);
 
         return view('seguridad.persona.index',["personas"=>$personas,"tipos"=>$tipos,"searchText"=>$text,"searchCodigo"=>$codigo]);
-    }  
+    }
     public function create()
     {
         return view("seguridad.persona.create");
@@ -60,6 +64,8 @@ class PersonaController extends Controller
             $persona->telefono=$request->get('telefono');
             $persona->tipo_persona=$request->get('tipo_persona');
             $persona->municipio=$request->get('municipio');
+                $mytime = Carbon::now('America/Caracas');
+            $persona->fecha_creacion=$mytime->toDateTimestring();
             $persona->save();
             DB::commit();
         }catch(\Exception $e){

@@ -1,14 +1,19 @@
-<div class="small-box bg-aqua">
-    <div class="inner">
-    	@foreach($personas as $per)	
-  			<h3>{{ $per->personas }}</h3>
-      @endforeach 
-      <p class="info-box-text">Clientes Registrados</p>
-    </div>
-    <div class="icon">
-      <i class="fa fa fa-users"></i>
-    </div>
-    <a href="{{ url('seguridad/persona') }}" class="small-box-footer">
-      Mas info <i class="fa fa-arrow-circle-right"></i>
-    </a>
-</div>		   	
+<div class="info-box bg-aqua">
+    <span class="info-box-icon"><i class="fa fa-users "></i></span>
+    <div class="info-box-content">
+        <span class="info-box-text">Clientes</span>
+        <span class="info-box-number">
+            @foreach($clientes as $per)
+                {{ $per->personas }}
+            @endforeach
+        </span>
+        <div class="progress">
+            <div class="progress-bar" style="width: 100%"></div>
+        </div>
+        <span class="progress-description">
+            @foreach($cli_new as $per)
+                Clientes nuevos: {{ $per->personas }}
+            @endforeach
+        </span>
+    </div><!-- /.info-box-content -->
+</div><!-- /.info-box -->
