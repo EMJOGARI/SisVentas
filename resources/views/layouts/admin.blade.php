@@ -159,7 +159,8 @@
                     <li><a href="{{ url('reporte/almacen/listado-producto') }}"><i class="fa fa-th"></i>Listado de Productos</a></li>
                     <li><a href="{{ url('reporte/almacen/margen-utilidad') }}"><i class="fa fa-th"></i>Margen de Utilidad</a></li>
                     <li><a href="{{ url('reporte/almacen/resumen-inventario') }}"><i class="fa fa-th"></i>Resumen Almacen</a></li>
-                    <li><a href="{{ url('reporte/almacen/producto-menos-vendido') }}"><i class="fa fa-th"></i>Menos Vendidos</a></li>
+                    <li><a href="{{ url('reporte/almacen/producto-mas-vendido') }}"><i class="fa fa-th"></i>Producto mas Vendidos</a></li>
+                    <li><a href="{{ url('reporte/almacen/producto-menos-vendido') }}"><i class="fa fa-th"></i>Producto Menos Vendidos</a></li>
                   </ul>
                 </li>
                 <li class="treeview menu-open">
@@ -199,9 +200,9 @@
                 </li>
 
                 <li><a href="{{ url('pdf/reportearticuloprecio') }}" target="_blank"><i class="fa fa-file-pdf-o"></i>Lista de Precio Productos</a></li>
-                <li><a href="{{ url('pdf/reportearticulo') }}" target="_blank"><i class="fa fa-file-pdf-o"></i>Reporte de Inventario</a></li>
-                <li><a href="{{ url('pdf/reporteventa') }}" target="_blank"><i class="fa fa-file-pdf-o"></i>Reporte de Ventas</a></li>
-                <li><a href="{{ url('pdf/reporteingreso') }}" target="_blank"><i class="fa fa-file-pdf-o"></i>Reporte de Ingresos</a></li>
+                <li><a href="{{ url('pdf/reportearticulo') }}" target="_blank"><i class="fa fa-file-pdf-o"></i>Reporte de Inventario Cero</a></li>
+                {{--<li><a href="{{ url('pdf/reporteventa') }}" target="_blank"><i class="fa fa-file-pdf-o"></i>Reporte de Ventas</a></li>
+                <li><a href="{{ url('pdf/reporteingreso') }}" target="_blank"><i class="fa fa-file-pdf-o"></i>Reporte de Ingresos</a></li>--}}
               </ul>
             </li>
             <li><a href="{{ url('seguridad/persona') }}"><i class="fa fa-user"></i><span>Personas</span></a></li>

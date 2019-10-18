@@ -196,6 +196,9 @@ class ReportealmacenController extends Controller
     }
     public function articulo_menos_vendido(Request $request)
     {
+        $categorias=DB::table('tb_categoria')->where('condicion','=','1')->get();
+        $cat = trim($request->get('searchCategoria'));
+
         $f1 = Carbon::now()->toDateString("FechaInicio");
         $f2 = Carbon::now()->toDateString("FechaFinal");
 
@@ -206,7 +209,7 @@ class ReportealmacenController extends Controller
 
         if(($f1 != "") & ($f2 != "")){
             $date_1 = $request->get('FechaInicio');
-            $date_2 = $request->get('FechaFinal');          
+            $date_2 = $request->get('FechaFinal');
         }else{
             $date_1 = $date->format('Y-m-01');
             $date_2 = $date;//$date->format('Y-m-d');
@@ -215,7 +218,7 @@ class ReportealmacenController extends Controller
         $art_venta=DB::table('tb_detalle_venta as dv')
             ->join('tb_venta as v','v.idventa','dv.idventa')
             ->join('tb_articulo as a','a.idarticulo','dv.idarticulo')
-            ->select('dv.idarticulo')            
+            ->select('dv.idarticulo')
             ->where([
                     ['v.fecha_hora','>=',$date_1],
                     ['v.fecha_hora','<=',$date_2],
@@ -232,17 +235,68 @@ class ReportealmacenController extends Controller
         }
 
         $articulos=DB::table('tb_articulo as a')
+            ->join('tb_categoria as c','c.idcategoria','a.idcategoria')
+            ->select('a.idarticulo','a.nombre','c.nombre as categoria','a.stock')
+            ->where(function($query) use ($cat){
+                if($cat){
+                    if ($cat != "") {
+                        return $query->where('c.idcategoria',$cat);
+                    }
+                }
+            })
             ->where([
-                ['stock','>','0'],
-                ['estado','Activo']
+                ['a.stock','>','0'],
+                ['a.estado','Activo']
             ])
-            ->whereNotIn('idarticulo',$data)
-            ->orderBy('idarticulo')
-            ->get();
+            ->whereNotIn('a.idarticulo',$data)
+            ->orderBy('a.idarticulo')
+            ->paginate(50);
+        //dd($articulos);
+        return view('reporte.almacen.producto-menos-vendido.index',compact('articulos','categorias'));
+    }
+    public function articulo_mas_vendido(Request $request)
+    {
+        $categorias=DB::table('tb_categoria')->where('condicion','=','1')->get();
+        $cat = trim($request->get('searchCategoria'));
 
+        $f1 = Carbon::now()->toDateString("FechaInicio");
+        $f2 = Carbon::now()->toDateString("FechaFinal");
 
+        $f1=$request->get('FechaInicio');
+        $f2=$request->get('FechaFinal');
 
+        $date = Carbon::now();
 
-        return view('reporte.almacen.producto-menos-vendido.index',compact('articulos'));
+        if(($f1 != "") & ($f2 != "")){
+            $date_1 = $request->get('FechaInicio');
+            $date_2 = $request->get('FechaFinal');
+        }else{
+            $date_1 = $date->format('Y-m-01');
+            $date_2 = $date;//$date->format('Y-m-d');
+        }
+
+        $art_ventas=DB::table('tb_detalle_venta as dv')
+            ->join('tb_venta as v','v.idventa','dv.idventa')
+            ->join('tb_articulo as a','a.idarticulo','dv.idarticulo')
+            ->join('tb_categoria as c','c.idcategoria','a.idcategoria')
+            ->select('dv.idarticulo','a.nombre','c.nombre as categoria',DB::raw("sum(cantidad) as cantidad"))
+            ->where(function($query) use ($cat){
+                if($cat){
+                    if ($cat != "") {
+                        return $query->where('c.idcategoria',$cat);
+                    }
+                }
+            })
+            ->where([
+                    ['v.fecha_hora','>=',$date_1],
+                    ['v.fecha_hora','<=',$date_2],
+                    ['v.estado','<>','Anulada'],
+                    ['v.estado','<>','Eliminada']
+                ])
+            ->groupBy('dv.idarticulo','a.nombre','c.nombre')
+            ->orderBy('cantidad','desc')
+            ->paginate(50);
+            //sdd($art_venta);
+        return view('reporte.almacen.producto-mas-vendido.index',compact('art_ventas','categorias'));
     }
 }

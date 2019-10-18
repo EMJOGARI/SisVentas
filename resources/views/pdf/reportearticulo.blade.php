@@ -17,7 +17,7 @@
 					<tr>
 						<td style="text-align: center;">{{ $art->codigo }}</td>
 						<td>{{ $art->nombre }}</td>
-						<td style="text-align: center;">{{ $art->stock }}</td>
+						<td style="text-align: center;"></td>
 					</tr>
 				@endif
 			@endforeach

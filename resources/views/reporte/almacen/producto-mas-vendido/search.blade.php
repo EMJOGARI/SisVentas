@@ -1,4 +1,4 @@
-{!! Form::open(array('url'=>'reporte/almacen/producto-menos-vendido', 'method'=>'GET', 'autocomplete'=>'off', 'role'=>'search' )) !!}
+{!! Form::open(array('url'=>'reporte/almacen/producto-mas-vendido', 'method'=>'GET', 'autocomplete'=>'off', 'role'=>'search' )) !!}
 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
     <div class="input-group">
         <div class="input-group-addon">

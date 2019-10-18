@@ -1,11 +1,11 @@
 @extends ('layouts.admin')
-@section('name', "Productos menos vendidos")
+@section('name', "Productos Mas vendidos")
 @section('content')
 
 <div class="row" style="margin-bottom: 2rem;">
 	<div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
 		<div class="row">
-			@include('reporte.almacen.producto-menos-vendido.search')
+			@include('reporte.almacen.producto-mas-vendido.search')
 		</div>
 	</div>
 </div>
@@ -19,19 +19,19 @@
 					<th width="5%">Codigo</th>
 					<th width="35%">Nombre</th>
 					<th width="10%">Categoría</th>
-					<th width="5%">Stock</th>
+					<th width="5%">Cantidad Vendida</th>
 				</thead>
-				@foreach ($articulos as $art)
+				@foreach ($art_ventas as $art)
 					<tr>
 						<td align="center">{{ $art->idarticulo }}</td>
 						<td>{{ $art->nombre }}</td>
 						<td align="center">{{ $art->categoria }}</td>
-						<td align="center">{{ $art->stock }}</td>
+						<td align="center">{{ $art->cantidad }}</td>
 					</tr>
 				@endforeach
 			</table>
 		</div>
-		{{ $articulos->appends(Request::all())->render() }}
+		{{ $art_ventas->appends(Request::all())->render() }}
 	</div>
 </div>
 
