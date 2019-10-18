@@ -19,11 +19,11 @@
 					<th width="5%">Codigo</th>
 					<th width="35%">Nombre</th>
 					<th width="10%">Categoría</th>
-					<th width="5%">Stock</th>
+					<th width="10%">Stock</th>
 				</thead>
 				@foreach ($articulos as $art)
 					<tr>
-						<td align="center">{{ $art->idarticulo }}</td>
+						<td align="center">{{ str_pad($art->idarticulo, 3, "0", STR_PAD_LEFT) }}</td>
 						<td>{{ $art->nombre }}</td>
 						<td align="center">{{ $art->categoria }}</td>
 						<td align="center">{{ $art->stock }}</td>

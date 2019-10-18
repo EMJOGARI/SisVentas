@@ -84,6 +84,7 @@ class ReporteingresoController extends Controller
         $vende = $request->get('searchVendedor');
 
         $fact=trim($request->get('searchText'));
+
         $ventas=DB::table('tb_venta as v')
             ->join('tb_persona as p','p.idpersona','v.idcliente')
             ->join('tb_persona as p2','p2.idpersona','v.idvendedor')
@@ -104,12 +105,40 @@ class ReporteingresoController extends Controller
             ->where('v.estado','Pendiente')
             ->groupBy('v.idcliente','v.idvendedor','v.idventa','v.fecha_hora','p.nombre','p2.nombre','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.estado','v.total_venta')
             ->orderBy('idventa','desc')
-            ->paginate(20);
-            $tiempo = 0;
-            foreach ($ventas as $ven) {
-                $tiempo=(strtotime(date('d-m-Y'))-strtotime($ven->fecha_hora))/86400;
+            ->paginate(30);
+            $mar_1 = 0; $mar_2 = 0; $mar_3 = 0;
+            foreach ($ventas as $ven){               
+                if(($ven->dia === 0) & ($ven->dia <= 3)){
+                    $mar_1 += $ven->total_venta;
+                }else{
+                    if(($ven->dia >= 4) && ($ven->dia <= 7)){
+                        $mar_2 += $ven->total_venta;
+                    }else{
+                        $mar_3 += $ven->total_venta;
+                    }  
+                }                    
             }
-            //dd($ventas);
-        return view('reporte.ingreso.analisis-vencimiento.index',["ventas"=>$ventas,"searchText"=>$fact,"vendedores"=>$vendedores,"tiempo"=>$tiempo]);
+            //dd($mar_1,$mar_2,$mar_3);
+        return view('reporte.ingreso.analisis-vencimiento.index',compact('ventas','fact','vendedores','mar_1','mar_2','mar_3'));
    }
+    
+    public function show($id)
+    {
+       $ingreso=DB::table('tb_ingreso as i')
+            ->join('tb_persona as p','i.idproveedor','=','p.idpersona')
+            ->join('tb_detalle_ingreso as di','i.idingreso','=','di.idingreso')
+            ->select('i.idingreso','i.fecha_hora','p.nombre','i.tipo_comprobante','i.serie_comprobante','i.num_comprobante','i.estado',DB::raw('sum(di.cantidad*di.precio_compra) as total'))
+            ->groupBy('i.idingreso','i.fecha_hora','p.nombre','i.tipo_comprobante','i.serie_comprobante','i.num_comprobante', 'i.estado')
+            ->where('i.idingreso','=',$id)
+            ->first();
+
+        $detalles=DB::table('tb_detalle_ingreso as d')
+            ->join('tb_articulo as a', 'd.idarticulo', '=','a.idarticulo')
+            ->select('d.idarticulo','a.nombre as articulo', 'd.cantidad', 'd.precio_compra')
+            ->where('d.idingreso','=',$id)
+            ->get();
+
+        return view("reporte.ingreso.ingreso-proveedor.show",["ingreso"=>$ingreso , "detalles"=>$detalles]);
+    }
+
 } /* FIN REPORTE INGRESO CONTROLLER*/

@@ -19,11 +19,11 @@
 					<th width="5%">Codigo</th>
 					<th width="35%">Nombre</th>
 					<th width="10%">Categoría</th>
-					<th width="5%">Cantidad Vendida</th>
+					<th width="10%">Cantidad Vendida</th>
 				</thead>
 				@foreach ($art_ventas as $art)
 					<tr>
-						<td align="center">{{ $art->idarticulo }}</td>
+						<td align="center">{{ str_pad($art->idarticulo, 3, "0", STR_PAD_LEFT) }}</td>
 						<td>{{ $art->nombre }}</td>
 						<td align="center">{{ $art->categoria }}</td>
 						<td align="center">{{ $art->cantidad }}</td>

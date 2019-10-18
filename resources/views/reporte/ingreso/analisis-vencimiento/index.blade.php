@@ -4,7 +4,7 @@
 
 @section('content')
 	<div class="row">
-		@include('reporte.ingreso.analisis-vencimiento.search'){{--cobranza.cuenta-por-cobrar--}}
+		@include('reporte.ingreso.analisis-vencimiento.search')
 	</div>
 	<div class="row">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -23,7 +23,7 @@
 						<tr>
 							<td align="center">{{ date('d-m-Y', strtotime($ven->fecha_hora)) }}</td>
 							<td>{{ str_pad($ven->idcliente, 3, "0", STR_PAD_LEFT).' - '.$ven->nombre }}</td>
-							<td>{{ str_pad($ven->idvendedor, 3, "0", STR_PAD_LEFT).' - '.$ven->vendedor }}</td>
+							<td>{{ str_pad($ven->idvendedor, 3, "0", STR_PAD_LEFT) }}</td>
 							<td>{{ $ven->tipo_comprobante.': '.$ven->serie_comprobante.' - '.$ven->num_comprobante }}</td>
 							<td align="right">
 								@if(($ven->dia === 0) & ($ven->dia <= 3))
@@ -40,11 +40,17 @@
 									{{ number_format($ven->total_venta, 2, ',', '.') }}
 								@endif
 							</td>
-
 						</tr>
-						@include('cobranza.cuenta-por-cobrar.modal-pagar')
-
 					@endforeach
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td align="center"><strong>TOTAL</strong></td>
+							<td align="right"><strong>{{ number_format($mar_1, 2, ',', '.') }}</strong></td>
+							<td align="right"><strong>{{ number_format($mar_2, 2, ',', '.') }}</strong></td>
+							<td align="right"><strong>{{ number_format($mar_3, 2, ',', '.') }}</strong></td>
+						</tr>
 				</table>
 			</div>
 			{{ $ventas->appends(Request::all())->render() }}
