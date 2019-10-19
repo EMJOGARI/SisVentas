@@ -24,8 +24,7 @@ class ArticuloFormRequest extends FormRequest
     public function rules()
     {
         return [
-            'idcategoria'  => 'required',
-            'codigo'       => 'required|max:50',
+            'idcategoria'  => 'required',            
             'nombre'       => 'required|max:255',
             'stock'        => 'numeric',            
             'costo'        => 'numeric'

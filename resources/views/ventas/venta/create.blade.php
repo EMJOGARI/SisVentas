@@ -21,17 +21,12 @@
 			 	<div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
 			 		<div class="form-group">
 				 		{!! Form::label('cliente', 'Cliente') !!}
-				 		 <select name="idcliente" id="idcliente" class="form-control selectpicker" data-live-search="true">
+				 		 	<select name="idcliente" id="idcliente" class="form-control selectpicker" data-live-search="true">
 		                    	<option value="">Seleccioné un Cliente</option>
 		                    	@foreach($personas as $persona)
 		                    		<option value="{{ $persona->idpersona }}">{{ str_pad($persona->idpersona, 3, "0", STR_PAD_LEFT).' - '.$persona->nombre }}</option>
 		                    	@endforeach
 		                    </select>
-		                {{--<div class="input-group">
-			                <div class="input-group-btn">
-			                	<a href="{{ url('seguridad/persona/create') }}" type="button" class="btn btn-success"><i class="fa fa-plus"></i> Nuevo Cliente</a>
-			                </div>
-		                </div>--}}
 			 		</div>
 	            </div>
 	            <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
@@ -86,7 +81,7 @@
 				                    <select name="pidarticulo" id="pidarticulo" class="form-control selectpicker" data-live-search="true">
 				                    	<option value="">Seleccioné un Articulo</option>
 				                    	@foreach($articulos as $art)
-				                    		<option value="{{ $art->idarticulo }}_{{ $art->stock }}_{{ $art->precio_venta }}">{{ $art->articulo }}</option>
+				                    		<option value="{{ $art->idarticulo }}_{{ $art->stock }}_{{ $art->precio_venta }}">{{ str_pad($art->idarticulo, 3, "0", STR_PAD_LEFT).' - '.$art->nombre }}</option>
 				                    	@endforeach
 				                    </select>
 				                </div>

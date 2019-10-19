@@ -59,11 +59,11 @@ class VentaController extends Controller
 
     	$articulos=DB::table('tb_articulo as art')
     		->join('tb_detalle_ingreso as di','art.idarticulo','=','di.idarticulo')
-    		->select(DB::raw("CONCAT(art.codigo,' - ',art.nombre) AS articulo"),'art.idarticulo','art.stock', DB::raw("MAX(di.precio_venta) AS precio_venta"),DB::raw("MAX(di.precio_credito) AS precio_credito"))
+    		->select('art.idarticulo','art.nombre','art.stock', DB::raw("MAX(di.precio_venta) AS precio_venta"),DB::raw("MAX(di.precio_credito) AS precio_credito"))
     		->where('art.estado','=','Activo')
     		->where('art.stock','>','0')
-    		->groupBy('articulo','art.idarticulo','art.stock')
-            ->orderBy('art.codigo')
+    		->groupBy('art.idarticulo','art.stock','art.nombre')
+            ->orderBy('art.idarticulo')
     		->get();
             //dd($personas, $articulos);
         return view("ventas.venta.create",["personas"=>$personas, "articulos"=>$articulos, "vendedores"=>$vendedores]);

@@ -17,7 +17,7 @@
 			@foreach ($articulos as $art)
 				@if(($cat->nombre)==($art->categoria))
 					<tr>
-						<td style="text-align: center;">{{ $art->codigo }}</td>
+						<td style="text-align: center;">{{ str_pad($art->idarticulo, 3, "0", STR_PAD_LEFT) }}</td>
 						<td>{{ $art->nombre }}</td>
 
 						<td style="text-align: center;">{{ $art->stock }}</td>

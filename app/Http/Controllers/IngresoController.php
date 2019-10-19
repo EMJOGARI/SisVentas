@@ -52,9 +52,9 @@ class IngresoController extends Controller
             ->get();
 
     	$articulos=DB::table('tb_articulo as art')
-    		->select(DB::raw("CONCAT(art.codigo,' - ',art.nombre) AS articulo"),'art.idarticulo')
+    		->select('art.idarticulo','art.nombre')
     		->where('art.estado','=','Activo')
-            ->orderBy('art.codigo')
+            ->orderBy('art.idarticulo')
     		->get();
         return view("compras.ingreso.create",["personas"=>$personas, "articulos"=>$articulos]);
     }

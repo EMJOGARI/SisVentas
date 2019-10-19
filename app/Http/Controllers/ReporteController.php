@@ -39,7 +39,7 @@ class ReporteController extends Controller
         $categorias=DB::table('tb_categoria')->where('condicion','=','1')->get();
         $articulos=DB::table('tb_articulo as a')
             ->join('tb_categoria as c','a.idcategoria','=','c.idcategoria')
-            ->select('a.idarticulo','a.nombre','a.codigo','a.stock','c.nombre as categoria','a.estado')
+            ->select('a.idarticulo','a.nombre','a.stock','c.nombre as categoria','a.estado')
             ->where('a.estado','Activo')
             ->orderBy('categoria')
             ->orderBy('a.nombre')
@@ -56,10 +56,10 @@ class ReporteController extends Controller
         $articulos=DB::table('tb_articulo as art')
             ->join('tb_categoria as c','art.idcategoria','=','c.idcategoria')
             ->join('tb_detalle_ingreso as di','art.idarticulo','=','di.idarticulo')
-            ->select('art.codigo','art.nombre','art.stock', DB::raw("MAX(di.precio_venta) AS precio_venta"),'c.nombre as categoria')
+            ->select('art.idarticulo','art.nombre','art.stock', DB::raw("MAX(di.precio_venta) AS precio_venta"),'c.nombre as categoria')
             ->where('art.estado','Activo')
             ->where('art.stock','>','0')
-            ->groupBy('art.codigo','art.nombre','art.stock', 'categoria')
+            ->groupBy('art.idarticulo','art.nombre','art.stock', 'categoria')
             ->orderBy('categoria')
             ->orderBy('art.nombre')
             ->get();

@@ -32,11 +32,10 @@ class ReportealmacenController extends Controller
         $articulos=DB::table('tb_articulo as a')
             ->join('tb_categoria as c','a.idcategoria','=','c.idcategoria')
             ->join('tb_detalle_ingreso as di','a.idarticulo','=','di.idarticulo')
-            ->select('a.idarticulo','a.nombre','a.codigo','a.stock','c.nombre as categoria','a.estado',
+            ->select('a.idarticulo','a.nombre','a.stock','c.nombre as categoria','a.estado',
                 DB::raw("MAX(di.precio_venta) AS precio_venta"),
                 DB::raw("MAX(di.precio_compra) AS precio_compra")
-            )
-            ->groupBy('a.idarticulo','a.nombre','a.codigo','a.stock','a.estado','c.nombre')
+            )            
             ->where(function($query) use ($codigo, $stock, $cat){
                 if($codigo){
                     if ($codigo != "") {
@@ -68,6 +67,7 @@ class ReportealmacenController extends Controller
                 }
             })
             ->where('a.estado','Activo')
+            ->groupBy('a.idarticulo','a.nombre','a.stock','a.estado','c.nombre')
             ->orderBy('categoria')
             ->orderBy('a.nombre')
             ->paginate(50);
@@ -90,7 +90,7 @@ class ReportealmacenController extends Controller
         $articulos=DB::table('tb_articulo as a')
             ->join('tb_categoria as c','a.idcategoria','=','c.idcategoria')
             ->join('tb_detalle_ingreso as di','a.idarticulo','=','di.idarticulo')
-            ->select('a.idarticulo','a.nombre','a.codigo','a.stock','c.nombre as categoria','a.estado',
+            ->select('a.idarticulo','a.nombre','a.stock','c.nombre as categoria','a.estado',
                 DB::raw("MAX(di.precio_venta) AS precio_venta"),
                 DB::raw("MAX(di.precio_compra) AS precio_compra")
             )
@@ -108,7 +108,7 @@ class ReportealmacenController extends Controller
             })
             ->where('stock','>','0')
             ->where('a.estado','Activo')
-            ->groupBy('a.idarticulo','a.nombre','a.codigo','a.stock','a.estado','c.nombre')
+            ->groupBy('a.idarticulo','a.nombre','a.stock','a.estado','c.nombre')
             ->orderBy('categoria')
             ->orderBy('a.nombre')
             ->paginate(200);
