@@ -61,23 +61,36 @@ class IngresoController extends Controller
 
     public function store(IngresoFormRequest $request)
     {
-        dd($request->all());
+       
     	try{
     		DB::beginTransaction();
+            
+                $idarticulo=$request->get('idarticulo');
+                $cantidad=$request->get('cantidad');
+                $precio_compra=$request->get('precio_compra');
+                $venta_total = 0;
+                $sum = 0;
+
+                while($sum < count($idarticulo)){
+                        $venta_total = $venta_total + ($cantidad[$sum]*$precio_compra[$sum]);
+                        $sum=$sum+1;
+                    }
+                //dd($venta_total);
     			$ingreso = new Ingreso;
     			$ingreso->idproveedor=$request->get('idproveedor');
 		        $ingreso->tipo_comprobante='Factura';
 		        $ingreso->serie_comprobante=$request->get('serie_comprobante');
 		        $ingreso->num_comprobante=$request->get('num_comprobante');
-                $ingreso->total_compra=$request->get('total_compra');
+                $ingreso->total_compra=$venta_total;
+                //$ingreso->total_compra=$request->get('total_compra');
 		          $mytime = Carbon::now('America/Caracas');
 		        $ingreso->fecha_hora=$mytime->toDateTimestring();
 		        $ingreso->estado='A';
 		        $ingreso->save();
 
-		        $idarticulo=$request->get('idarticulo');
+		        /*$idarticulo=$request->get('idarticulo');
 		        $cantidad=$request->get('cantidad');
-		        $precio_compra=$request->get('precio_compra');
+		        $precio_compra=$request->get('precio_compra');*/
 
 		        $cont = 0;
 
@@ -91,10 +104,12 @@ class IngresoController extends Controller
 		        	$detalle->save();
 		        	$cont=$cont+1;
 		        }
+            //dd($ingreso,$detalle);
             flash('Ingreso Exitoso')->success();
     		DB::commit();
 
     	}catch(\Exception $e){
+            dd($e);
     		DB::rollback();
             flash('Error a procesar el ingreso de la factura')->warning();
     	}

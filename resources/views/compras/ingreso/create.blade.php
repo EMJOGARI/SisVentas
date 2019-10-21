@@ -151,7 +151,7 @@
 				<td align="right"><input type="hidden" name="cantidad[]" value="'+cantidad+'">'+cantidad+'</td>\n\
 				<td align="right"><input type="hidden" name="precio_compra[]" value="'+precio_compra+'">'+precio_compra+'</td>\n\
 				<td align="right">'+subtotal[cont]+'</td>\n\
-				<td><button type="button" class="btn btn-danger" onclick="eliminar('+cont+')"><i class="fa-close"></i></button></td>\n\
+				<td><button type="button" class="btn btn-danger" onclick="eliminar('+cont+')"><i class="fa fa-close"></i></button></td>\n\
 				</tr>';
 
 			cont++;
