@@ -227,9 +227,9 @@ class ReporteventaController extends Controller
                     if ($vende) {
                         if ($vende != "") {
                              return $query->where('v.idvendedor',$vende)
-                                       /* ->where(function($q){
+                                        ->where(function($q){
                                             $q->whereMonth('v.fecha_hora', date('m'));
-                                        })*/;
+                                        });
                         }
                     }
                 })

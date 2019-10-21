@@ -61,6 +61,7 @@ class IngresoController extends Controller
 
     public function store(IngresoFormRequest $request)
     {
+        dd($request->all());
     	try{
     		DB::beginTransaction();
     			$ingreso = new Ingreso;

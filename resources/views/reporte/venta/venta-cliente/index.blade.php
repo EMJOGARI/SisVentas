@@ -19,10 +19,11 @@
 				<thead>
 					<th width="10%">Fecha</th>
 					<th width="10%">Factura Nº</th>
-					<th width="45%">Cliente</th>
+					<th width="40%">Cliente</th>
 					<th width="15%">Municipio</th>
 					<th width="10%">Estado</th>
 					<th width="10%">Neto</th>
+					<th width="5%"></th>
 				</thead>
 				@foreach ($ventas as $ven)
 					<tr>
@@ -38,7 +39,11 @@
 								@endif
 						</td>
 						<td align="right">{{ number_format($ven->total_venta, 2, ',', '.') }}</td>
+						<td>
+							<a href="{{ URL::action('VentaController@show',$ven->idventa) }}"><button class="btn btn-default"><i class="fa fa-eye"></i></button></a>
+						</td>
 					</tr>
+				@include('ventas.venta.modal')
 				@endforeach
 					<tr>
 						<td></td>
@@ -47,6 +52,7 @@
 						<td></td>
 						<td align="center"><strong>TOTAL:</strong></td>
 						<td align="right"><strong>{{ number_format($sum_total_venta, 2, ',', '.') }}</strong></td>
+						<td></td>
 					</tr>
 			</table>
 		</div>

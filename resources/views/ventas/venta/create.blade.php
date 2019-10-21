@@ -154,9 +154,7 @@
 
 @push('scripts')
 <script>
-	/*function tax_value(value){
-			$("#resultados" ).load( "./ajax/agregar_tmp.php?tax="+value );
-		}*/
+
 	$(document).ready(function(){
 		$('#bt_add').click(function(){
 			agregar();
@@ -210,7 +208,7 @@
 
 					cont++;
 					limpiar();
-					$("#total").html("BsS. " + total); // number_format(total, 2, ',', '.')
+					$("#total").html("BsS. " + total);
 					$("#total_venta").val(total);
 					evaluar();
 					$('#detalles').append(fila);

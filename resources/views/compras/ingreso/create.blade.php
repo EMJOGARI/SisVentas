@@ -71,13 +71,13 @@
 				            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
 				                <div class="form-group">
 				                    {!! Form::label('cantidad', 'Cantidad') !!}
-				                    {!! Form::number('cantidad', null, ['id'=>'pcantidad','class'=>'form-control','placeholder'=>'Cantidad']) !!}
+				                    {!! Form::number('pcantidad', null, ['id'=>'pcantidad','class'=>'form-control','placeholder'=>'Cantidad']) !!}
 				                </div>
 				            </div>
 				            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
 				                <div class="form-group">
 				                    {!! Form::label('precio_compra', 'Precio Unitario') !!}
-				                    {!! Form::number('precio_compra', null, ['id'=>'pprecio_compra','class'=>'form-control','placeholder'=>'P. Unidad']) !!}
+				                    {!! Form::number('pprecio_compra', null, ['id'=>'pprecio_compra','class'=>'form-control','placeholder'=>'P. Unidad']) !!}
 				                </div>
 				            </div>
 				            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
@@ -120,79 +120,77 @@
 
 
 @push('scripts')
-
 <script>
+
 	$(document).ready(function(){
-	$('#bt_add').click(function(){
-		agregar();
+		$('#bt_add').click(function(){
+			agregar();
+		});
 	});
-});
 
-var cont=0;
-total=0;
-subtotal=[];
-$("#guardar").hide();
+	var cont=0;
+	total=0;
+	subtotal=[];
+	$("#guardar").hide();
 
-function agregar()
-{
-	idarticulo=$("#pidarticulo").val();
-	articulo=$("#pidarticulo option:selected").text();
-	cantidad=$("#pcantidad").val();
-	precio_compra=$("#pprecio_compra").val();
-	total=$("#total").val();
-
-	if (idarticulo!="" && cantidad!="" && cantidad>0 && precio_compra!="")
+	function agregar()
 	{
-		subtotal[cont]=(cantidad*precio_compra);
-		total=total+subtotal[cont];
+		idarticulo=$("#pidarticulo").val();
+		articulo=$("#pidarticulo option:selected").text();
+		cantidad=$("#pcantidad").val();
+		precio_compra=$("#pprecio_compra").val();
+		total=$("#total").val();
 
-		var fila='<tr class="selected" id="fila'+cont+'">\n\
-			<td align="left"><input type="hidden" name="idarticulo[]" value="'+idarticulo+'">'+articulo+'</td>\n\
-			<td align="right"><input type="hidden" name="cantidad[]" value="'+cantidad+'">'+cantidad+'</td>\n\
-			<td align="right"><input type="hidden" name="precio_compra[]" value="'+precio_compra+'">'+precio_compra+'</td>\n\
-			<td align="right">'+subtotal[cont]+'</td>\n\
-			<td><button type="button" class="btn btn-danger" onclick="eliminar('+cont+')"><i class="fa fa-close"></i></button></td>\n\
-			</tr>';
+		if (idarticulo!="" && cantidad!="" && cantidad>0 && precio_compra!="")
+		{
+			subtotal[cont]=(cantidad*precio_compra);
+			total=total+subtotal[cont];
 
-		cont++;
-		limpiar();
+			var fila='<tr class="selected" id="fila'+cont+'">\n\
+				<td align="left"><input type="hidden" name="idarticulo[]" value="'+idarticulo+'">'+articulo+'</td>\n\
+				<td align="right"><input type="hidden" name="cantidad[]" value="'+cantidad+'">'+cantidad+'</td>\n\
+				<td align="right"><input type="hidden" name="precio_compra[]" value="'+precio_compra+'">'+precio_compra+'</td>\n\
+				<td align="right">'+subtotal[cont]+'</td>\n\
+				<td><button type="button" class="btn btn-danger" onclick="eliminar('+cont+')"><i class="fa-close"></i></button></td>\n\
+				</tr>';
+
+			cont++;
+			limpiar();
+			$("#total").html("BsS. " + total);
+			evaluar();
+			$('#detalles').append(fila);
+		}
+		else
+		{
+			alert("Error al ingresar el detalle del ingreso, revise los datos del articulo")
+		}
+	}
+
+	function limpiar()
+	{
+		$("#pcantidad").val("");
+		$("#pprecio_compra").val("");
+	}
+
+	function evaluar()
+	{
+		if (total>0)
+		{
+			$("#guardar").show();
+		}
+		else
+		{
+			$("#guardar").hide();
+		}
+	}
+
+	function eliminar(index)
+	{
+		total=total-subtotal[index];
 		$("#total").html("BsS. " + total);
-		$("#total_compra").val(total);
+		$("#fila" + index).remove();
 		evaluar();
-		$('#detalles').append(fila);
 	}
-	else
-	{
-		alert("Error al ingresar el detalle del ingreso, revise los datos del articulo")
-	}
-}
-
-function limpiar()
-{
-	$("#pcantidad").val("");
-	$("#pprecio_compra").val("");
-}
-
-function evaluar()
-{
-	if (total>0)
-	{
-		$("#guardar").show();
-	}
-	else
-	{
-		$("#guardar").hide();
-	}
-}
-
-function eliminar(index)
-{
-	total=total-subtotal[index];
-	$("#total").html("BsS. " + total);
-	$("#fila" + index).remove();
-	evaluar();
-}
-
 </script>
 @endpush
 

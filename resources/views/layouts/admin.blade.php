@@ -174,8 +174,18 @@
                     <li><a href="{{ url('reporte/venta/venta-vendedor') }}"><i class="fa fa-th"></i>Ventas por Vendedor</a></li>
                     <li><a href="{{ url('reporte/venta/venta-categoria') }}"><i class="fa fa-th"></i>Ventas por Categoria</a></li>
                     <li><a href="{{ url('reporte/venta/facturas-anuladas') }}"><i class="fa fa-th"></i>Facturas Anuladas</a></li>
-                    <li><a href="{{ url('reporte/ingreso/ingreso-cliente') }}"><i class="fa fa-th"></i>Volumen de Cobranzas</a></li>
-                    <li><a href="{{ url('reporte/ingreso/analisis-vencimiento') }}"><i class="fa fa-th"></i>Analisis de Vencimiento</a></li>
+
+                  </ul>
+                </li>
+                <li class="treeview menu-open">
+                  <a href="#"><i class="fa fa-line-chart"></i> Cobranzas
+                    <span class="pull-right-container">
+                      <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                  </a>
+                  <ul class="treeview-menu" style="display: auto;">
+                      <li><a href="{{ url('reporte/ingreso/ingreso-cliente') }}"><i class="fa fa-th"></i>Volumen de Cobranzas</a></li>
+                      <li><a href="{{ url('reporte/ingreso/analisis-vencimiento') }}"><i class="fa fa-th"></i>Analisis de Vencimiento</a></li>
                   </ul>
                 </li>
                  <li class="treeview menu-open">
@@ -185,7 +195,7 @@
                     </span>
                   </a>
                   <ul class="treeview-menu" style="display: auto;">
-                    
+
                   </ul>
                 </li>
                 <li class="treeview menu">

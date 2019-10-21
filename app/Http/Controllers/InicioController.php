@@ -136,7 +136,7 @@ class InicioController extends Controller
             ->groupBy(DB::raw("EXTRACT(MONTH FROM fecha_hora)"),'nombre')
             ->orderBy('mes')
             ->get();
-
+//dd($ingreso);
     $data_pag = [];
     $data_pen = [];
     $mes = [];

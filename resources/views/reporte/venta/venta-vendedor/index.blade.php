@@ -41,7 +41,11 @@
 								@endif
 						</td>
 						<td align="right">{{ number_format($ven->total_venta, 2, ',', '.') }}</td>
+						<td>
+							<a href="{{ URL::action('VentaController@show',$ven->idventa) }}"><button class="btn btn-default"><i class="fa fa-eye"></i></button></a>
+						</td>
 					</tr>
+				@include('ventas.venta.modal')
 				@endforeach
 					<tr>
 						<td></td>
