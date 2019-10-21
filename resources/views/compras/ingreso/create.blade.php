@@ -157,6 +157,7 @@
 			cont++;
 			limpiar();
 			$("#total").html("BsS. " + total);
+			$("#total_compra").val(total);
 			evaluar();
 			$('#detalles').append(fila);
 		}
