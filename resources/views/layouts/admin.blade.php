@@ -195,7 +195,7 @@
                     </span>
                   </a>
                   <ul class="treeview-menu" style="display: auto;">
-
+                    <li><a href="{{ url('reporte/compra/compra-proveedor') }}"><i class="fa fa-th"></i>Compras por Proveedor</a></li>
                   </ul>
                 </li>
                 <li class="treeview menu">

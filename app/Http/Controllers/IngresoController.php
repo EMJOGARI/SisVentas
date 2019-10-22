@@ -33,7 +33,7 @@ class IngresoController extends Controller
             	->join('tb_persona as p','i.idproveedor','=','p.idpersona')
             	->join('tb_detalle_ingreso as di','i.idingreso','=','di.idingreso')
             	->select('i.idingreso','i.fecha_hora','p.nombre','i.tipo_comprobante','i.serie_comprobante','i.num_comprobante','i.estado'
-                    ,DB::raw('sum(di.cantidad*di.precio_compra) as total'))
+                    ,DB::raw('sum(di.cantidad*di.precio_compra) as total'),'i.total_compra')
             	->where('i.num_comprobante','LIKE','%'.$query.'%')
                 ->where('i.estado','=','A')
             	->orderBy('idingreso','desc')

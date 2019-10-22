@@ -41,6 +41,8 @@ Route::get('reporte/venta/facturas-anuladas', 'ReporteventaController@reporte_fa
 /* REPORTES INGRESO */
 Route::get('reporte/ingreso/ingreso-cliente', 'ReporteingresoController@reporte_ingreso_cliente');
 Route::get('reporte/ingreso/analisis-vencimiento', 'ReporteingresoController@reporte_analisis_vencimiento');
+/* REPORTE COMPRAS */
+Route::get('reporte/compra/compra-proveedor', 'ReporteCompraController@reporte_compra_proveedor');
 /* RANKING */
 Route::get('reporte/ranking/cliente', 'RankingController@ranking_cliente');
 Route::get('reporte/ranking/municipio', 'RankingController@ranking_municipio');

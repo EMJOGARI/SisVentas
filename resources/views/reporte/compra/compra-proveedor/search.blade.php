@@ -1,4 +1,4 @@
-{!! Form::open(array('url'=>'reporte/venta/venta-cliente', 'method'=>'GET', 'autocomplete'=>'off', 'role'=>'search' )) !!}
+{!! Form::open(array('url'=>'reporte/compra/compra-proveedor', 'method'=>'GET', 'autocomplete'=>'off', 'role'=>'search' )) !!}
 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
     <div class="input-group">
         <div class="input-group-addon">
@@ -16,9 +16,9 @@
 </div>
 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
     <div class="input-group">
-        <select name="cliente" id="cliente" class="form-control selectpicker" data-live-search="true">
-                <option value="">Seleccioné un Cliente</option>
-            @foreach($clientes as $persona)
+        <select name="searchProveedor" id="searchProveedor" class="form-control selectpicker" data-live-search="true">
+                <option value="">Seleccioné un Proveedor</option>
+            @foreach($proveedor as $persona)
                 <option value="{{ $persona->idpersona }}">{{ str_pad($persona->idpersona, 3, "0", STR_PAD_LEFT).' - '.$persona->nombre }}</option>
             @endforeach
         </select>

@@ -26,7 +26,7 @@
 							<td align="center">{{ date('d-m-Y', strtotime($ing->fecha_hora)) }}</td>
 							<td>{{ $ing->nombre }}</td>
 							<td>{{ $ing->tipo_comprobante.': '.$ing->serie_comprobante.' - '.$ing->num_comprobante }}</td>
-							<td align="right">{{ number_format($ing->total, 2, ',', '.') }}</td>
+							<td align="right">{{ number_format($ing->total_compra, 2, ',', '.') }}</td>
 							<td align="center">{{ $ing->estado }}</td>
 							<td>
 								<div class="btn-group">

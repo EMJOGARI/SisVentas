@@ -35,11 +35,28 @@ Tales of Zestiria the X
 
 
 -------------------------------------------------------------------
+PARA UPDATEAR TODOS LOS CAMPOS D ELA BD
 -------------------------------------------------------------------
+CREATE OR REPLACE FUNCTION cargar_bd()
+RETURNS void AS
+$BODY$BEGIN
+	for i in 1..130 loop
+		UPDATE tb_ingreso   
+		SET total_compra = (select SUM(cantidad * precio_compra) from tb_detalle_ingreso WHERE idingreso = i)
+		WHERE idingreso = i;
+	end loop;
+END;$BODY$
+LANGUAGE 'plpgsql' VOLATILE;
 
+select cargar_bd(); --PARA CARGAR LOS CAMPOS
 -------------------------------------------------------------------
+CONSULTAR BD TOTAL INGRESO
 -------------------------------------------------------------------
-
+SELECT SUM(total_compra) as total, EXTRACT(MONTH FROM fecha_hora) as mes, to_char(fecha_hora, 'TMMonth') as nombre
+FROM tb_ingreso
+WHERE estado = 'A' AND EXTRACT(YEAR FROM fecha_hora) = 2019
+GROUP BY EXTRACT(MONTH FROM fecha_hora),nombre 
+ORDER BY  mes
 ------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------
 /*Articulos no vendidos*/
@@ -66,7 +83,7 @@ group by dv.idarticulo,a.nombre
 order by cantidad desc
 ------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------
-/*rankin cliente*/
+
 
 
 https://aprendible.com/series/laravel-excel

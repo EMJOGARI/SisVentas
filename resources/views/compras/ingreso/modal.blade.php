@@ -33,7 +33,7 @@
 				         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
 				            <div class="form-group">
 				                {!! Form::label('tipo_comprobante', 'Monto Neto') !!}
-				                <p>{{ number_format($ing->total, 2, ',', '.') }}</p>
+				                <p>{{ number_format($ing->total_compra, 2, ',', '.') }}</p>
 				            </div>
 				        </div>
 				        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
