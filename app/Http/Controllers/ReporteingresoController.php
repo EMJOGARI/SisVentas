@@ -21,8 +21,11 @@ use Illuminate\Support\Collection;
 class ReporteingresoController extends Controller
 {
     public function reporte_ingreso_cliente(Request $request){
+        $vendedores=DB::table('tb_persona')->where('tipo_persona','Vendedor')->get();
+        $vende = trim($request->get('searchVendedor'));
 
         $clientes=DB::table('tb_persona')->orderBy('idpersona')->get();
+        $clien = $request->get('cliente');
 
         $f1 = Carbon::now()->toDateString("FechaInicio");
         $f2 = Carbon::now()->toDateString("FechaFinal");
@@ -30,7 +33,6 @@ class ReporteingresoController extends Controller
         $f1=$request->get('FechaInicio');
         $f2=$request->get('FechaFinal');
 
-        $clien = $request->get('cliente');
         $muni = $request->get('municipio');
 
             $ventas=DB::table('tb_venta as v')
@@ -38,13 +40,14 @@ class ReporteingresoController extends Controller
                 ->join('tb_persona as p2','v.idvendedor','=','p2.idpersona')
                 ->join('tb_detalle_venta as dv','v.idventa','=','dv.idventa')
                 ->select('v.idventa','v.idvendedor','v.fecha_hora','v.idcliente','p.nombre','p2.nombre as vendedor','p.municipio','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.estado','v.total_venta')
-                ->where(function($query) use ($clien,$muni,$f1,$f2){
+                ->where(function($query) use ($clien,$muni,$f1,$f2,$vende){
                     if (($f1) & ($f2)) {
                         if (($f1 != "") & ($f2 != "") & ($clien != "")) {
                             return $query->WhereBetween('v.fecha_hora', [$f1,$f2])
-                                            ->where(function($q) use ($clien,$muni){
+                                            ->where(function($q) use ($clien,$muni,$vende){
                                                 $q->orWhere('p.idpersona',$clien)
-                                                ->orWhere('p.municipio',$muni);
+                                                ->orWhere('p.municipio',$muni)
+                                                ->orWhere('p.idpersona',$vende);
                                             });
                         }else{
                             if (($f1 != "") & ($f2 != "")){
@@ -54,6 +57,15 @@ class ReporteingresoController extends Controller
                             }
                         }
                     }
+                    if ($vende) {
+                        if ($vende != "") {
+                            return $query->where('v.idvendedor',$vende)
+                                        ->where(function($q){
+                                            $q->whereMonth('v.fecha_hora', date('m'));
+                            });
+                        }
+                    }
+
                     if ($clien) {
                         if ($clien != "") {
                              return $query->where('p.idpersona',$clien)
@@ -77,7 +89,7 @@ class ReporteingresoController extends Controller
             foreach ($ventas as $venta) {
                 $sum_total_venta += $venta->total_venta;
             }
-        return view('reporte.ingreso.ingreso-cliente.index',["ventas"=>$ventas,"clientes"=>$clientes,"sum_total_venta"=>$sum_total_venta]);
+        return view('reporte.ingreso.ingreso-cliente.index',compact('ventas','clientes','sum_total_venta','vendedores'));
     }
     public function reporte_analisis_vencimiento(Request $request){
         $vendedores=DB::table('tb_persona')->where('tipo_persona','Vendedor')->get();

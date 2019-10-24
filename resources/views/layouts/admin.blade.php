@@ -6,7 +6,8 @@
     <title>SisVentas</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js" charset="utf-8"></script>
+    <!--script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js" charset="utf-8"></script-->
+    <script src="{{ asset('/assets/js/Chart.min.js') }}"></script>
     <!-- Bootstrap 3.3.5 -->
     <link rel="stylesheet" href="{{ asset('/assets/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('/assets/css/bootstrap-select.min.css') }}">
@@ -160,7 +161,7 @@
                     <li><a href="{{ url('reporte/almacen/margen-utilidad') }}"><i class="fa fa-th"></i>Margen de Utilidad</a></li>
                     <li><a href="{{ url('reporte/almacen/resumen-inventario') }}"><i class="fa fa-th"></i>Resumen Almacen</a></li>
                     <li><a href="{{ url('reporte/almacen/producto-mas-vendido') }}"><i class="fa fa-th"></i>Producto mas Vendidos</a></li>
-                    <li><a href="{{ url('reporte/almacen/producto-menos-vendido') }}"><i class="fa fa-th"></i>Producto Menos Vendidos</a></li>
+                    <li><a href="{{ url('reporte/almacen/producto-menos-vendido') }}"><i class="fa fa-th"></i>Producto no Vendidos</a></li>
                   </ul>
                 </li>
                 <li class="treeview menu-open">

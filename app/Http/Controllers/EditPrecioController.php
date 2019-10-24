@@ -25,20 +25,20 @@ class EditPrecioController extends Controller
             $text=trim($request->get('searchText'));
             $articulos=DB::table('tb_articulo as art')
                 ->join('tb_detalle_ingreso as di','art.idarticulo','=','di.idarticulo')
-                ->select('art.idarticulo','art.nombre','art.codigo','art.stock', DB::raw("MAX(di.precio_venta) AS precio_venta"),DB::raw("MAX(di.precio_compra) AS precio_compra"))
-                ->where(function($query) use ($codigo, $text){                    
+                ->select('art.idarticulo','art.nombre','art.stock', DB::raw("MAX(di.precio_venta) AS precio_venta"),DB::raw("MAX(di.precio_compra) AS precio_compra"))
+                ->where(function($query) use ($codigo, $text){
                         if ($codigo != "") {
-                            return $query->where('art.codigo',$codigo);
+                            return $query->where('art.idarticulo',$codigo);
                         }
                     else{
                         return $query->where('art.nombre','LIKE','%'.$text.'%');
                     }
-                    
+
                 })
                 ->where('art.estado','=','Activo')
                 ->where('art.stock','>=','0')
-                ->groupBy('art.idarticulo','art.nombre','art.codigo','art.stock')
-                ->orderBy('art.codigo')
+                ->groupBy('art.idarticulo','art.nombre','art.stock')
+                ->orderBy('art.idarticulo')
                 ->paginate(20);
             return view("seguridad.precio_articulo.index",["articulos"=>$articulos,"searchText"=>$text,"searchCodigo"=>$codigo]);
         }
@@ -53,8 +53,8 @@ class EditPrecioController extends Controller
     {
        $articulos=DB::table('tb_articulo as art')
             ->join('tb_detalle_ingreso as di','art.idarticulo','=','di.idarticulo')
-            ->select('art.idarticulo','art.nombre','art.codigo','art.stock',DB::raw("MAX(di.precio_compra) AS precio_compra"), DB::raw("MAX(di.precio_venta / 0.70) AS precio_venta"),DB::raw("MAX(di.precio_venta) AS precio_venta_actual"))
-            ->groupBy('art.idarticulo','art.nombre','art.codigo','art.stock')
+            ->select('art.idarticulo','art.nombre','art.stock',DB::raw("MAX(di.precio_compra) AS precio_compra"), DB::raw("MAX(di.precio_venta / 0.70) AS precio_venta"),DB::raw("MAX(di.precio_venta) AS precio_venta_actual"))
+            ->groupBy('art.idarticulo','art.nombre','art.stock')
             ->where('art.idarticulo',$id)
             ->first();
 
@@ -67,13 +67,13 @@ class EditPrecioController extends Controller
         if ($pv == 1) {
              DB::table('tb_detalle_ingreso as di')
                 ->join('tb_articulo as art','art.idarticulo','=','di.idarticulo')
-                ->select('art.idarticulo','art.nombre','art.codigo','art.stock', DB::raw("MAX(di.precio_venta) AS precio_venta")) //probando esta linea
+                ->select('art.idarticulo','art.nombre','art.stock', DB::raw("MAX(di.precio_venta) AS precio_venta")) //probando esta linea
                 ->where('art.idarticulo',$id)
                 ->update(array('precio_venta' => Input::get('precio_venta')));
         } else {
         DB::table('tb_detalle_ingreso as di')
             ->join('tb_articulo as art','art.idarticulo','=','di.idarticulo')
-            ->select('art.idarticulo','art.nombre','art.codigo','art.stock', DB::raw("MAX(di.precio_compra) AS precio_compra")) //probando esta linea
+            ->select('art.idarticulo','art.nombre','art.stock', DB::raw("MAX(di.precio_compra) AS precio_compra")) //probando esta linea
             ->where('art.idarticulo',$id)
             ->update(array('precio_compra' => Input::get('precio_compra')));
         }

@@ -14,7 +14,7 @@
             </span>
         </div>
     </div>
-    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
         <div class="input-group">
             <select name="cliente" id="cliente" class="form-control selectpicker" data-live-search="true">
                     <option value="">Seleccioné un Cliente</option>
@@ -27,25 +27,18 @@
             </span>
         </div>
     </div>
-    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
         <div class="input-group">
-            <select name="municipio" id="municipio" class="form-control selectpicker" data-live-search="true">
-                <option value="">Seleccioné un Municipio</option>
-                <option value="Arismendi">Arismendi</option>
-                <option value="Antolin del Campo">Antolin del Campo</option>
-                <option value="Díaz">Díaz</option>
-                <option value="García">García</option>
-                <option value="Gómez">Gómez</option>
-                <option value="Maneiro">Maneiro</option>
-                <option value="Marcano">Marcano</option>
-                <option value="Mariño">Mariño</option>
-                <option value="Península de Macanao">Península de Macanao</option>
-                <option value="Tubares">Tubares</option>
-                <option value="Villalba">Villalba</option>
+            <select name="searchVendedor" id="searchVendedor" class="form-control selectpicker" data-live-search="true">
+                    <option value="">Seleccioné un Vendedor</option>
+                @foreach($vendedores as $pers)
+                    <option value="{{ $pers->idpersona }}">{{ str_pad($pers->idpersona, 3, "0", STR_PAD_LEFT).' - '.$pers->nombre }}</option>
+                @endforeach
             </select>
             <span class="input-group-btn">
-                    <button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
+                <button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
             </span>
         </div>
     </div>
+
 {{ Form::close() }}

@@ -23,8 +23,9 @@ class VentaFormRequest extends FormRequest
      */
     public function rules()
     {
-         return [
+        return [
             'idcliente'        => 'required',
+            'idvendedor' => 'required',
             'tipo_comprobante'   => 'max:20',
             'serie_comprobante'  => 'max:7',
             'num_comprobante'    => 'required|max:10',
@@ -33,6 +34,13 @@ class VentaFormRequest extends FormRequest
             'precio_venta'      => 'required',
             'descuento'      => 'required',
             'total_venta'      => 'required'
+        ];
+    }
+    public function messages()
+    {
+        return [
+            'idcliente.required' => 'Olvidaste el nombre del Cliente',
+            'idvendedor.required' => 'Olvidaste el nombre del Proveedor',
         ];
     }
 }

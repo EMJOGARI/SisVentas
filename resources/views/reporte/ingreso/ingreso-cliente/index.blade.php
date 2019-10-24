@@ -20,7 +20,7 @@
 					<th width="10%">Fecha</th>
 					<th width="10%">Factura Nº</th>
 					<th width="45%">Cliente</th>
-					<th width="15%">Municipio</th>
+					<th width="15%">Vendedor</th>
 					<th width="10%">Estado</th>
 					<th width="10%">Neto</th>
 					<th width="5%"></th>

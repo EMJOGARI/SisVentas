@@ -1,8 +1,8 @@
 @extends ('layouts.admin')
 @section('name', "Cambiar Precios de Articulos")
 @section('content')
-	<div class="row">		
-		@include('seguridad.precio_articulo.search')		
+	<div class="row">
+		@include('seguridad.precio_articulo.search')
 	</div>
 	<div class="row">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -18,7 +18,7 @@
 					</thead>
 					@foreach ($articulos as $art)
 						<tr>
-							<td align="center">{{ $art->codigo }}</td>
+							<td align="center">{{ $art->idarticulo }}</td>
 							<td>{{ $art->nombre }}</td>
 							<td align="center">{{ $art->stock }}</td>
 							<td align="right">{{ number_format($art->precio_compra, 2, ',', '.') }}</td>
