@@ -1,5 +1,5 @@
 @extends ('layouts.admin')
-@section('name', "Volumen de Cobranzas por Clientes y Municipio")
+@section('name', "Volumen de Cobranzas por Clientes y Vendedor")
 @section('content')
 
 <div class="row" style="margin-bottom: 2rem;">
@@ -20,8 +20,9 @@
 					<th width="10%">Fecha</th>
 					<th width="10%">Factura Nº</th>
 					<th width="45%">Cliente</th>
-					<th width="15%">Vendedor</th>
-					<th width="10%">Estado</th>
+					<th width="10%">Municipio</th>
+					<th width="5%">Vendedor</th>
+					<th width="5%">Estado</th>
 					<th width="10%">Neto</th>
 					<th width="5%"></th>
 				</thead>
@@ -29,8 +30,9 @@
 					<tr>
 						<td align="center">{{ date('d-m-Y', strtotime($ven->fecha_hora)) }}</td>
 						<td>{{ $ven->serie_comprobante.' - '.$ven->num_comprobante }}</td>
-						<td>{{ str_pad($ven->idcliente, 3, "0", STR_PAD_LEFT).' - '.$ven->nombre }}</td>
-						<td>{{ $ven->municipio }}</td>
+						<td>{{ str_pad($ven->idcliente, 3, "0", STR_PAD_LEFT).' - '.$ven->nombre }}</td>						
+						<td align="center">{{ $ven->municipio }}</td>
+						<td align="center">{{ $ven->idvendedor }}</td>
 						<td align="center">
 								@if($ven->estado == 'Pagada')
 									<span class="label label-success">{{ $ven->estado }}</span>
@@ -50,8 +52,9 @@
 						<td></td>
 						<td></td>
 						<td></td>
+						<td></td>
 						<td align="center"><strong>TOTAL:</strong></td>
-						<td align="right"><strong>{{ number_format($sum_total_venta, 2, ',', '.') }}</strong></td>
+						<td align="right"><strong>{{ number_format($sum_total_venta, 2, ',', '.') }}</strong></td>						
 						<td></td>
 					</tr>
 			</table>

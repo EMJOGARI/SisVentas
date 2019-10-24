@@ -32,8 +32,16 @@ desetsu no yuusha
 trigun
  Campione
 Tales of Zestiria the X
-
-
+-------------------------------------------------------------------
+COMPRAS POR CLIENTES
+-------------------------------------------------------------------
+SELECT di.idarticulo, a.nombre, SUM(cantidad), SUM(cantidad * precio_venta)
+FROM tb_venta AS i
+JOIN tb_detalle_venta AS di ON di.idventa = i.idventa
+JOIN tb_articulo AS a ON a.idarticulo = di.idarticulo 
+WHERE i.idcliente = 2 --and i.estado = 'Pagada'
+GROUP BY di.idarticulo, a.nombre
+ORDER BY di.idarticulo
 -------------------------------------------------------------------
 PARA UPDATEAR TODOS LOS CAMPOS D ELA BD
 -------------------------------------------------------------------

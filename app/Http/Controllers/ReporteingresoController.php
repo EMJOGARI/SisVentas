@@ -89,8 +89,10 @@ class ReporteingresoController extends Controller
             foreach ($ventas as $venta) {
                 $sum_total_venta += $venta->total_venta;
             }
+            //dd($ventas);
         return view('reporte.ingreso.ingreso-cliente.index',compact('ventas','clientes','sum_total_venta','vendedores'));
     }
+   
     public function reporte_analisis_vencimiento(Request $request){
         $vendedores=DB::table('tb_persona')->where('tipo_persona','Vendedor')->get();
         $vende = $request->get('searchVendedor');
