@@ -35,13 +35,14 @@ Tales of Zestiria the X
 -------------------------------------------------------------------
 COMPRAS POR CLIENTES
 -------------------------------------------------------------------
-SELECT di.idarticulo, a.nombre, SUM(cantidad), SUM(cantidad * precio_venta)
+SELECT i.idcliente,di.idarticulo, a.nombre, c.nombre, SUM(cantidad), SUM(cantidad * precio_venta)
 FROM tb_venta AS i
 JOIN tb_detalle_venta AS di ON di.idventa = i.idventa
-JOIN tb_articulo AS a ON a.idarticulo = di.idarticulo 
-WHERE i.idcliente = 2 --and i.estado = 'Pagada'
-GROUP BY di.idarticulo, a.nombre
-ORDER BY di.idarticulo
+JOIN tb_articulo AS a ON a.idarticulo = di.idarticulo
+JOIN tb_categoria AS c ON c.idcategoria = a.idcategoria
+WHERE i.estado = 'Pagada' and c.idcategoria = 6
+GROUP BY i.idcliente,di.idarticulo, a.nombre, c.nombre
+ORDER BY i.idcliente
 -------------------------------------------------------------------
 PARA UPDATEAR TODOS LOS CAMPOS D ELA BD
 -------------------------------------------------------------------
