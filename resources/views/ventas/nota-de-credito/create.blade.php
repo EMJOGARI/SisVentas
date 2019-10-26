@@ -14,7 +14,7 @@
 				</div>
 			@endif
 
-			{!! Form::open(array('url'=>'cobranza/cuenta-por-cobrar', 'method'=>'POST', 'autocomplete'=>'off')) !!}
+			{!! Form::open(array('url'=>'ventas/nota-de-credito', 'method'=>'POST', 'autocomplete'=>'off')) !!}
 			{{ Form::token() }}
 			<div class="row">
 
@@ -63,7 +63,8 @@
 				                    <select name="pidarticulo" id="pidarticulo" class="form-control selectpicker" data-live-search="true">
 				                    	<option value="">Seleccioné un Articulo</option>
 				                    	@foreach($articulos as $art)
-				                    		<option value="{{ $art->idarticulo }}_{{ $art->stock }}_{{ $art->precio_venta }}">{{ $art->articulo }}</option>
+				                    		<option value="{{ $art->idarticulo }}_{{ $art->stock }}_{{ $art->precio_venta }}">
+				                    			{{  str_pad($art->idarticulo, 3, "0", STR_PAD_LEFT).' - '.$art->nombre }}</option>
 				                    	@endforeach
 				                    </select>
 				                </div>

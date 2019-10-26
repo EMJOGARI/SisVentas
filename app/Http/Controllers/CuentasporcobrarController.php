@@ -54,81 +54,17 @@ class CuentasporcobrarController extends Controller
 
     public function create()
     {
-        $ventas=DB::table('tb_venta as v')
-            ->where('estado','Pendiente')
-            ->orderBy('idventa','desc')
-            ->get();
-
-        $personas=DB::table('tb_persona')
-            ->where('tipo_persona','Cliente')
-            ->orwhere('tipo_persona','Proveedor')
-            ->orwhere('tipo_persona','Vendedor')
-            ->orderBy('idpersona')
-            ->get();
-
-        $vendedores=DB::table('tb_persona')
-            ->where('tipo_persona','Vendedor')
-            ->orderBy('idpersona')
-            ->get();
-
-        $articulos=DB::table('tb_articulo as art')
-            ->join('tb_detalle_ingreso as di','art.idarticulo','=','di.idarticulo')
-            ->select(DB::raw("CONCAT(art.codigo,' - ',art.nombre) AS articulo"),'art.idarticulo','art.stock', DB::raw("MAX(di.precio_venta) AS precio_venta"),DB::raw("MAX(di.precio_credito) AS precio_credito"))
-            ->where('art.estado','=','Activo')
-            ->where('art.stock','>','0')
-            ->groupBy('articulo','art.idarticulo','art.stock')
-            ->orderBy('art.codigo')
-            ->get();
-        return view("cobranza.cuenta-por-cobrar.create",["personas"=>$personas, "articulos"=>$articulos, "vendedores"=>$vendedores,"ventas"=>$ventas]);
+       
     }
 
     public function store(NotaDebitoFormRequest $request)
     {
-        //dd($request->all());
-        try{
-            DB::beginTransaction();
-                $ND = new NotaDebito;
-                $ND->idventa=$request->get('idventa');
-                $ND->tipo_comprobante='Nota de Debito';
-                $ND->num_comprobante=$request->get('num_comprobante');
-                $ND->total_debito=$request->get('total_debito');
-                    $mytime = Carbon::now('America/Caracas');
-                $ND->fecha=$mytime->toDateTimestring();
-                $ND->estado=$request->get('estado');
-                $ND->save();
-
-                $idarticulo=$request->get('idarticulo');
-                $cantidad=$request->get('cantidad');
-                $descuento=$request->get('descuento');
-                $precio_venta=$request->get('precio_venta');
-
-                $cont = 0;
-
-                while($cont < count($idarticulo))
-                { // count($idarticulo)) -> recorre todos los articulos recibidos en el detalle
-                    $detalle = new DetalleNotaDebito();
-                    $detalle->id_node=$ND->id_node;
-                    $detalle->idarticulo=$idarticulo[$cont];
-                    $detalle->cantidad=$cantidad[$cont];
-                    $detalle->precio_venta=$precio_venta[$cont];
-                    $detalle->descuento=$descuento[$cont];
-                    $detalle->save();
-                    $cont=$cont+1;
-                }
-
-            DB::commit();
-            flash('Nota de Debito Agregada')->success();
-        }catch(\Exception $e){
-            dd($e);
-            DB::rollback();
-            flash('Error a procesar la venta')->warning();
-        }
-        return Redirect::to('cobranza/cuenta-por-cobrar');
+              
     }
 
     public function show($id)
     {
-        //
+        
     }
 
     public function update(Request $request, $id)

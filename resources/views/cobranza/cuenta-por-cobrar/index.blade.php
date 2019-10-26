@@ -41,7 +41,7 @@
 								<div class="btn-group">
 									<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Acciones <span class="fa fa-caret-down"></span></button>
 									<ul class="dropdown-menu">
-										<li><a href="{{ url('cobranza/cuenta-por-cobrar/create') }}{{-- URL::action(' CuentasporcobrarController@create',$ven->idventa) --}}"><i class="fa fa-clipboard"></i> Nota de Credito</a></li>
+										<li><a href="{{ url('ventas/nota-de-credito/create') }}{{-- URL::action(' CuentasporcobrarController@create',$ven->idventa) --}}"><i class="fa fa-clipboard"></i> Nota de Credito</a></li>
 										<li><a href="{{ URL::action('VentaController@show',$ven->idventa) }}"><i class="fa fa-file-text-o"></i> Detalle Factura</a></li>
 										<li><a href="#" data-target="#modal-pagar-{{ $ven->idventa }}" data-toggle="modal"><i class="fa fa-money"></i> Pagar Factura</a></li>
 									</ul>
