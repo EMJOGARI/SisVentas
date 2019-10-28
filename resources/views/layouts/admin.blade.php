@@ -141,6 +141,16 @@
               <ul class="treeview-menu">
                 <li><a href="{{ url('cobranza/cuenta-por-cobrar/') }}"><i class="fa fa-briefcase"></i>Cuentas por Cobrar</a></li>
                 <li><a href="{{ url('cobranza/banco/') }}"><i class="fa fa-bank"></i>Banco</a></li>
+                <li class="treeview menu">
+                  <a href="#"><i class="fa fa-cubes"></i>Notas
+                    <span class="pull-right-container">
+                      <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                  </a>
+                  <ul class="treeview-menu" style="display: auto;">
+                    <li><a href="{{ url('ventas/nota-de-credito') }}"><i class="fa fa-th"></i>Notas de Credito</a></li>
+                  </ul>
+                </li>
               </ul>
             </li>
             <li class="treeview">

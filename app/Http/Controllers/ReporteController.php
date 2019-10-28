@@ -172,12 +172,11 @@ class ReporteController extends Controller
 
         $detalles=DB::table('tb_detalle_venta as d')
             ->join('tb_articulo as a', 'd.idarticulo', '=','a.idarticulo')
-            ->select('a.nombre as articulo', 'd.cantidad', 'd.descuento','d.precio_venta')
+            ->select('a.idarticulo','a.nombre as articulo', 'd.cantidad', 'd.descuento','d.precio_venta')
             ->where('d.idventa','=',$id)
             ->get();
 
         $view = \View::make('pdf.reporteventaid',compact('venta','detalles'))->render();
-        $paper_size = array(0,0,623.622,433.701); // 'portrait' or 'landscape'
 
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadHTML($view)->setPaper('landscape');

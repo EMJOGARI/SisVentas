@@ -21,9 +21,26 @@ use Illuminate\Support\Collection;
 class NotasdeCreditosController extends Controller
 {
    
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $code=trim($request->get('searchcodigo'));
+            $nodes=DB::table('tb_nota_debito as nd')
+                ->join('tb_venta as v','v.idventa','nd.idventa')
+                ->join('tb_persona as p','p.idpersona','v.idcliente')                
+                ->select('nd.id_node','nd.tipo_comprobante as tipo','nd.num_comprobante as numero','nd.total_debito','nd.estado','nd.fecha','v.idcliente','p.nombre','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante')
+                ->where(function($query) use ($code){                   
+                    if ($code){
+                        if ($code != ""){
+                             return $query->where('v.serie_comprobante','LIKE','%'.$code.'%');
+                        }
+                    }
+                })
+                ->where('v.estado','<>','Eliminada')
+                ->orderBy('nd.id_node','desc')
+                ->groupBy('nd.id_node','nd.tipo_comprobante','nd.num_comprobante','nd.total_debito','nd.estado','nd.fecha','v.idcliente','p.nombre','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante')
+                ->get();//paginate(20);
+        //dd($nodes);
+        return view('ventas.nota-de-credito.index',compact('nodes','code'));
     }
 
     public function create()
