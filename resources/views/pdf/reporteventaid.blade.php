@@ -8,44 +8,44 @@
 	<title>{{ $venta->tipo_comprobante.': '.$venta->serie_comprobante.' - '.$venta->num_comprobante }}</title>
 
 
-	<style>		
+	<style>
 	    table{
 	    	width:100%;
 	        border-collapse: collapse;
 	    }
-	    th, td{	       
+	    th, td{
 	        font-size: 12px;
 	    }
-	    
+
 	    .datos{
 	    	margin-top: 10rem
-	    }	    
+	    }
 	    .fecha{
 	    	font-size:18px;
 	    }
-	    .detalles {	
-	   		margin-top: 5px;    	
+	    .detalles {
+	   		margin-top: 5px;
 			height: 24.5rem;
 			border: 0.2px solid #000;
 			border-radius: 10px;
 			text-transform: uppercase;
-	    }	   
-	    .detalles table thead{	    	   	
+	    }
+	    .detalles table thead{
 	    	text-align: center;
-	     	background: #f4f4f4; 
+	     	background: #f4f4f4;
 	     	border: 0.2px solid #000;
 	    }
-	    .total{ 
-	    	margin-top: 5px;	
+	    .total{
+	    	margin-top: 5px;
 	    	width:30%;
-	        text-transform: uppercase;	
+	        text-transform: uppercase;
 	        border: 0.2px solid #000;
-	        border-radius: 10px;	           
+	        border-radius: 10px;
 	    }
 	    .total table{
 	        text-transform: uppercase;
-	        margin: 5px;	           
-	    }    
+	        margin: 5px;
+	    }
 	</style>
 </head>
 <body>
@@ -66,7 +66,7 @@
 					<td></td>
 					<td></td>
 					<td></td>
-				    <td rowspan="4" align="center" class="fecha"><strong>{{ date('d/m/Y', strtotime($venta->fecha_hora)) }}</strong></td>			      	
+				    <td rowspan="3" align="center" class="fecha"><strong>{{ date('d/m/Y', strtotime($venta->fecha_hora)) }}</strong></td>
 			    </tr>
 			    <tr>
 			      	<td colspan="4">{{ $venta->nombre }}</td>
@@ -76,9 +76,10 @@
 			      	<td colspan="2">Telefono: {{ $venta->telefono }}</td>
 			    </tr>
 			    <tr>
-			      	<td colspan="4">{{ $venta->direccion }}</td>			      	
-			    </tr>			    
-			   
+			      	<td colspan="4">{{ $venta->direccion }}</td>
+			      	<td colspan="1">Vendedor: {{ $venta->idvendedor }}</td>
+			    </tr>
+
 			</tbody>
 		</table>
 	</div>
@@ -90,12 +91,12 @@
 					<td width="50%">Descripción</td>
 					<td width="10%">Cant.</td>
 					<td width="15%">Precio</td>
-					<td width="15%">Total</td>				
+					<td width="15%">Total</td>
 				</tr>
-			</thead>			
+			</thead>
 		    @foreach($detalles as $det)
 			    <tr>
-			    	<td align="center">{{ str_pad($det->idarticulo, 3, "0", STR_PAD_LEFT) }}</td>			        
+			    	<td align="center">{{ str_pad($det->idarticulo, 3, "0", STR_PAD_LEFT) }}</td>
 			        <td>{{ $det->articulo }}</td>
 			        <td align="center">{{ $det->cantidad }}</td>
 			        <td align="right">{{ number_format($det->precio_venta, 2, ',', '.') }}</td>
@@ -103,16 +104,16 @@
 			    </tr>
 		   	@endforeach
 		</table>
-	</div>		
+	</div>
 	<div class="total pull-right">
 		<table>
 			<thead>
-			    <tr>					
+			    <tr>
 					<td width="50%"></td>
-					<td width="50%"></td>			
+					<td width="50%"></td>
 				</tr>
 			</thead>
-			<tr>				
+			<tr>
 		        <td align="left"><strong>Subtotal</strong></td>
 		        <td align="right"><strong>{{ number_format($venta->total_venta, 2, ',', '.') }}</strong></td>
 		    </tr>
@@ -124,7 +125,7 @@
 		        <td align="left"><strong>total</strong></td>
 		        <td align="right"><strong>{{ number_format($venta->total_venta, 2, ',', '.') }}</strong></td>
 		    </tr>
-		</table>		
+		</table>
 	</div>
 
 	<script src="{{ asset('/assets/js/jQuery-2.1.4.min.js') }}"></script>
