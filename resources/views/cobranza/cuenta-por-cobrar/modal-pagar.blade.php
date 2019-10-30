@@ -29,13 +29,7 @@
 				                {!! Form::label('tipo_comprobante', 'Nº del Documento') !!}
 				                <p>{{ $ven->tipo_comprobante.': '.$ven->serie_comprobante.' - '.$ven->num_comprobante }}</p>
 				            </div>
-				        </div>
-				         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-				            <div class="form-group">
-				                {!! Form::label('tipo_comprobante', 'Monto Neto') !!}
-				                <p>{{ number_format($ven->total_venta, 2, ',', '.') }}</p>
-				            </div>
-				        </div>
+				        </div>				        
 				        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 				            <div class="form-group">
 				                {!! Form::label('detalle', 'Nota') !!}

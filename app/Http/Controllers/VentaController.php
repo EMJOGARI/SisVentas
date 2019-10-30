@@ -39,6 +39,7 @@ class VentaController extends Controller
             	->orderBy('idventa','desc')
                 ->groupBy('v.idventa','v.fecha_hora','p.nombre','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.estado','v.total_venta')
                 ->paginate(20);
+            
             return view('ventas.venta.index',["ventas"=>$ventas,"searchText"=>$query,"nodes"=>$nodes]);
         }
     }

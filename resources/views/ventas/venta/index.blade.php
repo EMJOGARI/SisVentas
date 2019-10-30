@@ -21,26 +21,26 @@
 				<table class="table table-striped table-bordered table-condensed table-hover">
 					<thead>
 						<th width="10%">Fecha</th>
-						<th width="40%">Cliente</th>
+						<th width="35%">Cliente</th>
 						<th width="15%">Comprobante</th>
-						<th width="10%">Total</th>
+						<th width="10%">Total Factura</th>
+						<th width="5%">Nota C.</th>
 						<th width="10%">Estado</th>
 						<th width="15%"></th>
-					</thead>
-					@foreach ($ventas as $ven)
+					</thead>					
+					@foreach ($ventas as $ven)					
 						<tr>
 							<td align="center">{{ date('d-m-Y', strtotime($ven->fecha_hora)) }}</td>
 							<td>{{ $ven->nombre }}</td>
 							<td>{{ $ven->tipo_comprobante.': '.$ven->serie_comprobante.' - '.$ven->num_comprobante }}</td>
-							<td align="right">
+							<td align="right">{{ number_format($ven->total_venta, 2, ',', '.') }}</td>		
+							<td align="center">
 								@foreach ($nodes as $no)
 									@if($no->idventa == $ven->idventa)
-										{{ number_format($ven->total_venta - $no->total_debito, 2, ',', '.') }}
-									@else
-										{{ number_format($ven->total_venta, 2, ',', '.') }}
+										{{ str_pad($no->num_comprobante, 5, "0", STR_PAD_LEFT) }}									
 									@endif
-								@endforeach
-							</td>
+								@endforeach									
+							</td>					
 							<td align="center">
 								@if($ven->estado == 'Pagada')
 									<span class="label label-success">{{ $ven->estado }}</span>
@@ -63,8 +63,8 @@
 								</div>
 							</td>
 						</tr>
-						@include('ventas.venta.modal')
-					@endforeach
+						@include('ventas.venta.modal')					
+					@endforeach 
 				</table>
 			</div>
 			{{ $ventas->render() }}

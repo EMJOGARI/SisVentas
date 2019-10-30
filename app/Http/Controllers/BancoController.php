@@ -37,7 +37,7 @@ class BancoController extends Controller
             ->join('tb_persona as p','p.idpersona','v.idcliente')
             ->join('tb_persona as p2','p2.idpersona','v.idvendedor')
             ->join('tb_detalle_venta as dv','v.idventa','=','dv.idventa')
-            ->select('v.idventa','v.fecha_hora','p.nombre','p2.nombre as vendedor','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.estado','v.total_venta')
+            ->select('v.idvendedor','v.idventa','v.fecha_hora','p.nombre','p2.nombre as vendedor','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.estado','v.total_venta')
             ->where(function($query) use ($fact,$clien,$vende){
                 if($fact){
                     if ($fact != "") {
@@ -56,7 +56,7 @@ class BancoController extends Controller
                 }
             })
             ->where('v.estado','Pagada')
-            ->groupBy('v.idventa','v.fecha_hora','p.nombre','p2.nombre','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.estado','v.total_venta')
+            ->groupBy('v.idvendedor','v.idventa','v.fecha_hora','p.nombre','p2.nombre','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.estado','v.total_venta')
             ->orderBy('idventa','desc')
             ->paginate(20);
             //dd($ventas);

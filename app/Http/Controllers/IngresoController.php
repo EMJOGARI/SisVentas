@@ -75,7 +75,6 @@ class IngresoController extends Controller
                         $venta_total = $venta_total + ($cantidad[$sum]*$precio_compra[$sum]);
                         $sum=$sum+1;
                     }
-                //dd($venta_total);
     			$ingreso = new Ingreso;
     			$ingreso->idproveedor=$request->get('idproveedor');
 		        $ingreso->tipo_comprobante='Factura';

@@ -24,20 +24,20 @@ class NotaDebitoFormRequest extends FormRequest
     public function rules()
     {
          return [
-            'idventa'           => 'required|unique',
-            //'total_debito'      => 'required',
-            'estado'            => 'required',
-            //'fecha',
-
-          /*
-            'tipo_comprobante'      => 'max:20',
-            'serie_comprobante'     => 'max:10',
-            'num_comprobante'       => 'required|max:10',
+            'idventa'           => 'required|unique:tb_nota_debito,idventa',
+            'num_comprobante'   => 'required|max:10',
             'idarticulo'            => 'required',
             'cantidad'              => 'required',
             'precio_venta'          => 'required',
             'descuento'             => 'required',
-            'total_debito'           => 'required'*/
+            'total_debito'      => 'required'
+           
+        ];        
+    }
+    public function messages()
+    {
+        return [
+            'idventa.unique' => 'Numero de Factura contiene una nota de debito',
         ];
     }
 }

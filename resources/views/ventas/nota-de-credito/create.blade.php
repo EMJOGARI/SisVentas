@@ -43,16 +43,7 @@
 	                    {!! Form::label('num_comprobante', 'Número de Control') !!}
 	                    {!! Form::number('num_comprobante', null, ['required','class'=>'form-control', 'placeholder'=>'Número de Control']) !!}
 	                </div>
-	            </div>
-	            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-	                <div class="form-group">
-	                    {!! Form::label('estado', 'Estado') !!}
-	                    <select name="estado" class="form-control">
-	                    	<option value="Pendiente">Pendiente</option>
-	                    	<option value="Pagada">Pagada</option>
-	                    </select>
-	                </div>
-	            </div>
+	            </div>	            
 	    	</div>
 	    	<div class="row">
 	            <div class="panel panel-primary">

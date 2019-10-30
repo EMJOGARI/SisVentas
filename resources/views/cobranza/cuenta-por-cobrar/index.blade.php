@@ -13,10 +13,12 @@
 					<thead>
 						<th width="8%">Fecha</th>
 						<th width="25%">Cliente</th>
-						<th width="18%">Vendedor</th>
-						<th width="13%">Comprobante</th>
-						<th width="8%">Total</th>
-						<th width="8%">Dias Vencida</th>
+						<th width="5%">Vendedor</th>
+						<th width="15%">Comprobante</th>
+						<th width="10%">Monto Factura</th>
+						<th width="10%">Nota Credito</th>
+						<th width="10%">Total Pagar</th>
+						<th width="5%">Dias V.</th>
 						<th width="7%">Estado</th>
 						<th width="13%"></th>
 					</thead>
@@ -24,16 +26,22 @@
 						<tr>
 							<td align="center">{{ date('d-m-Y', strtotime($ven->fecha_hora)) }}</td>
 							<td>{{ $ven->nombre }}</td>
-							<td>{{ $ven->vendedor }}</td>
+							<td>{{ $ven->idvendedor }}</td>
 							<td>{{ $ven->tipo_comprobante.': '.$ven->serie_comprobante.' - '.$ven->num_comprobante }}</td>
+							<td align="right">{{ number_format($ven->total_venta, 2, ',', '.') }}</td>
 							<td align="right">
 								@foreach ($nodes as $no)
 									@if($no->idventa == $ven->idventa)
-										{{ number_format($ven->total_venta - $no->total_debito, 2, ',', '.') }}
-									@else
-										{{ number_format($ven->total_venta, 2, ',', '.') }}
+										{{ number_format($no->total_debito, 2, ',', '.') }}									
 									@endif
-								@endforeach
+								@endforeach								
+							</td>
+							<td align="right">
+								@foreach ($nodes as $no)
+									@if($no->idventa == $ven->idventa)
+										{{ number_format($ven->total_venta - $no->total_debito, 2, ',', '.') }}									
+									@endif
+								@endforeach								
 							</td>
 							<td align="center">{{ (strtotime(date('d-m-Y'))-strtotime($ven->fecha_hora))/86400 }}</td>
 							<td align="center">

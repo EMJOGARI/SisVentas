@@ -16,7 +16,7 @@
 						<th width="10%">Fecha</th>
 						<th width="40%">Cliente</th>
 						<th width="10%">Nº Factura</th>
-						<th width="10%">Nota de Debito</th>
+						<th width="5%">Nota C.</th>
 						<th width="10%">Total</th>
 						<th width="10%">Estado</th>
 						<th width="15%"></th>
@@ -38,21 +38,22 @@
 								@endif
 							</td>
 							<td>
-									{{--
+									
 								<div class="btn-group">
 									<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Acciones <span class="fa fa-caret-down"></span></button>
 									<ul class="dropdown-menu">
-										<li><a href="{{ URL::action('VentaController@show',$ven->idventa) }}"><i class="fa fa-file-text-o"></i> Detalle Factura</a></li>
+										<li><a href="{{ URL::action('VentaController@show',$no->idventa) }}"><i class="fa fa-file-text-o"></i> Detalle Factura</a></li>
 
-										<li><a href="{{ URL::action('ReporteController@ReporteVentaID',$ven->idventa) }}" target="_blank"><i class="fa fa-file-pdf-o"></i> Ver PDF</a></li>
+										<li><a href="{{-- URL::action('ReporteController@ReporteVentaID',$ven->idventa) --}}" target="_blank"><i class="fa fa-file-pdf-o"></i> Ver PDF</a></li>
 
-										<li><a href="#" data-target="#modal-delete-{{ $ven->idventa }}" data-toggle="modal"><i class="fa fa-trash"></i> Anular Factura</a></li>
+										<li><a href="#" data-target="#modal-delete-{{ $no->id_node }}" data-toggle="modal"><i class="fa fa-trash"></i> Eliminar Nota</a></li>
 									</ul>
-								</div> --}}
+								</div> 
+								{{----}}
 							</td>
-						</tr>{{--
+						</tr>
 						@include('ventas.nota-de-credito.modal')
-						--}}
+						{{----}}
 					@endforeach
 				</table>
 			</div>

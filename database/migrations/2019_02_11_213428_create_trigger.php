@@ -13,7 +13,24 @@ class CreateTrigger extends Migration
      */
     public function up()
     {
-       
+       /*PGSQL*/
+        DB::unprepared('
+
+            CREATE OR REPLACE FUNCTION StockNotaCredito() RETURNS TRIGGER AS $$
+            DECLARE
+            BEGIN
+               
+                UPDATE tb_articulo AS a SET stock = stock + NEW.cantidad WHERE a.idarticulo = NEW.idarticulo;
+
+                RETURN NULL;
+
+            END;
+            $$ LANGUAGE plpgsql;
+
+            CREATE TRIGGER Trigger_Stock_Nota_Credito AFTER INSERT ON tb_detalle_node FOR EACH ROW 
+            EXECUTE PROCEDURE StockNotaCredito();
+
+        ');
 		DB::unprepared('
 
 	    	CREATE OR REPLACE FUNCTION StockIngresar() RETURNS TRIGGER AS $$
@@ -50,7 +67,7 @@ class CreateTrigger extends Migration
         	
     	');
 
-    
+        /*MYSQL*/
         /*DB::unprepared('
             CREATE TRIGGER StockIngresar AFTER INSERT ON tb_detalle_ingreso FOR EACH ROW 
                 BEGIN

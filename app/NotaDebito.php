@@ -16,7 +16,6 @@ class NotaDebito extends Model
     	'idventa',
         'tipo_comprobante',
         'total_debito',
-        'estado',
         'fecha'
     ];
 

@@ -27,7 +27,7 @@ class NotasdeCreditosController extends Controller
             $nodes=DB::table('tb_nota_debito as nd')
                 ->join('tb_venta as v','v.idventa','nd.idventa')
                 ->join('tb_persona as p','p.idpersona','v.idcliente')                
-                ->select('nd.id_node','nd.tipo_comprobante as tipo','nd.num_comprobante as numero','nd.total_debito','nd.estado','nd.fecha','v.idcliente','p.nombre','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante')
+                ->select('nd.id_node','nd.idventa','nd.tipo_comprobante as tipo','nd.num_comprobante as numero','nd.total_debito','v.estado','nd.fecha','v.idcliente','p.nombre','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante')
                 ->where(function($query) use ($code){                   
                     if ($code){
                         if ($code != ""){
@@ -35,9 +35,9 @@ class NotasdeCreditosController extends Controller
                         }
                     }
                 })
-                ->where('v.estado','<>','Eliminada')
+                ->where('nd.estado','Activo')
                 ->orderBy('nd.id_node','desc')
-                ->groupBy('nd.id_node','nd.tipo_comprobante','nd.num_comprobante','nd.total_debito','nd.estado','nd.fecha','v.idcliente','p.nombre','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante')
+                ->groupBy('nd.id_node','nd.tipo_comprobante','nd.num_comprobante','nd.total_debito','v.estado','nd.fecha','v.idcliente','p.nombre','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante')
                 ->get();//paginate(20);
         //dd($nodes);
         return view('ventas.nota-de-credito.index',compact('nodes','code'));
@@ -75,9 +75,9 @@ class NotasdeCreditosController extends Controller
         return view("ventas.nota-de-credito.create",["personas"=>$personas, "articulos"=>$articulos, "vendedores"=>$vendedores,"ventas"=>$ventas]);
     }
 
-    public function store(Request $request)
+    public function store(NotaDebitoFormRequest $request)
     {
-        //dd($request->all()
+        //dd($request->all());
         try{
             DB::beginTransaction();
                 $ND = new NotaDebito;
@@ -87,7 +87,7 @@ class NotasdeCreditosController extends Controller
                 $ND->total_debito=$request->get('total_debito');
                     $mytime = Carbon::now('America/Caracas');
                 $ND->fecha=$mytime->toDateTimestring();
-                $ND->estado=$request->get('estado');
+                $ND->estado='Activo';
                 $ND->save();
 
                 $idarticulo=$request->get('idarticulo');
@@ -116,7 +116,7 @@ class NotasdeCreditosController extends Controller
             DB::rollback();
             flash('Error a procesar la Nota de Debito')->warning();
         }
-        return Redirect::to('ventas/venta');
+        return Redirect::to('ventas/nota-de-credito');
        // return view("cobranza.cuenta-por-cobrar.index");
         //return Redirect::to('cobranza/cuenta-por-cobrar/index');
     }
@@ -136,8 +136,29 @@ class NotasdeCreditosController extends Controller
         //
     }
 
-    public function destroy($id)
-    {
-        //
+    public function destroy($id)   {      
+
+            $node=NotaDebito::findOrFail($id);
+            $node->estado='Eliminada';         
+            $node->save();
+
+        try {
+            $detallenode        = new DetalleNotaDebito;
+            $detalle_articulos  = $detallenode->Sumadetallenode($id);
+
+            if ($detalle_articulos->count()) {
+                DB::beginTransaction();
+                    foreach ($detalle_articulos as $key => $detalle) {
+                        $articulo = new Articulo;
+                        $articulo = $articulo->find($detalle->idarticulo);
+                        $articulo->stock -= $detalle->suma;
+                        $articulo->save();
+                     }
+                DB::commit();
+            }
+        } catch (Exception $e) {
+            DB::rollback();
+        }
+        return Redirect::to('ventas/nota-de-credito');
     }
 }
