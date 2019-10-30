@@ -28,7 +28,7 @@ class VentaController extends Controller
         //dd($request->all());
         if ($request)
         {
-            // Variable de busqueda por categoria dond trim quita los espacios en blanco en el inicio y el final
+            $nodes=DB::table('tb_nota_debito as nd')->get();
             $query=trim($request->get('searchText'));
             $ventas=DB::table('tb_venta as v')
             	->join('tb_persona as p','v.idcliente','=','p.idpersona')
@@ -39,7 +39,7 @@ class VentaController extends Controller
             	->orderBy('idventa','desc')
                 ->groupBy('v.idventa','v.fecha_hora','p.nombre','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.estado','v.total_venta')
                 ->paginate(20);
-            return view('ventas.venta.index',["ventas"=>$ventas,"searchText"=>$query]);
+            return view('ventas.venta.index',["ventas"=>$ventas,"searchText"=>$query,"nodes"=>$nodes]);
         }
     }
 
@@ -136,7 +136,16 @@ class VentaController extends Controller
             ->where('d.idventa','=',$id)
             ->get();
 
-        return view("ventas.venta.show",["venta"=>$venta , "detalles"=>$detalles, "vendedor"=>$vendedor]);
+        $nodes=DB::table('tb_nota_debito')
+            ->where('idventa','=',$id)
+            ->get();
+
+        $deta_node=DB::table('tb_detalle_node as d')
+            ->join('tb_articulo as a', 'd.idarticulo', '=','a.idarticulo')
+            ->select('d.id_node','a.idarticulo','a.nombre as articulo', 'd.cantidad', 'd.descuento','d.precio_venta')
+            ->get();
+         //dd($nodes, $venta);
+        return view("ventas.venta.show",["venta"=>$venta , "detalles"=>$detalles, "vendedor"=>$vendedor, "nodes"=>$nodes,"deta_node"=>$deta_node]);
     }
 
     public function destroy(Request $request, $id)

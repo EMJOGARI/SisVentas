@@ -23,6 +23,7 @@ class CuentasporcobrarController extends Controller
 {
     public function index(Request $request)
     {
+        $nodes=DB::table('tb_nota_debito as nd')->get();
         $vendedores=DB::table('tb_persona')->where('tipo_persona','Vendedor')->get();
         $vende = $request->get('searchVendedor');
 
@@ -48,23 +49,23 @@ class CuentasporcobrarController extends Controller
             ->groupBy('v.idventa','v.fecha_hora','p.nombre','p2.nombre','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.estado','v.total_venta')
             ->orderBy('idventa','desc')
             ->paginate(20);
-        return view('cobranza.cuenta-por-cobrar.index',["ventas"=>$ventas,"searchText"=>$fact,"vendedores"=>$vendedores]);
+        return view('cobranza.cuenta-por-cobrar.index',["ventas"=>$ventas,"searchText"=>$fact,"vendedores"=>$vendedores,"nodes"=>$nodes]);
     }
 
 
     public function create()
     {
-       
+
     }
 
     public function store(NotaDebitoFormRequest $request)
     {
-              
+
     }
 
     public function show($id)
     {
-        
+
     }
 
     public function update(Request $request, $id)

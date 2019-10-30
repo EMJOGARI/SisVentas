@@ -26,7 +26,15 @@
 							<td>{{ $ven->nombre }}</td>
 							<td>{{ $ven->vendedor }}</td>
 							<td>{{ $ven->tipo_comprobante.': '.$ven->serie_comprobante.' - '.$ven->num_comprobante }}</td>
-							<td align="right">{{ number_format($ven->total_venta, 2, ',', '.') }}</td>
+							<td align="right">
+								@foreach ($nodes as $no)
+									@if($no->idventa == $ven->idventa)
+										{{ number_format($ven->total_venta - $no->total_debito, 2, ',', '.') }}
+									@else
+										{{ number_format($ven->total_venta, 2, ',', '.') }}
+									@endif
+								@endforeach
+							</td>
 							<td align="center">{{ (strtotime(date('d-m-Y'))-strtotime($ven->fecha_hora))/86400 }}</td>
 							<td align="center">
 								@if($ven->estado == 'Pagada')

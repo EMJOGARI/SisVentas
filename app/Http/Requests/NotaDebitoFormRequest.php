@@ -24,7 +24,7 @@ class NotaDebitoFormRequest extends FormRequest
     public function rules()
     {
          return [
-            'idventa'           => 'required',
+            'idventa'           => 'required|unique',
             //'total_debito'      => 'required',
             'estado'            => 'required',
             //'fecha',

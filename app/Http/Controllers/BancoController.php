@@ -25,6 +25,7 @@ class BancoController extends Controller
      */
     public function index(Request $request)
     {
+        $nodes=DB::table('tb_nota_debito as nd')->get();
         $clientes=DB::table('tb_persona')->orderBy('idpersona')->get();
         $vendedores=DB::table('tb_persona')->where('tipo_persona','Vendedor')->get();
 
@@ -59,9 +60,6 @@ class BancoController extends Controller
             ->orderBy('idventa','desc')
             ->paginate(20);
             //dd($ventas);
-        return view('cobranza.banco.index',["ventas"=>$ventas,"searchText"=>$fact,"clientes"=>$clientes,"vendedores"=>$vendedores]);
+        return view('cobranza.banco.index',["ventas"=>$ventas,"searchText"=>$fact,"clientes"=>$clientes,"vendedores"=>$vendedores,"nodes"=>$nodes]);
     }
-
-
-
 }/*Fin BancoController*/
