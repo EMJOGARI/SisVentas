@@ -23,7 +23,7 @@ class CuentasporcobrarController extends Controller
 {
     public function index(Request $request)
     {
-        $nodes=DB::table('tb_nota_debito as nd')->get();
+        $nodes=DB::table('tb_nota_debito')->where('estado','Activo')->get();
         $vendedores=DB::table('tb_persona')->where('tipo_persona','Vendedor')->get();
         $vende = $request->get('searchVendedor');
 

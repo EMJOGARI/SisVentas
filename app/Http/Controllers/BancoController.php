@@ -25,7 +25,7 @@ class BancoController extends Controller
      */
     public function index(Request $request)
     {
-        $nodes=DB::table('tb_nota_debito as nd')->get();
+        $nodes=DB::table('tb_nota_debito')->where('estado','Activo')->get();
         $clientes=DB::table('tb_persona')->orderBy('idpersona')->get();
         $vendedores=DB::table('tb_persona')->where('tipo_persona','Vendedor')->get();
 

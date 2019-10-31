@@ -28,7 +28,7 @@ class VentaController extends Controller
         //dd($request->all());
         if ($request)
         {
-            $nodes=DB::table('tb_nota_debito as nd')->get();
+            $nodes=DB::table('tb_nota_debito')->where('estado','Activo')->get();
             $query=trim($request->get('searchText'));
             $ventas=DB::table('tb_venta as v')
             	->join('tb_persona as p','v.idcliente','=','p.idpersona')
@@ -39,7 +39,7 @@ class VentaController extends Controller
             	->orderBy('idventa','desc')
                 ->groupBy('v.idventa','v.fecha_hora','p.nombre','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.estado','v.total_venta')
                 ->paginate(20);
-            
+
             return view('ventas.venta.index',["ventas"=>$ventas,"searchText"=>$query,"nodes"=>$nodes]);
         }
     }
