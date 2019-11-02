@@ -54,10 +54,8 @@
 								<div class="btn-group">
 									<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Acciones <span class="fa fa-caret-down"></span></button>
 									<ul class="dropdown-menu">
-										<li><a href="{{ URL::action('VentaController@show',$ven->idventa) }}"><i class="fa fa-file-text-o"></i> Detalle Factura</a></li>
-
-										<li><a href="{{ URL::action('ReporteController@ReporteVentaID',$ven->idventa) }}" target="_blank"><i class="fa fa-file-pdf-o"></i> Ver PDF</a></li>
-
+										<li><a href="{{ URL::action('ReporteController@ReporteFactura',$ven->idventa) }}" target="_blank"><i class="fa fa-file-pdf-o"></i> Ver Factura</a></li>
+										<li><a href="{{ URL::action('VentaController@show',$ven->idventa) }}"><i class="fa fa-file-text-o"></i> Detalle Factura</a></li>	
 										<li><a href="#" data-target="#modal-delete-{{ $ven->idventa }}" data-toggle="modal"><i class="fa fa-trash"></i> Anular Factura</a></li>
 									</ul>
 								</div>

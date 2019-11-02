@@ -161,7 +161,7 @@ class ReporteController extends Controller
         return $pdf->stream('informe'.'.pdf');
     }
 
-    public function ReporteVentaID($id)
+    public function ReporteFactura($id)
     {
        $venta=DB::table('tb_venta as v')
             ->join('tb_persona as p','v.idcliente','=','p.idpersona')
@@ -177,7 +177,7 @@ class ReporteController extends Controller
             ->where('d.idventa','=',$id)
             ->get();
             //dd($venta);
-        $view = \View::make('pdf.reporteventaid',compact('venta','detalles'))->render();
+        $view = \View::make('pdf.reportefactura',compact('venta','detalles'))->render();
 
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadHTML($view)->setPaper('landscape');

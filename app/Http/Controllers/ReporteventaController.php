@@ -24,6 +24,17 @@ class ReporteventaController extends Controller
     /************************/
     public function reporte_venta_cliente(Request $request)
     {
+
+       /* $second=DB::table('tb_nota_debito as nd')
+             ->rightJoin('tb_venta as v', 'v.idventa','nd.idventa');
+
+             04248656994 7937776 Banesco
+
+        $first=DB::table('tb_venta as v')
+            ->leftJoin('tb_nota_debito as nd','nd.idventa','v.idventa')
+            ->unionAll($second)
+            ->get();
+        dd($first);*/
         $clientes=DB::table('tb_persona')->orderBy('idpersona')->get();
 
         $f1 = Carbon::now()->toDateString("FechaInicio");

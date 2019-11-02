@@ -10,7 +10,16 @@ https://appdividend.com/2017/07/13/add-charts-laravel-using-chartjs/
 
 https://dev.to/arielsalvadordev/use-laravel-charts-in-laravel-5bbm
 -------------------------------------------------------------------
+/*select v.idventa, v.idcliente, v.serie_comprobante, v.total_venta
+	,(select nd.total_debito from tb_nota_debito as nd where v.idventa = nd.idventa and nd.estado = 'Activo')
+	,(v.total_venta - (select total_debito from tb_nota_debito where v.idventa = idventa and estado = 'Activo')) as monto_pagar
+from tb_venta as v
+where v.estado <> 'Eliminada' and v.estado <> 'Anulada'
+order by v.idventa desc*/
 
+select *
+from tb_venta as v
+FULL OUTER JOIN tb_nota_debito as nd on nd.idventa = v.idventa 
 -------------------------------------------------------------------
 POSGRETS SQL FUNCIONES
 wewe
