@@ -92,7 +92,7 @@ class NotasdeCreditosController extends Controller
                 $ND->save();
                 */
                 
-                $NC = new Venta;
+               /* $NC = new Venta;
                 $NC->idnoce=$request->get('idventa');
                 $NC->idcliente=10;
                 $NC->idvendedor=0;
@@ -103,7 +103,7 @@ class NotasdeCreditosController extends Controller
                     $mytime = Carbon::now('America/Caracas');
                 $NC->fecha_hora=$mytime->toDateTimestring();
                 $NC->estado='Activo';
-                $NC->save();                
+                $NC->save();    */           
 
                 $idarticulo=$request->get('idarticulo');
                 $cantidad=$request->get('cantidad');
@@ -138,7 +138,11 @@ class NotasdeCreditosController extends Controller
     
     public function show($id)
     {
-        //
+        $ventas=Venta::findOrFail($id);
+
+        $detalles=DetalleNotaDebito::findOrFail($id);
+
+        return view("ventas.nota-de-credito.edit",compact('ventas','detalles'));
     }
 
     public function edit($id)
@@ -148,7 +152,34 @@ class NotasdeCreditosController extends Controller
 
     public function update(Request $request, $id)
     {
-        //
+        $ND=Venta::findOrFail($id);
+        $ND->tipo='NC';
+        $ND->num_nc=$request->get('num_comprobante');
+        $NC->serie_nc=$request->get('serie_comprobante');
+        $ND->total_nc=$request->get('total_debito');
+            $mytime = Carbon::now('America/Caracas');
+        $ND->fecha=$mytime->toDateTimestring();
+        $ND->estado='Activo';
+        $ND->update();
+
+        $idarticulo=$request->get('idarticulo');
+        $cantidad=$request->get('cantidad');
+        $descuento=$request->get('descuento');
+        $precio_venta=$request->get('precio_venta');
+
+        $cont = 0;
+
+        while($cont < count($idarticulo))
+        { // count($idarticulo)) -> recorre todos los articulos recibidos en el detalle
+            $detalle = new DetalleNotaDebito();
+            $detalle->id_node=$NC->id_node;
+            $detalle->idarticulo=$idarticulo[$cont];
+            $detalle->cantidad=$cantidad[$cont];
+            $detalle->precio_venta=$precio_venta[$cont];
+            $detalle->descuento=$descuento[$cont];
+            $detalle->save();
+            $cont=$cont+1;
+        }
     }
 
     public function destroy($id)   {      
