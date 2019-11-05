@@ -20,15 +20,15 @@ use Response;
 use Illuminate\Support\Collection;
 class NotasdeCreditosController extends Controller
 {
-   
+
     public function index(Request $request)
     {
         $code=trim($request->get('searchcodigo'));
             $nodes=DB::table('tb_nota_debito as nd')
                 ->join('tb_venta as v','v.idventa','nd.idventa')
-                ->join('tb_persona as p','p.idpersona','v.idcliente')                
+                ->join('tb_persona as p','p.idpersona','v.idcliente')
                 ->select('nd.id_node','nd.idventa','nd.tipo_comprobante as tipo','nd.num_comprobante as numero','nd.total_debito','v.estado','nd.fecha','v.idcliente','p.nombre','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante')
-                ->where(function($query) use ($code){                   
+                ->where(function($query) use ($code){
                     if ($code){
                         if ($code != ""){
                              return $query->where('v.serie_comprobante','LIKE','%'.$code.'%');
@@ -64,7 +64,7 @@ class NotasdeCreditosController extends Controller
 
         $articulos=DB::table('tb_articulo as art')
             ->join('tb_detalle_ingreso as di','art.idarticulo','=','di.idarticulo')
-            ->select('art.idarticulo','art.nombre','art.stock', 
+            ->select('art.idarticulo','art.nombre','art.stock',
                 DB::raw("MAX(di.precio_venta) AS precio_venta"),
                 DB::raw("MAX(di.precio_credito) AS precio_credito"))
             ->where('art.estado','=','Activo')
@@ -80,7 +80,7 @@ class NotasdeCreditosController extends Controller
         //dd($request->all());
         try{
             DB::beginTransaction();
-                /*
+
                 $ND = new NotaDebito;
                 $ND->idnoce=$request->get('idventa');
                 $ND->tipo_comprobante='Nota de Debito';
@@ -90,8 +90,7 @@ class NotasdeCreditosController extends Controller
                 $ND->fecha=$mytime->toDateTimestring();
                 $ND->estado='Activo';
                 $ND->save();
-                */
-                
+
                /* $NC = new Venta;
                 $NC->idnoce=$request->get('idventa');
                 $NC->idcliente=10;
@@ -103,7 +102,7 @@ class NotasdeCreditosController extends Controller
                     $mytime = Carbon::now('America/Caracas');
                 $NC->fecha_hora=$mytime->toDateTimestring();
                 $NC->estado='Activo';
-                $NC->save();    */           
+                $NC->save();    */
 
                 $idarticulo=$request->get('idarticulo');
                 $cantidad=$request->get('cantidad');
@@ -135,19 +134,21 @@ class NotasdeCreditosController extends Controller
        // return view("cobranza.cuenta-por-cobrar.index");
         //return Redirect::to('cobranza/cuenta-por-cobrar/index');
     }
-    
+
     public function show($id)
     {
         $ventas=Venta::findOrFail($id);
-
         $detalles=DetalleNotaDebito::findOrFail($id);
 
-        return view("ventas.nota-de-credito.edit",compact('ventas','detalles'));
+        return view("ventas.nota-de-credito.show",compact('ventas','detalles'));
     }
 
     public function edit($id)
     {
-        //
+        $ventas=Venta::findOrFail($id);
+        $detalles=DetalleNotaDebito::findOrFail($id);
+
+        return view("ventas.nota-de-credito.edit",compact('ventas','detalles'));
     }
 
     public function update(Request $request, $id)
@@ -170,7 +171,7 @@ class NotasdeCreditosController extends Controller
         $cont = 0;
 
         while($cont < count($idarticulo))
-        { // count($idarticulo)) -> recorre todos los articulos recibidos en el detalle
+        {
             $detalle = new DetalleNotaDebito();
             $detalle->id_node=$NC->id_node;
             $detalle->idarticulo=$idarticulo[$cont];
@@ -182,10 +183,10 @@ class NotasdeCreditosController extends Controller
         }
     }
 
-    public function destroy($id)   {      
+    public function destroy($id)   {
 
         $node=NotaDebito::findOrFail($id);
-        $node->estado='Eliminada';         
+        $node->estado='Eliminada';
         $node->save();
 
         try {
@@ -205,10 +206,10 @@ class NotasdeCreditosController extends Controller
         } catch (Exception $e) {
             DB::rollback();
         }
-        $delete=DetalleNotaDebito::findOrFail($id);                  
+        $delete=DetalleNotaDebito::findOrFail($id);
         $delete->delete();
 
-        $delete=NotaDebito::findOrFail($id);                  
+        $delete=NotaDebito::findOrFail($id);
         $delete->delete();
         return Redirect::to('ventas/nota-de-credito');
     }

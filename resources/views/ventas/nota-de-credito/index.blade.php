@@ -3,7 +3,7 @@
 @section('name', "Notas de Credito")
 
 @section('content')
-	<div class="row">		
+	<div class="row">
 		<div class="col-lg-5 col-md-5 col-sm-5 col-xs-12 pull-right">
 			@include('ventas.nota-de-credito.search')
 		</div>
@@ -38,7 +38,7 @@
 								@endif
 							</td>
 							<td>
-									
+
 								<div class="btn-group">
 									<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Acciones <span class="fa fa-caret-down"></span></button>
 									<ul class="dropdown-menu">
@@ -48,7 +48,7 @@
 
 										<li><a href="#" data-target="#modal-delete-{{ $no->id_node }}" data-toggle="modal"><i class="fa fa-trash"></i> Eliminar Nota</a></li>
 									</ul>
-								</div> 
+								</div>
 								{{----}}
 							</td>
 						</tr>

@@ -124,7 +124,7 @@ class VentaController extends Controller
             ->where('v.idventa','=',$id)
             ->first();
 
-       $venta=DB::table('tb_venta as v')
+        $venta=DB::table('tb_venta as v')
             ->join('tb_persona as p','p.idpersona','v.idcliente')
             ->join('tb_detalle_venta as dv','dv.idventa','v.idventa')
             ->select('v.idventa','v.fecha_hora','p.nombre','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.estado','v.total_venta')
