@@ -22,7 +22,6 @@
                 </div>
             </div>
         </div>
-
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
             <div class="info-box bg-aqua">
                 <span class="info-box-icon"><i class="fa fa-th"></i></span>
