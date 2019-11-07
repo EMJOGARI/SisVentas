@@ -12,7 +12,7 @@
 				@endforeach
 			</ul>
 		</div>
-	@endif
+	@endif	
 	<div class="row">
 		 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
 	        <div class="info-box bg-green">
@@ -42,13 +42,10 @@
             </div>
         </div>
 	</div>
-	{{--{!! Form::open(array('url'=>'ventas/nota-de-credito', 'method'=>'POST', 'autocomplete'=>'off')) !!}--}}
-	{{--{!! Form::open(array('route'=>['nota-de-credito.update',$ventas->idventa], 'method'=>'PUT', 'autocomplete'=>'off')) !!}--}}
-
-	{!! Form::model($ventas['method'=>'PUT', 'route'=>['nota-de-credito.update',$ventas->idventa], 'file'=>'true']) !!}
-
+	
+	{!! Form::open(array('route'=>['nota-de-credito.update',$ventas->idventa], 'method'=>'PUT', 'autocomplete'=>'off')) !!}
 	{{ Form::token() }}
-
+	<input type="hidden" name="idventa" id="idventa" value="{{ $ventas->idventa }}"></th>
 		<div class="row">
 	        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 pull-right">
 	        	{!! Form::label('','Fecha') !!}
@@ -105,12 +102,12 @@
 		                    {!! Form::text('pcantidad', null, ['id'=>'pcantidad','class'=>'form-control','placeholder'=>'Cantidad']) !!}
 		                </div>
 		            </div>
-		            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+		            {{--<div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
 		                <div class="form-group">
 		                    {!! Form::label('descuento', 'Descuento') !!}
 		                    {!! Form::number('descuento', null, ['id'=>'pdescuento','class'=>'form-control','placeholder'=>'Descuento']) !!}
 		                </div>
-		            </div>
+		            </div>--}}
 		            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
 		            	{!! Form::label('','') !!}
 		                <div class="form-group">
@@ -123,12 +120,10 @@
 							    <th width="40%" scope="col">Articulo</th>
 							    <th width="5%" scope="col">Cantidad</th>
 							    <th width="15%" scope="col">Precio Unit.</th>
-							    <th width="15%" scope="col">% Descuento</th>
 							    <th width="15%" scope="col">Precio Total</th>
 							    <th width="5%" scope="col">Opcion</th>
 						  	</thead>
 						  	<tfoot>
-						  		<th></th>
 						  		<th></th>
 						  		<th></th>
 						  		<th><h4><strong>TOTAL</strong></h4></th>
@@ -180,31 +175,30 @@
 		idarticulo=datosArticulos[0];
 		articulo=$("#pidarticulo option:selected").text();
 		cantidad=$("#pcantidad").val();
-		descuento=$("#pdescuento").val();
+		//descuento=$("#pdescuento").val();
 		precio_venta=$("#pprecio_venta").val();
 		stock=$("#pstock").val();
 
-		if (idarticulo!="" && cantidad!="" && cantidad>0 && precio_venta!="" && descuento!="")
+		if (idarticulo!="" && cantidad!="" && cantidad>0 && precio_venta!="")/*&& descuento!=""*/
 		{
 			if (stock>=cantidad)
 			{
-				des=(descuento/100);
+				//des=(descuento/100);
 				subtotal[cont]=(cantidad*precio_venta);
-				subtotal[cont]=(subtotal[cont]-(subtotal[cont]*des));
+				//subtotal[cont]=(subtotal[cont]-(subtotal[cont]*des));
 				total=total+subtotal[cont];
 
 				var fila='<tr class="selected" id="fila'+cont+'">\n\
 					<td align="left"><input type="hidden" name="idarticulo[]" value="'+idarticulo+'">'+articulo+'</td>\n\
 					<td align="right"><input type="hidden" name="cantidad[]" value="'+cantidad+'">'+cantidad+'</td>\n\
 					<td align="right"><input type="hidden" name="precio_venta[]" value="'+precio_venta+'">'+precio_venta+'</td>\n\
-					<td align="right"><input type="hidden" name="descuento[]" value="'+descuento+'">'+descuento+'</td>\n\
 					<td align="right">'+subtotal[cont]+'</td>\n\
 					<td align="right"><button type="button" class="btn btn-danger" onclick="eliminar('+cont+')"><i class="fa  fa-trash"></i></button></td>\n\
 					</tr>';
 
 				cont++;
 				limpiar();
-				$("#total").html("BsS. " + total); // number_format(total, 2, ',', '.')
+				$("#total").html("BsS. " + total); // number_format(total, 2, ',', '.') 
 				$("#total_credito").val(total);
 				evaluar();
 				$('#detalles').append(fila);
@@ -223,7 +217,7 @@
 	function limpiar()
 	{
 		$("#pcantidad").val("");
-		$("#pdescuento").val("");
+		//$("#pdescuento").val("");
 		$("#pcosto").val("");
 	}
 

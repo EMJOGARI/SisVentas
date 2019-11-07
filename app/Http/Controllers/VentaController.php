@@ -143,7 +143,7 @@ class VentaController extends Controller
 
         $deta_noces=DB::table('tb_detalle_noce as d')
             ->join('tb_articulo as a', 'd.idarticulo', '=','a.idarticulo')
-            ->select('d.idnoce','a.idarticulo','a.nombre as articulo', 'd.cantidad', 'd.descuento','d.precio_venta')
+            ->select('d.idnoce','a.idarticulo','a.nombre as articulo', 'd.cantidad','d.precio_venta')
             ->get();
          //dd($nodes, $venta);
         return view("ventas.venta.show",["venta"=>$venta , "detalles"=>$detalles, "vendedor"=>$vendedor, "noces"=>$noces,"deta_noces"=>$deta_noces]);

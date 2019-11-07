@@ -1,15 +1,14 @@
 /*tablas nota de credito*/
-
 CREATE TABLE tb_nota_credito
 (
-  idnoce integer NOT NULL DEFAULT nextval('tb_nota_credito_idnoce_seq'::regclass),
+  idnoce serial NOT NULL,
   idventa integer,
   tipo character varying(15),
   num_noce integer,
-  total_noce numeric(11,2),
-  estado character varying(10),
-  fecha date,
   serie_noce integer,
+  total_noce numeric(11,2),
+  fecha date,
+  estado character varying(10),
   CONSTRAINT tb_nota_credito_pkey PRIMARY KEY (idnoce),
   CONSTRAINT tb_nota_credito_idventa_foreing FOREIGN KEY (idventa)
       REFERENCES tb_venta (idventa) MATCH SIMPLE
@@ -18,14 +17,13 @@ CREATE TABLE tb_nota_credito
 WITH (
   OIDS=FALSE
 );
-ALTER TABLE tb_nota_credito
+ALTER TABLE tb_nota_debito
   OWNER TO postgres;
 
 /*tabla detalle nota de credito*/
-
 CREATE TABLE tb_detalle_noce
 (
-  id_detalle_noce integer NOT NULL DEFAULT nextval('tb_detalle_noce_id_detalle_noce_seq'::regclass),
+  id_detalle_noce serial NOT NULL,
   idnoce integer,
   idarticulo integer,
   cantidad integer,
@@ -42,7 +40,7 @@ CREATE TABLE tb_detalle_noce
 WITH (
   OIDS=FALSE
 );
-ALTER TABLE tb_detalle_noce
+ALTER TABLE tb_detalle_node
   OWNER TO postgres;
 
 /*tabla ventas */

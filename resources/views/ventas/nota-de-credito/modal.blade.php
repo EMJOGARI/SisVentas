@@ -1,5 +1,5 @@
-<div class="modal fade modal-slide-in-right" aria-hidden="true" role="dialog" tabindex="-1" id="modal-delete-{{ $no->id_node }}">
-	{{ Form::open(['method'=>'delete', 'route'=>['nota-de-credito.destroy', $no->id_node]]) }}
+<div class="modal fade modal-slide-in-right" aria-hidden="true" role="dialog" tabindex="-1" id="modal-delete-{{ $no->idnoce }}">
+	{{ Form::open(['method'=>'delete', 'route'=>['nota-de-credito.destroy', $no->idnoce]]) }}
 
 		<div class="modal-dialog">
 			<div class="modal-content">
@@ -36,22 +36,7 @@
 				                <p>{{-- number_format($ven->total_venta, 2, ',', '.') --}}</p>
 				            </div>
 				        </div>
-				        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-				            <div class="form-group">
-				                {!! Form::label('detalle', 'Nota') !!}
-				                {!! Form::textarea('detalle', null, ['class'=>'form-control', 'rows' => 4, 'cols' => 54, 'placeholder'=>'Nota', 'required']) !!}
-				            </div>
-				        </div>
-				        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 pull-right">
-			                <div class="form-group">
-			                	<div class="input-group">
-			                        <span class="input-group-addon">
-										{!! Form::checkbox('delete') !!}
-			                        </span>
-									<p class="form-control"><strong> Eliminar factura</strong></p>
-		                  		</div>
-		                	</div>
-	            		</div>
+				       
 				        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 				            <h4><strong>Confirme si desea cancelar la venta seleccionada</strong></h4>
 				        </div>

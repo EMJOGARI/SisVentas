@@ -7,7 +7,7 @@ use DB;
 
 class DetalleNotaDebito extends Model
 {
-    protected $table='tb_detalle_node';
+   /* protected $table='tb_detalle_node';
 
     protected $primaryKey='id_detalle_node';
 
@@ -30,5 +30,5 @@ class DetalleNotaDebito extends Model
                     ->groupBy('idarticulo')
                     ->get();
     }
-    
+    */
 }

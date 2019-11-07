@@ -25,7 +25,7 @@
 
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
             <div class="info-box bg-aqua">
-                <span class="info-box-icon"><i class="fa fa-th"></i></span>
+                <span class="info-box-icon"><i class="fa fa-ticket"></i></span>
                 <div class="info-box-content">
                   <span class="info-box-text">Factura Nº</span>
                   <span class="info-box-number">{{ $venta->serie_comprobante.' - '.$venta->num_comprobante }}</span>
@@ -77,10 +77,10 @@
         <div class="row">
             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                 <div class="info-box bg-orange">
-                    <span class="info-box-icon"><i class="fa fa-th"></i></span>
+                    <span class="info-box-icon"><i class="fa fa-ticket"></i></span>
                     <div class="info-box-content">
-                      <span class="info-box-text">Nº Nota de Credito</span>
-                      <span class="info-box-number">{{ str_pad($no->idnoce, 5, "0", STR_PAD_LEFT) }}</span>
+                      <span class="info-box-text">Nota de Credito Nº</span>
+                      <span class="info-box-number">{{ $no->num_noce.' - '.$no->serie_noce }}</span>
                     </div>
                 </div>
             </div>
@@ -91,31 +91,28 @@
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <table id="detalles" class="table table-striped table-bordered table-condensed table-hover">
                             <thead style="background-color:#f39c12">
-                                <th width="40%" scope="col">Articulo</th>
+                                <th width="50%" scope="col">Articulo</th>
                                 <th width="5%" scope="col">Cantidad</th>
                                 <th width="15%" scope="col">Precio Unidad</th>
                                 <th width="15%" scope="col">Venta Neta</th>
-                                <th width="10%" scope="col">% Descuento</th>
                                 <th width="15%" scope="col">Subtotal</th>
                             </thead>
-                            <tfoot>
-                                <th></th>
+                            <tfoot>                               
                                 <th></th>
                                 <th></th>
                                 <th></th>
                                 <th><h4><strong>TOTAL:</strong></h4></th>
-                                <th><h4 id="total"><strong>{{ number_format($no->total_debito, 2, ',', '.') }}</strong></h4></th>
+                                <th><h4 id="total"><strong>{{ number_format($no->total_noce, 2, ',', '.') }}</strong></h4></th>
                             </tfoot>
                             <tbody>
-                                @foreach($deta_node as $det_no)
-                                    @if($no->id_node == $det_no->id_node)
+                                @foreach($deta_noces as $det_no)
+                                    @if($no->idnoce == $det_no->idnoce)
                                         <tr>
                                             <td>{{ $det_no->idarticulo.' - '.$det_no->articulo }}</td>
                                             <td align="center">{{ $det_no->cantidad }}</td>
                                             <td align="right">{{ number_format($det_no->precio_venta, 2, ',', '.') }}</td>
                                             <td align="right">{{ number_format($det_no->cantidad*$det_no->precio_venta, 2, ',', '.') }}</td>
-                                            <td align="center">{{ $det_no->descuento }}</td>
-                                            <td align="right">{{ number_format((($det_no->cantidad*$det_no->precio_venta)-(($det_no->cantidad*$det_no->precio_venta)*($det_no->descuento/100))), 2, ',', '.') }}</td>
+                                            <td align="right">{{ number_format((($det_no->cantidad*$det_no->precio_venta)-(($det_no->cantidad*$det_no->precio_venta))), 2, ',', '.') }}</td>
                                         </tr>
                                     @endif
                                 @endforeach
@@ -129,7 +126,7 @@
                     <span class="info-box-icon"><i class="fa fa-money"></i></span>
                     <div class="info-box-content">
                       <span class="info-box-text">total a pagar</span>
-                      <span class="info-box-number">{{ number_format($venta->total_venta - $no->total_debito, 2, ',', '.') }}</span>
+                      <span class="info-box-number">{{ number_format($venta->total_venta - $no->total_noce, 2, ',', '.') }}</span>
                     </div>
                 </div>
             </div>

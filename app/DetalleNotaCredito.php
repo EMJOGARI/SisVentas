@@ -3,6 +3,7 @@
 namespace SisVentas;
 
 use Illuminate\Database\Eloquent\Model;
+use DB;
 
 class DetalleNotaCredito extends Model
 {
@@ -25,7 +26,7 @@ class DetalleNotaCredito extends Model
     ];
     public function scopeSumadetallenoce($query,$node_id){
         return $query->select('idarticulo',DB::raw("SUM(cantidad) as suma"))
-                    ->where('id_node',$node_id)
+                    ->where('idnoce',$node_id)
                     ->groupBy('idarticulo')
                     ->get();
     }

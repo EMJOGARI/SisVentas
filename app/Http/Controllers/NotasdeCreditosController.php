@@ -11,7 +11,7 @@ use SisVentas\DetalleVenta;
 use SisVentas\Articulo;
 use SisVentas\NotaCredito;
 use SisVentas\DetalleNotaCredito;
-use SisVentas\Http\Requests\NotaDebitoFormRequest;
+use SisVentas\Http\Requests\NotaCreditoFormRequest;
 
 use DB;
 
@@ -42,10 +42,10 @@ class NotasdeCreditosController extends Controller
         //dd($nodes);
         return view('ventas.nota-de-credito.index',compact('noces','code'));
     }
-
+/*
     public function create()
     {
-         $ventas=DB::table('tb_venta as v')
+        $ventas=DB::table('tb_venta as v')
             ->where('estado','Pendiente')
             ->orderBy('idventa','desc')
             ->get();
@@ -77,7 +77,8 @@ class NotasdeCreditosController extends Controller
 
     public function store(NotaDebitoFormRequest $request)//NotaDebitoFormRequest
     {
-        //dd($request->all());
+       try{
+            DB::beginTransaction();
 
                 $NC = new NotaDebito;
                 $NC->idventa=$request->get('idventa');
@@ -115,10 +116,13 @@ class NotasdeCreditosController extends Controller
 
             DB::commit();
             flash('Nota de Debito Agregada')->success();
+        }catch(\Exception $e){
+            dd($e);
+            DB::rollback();
+            flash('Error a procesar la Nota de Debito')->warning();
+        }
 
         return Redirect::to('ventas/nota-de-credito');
-       // return view("cobranza.cuenta-por-cobrar.index");
-        //return Redirect::to('cobranza/cuenta-por-cobrar/index');
     }
 
     public function show($id)
@@ -128,7 +132,7 @@ class NotasdeCreditosController extends Controller
 
         return view("ventas.nota-de-credito.show",compact('ventas','detalles'));
     }
-
+*/
     public function edit($id)
     {
         $vendedor=DB::table('tb_venta as v')
@@ -150,15 +154,13 @@ class NotasdeCreditosController extends Controller
             ->where('d.idventa','=',$id)
             ->get();
 
-        //dd($vendedor,$ventas,$detalles);
         return view("ventas.nota-de-credito.edit",compact('ventas','detalles','vendedor'));
     }
 
-    public function update(Request $request, $id)
-    {
+    public function update(NotaCreditoFormRequest $request, $id)
+    {   //dd($request->all());        
         try{
             DB::beginTransaction();
-
                 $NC = new NotaCredito;
                 $NC->idventa=$request->get('idventa');
                 $NC->tipo='NC';
@@ -184,75 +186,35 @@ class NotasdeCreditosController extends Controller
                     $detalle->idarticulo=$idarticulo[$cont];
                     $detalle->cantidad=$cantidad[$cont];
                     $detalle->precio_venta=$precio_venta[$cont];
-                    $detalle->descuento=$descuento[$cont];
+                    //$detalle->descuento=$descuento[$cont];
                     $detalle->save();
                     $cont=$cont+1;
                 }
 
-                $venta=Venta::findOrFail($request->get('idventa'));
+                $venta=Venta::findOrFail($id);
                 $venta->idnoce=$NC->idnoce;
                 $venta->total_noce=$request->get('total_credito');
                 $venta->update();
 
             DB::commit();
-            flash('Nota de Debito Agregada')->success();
+            flash('Nota de Credito Agregada')->success();
         }catch(\Exception $e){
             dd($e);
             DB::rollback();
-            flash('Error a procesar la Nota de Debito')->warning();
+            flash('Error a procesar la Nota de Credito')->warning();
         }
-
-        return Redirect::to('ventas/nota-de-credito');
-        /*dd($request->all());
-        $ND=Venta::findOrFail($id);
-        $ND->tipo='NC';
-        $ND->num_nc=$request->get('num_comprobante');
-        $NC->serie_nc=$request->get('serie_comprobante');
-        $ND->total_nc=$request->get('total_debito');
-            $mytime = Carbon::now('America/Caracas');
-        $ND->fecha=$mytime->toDateTimestring();
-        $ND->estado='Activo';
-        $ND->update();
-
-        $idarticulo=$request->get('idarticulo');
-        $cantidad=$request->get('cantidad');
-        $descuento=$request->get('descuento');
-        $precio_venta=$request->get('precio_venta');
-
-        $cont = 0;
-
-        while($cont < count($idarticulo))
-        {
-            $detalle = new DetalleNotaDebito();
-            $detalle->id_node=$NC->id_node;
-            $detalle->idarticulo=$idarticulo[$cont];
-            $detalle->cantidad=$cantidad[$cont];
-            $detalle->precio_venta=$precio_venta[$cont];
-            $detalle->descuento=$descuento[$cont];
-            $detalle->save();
-            $cont=$cont+1;
-        }
-
-        $ND=Venta::findOrFail($id);
-        $ND->tipo='NC';
-        $ND->num_nc=$request->get('num_comprobante');
-        $NC->serie_nc=$request->get('serie_comprobante');
-        $ND->total_nc=$request->get('total_debito');
-            $mytime = Carbon::now('America/Caracas');
-        $ND->fecha=$mytime->toDateTimestring();
-        $ND->estado='Activo';
-        $ND->update();*/
+        return Redirect::to('ventas/nota-de-credito');       
     }
 
     public function destroy($id)   {
 
-        $node=NotaDebito::findOrFail($id);
+        $node=NotaCredito::findOrFail($id);
         $node->estado='Eliminada';
         $node->save();
 
         try {
-            $detallenode        = new DetalleNotaDebito;
-            $detalle_articulos  = $detallenode->Sumadetallenode($id);
+            $detallenoce        = new DetalleNotaCredito;
+            $detalle_articulos  = $detallenoce->Sumadetallenoce($id);
 
             if ($detalle_articulos->count()) {
                 DB::beginTransaction();
@@ -265,13 +227,28 @@ class NotasdeCreditosController extends Controller
                 DB::commit();
             }
         } catch (Exception $e) {
+            dd($e);
             DB::rollback();
         }
-        $delete=DetalleNotaDebito::findOrFail($id);
+
+        $sell=DB::table('tb_venta')
+            ->where('idnoce',$id)
+            ->first();
+
+        $venta=Venta::findOrFail($sell->idventa);   
+        $venta->idnoce=0;
+        $venta->total_noce=0;
+        $venta->save();
+        
+        $detalle=DB::table('tb_detalle_noce')
+            ->where('idnoce',$id)
+            ->delete();
+
+        $delete=NotaCredito::findOrFail($id);
         $delete->delete();
 
-        $delete=NotaDebito::findOrFail($id);
-        $delete->delete();
+        flash('Nota de Credito Eliminada')->success();
+
         return Redirect::to('ventas/nota-de-credito');
     }
 }

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class NotaDebito extends Model
 {
-    protected $table='tb_nota_debito';
+   /* protected $table='tb_nota_debito';
 
     protected $primaryKey='id_node';
 
@@ -21,5 +21,5 @@ class NotaDebito extends Model
 
     protected $guarded =[
 
-    ];
+    ];*/
 }

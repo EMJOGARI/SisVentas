@@ -26,7 +26,7 @@
 							<td align="center">{{ date('d-m-Y', strtotime($no->fecha)) }}</td>
 							<td>{{ $no->nombre }}</td>
 							<td align="right">{{ $no->serie_comprobante.' - '.$no->num_comprobante }}</td>
-							<td align="right">{{ str_pad($no->numero, 5, "0", STR_PAD_LEFT) }}</td>
+							<td align="right">{{ $no->numero }}</td>
 							<td align="right">{{ number_format($no->total_noce, 2, ',', '.') }}</td>
 							<td align="center">
 								@if($no->estado == 'Pagada')
@@ -46,7 +46,7 @@
 
 										<li><a href="{{-- URL::action('ReporteController@ReporteVentaID',$ven->idventa) --}}" target="_blank"><i class="fa fa-file-pdf-o"></i> Ver PDF</a></li>
 
-										<li><a href="#" data-target="#modal-delete-{{ $no->id_node }}" data-toggle="modal"><i class="fa fa-trash"></i> Eliminar Nota</a></li>
+										<li><a href="#" data-target="#modal-delete-{{ $no->idnoce }}" data-toggle="modal"><i class="fa fa-trash"></i> Eliminar Nota</a></li>
 									</ul>
 								</div>
 								{{----}}
