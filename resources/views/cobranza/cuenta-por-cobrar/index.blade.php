@@ -30,16 +30,16 @@
 							<td>{{ $ven->tipo_comprobante.': '.$ven->serie_comprobante.' - '.$ven->num_comprobante }}</td>
 							<td align="right">{{ number_format($ven->total_venta, 2, ',', '.') }}</td>
 							<td align="right">
-								@foreach ($nodes as $no)
+								@foreach ($noces as $no)
 									@if($no->idventa == $ven->idventa)
-										{{ number_format($no->total_debito, 2, ',', '.') }}
+										{{ number_format($no->total_noce, 2, ',', '.') }}
 									@endif
 								@endforeach
 							</td>
 							<td align="right">
-								@foreach ($nodes as $no)
+								@foreach ($noces as $no)
 									@if($no->idventa == $ven->idventa)
-										{{ number_format($ven->total_venta - $no->total_debito, 2, ',', '.') }}
+										{{ number_format($ven->total_venta - $no->total_noce, 2, ',', '.') }}
 									@endif
 								@endforeach
 							</td>
@@ -57,7 +57,7 @@
 								<div class="btn-group">
 									<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Acciones <span class="fa fa-caret-down"></span></button>
 									<ul class="dropdown-menu">
-										<li><a href="{{-- URL::action('NotasdeCreditosController@edit',$ven->idventa) --}}{{ url('ventas/nota-de-credito/create') }}{{-- URL::action(' CuentasporcobrarController@create',$ven->idventa) --}}"><i class="fa fa-clipboard"></i> Nota de Credito</a></li>
+										<li><a href="{{ url('ventas/nota-de-credito/create') }}"><i class="fa fa-clipboard"></i> Nota de Credito</a></li>
 										<li><a href="{{ URL::action('NotasdeCreditosController@edit',$ven->idventa) }}"><i class="fa fa-clipboard"></i> NC</a></li>
 										<li><a href="{{ URL::action('VentaController@show',$ven->idventa) }}"><i class="fa fa-file-text-o"></i> Detalle Factura</a></li>
 										<li><a href="#" data-target="#modal-pagar-{{ $ven->idventa }}" data-toggle="modal"><i class="fa fa-money"></i> Pagar Factura</a></li>

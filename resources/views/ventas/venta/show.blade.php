@@ -72,7 +72,7 @@
         </div>
 	</div>
 
-    @foreach($nodes as $no)
+    @foreach($noces as $no)
         @if($no->idventa == $venta->idventa)
         <div class="row">
             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
@@ -80,7 +80,7 @@
                     <span class="info-box-icon"><i class="fa fa-th"></i></span>
                     <div class="info-box-content">
                       <span class="info-box-text">Nº Nota de Credito</span>
-                      <span class="info-box-number">{{ str_pad($no->id_node, 5, "0", STR_PAD_LEFT) }}</span>
+                      <span class="info-box-number">{{ str_pad($no->idnoce, 5, "0", STR_PAD_LEFT) }}</span>
                     </div>
                 </div>
             </div>

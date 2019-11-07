@@ -1,3 +1,77 @@
+/*tablas nota de credito*/
+
+CREATE TABLE tb_nota_credito
+(
+  idnoce integer NOT NULL DEFAULT nextval('tb_nota_credito_idnoce_seq'::regclass),
+  idventa integer,
+  tipo character varying(15),
+  num_noce integer,
+  total_noce numeric(11,2),
+  estado character varying(10),
+  fecha date,
+  serie_noce integer,
+  CONSTRAINT tb_nota_credito_pkey PRIMARY KEY (idnoce),
+  CONSTRAINT tb_nota_credito_idventa_foreing FOREIGN KEY (idventa)
+      REFERENCES tb_venta (idventa) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE tb_nota_credito
+  OWNER TO postgres;
+
+/*tabla detalle nota de credito*/
+
+CREATE TABLE tb_detalle_noce
+(
+  id_detalle_noce integer NOT NULL DEFAULT nextval('tb_detalle_noce_id_detalle_noce_seq'::regclass),
+  idnoce integer,
+  idarticulo integer,
+  cantidad integer,
+  descuento integer,
+  precio_venta numeric(11,2),
+  CONSTRAINT tb_detalle_noce_pkey PRIMARY KEY (id_detalle_noce),
+  CONSTRAINT tb_detalle_noce_idarticulo_foreign FOREIGN KEY (idarticulo)
+      REFERENCES tb_articulo (idarticulo) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT tb_detalle_noce_idnoce_foreign FOREIGN KEY (idnoce)
+      REFERENCES tb_nota_credito (idnoce) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE tb_detalle_noce
+  OWNER TO postgres;
+
+/*tabla ventas */
+
+CREATE TABLE tb_venta
+(
+  idventa serial NOT NULL,
+  idcliente integer NOT NULL,
+  tipo_comprobante character varying(10) NOT NULL,
+  serie_comprobante character varying(10) NOT NULL,
+  num_comprobante character varying(10) NOT NULL,
+  total_venta numeric(11,2) NOT NULL,
+  estado character varying(10) NOT NULL,
+  fecha_hora date NOT NULL,
+  idvendedor integer,
+  detalle character varying(200),
+  fecha_entrega date, /*NUEVOS*/
+  idnoce integer, /*NUEVOS*/
+  total_noce numeric(11,2), /*NUEVOS*/
+  CONSTRAINT tb_venta_pkey PRIMARY KEY (idventa),
+  CONSTRAINT tb_venta_idcliente_foreign FOREIGN KEY (idcliente)
+      REFERENCES tb_persona (idpersona) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE CASCADE
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE tb_venta
+  OWNER TO postgres;
 -------------------------------------------------------------------
 http://youtube.com/watch?reload=9&v=7T80LZR850o
 -------------------------------------------------------------------
@@ -19,7 +93,7 @@ order by v.idventa desc*/
 
 select *
 from tb_venta as v
-FULL OUTER JOIN tb_nota_debito as nd on nd.idventa = v.idventa 
+FULL OUTER JOIN tb_nota_debito as nd on nd.idventa = v.idventa
 -------------------------------------------------------------------
 POSGRETS SQL FUNCIONES
 wewe
@@ -61,7 +135,7 @@ CREATE OR REPLACE FUNCTION cargar_bd()
 RETURNS void AS
 $BODY$BEGIN
 	for i in 1..130 loop
-		UPDATE tb_ingreso   
+		UPDATE tb_ingreso
 		SET total_compra = (select SUM(cantidad * precio_compra) from tb_detalle_ingreso WHERE idingreso = i)
 		WHERE idingreso = i;
 	end loop;
@@ -75,7 +149,7 @@ CONSULTAR BD TOTAL INGRESO
 SELECT SUM(total_compra) as total, EXTRACT(MONTH FROM fecha_hora) as mes, to_char(fecha_hora, 'TMMonth') as nombre
 FROM tb_ingreso
 WHERE estado = 'A' AND EXTRACT(YEAR FROM fecha_hora) = 2019
-GROUP BY EXTRACT(MONTH FROM fecha_hora),nombre 
+GROUP BY EXTRACT(MONTH FROM fecha_hora),nombre
 ORDER BY  mes
 ------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------
@@ -86,7 +160,7 @@ where stock > 0 and estado = 'Activo' and idarticulo not in (select dv.idarticul
 						from tb_detalle_venta as dv
 						join tb_venta as v on v.idventa = dv.idventa
 						join tb_articulo as a on a.idarticulo = dv.idarticulo
-						where v.fecha_hora >= '2019-09-01' and v.fecha_hora <= '2019-09-30' and v.estado <> 'Anulada' and v.estado <> 'Eliminada'					
+						where v.fecha_hora >= '2019-09-01' and v.fecha_hora <= '2019-09-30' and v.estado <> 'Anulada' and v.estado <> 'Eliminada'
 					      )
 order by idarticulo
 ------------------------------------------------------------------------------------

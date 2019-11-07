@@ -9,8 +9,6 @@ use Illuminate\Support\Facades\Input;
 use SisVentas\Venta;
 use SisVentas\DetalleVenta;
 use SisVentas\Articulo;
-use SisVentas\NotaDebito;
-use SisVentas\DetalleNotaDebito;
 use SisVentas\Http\Requests\NotaDebitoFormRequest;
 
 use DB;
@@ -23,7 +21,7 @@ class CuentasporcobrarController extends Controller
 {
     public function index(Request $request)
     {
-        $nodes=DB::table('tb_nota_debito')->where('estado','Activo')->get();
+        $noces=DB::table('tb_nota_credito')->where('estado','Activo')->get();
         $vendedores=DB::table('tb_persona')->where('tipo_persona','Vendedor')->get();
         $vende = $request->get('searchVendedor');
 
@@ -49,7 +47,7 @@ class CuentasporcobrarController extends Controller
             ->groupBy('v.idventa','v.fecha_hora','p.nombre','v.idvendedor','p2.nombre','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.estado','v.total_venta')
             ->orderBy('idventa','desc')
             ->paginate(20);
-        return view('cobranza.cuenta-por-cobrar.index',["ventas"=>$ventas,"searchText"=>$fact,"vendedores"=>$vendedores,"nodes"=>$nodes]);
+        return view('cobranza.cuenta-por-cobrar.index',["ventas"=>$ventas,"searchText"=>$fact,"vendedores"=>$vendedores,"noces"=>$noces]);
     }
 
 

@@ -21,13 +21,13 @@
 						<th width="10%">Estado</th>
 						<th width="15%"></th>
 					</thead>
-					@foreach ($nodes as $no)
+					@foreach ($noces as $no)
 						<tr>
 							<td align="center">{{ date('d-m-Y', strtotime($no->fecha)) }}</td>
 							<td>{{ $no->nombre }}</td>
 							<td align="right">{{ $no->serie_comprobante.' - '.$no->num_comprobante }}</td>
 							<td align="right">{{ str_pad($no->numero, 5, "0", STR_PAD_LEFT) }}</td>
-							<td align="right">{{ number_format($no->total_debito, 2, ',', '.') }}</td>
+							<td align="right">{{ number_format($no->total_noce, 2, ',', '.') }}</td>
 							<td align="center">
 								@if($no->estado == 'Pagada')
 									<span class="label label-success">{{ $no->estado }}</span>

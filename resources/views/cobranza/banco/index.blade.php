@@ -30,18 +30,18 @@
 							<td>{{ $ven->tipo_comprobante.': '.$ven->serie_comprobante.' - '.$ven->num_comprobante }}</td>
 							<td align="right">{{ number_format($ven->total_venta, 2, ',', '.') }}</td>
 							<td align="right">
-								@foreach ($nodes as $no)
+								@foreach ($noces as $no)
 									@if($no->idventa == $ven->idventa)
-										{{ number_format($no->total_debito, 2, ',', '.') }}									
+										{{ number_format($no->total_noce, 2, ',', '.') }}
 									@endif
-								@endforeach								
+								@endforeach
 							</td>
 							<td align="right">
-								@foreach ($nodes as $no)
+								@foreach ($noces as $no)
 									@if($no->idventa == $ven->idventa)
-										{{ number_format($ven->total_venta - $no->total_debito, 2, ',', '.') }}									
+										{{ number_format($ven->total_venta - $no->total_noce, 2, ',', '.') }}
 									@endif
-								@endforeach								
+								@endforeach
 							</td>
 							<td align="center">
 								@if($ven->estado == 'Pagada')

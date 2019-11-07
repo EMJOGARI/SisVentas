@@ -27,20 +27,20 @@
 						<th width="5%">Nota C.</th>
 						<th width="10%">Estado</th>
 						<th width="15%"></th>
-					</thead>					
-					@foreach ($ventas as $ven)					
+					</thead>
+					@foreach ($ventas as $ven)
 						<tr>
 							<td align="center">{{ date('d-m-Y', strtotime($ven->fecha_hora)) }}</td>
 							<td>{{ $ven->nombre }}</td>
 							<td>{{ $ven->tipo_comprobante.': '.$ven->serie_comprobante.' - '.$ven->num_comprobante }}</td>
-							<td align="right">{{ number_format($ven->total_venta, 2, ',', '.') }}</td>		
+							<td align="right">{{ number_format($ven->total_venta, 2, ',', '.') }}</td>
 							<td align="center">
-								@foreach ($nodes as $no)
+								@foreach ($noces as $no)
 									@if($no->idventa == $ven->idventa)
-										{{ str_pad($no->num_comprobante, 5, "0", STR_PAD_LEFT) }}									
+										{{ str_pad($no->num_noce, 5, "0", STR_PAD_LEFT) }}
 									@endif
-								@endforeach									
-							</td>					
+								@endforeach
+							</td>
 							<td align="center">
 								@if($ven->estado == 'Pagada')
 									<span class="label label-success">{{ $ven->estado }}</span>
@@ -55,14 +55,14 @@
 									<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Acciones <span class="fa fa-caret-down"></span></button>
 									<ul class="dropdown-menu">
 										<li><a href="{{ URL::action('ReporteController@ReporteFactura',$ven->idventa) }}" target="_blank"><i class="fa fa-file-pdf-o"></i> Ver Factura</a></li>
-										<li><a href="{{ URL::action('VentaController@show',$ven->idventa) }}"><i class="fa fa-file-text-o"></i> Detalle Factura</a></li>	
+										<li><a href="{{ URL::action('VentaController@show',$ven->idventa) }}"><i class="fa fa-file-text-o"></i> Detalle Factura</a></li>
 										<li><a href="#" data-target="#modal-delete-{{ $ven->idventa }}" data-toggle="modal"><i class="fa fa-trash"></i> Anular Factura</a></li>
 									</ul>
 								</div>
 							</td>
 						</tr>
-						@include('ventas.venta.modal')					
-					@endforeach 
+						@include('ventas.venta.modal')
+					@endforeach
 				</table>
 			</div>
 			{{ $ventas->render() }}
