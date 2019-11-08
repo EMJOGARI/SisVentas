@@ -12,9 +12,9 @@
 				<table class="table table-striped table-bordered table-condensed table-hover">
 					<thead>
 						<th width="8%">Fecha</th>
-						<th width="25%">Cliente</th>
+						<th width="20%">Cliente</th>
 						<th width="5%">Vendedor</th>
-						<th width="15%">Comprobante</th>
+						<th width="12%">Factura Nº</th>
 						<th width="10%">Monto Factura</th>
 						<th width="10%">Nota Credito</th>
 						<th width="10%">Total Pagar</th>
@@ -27,7 +27,7 @@
 							<td align="center">{{ date('d-m-Y', strtotime($ven->fecha_hora)) }}</td>
 							<td>{{ $ven->nombre }}</td>
 							<td>{{ $ven->idvendedor }}</td>
-							<td>{{ $ven->tipo_comprobante.': '.$ven->serie_comprobante.' - '.$ven->num_comprobante }}</td>
+							<td>{{ $ven->serie_comprobante.' - '.$ven->num_comprobante }}</td>
 							<td align="right">{{ number_format($ven->total_venta, 2, ',', '.') }}</td>
 							<td align="right">
 								@foreach ($noces as $no)

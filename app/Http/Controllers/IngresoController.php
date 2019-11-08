@@ -61,10 +61,10 @@ class IngresoController extends Controller
 
     public function store(IngresoFormRequest $request)
     {
-       
+
     	try{
     		DB::beginTransaction();
-            
+
                 $idarticulo=$request->get('idarticulo');
                 $cantidad=$request->get('cantidad');
                 $precio_compra=$request->get('precio_compra');
@@ -108,7 +108,6 @@ class IngresoController extends Controller
     		DB::commit();
 
     	}catch(\Exception $e){
-            dd($e);
     		DB::rollback();
             flash('Error a procesar el ingreso de la factura')->warning();
     	}

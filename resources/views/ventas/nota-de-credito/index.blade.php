@@ -26,7 +26,7 @@
 							<td align="center">{{ date('d-m-Y', strtotime($no->fecha)) }}</td>
 							<td>{{ $no->nombre }}</td>
 							<td align="right">{{ $no->serie_comprobante.' - '.$no->num_comprobante }}</td>
-							<td align="right">{{ $no->numero }}</td>
+							<td align="right">{{ $no->num_noce.' - '.$no->serie_noce }}</td>
 							<td align="right">{{ number_format($no->total_noce, 2, ',', '.') }}</td>
 							<td align="center">
 								@if($no->estado == 'Pagada')
@@ -44,7 +44,7 @@
 									<ul class="dropdown-menu">
 										<li><a href="{{ URL::action('VentaController@show',$no->idventa) }}"><i class="fa fa-file-text-o"></i> Detalle Factura</a></li>
 
-										<li><a href="{{-- URL::action('ReporteController@ReporteVentaID',$ven->idventa) --}}" target="_blank"><i class="fa fa-file-pdf-o"></i> Ver PDF</a></li>
+										<li><a href="{{ URL::action('ReporteController@ReporteNotaCredito',$no->idnoce) }}" target="_blank"><i class="fa fa-file-pdf-o"></i> Imprimir</a></li>
 
 										<li><a href="#" data-target="#modal-delete-{{ $no->idnoce }}" data-toggle="modal"><i class="fa fa-trash"></i> Eliminar Nota</a></li>
 									</ul>
@@ -57,7 +57,7 @@
 					@endforeach
 				</table>
 			</div>
-			{{-- $nodes->render() --}}
+			{{ $noces->render() }}
 		</div>
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"></div>
 	</div>

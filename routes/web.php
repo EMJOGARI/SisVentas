@@ -64,6 +64,7 @@ Route::get('pdf/reporteingresoid/{id}', 'ReporteController@ReporteIngresoID');
 
 Route::get('pdf/reporteventa', 'ReporteController@ReporteVenta');
 Route::get('pdf/reportefactura/{id}', 'ReporteController@ReporteFactura');
+Route::get('pdf/reportenotacredito/{id}', 'ReporteController@ReporteNotaCredito');
 
 Route::get('pdf/reportepersona', 'ReporteController@ReportePersona');
 Route::get('pdf/reportecliente', 'ReporteController@ReporteCliente');

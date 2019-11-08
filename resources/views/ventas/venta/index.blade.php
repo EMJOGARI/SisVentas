@@ -37,7 +37,7 @@
 							<td align="center">
 								@foreach ($noces as $no)
 									@if($no->idventa == $ven->idventa)
-										{{ str_pad($no->num_noce, 5, "0", STR_PAD_LEFT) }}
+										{{ $no->num_noce.' - '.$no->serie_noce  }}
 									@endif
 								@endforeach
 							</td>

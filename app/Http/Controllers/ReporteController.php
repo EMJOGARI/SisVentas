@@ -161,9 +161,34 @@ class ReporteController extends Controller
         return $pdf->stream('informe'.'.pdf');
     }
 
+    public function ReporteNotaCredito($id)
+    {
+        $ventas=DB::table('tb_venta as v')
+            ->join('tb_persona as p','v.idcliente','=','p.idpersona')
+            ->join('tb_persona as p2','v.idvendedor','=','p2.idpersona')
+            ->select('v.idventa','v.fecha_hora','p.nombre','p2.nombre as vendedor','v.idvendedor','p.direccion','p.tipo_documento','p.num_documento','p.telefono')
+            ->where('v.idnoce','=',$id)
+            ->first();
+
+        $noces=DB::table('tb_nota_credito')
+            ->where('idnoce','=',$id)
+            ->first();
+
+        $deta_noces=DB::table('tb_detalle_noce as d')
+            ->join('tb_articulo as a', 'd.idarticulo', '=','a.idarticulo')
+            ->select('d.idnoce','a.idarticulo','a.nombre as articulo', 'd.cantidad','d.precio_venta')
+            ->where('d.idnoce','=',$id)
+            ->get();
+
+        $view = \View::make('pdf.reportenotacredito',compact('ventas','noces','deta_noces'))->render();
+
+        $pdf = \App::make('dompdf.wrapper');
+        $pdf->loadHTML($view)->setPaper('landscape');
+        return $pdf->stream('informe'.'.pdf');
+    }
     public function ReporteFactura($id)
     {
-       $venta=DB::table('tb_venta as v')
+        $venta=DB::table('tb_venta as v')
             ->join('tb_persona as p','v.idcliente','=','p.idpersona')
             ->join('tb_persona as p2','v.idvendedor','=','p2.idpersona')
             ->join('tb_detalle_venta as dv','v.idventa','=','dv.idventa')
@@ -176,7 +201,7 @@ class ReporteController extends Controller
             ->select('a.idarticulo','a.nombre as articulo', 'd.cantidad', 'd.descuento','d.precio_venta')
             ->where('d.idventa','=',$id)
             ->get();
-            //dd($venta);
+            dd($venta, $detalles);
         $view = \View::make('pdf.reportefactura',compact('venta','detalles'))->render();
 
         $pdf = \App::make('dompdf.wrapper');

@@ -108,7 +108,6 @@ class VentaController extends Controller
     		DB::commit();
             flash('Venta Exitosa')->success();
     	}catch(\Exception $e){
-            dd($e);
     		DB::rollback();
             flash('Error a procesar la venta')->warning();
     	}
