@@ -201,7 +201,6 @@ class ReporteController extends Controller
             ->select('a.idarticulo','a.nombre as articulo', 'd.cantidad', 'd.descuento','d.precio_venta')
             ->where('d.idventa','=',$id)
             ->get();
-            dd($venta, $detalles);
         $view = \View::make('pdf.reportefactura',compact('venta','detalles'))->render();
 
         $pdf = \App::make('dompdf.wrapper');
