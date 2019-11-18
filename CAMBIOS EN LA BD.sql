@@ -1,3 +1,16 @@
+select  v.idvendedor, p2.nombre, dv.idarticulo, a.nombre, a.idcategoria, c.nombre, dv.cantidad
+from tb_venta as v
+join tb_persona as p2 on p2.idpersona = v.idvendedor
+join tb_detalle_venta as dv on dv.idventa = v.idventa
+join tb_articulo as a on a.idarticulo = dv.idarticulo
+join tb_categoria as c on c.idcategoria = a.idcategoria
+
+where v.estado <> 'Eliminada' and v.estado <> 'Anulada' and v.fecha_hora >= '2019-10-01' and v.fecha_hora <= '2019-10-31'  and v.idvendedor = 225 and a.idcategoria = 8
+
+group by v.idvendedor, p2.nombre, dv.idarticulo, a.nombre, a.idcategoria, c.nombre, dv.cantidad
+
+order by cantidad desc
+
 /*tablas nota de credito*/
 CREATE TABLE tb_nota_credito
 (
