@@ -35,6 +35,8 @@ class InicioController extends Controller
             ->where('estado','A')
             ->get();
 
+        
+
         $ventas=DB::table('tb_venta')
             ->select(DB::raw("count(estado) AS ventas"))
             ->where([

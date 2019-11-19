@@ -145,7 +145,7 @@ class ReporteventaController extends Controller
     {
         $vendedores=DB::table('tb_persona')->where('tipo_persona','Vendedor')->get();
         $vende = trim($request->get('searchVendedor'));
-
+        //dd($vendedores);
         $f1 = Carbon::now()->toDateString("FechaInicio");
         $f2 = Carbon::now()->toDateString("FechaFinal");
 

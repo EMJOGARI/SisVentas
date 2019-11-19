@@ -2,8 +2,14 @@
 @section('content')
 <div class="row">
 
-    <div class="col-md-8">
-        @include('principal.charts.index')
+    <div class="col-md-8">        
+        <div class="col-md-12">
+            @include('principal.charts.index')
+        </div>
+        <div class="col-md-6">
+        </div>
+        <div class="col-md-6">
+        </div>
     </div>
 
     <div class="col-md-4">
@@ -19,7 +25,7 @@
 
     <div class="col-md-6">
         @include('principal.ranking-municipio.ranking')
-    </div>
+    </div> 
 
 </div>
 @endsection
