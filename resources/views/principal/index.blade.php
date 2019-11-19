@@ -7,8 +7,10 @@
             @include('principal.charts.index')
         </div>
         <div class="col-md-6">
-        </div>
+             @include('principal.partials-box.compras_mes')
+        </div>       
         <div class="col-md-6">
+             @include('principal.partials-box.facturas_mes')
         </div>
     </div>
 

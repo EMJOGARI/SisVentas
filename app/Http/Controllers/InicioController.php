@@ -23,7 +23,9 @@ class InicioController extends Controller
             ->where('tipo_persona','Cliente')
             ->whereMonth('fecha_creacion',date('m'))
             ->get();
-
+/***********************/            
+/* ESTADISTICA POR AÑO */
+/***********************/
         $ingresos=DB::table('tb_ingreso')
             ->select(DB::raw("count(estado) AS ingresos"))
             ->where('estado','A')
@@ -33,9 +35,7 @@ class InicioController extends Controller
             ->select(DB::raw("sum(total_compra) AS compras"))
             ->whereYear('fecha_hora',date('Y'))
             ->where('estado','A')
-            ->get();
-
-        
+            ->get();        
 
         $ventas=DB::table('tb_venta')
             ->select(DB::raw("count(estado) AS ventas"))
@@ -52,6 +52,50 @@ class InicioController extends Controller
                     ['estado','<>','Eliminada']
                 ])
             ->whereYear('fecha_hora',date('Y'))
+            ->get();
+/***********************/            
+/* ESTADISTICA POR MES */
+/***********************/
+         $ingresos_mes=DB::table('tb_ingreso')
+            ->select(DB::raw("count(estado) AS ingresos"), DB::raw("to_char(fecha_hora, 'TMMonth') as nombre"))
+            ->whereMonth('fecha_hora',date('m'))
+            ->groupBy(DB::raw("EXTRACT(MONTH FROM fecha_hora)"),'nombre')
+            ->where('estado','A')
+            ->get();
+
+        $ingreso_total_mes=DB::table('tb_ingreso')
+            ->select(DB::raw("sum(total_compra) AS compras"))
+            ->whereMonth('fecha_hora',date('m'))
+            ->where('estado','A')
+            ->get();        
+
+        $ventas_mes=DB::table('tb_venta')
+            ->select(DB::raw("count(estado) AS ventas"),DB::raw("to_char(fecha_hora, 'TMMonth') as nombre"))
+            ->whereMonth('fecha_hora',date('m'))
+            ->where([
+                    ['estado','<>','Anulada'],
+                    ['estado','<>','Eliminada']
+                ])
+            ->groupBy(DB::raw("EXTRACT(MONTH FROM fecha_hora)"),'nombre')
+            ->get();
+
+        $cantidad_mes=DB::table('tb_venta as v')
+            ->join('tb_detalle_venta as dv','dv.idventa','v.idventa')
+            ->select(DB::raw("sum(dv.cantidad) AS cantidad"))
+            ->whereMonth('v.fecha_hora',date('m'))
+            ->where([
+                    ['v.estado','<>','Anulada'],
+                    ['v.estado','<>','Eliminada']
+                ])            
+            ->get();
+
+        $venta_total_mes=DB::table('tb_venta')
+            ->select(DB::raw("sum(total_venta) AS ventas"))
+            ->whereMonth('fecha_hora',date('m'))
+            ->where([
+                    ['estado','<>','Anulada'],
+                    ['estado','<>','Eliminada']
+                ])            
             ->get();
 
         $articulos=DB::table('tb_articulo')
@@ -166,7 +210,6 @@ class InicioController extends Controller
 
 /************************/
 /************************/
-        return view('principal/index', compact('chart','clientes','cli_new','ingresos','ingreso_total','ventas','venta_total','articulos','neto_inventario','ranking','k','m','ranking_municipio','sum_total_municipio'));
+        return view('principal/index', compact('chart','clientes','cli_new','ingresos','ingreso_total','ventas','venta_total','articulos','neto_inventario','ranking','k','m','ranking_municipio','sum_total_municipio','ingresos_mes','ingreso_total_mes','ventas_mes','cantidad_mes','venta_total_mes'));
     }
-
 }
