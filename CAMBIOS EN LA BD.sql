@@ -1,3 +1,5 @@
+https://mega.nz/#!oopUlQbB!KSbrrvXkKX_1Bx_tjDbiEub6SK2bP3UWqJ1miAKJREA
+
 select  v.idvendedor, p2.nombre, dv.idarticulo, a.nombre, a.idcategoria, c.nombre, dv.cantidad
 from tb_venta as v
 join tb_persona as p2 on p2.idpersona = v.idvendedor
