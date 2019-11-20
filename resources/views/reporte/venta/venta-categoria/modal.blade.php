@@ -9,7 +9,7 @@
                 <h4 class="modal-title">Detalles Categoría</h4>
 			</div>
 			<div class="modal-body">
-				<p>{{ $ven->idvendedor }}</p> <p>{{ $ven->idcategoria }}</p>
+				<p>{{ $ven->idvendedor }}</p> <p>{{ $ven->categorias }}</p>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-arrow-left"></i> Atras</button>
