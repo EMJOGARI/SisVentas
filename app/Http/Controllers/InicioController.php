@@ -23,7 +23,7 @@ class InicioController extends Controller
             ->where('tipo_persona','Cliente')
             ->whereMonth('fecha_creacion',date('m'))
             ->get();
-/***********************/            
+/***********************/
 /* ESTADISTICA POR AÑO */
 /***********************/
         $ingresos=DB::table('tb_ingreso')
@@ -35,7 +35,7 @@ class InicioController extends Controller
             ->select(DB::raw("sum(total_compra) AS compras"))
             ->whereYear('fecha_hora',date('Y'))
             ->where('estado','A')
-            ->get();        
+            ->get();
 
         $ventas=DB::table('tb_venta')
             ->select(DB::raw("count(estado) AS ventas"))
@@ -53,7 +53,7 @@ class InicioController extends Controller
                 ])
             ->whereYear('fecha_hora',date('Y'))
             ->get();
-/***********************/            
+/***********************/
 /* ESTADISTICA POR MES */
 /***********************/
          $ingresos_mes=DB::table('tb_ingreso')
@@ -67,7 +67,7 @@ class InicioController extends Controller
             ->select(DB::raw("sum(total_compra) AS compras"))
             ->whereMonth('fecha_hora',date('m'))
             ->where('estado','A')
-            ->get();        
+            ->get();
 
         $ventas_mes=DB::table('tb_venta')
             ->select(DB::raw("count(estado) AS ventas"),DB::raw("to_char(fecha_hora, 'TMMonth') as nombre"))
@@ -86,7 +86,7 @@ class InicioController extends Controller
             ->where([
                     ['v.estado','<>','Anulada'],
                     ['v.estado','<>','Eliminada']
-                ])            
+                ])
             ->get();
 
         $venta_total_mes=DB::table('tb_venta')
@@ -95,7 +95,7 @@ class InicioController extends Controller
             ->where([
                     ['estado','<>','Anulada'],
                     ['estado','<>','Eliminada']
-                ])            
+                ])
             ->get();
 
         $articulos=DB::table('tb_articulo')
@@ -165,7 +165,11 @@ class InicioController extends Controller
                 DB::raw("EXTRACT(MONTH FROM fecha_hora) as mes"), //obtiene solo el numero del mes
                 DB::raw("to_char(fecha_hora, 'TMMonth') as nombre") // obtiene el nombre del mes
             )
-            ->where('estado','Pagada')
+            ->where([
+                    ['estado','<>','Anulada'],
+                    ['estado','<>','Eliminada']
+                ])
+            //->where('estado','Pagada')
             ->whereYear('fecha_hora',date('Y'))
             ->groupBy(DB::raw("EXTRACT(MONTH FROM fecha_hora)"),'nombre')
             ->orderBy('mes')
@@ -182,7 +186,7 @@ class InicioController extends Controller
             ->groupBy(DB::raw("EXTRACT(MONTH FROM fecha_hora)"),'nombre')
             ->orderBy('mes')
             ->get();
-//dd($ingreso);
+//dd($egreso,$ingreso);
     $data_pag = [];
     $data_pen = [];
     $mes = [];
