@@ -39,7 +39,7 @@ class ReporteventaController extends Controller
                 ->join('tb_persona as p','v.idcliente','=','p.idpersona')
                 ->join('tb_persona as p2','v.idvendedor','=','p2.idpersona')
                 ->join('tb_detalle_venta as dv','v.idventa','=','dv.idventa')
-                ->select('v.idventa','v.idvendedor','v.fecha_hora','v.idcliente','p.nombre','p2.nombre as vendedor','p.municipio','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.estado','v.total_venta')
+                ->select('v.idventa','v.idvendedor','v.fecha_hora','v.idcliente','p.nombre','p2.nombre as vendedor','p.municipio','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.estado','v.total_venta','v.total_noce')
                 ->where(function($query) use ($clien,$muni,$f1,$f2){
                     if (($f1) & ($f2)) {
                         if (($f1 != "") & ($f2 != "") & ($clien != "")) {
@@ -70,17 +70,17 @@ class ReporteventaController extends Controller
                         }
                     }
                 })
-                ->groupBy('v.idventa','v.fecha_hora','p.nombre','v.idcliente','p2.nombre','p.municipio','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.estado','v.total_venta')
+                ->groupBy('v.idventa','v.fecha_hora','p.nombre','v.idcliente','p2.nombre','p.municipio','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.estado','v.total_venta','v.total_noce')
                 ->where([
                     ['v.estado','<>','Anulada'],
                     ['v.estado','<>','Eliminada']
                 ])
                 ->orderBy('idventa','desc')
-                ->paginate(200);
+                ->paginate(100);
 
             $sum_total_venta = 0;
             foreach ($ventas as $venta) {
-                $sum_total_venta += $venta->total_venta;
+                $sum_total_venta += $venta->total_venta - $venta->total_noce;
             }
         return view('reporte.venta.venta-cliente.index',["ventas"=>$ventas,"clientes"=>$clientes,"sum_total_venta"=>$sum_total_venta]);
     }
@@ -102,7 +102,7 @@ class ReporteventaController extends Controller
                 ->join('tb_persona as p','v.idcliente','=','p.idpersona')
                 ->join('tb_persona as p2','v.idvendedor','=','p2.idpersona')
                 ->join('tb_detalle_venta as dv','v.idventa','=','dv.idventa')
-                ->select('v.idventa','v.idvendedor','v.fecha_hora','v.idcliente','p.nombre','p2.nombre as vendedor','p.municipio','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.estado','v.total_venta')
+                ->select('v.idventa','v.idvendedor','v.fecha_hora','v.idcliente','p.nombre','p2.nombre as vendedor','p.municipio','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.estado','v.total_venta','v.total_noce')
                 ->where(function($query) use ($vende,$muni,$f1,$f2){
                     if (($f1) & ($f2)) {
                         if (($f1 != "") & ($f2 != "") & ($vende != "")) {
@@ -127,17 +127,17 @@ class ReporteventaController extends Controller
                         }
                     }
                 })
-                ->groupBy('v.idventa','v.fecha_hora','p.nombre','v.idcliente','p2.nombre','p.municipio','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.estado','v.total_venta')
+                ->groupBy('v.idventa','v.fecha_hora','p.nombre','v.idcliente','p2.nombre','p.municipio','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.estado','v.total_venta','v.total_noce')
                 ->where([
                     ['v.estado','<>','Anulada'],
                     ['v.estado','<>','Eliminada']
                 ])
                 ->orderBy('idventa','desc')
-                ->paginate(200);
+                ->paginate(100);
 
             $sum_total_venta = 0;
             foreach ($ventas as $venta) {
-                $sum_total_venta += $venta->total_venta;
+                $sum_total_venta += $venta->total_venta - $venta->total_noce;
             }
         return view('reporte.venta.venta-vendedor.index',["ventas"=>$ventas,"vendedores"=>$vendedores,"sum_total_venta"=>$sum_total_venta]);
     }

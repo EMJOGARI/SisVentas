@@ -34,11 +34,17 @@
 						<td align="center">
 								@if($ven->estado == 'Pagada')
 									<span class="label label-success">{{ $ven->estado }}</span>
+									@if($ven->total_noce > 0)
+										<span class="label label-info">NC</span>
+									@endif
 								@else
 									<span class="label bg-yellow">{{ $ven->estado }}</span>
+									@if($ven->total_noce > 0)
+										<span class="label label-info">NC</span>
+									@endif
 								@endif
 						</td>
-						<td align="right">{{ number_format($ven->total_venta, 2, ',', '.') }}</td>
+						<td align="right">{{ number_format($ven->total_venta - $ven->total_noce, 2, ',', '.') }}</td>
 						<td>
 							<a href="{{ URL::action('VentaController@show',$ven->idventa) }}"><button class="btn btn-default"><i class="fa fa-eye"></i></button></a>
 						</td>
