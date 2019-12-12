@@ -18,7 +18,7 @@
 	    }
 
 	    .datos{
-	    	margin-top: 10rem
+	    	margin-top: 5.8rem
 	    }
 	    .fecha{
 	    	font-size:18px;

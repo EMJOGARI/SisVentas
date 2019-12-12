@@ -1,4 +1,4 @@
-<div class="modal fade modal-slide-in-right" aria-hidden="true" role="dialog" tabindex="-1" id="modal-pagar-{{ $ven->idventa }}">
+<div class="modal fade modal-slide-in-right" aria-hidden="true" role="dialog" tabindex="-1" id="modal-entregar-{{ $ven->idventa }}">
 	{{ Form::open(['method'=>'PUT', 'route'=>['cuenta-por-cobrar.update', $ven->idventa]]) }}
 
 		<div class="modal-dialog">
@@ -8,7 +8,7 @@
 					aria-label="Close">
 	                     <span aria-hidden="true">×</span>
 	                </button>
-	                <h4 class="modal-title"><strong>Pagar Factura</strong></h4>
+	                <h4 class="modal-title"><strong>Factura Entregada</strong></h4>
 				</div>
 				<div class="modal-body">
 					<div class="row">
@@ -40,9 +40,9 @@
 			                <div class="form-group">
 			                	<div class="input-group">
 			                        <span class="input-group-addon">
-										{!! Form::checkbox('up_pagar') !!}
+										{!! Form::checkbox('up_entregar') !!}
 			                        </span>
-									<p class="form-control"><strong> Pagar factura</strong></p>
+									<p class="form-control"><strong>Entregar Factura</strong></p>
 		                  		</div>
 		                	</div>
 	            		</div>

@@ -19,10 +19,13 @@ class Venta extends Model
         'serie_comprobante',
         'num_comprobante',
         'fecha_hora',
-        'impuesto',
+        'fecha_entrega',
+        'fecha_pagada',
         'total_venta',
         'estado',
-        'detalle'
+        'detalle',
+        'idnoce',
+        'total_noce'
     ];
 
     protected $guarded =[

@@ -15,9 +15,9 @@
 						<th width="0%">Cliente</th>
 						<th width="0%">Vendedor</th>
 						<th width="0%">Comprobante</th>
-						<th width="0%">0 - 3 Días</th>
-						<th width="0%">4 - 7 Días</th>
-						<th width="0%">8 + Días</th>
+						<th width="0%">1 - 4 Días</th>
+						<th width="0%">5 - 6 Días</th>
+						<th width="0%">7 + Días</th>
 					</thead>
 					@foreach ($ventas as $ven)
 						<tr>
@@ -26,18 +26,18 @@
 							<td>{{ str_pad($ven->idvendedor, 3, "0", STR_PAD_LEFT) }}</td>
 							<td>{{ $ven->tipo_comprobante.': '.$ven->serie_comprobante.' - '.$ven->num_comprobante }}</td>
 							<td align="right">
-								@if(($ven->dia === 0) & ($ven->dia <= 3))
-									{{ number_format($ven->total_venta, 2, ',', '.') }}
+								@if(($cont === 0) & ($cont <= 3))
+									{{ number_format($ven->total_venta - $ven->total_noce, 2, ',', '.') }}
 								@endif
 							</td>
 							<td align="right">
-								@if(($ven->dia >= 4) && ($ven->dia <= 7))
-									{{ number_format($ven->total_venta, 2, ',', '.') }}
+								@if(($cont >= 4) && ($cont <= 7))
+									{{ number_format($ven->total_venta - $ven->total_noce, 2, ',', '.') }}
 								@endif
 							</td>
 							<td align="right">
-								@if($ven->dia >= 8)
-									{{ number_format($ven->total_venta, 2, ',', '.') }}
+								@if($cont >= 8)
+									{{ number_format($ven->total_venta - $ven->total_noce, 2, ',', '.') }}
 								@endif
 							</td>
 						</tr>

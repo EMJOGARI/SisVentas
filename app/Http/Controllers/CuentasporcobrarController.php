@@ -30,7 +30,7 @@ class CuentasporcobrarController extends Controller
             ->join('tb_persona as p','p.idpersona','v.idcliente')
             ->join('tb_persona as p2','p2.idpersona','v.idvendedor')
             ->join('tb_detalle_venta as dv','v.idventa','dv.idventa')
-            ->select('v.idventa','v.fecha_hora','p.nombre','v.idvendedor','p2.nombre as vendedor','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.estado','v.total_venta')
+            ->select('v.idventa','v.fecha_hora','v.fecha_entrega','v.fecha_pagada','p.nombre','v.idvendedor','p2.nombre as vendedor','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.estado','v.total_venta')
             ->where(function($query) use ($fact,$vende){
                 if($fact){
                     if ($fact != "") {
@@ -44,7 +44,7 @@ class CuentasporcobrarController extends Controller
                 }
             })
             ->where('v.estado','Pendiente')
-            ->groupBy('v.idventa','v.fecha_hora','p.nombre','v.idvendedor','p2.nombre','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.estado','v.total_venta')
+            ->groupBy('v.idventa','v.fecha_hora','v.fecha_entrega','v.fecha_pagada','p.nombre','v.idvendedor','p2.nombre','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.estado','v.total_venta')
             ->orderBy('idventa','desc')
             ->paginate(20);
         return view('cobranza.cuenta-por-cobrar.index',["ventas"=>$ventas,"searchText"=>$fact,"vendedores"=>$vendedores,"noces"=>$noces]);
@@ -68,14 +68,26 @@ class CuentasporcobrarController extends Controller
 
     public function update(Request $request, $id)
     {
-        $up = $request->get('up_stado');
-        if ($up == 1) {
+        $pagar = $request->get('up_pagar');
+        $entrega = $request->get('up_entregar');
+        if ($pagar == 1) {
             $venta=Venta::findOrFail($id);
             $venta->estado='Pagada';
+                $mytime = Carbon::now('America/Caracas');
+            $venta->fecha_pagada=$mytime->toDateTimestring();
             $venta->detalle=$request->get('detalle');
             $venta->save();
 
-            flash('Pago Agregada')->success();
+            flash('Factura Pagada')->success();
+        }
+        elseif ($entrega == 1) {
+            $venta=Venta::findOrFail($id);
+                $mytime = Carbon::now('America/Caracas');
+            $venta->fecha_entrega=$mytime->toDateTimestring();
+            $venta->detalle=$request->get('detalle');
+            $venta->save();
+
+            flash('Factura Entregada')->success();
         }
         return Redirect::to('cobranza/cuenta-por-cobrar');
     }

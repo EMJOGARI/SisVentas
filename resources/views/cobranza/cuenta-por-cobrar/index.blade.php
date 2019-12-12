@@ -43,7 +43,22 @@
 									@endif
 								@endforeach
 							</td>
-							<td align="center">{{ (strtotime(date('d-m-Y'))-strtotime($ven->fecha_hora))/86400 }}</td>
+							<td align="center">
+								@if( $ven->fecha_entrega >= date('d-m-Y'))
+									<?php
+										$StarDate = strtotime($ven->fecha_entrega);
+										$EndDate = strtotime(date('d-m-Y'));
+										$cont = 0;
+										for($StarDate;$StarDate<=$EndDate;$StarDate=strtotime('+1 day ' . date('Y-m-d',$StarDate)))
+										{
+										    if((strcmp(date('D',$StarDate),'Sun')!=0) and (strcmp(date('D',$StarDate),'Sat')!=0))
+										    {
+										    	$cont = $cont + 1;
+			    							}
+										}
+										echo $cont;
+				    				?>
+								@endif
 							<td align="center">
 								@if($ven->estado == 'Pagada')
 									<span class="label label-success">{{ $ven->estado }}</span>
@@ -57,6 +72,7 @@
 								<div class="btn-group">
 									<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Acciones <span class="fa fa-caret-down"></span></button>
 									<ul class="dropdown-menu">
+										<li><a href="#" data-target="#modal-entregar-{{ $ven->idventa }}" data-toggle="modal"><i class="fa fa-check"></i> Entregar Factura</a></li>
 										<li><a href="{{ URL::action('NotasdeCreditosController@edit',$ven->idventa) }}"><i class="fa fa-clipboard"></i> Nota de Credito</a></li>
 										<li><a href="{{ URL::action('VentaController@show',$ven->idventa) }}"><i class="fa fa-file-text-o"></i> Detalle Factura</a></li>
 										<li><a href="#" data-target="#modal-pagar-{{ $ven->idventa }}" data-toggle="modal"><i class="fa fa-money"></i> Pagar Factura</a></li>
@@ -65,6 +81,7 @@
 							</td>
 						</tr>
 						@include('cobranza.cuenta-por-cobrar.modal-pagar')
+						@include('cobranza.cuenta-por-cobrar.modal-entregar')
 
 					@endforeach
 				</table>

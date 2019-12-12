@@ -33,20 +33,17 @@ class ReporteingresoController extends Controller
         $f1=$request->get('FechaInicio');
         $f2=$request->get('FechaFinal');
 
-        $muni = $request->get('municipio');
-
             $ventas=DB::table('tb_venta as v')
                 ->join('tb_persona as p','v.idcliente','=','p.idpersona')
                 ->join('tb_persona as p2','v.idvendedor','=','p2.idpersona')
                 ->join('tb_detalle_venta as dv','v.idventa','=','dv.idventa')
-                ->select('v.idventa','v.idvendedor','v.fecha_hora','v.idcliente','p.nombre','p2.nombre as vendedor','p.municipio','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.estado','v.total_venta')
-                ->where(function($query) use ($clien,$muni,$f1,$f2,$vende){
+                ->select('v.idventa','v.idvendedor','v.fecha_hora','v.fecha_entrega','v.fecha_pagada','v.idcliente','p.nombre','p2.nombre as vendedor','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.estado','v.total_venta','v.total_noce')
+                ->where(function($query) use ($clien,$f1,$f2,$vende){
                     if (($f1) & ($f2)) {
                         if (($f1 != "") & ($f2 != "") & ($clien != "")) {
                             return $query->WhereBetween('v.fecha_hora', [$f1,$f2])
-                                            ->where(function($q) use ($clien,$muni,$vende){
+                                            ->where(function($q) use ($clien,$vende){
                                                 $q->orWhere('p.idpersona',$clien)
-                                                ->orWhere('p.municipio',$muni)
                                                 ->orWhere('p.idpersona',$vende);
                                             });
                         }else{
@@ -74,25 +71,20 @@ class ReporteingresoController extends Controller
                                         })*/;
                         }
                     }
-                    if ($muni) {
-                        if ($muni != "") {
-                             return $query->where('p.municipio',$muni);
-                        }
-                    }
                 })
-                ->groupBy('v.idventa','v.fecha_hora','p.nombre','v.idcliente','p2.nombre','p.municipio','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.estado','v.total_venta')
+                ->groupBy('v.idventa','v.fecha_hora','v.fecha_entrega','v.fecha_pagada','p.nombre','v.idcliente','p2.nombre','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.estado','v.total_venta','v.total_noce')
                 ->where('v.estado','Pagada')
                 ->orderBy('idventa','desc')
                 ->paginate(200);
 
             $sum_total_venta = 0;
             foreach ($ventas as $venta) {
-                $sum_total_venta += $venta->total_venta;
+                $sum_total_venta += $venta->total_venta - $venta->total_noce;
             }
             //dd($ventas);
         return view('reporte.ingreso.ingreso-cliente.index',compact('ventas','clientes','sum_total_venta','vendedores'));
     }
-   
+
     public function reporte_analisis_vencimiento(Request $request){
         $vendedores=DB::table('tb_persona')->where('tipo_persona','Vendedor')->get();
         $vende = $request->get('searchVendedor');
@@ -103,7 +95,7 @@ class ReporteingresoController extends Controller
             ->join('tb_persona as p','p.idpersona','v.idcliente')
             ->join('tb_persona as p2','p2.idpersona','v.idvendedor')
             ->join('tb_detalle_venta as dv','v.idventa','dv.idventa')
-            ->select('v.idcliente','v.idvendedor','v.idventa','v.fecha_hora','p.nombre','p2.nombre as vendedor','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.estado','v.total_venta',DB::raw("(current_date - v.fecha_hora) AS dia"))
+            ->select('v.idcliente','v.idvendedor','v.idventa','v.fecha_hora','v.fecha_entrega','p.nombre','p2.nombre as vendedor','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.estado','v.total_venta','v.total_noce')
             ->where(function($query) use ($fact,$vende){
                 if($fact){
                     if ($fact != "") {
@@ -117,23 +109,35 @@ class ReporteingresoController extends Controller
                 }
             })
             ->where('v.estado','Pendiente')
-            ->groupBy('v.idcliente','v.idvendedor','v.idventa','v.fecha_hora','p.nombre','p2.nombre','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.estado','v.total_venta')
+            ->groupBy('v.idcliente','v.idvendedor','v.idventa','v.fecha_hora','v.fecha_entrega','p.nombre','p2.nombre','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.estado','v.total_venta','v.total_noce')
             ->orderBy('idventa','desc')
             ->paginate(30);
             $mar_1 = 0; $mar_2 = 0; $mar_3 = 0;
             foreach ($ventas as $ven){
-                if(($ven->dia === 0) & ($ven->dia <= 3)){
-                    $mar_1 += $ven->total_venta;
+
+                $StarDate = strtotime($ven->fecha_entrega);
+                $EndDate = strtotime(date('d-m-Y'));
+                $cont = 0;
+                for($StarDate;$StarDate<=$EndDate;$StarDate=strtotime('+1 day ' . date('Y-m-d',$StarDate)))
+                {
+                    if((strcmp(date('D',$StarDate),'Sun')!=0) and (strcmp(date('D',$StarDate),'Sat')!=0))
+                    {
+                        $cont = $cont + 1;
+                    }
+                }
+
+                if(($cont === 1) & ($cont <= 4)){
+                    $mar_1 += $ven->total_venta - $ven->total_noce;
                 }else{
-                    if(($ven->dia >= 4) && ($ven->dia <= 7)){
-                        $mar_2 += $ven->total_venta;
+                    if(($cont >= 5) && ($cont <= 6)){
+                        $mar_2 += $ven->total_venta - $ven->total_noce;
                     }else{
-                        $mar_3 += $ven->total_venta;
+                        $mar_3 += $ven->total_venta - $ven->total_noce;
                     }
                 }
             }
             //dd($mar_1,$mar_2,$mar_3);
-        return view('reporte.ingreso.analisis-vencimiento.index',compact('ventas','fact','vendedores','mar_1','mar_2','mar_3'));
+        return view('reporte.ingreso.analisis-vencimiento.index',compact('ventas','fact','vendedores','mar_1','mar_2','mar_3','cont'));
    }
 
 } /* FIN REPORTE INGRESO CONTROLLER*/
