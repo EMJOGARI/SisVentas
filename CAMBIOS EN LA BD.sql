@@ -1,3 +1,18 @@
+select v.idvendedor, dv.idarticulo, a.nombre, c.nombre as categoria
+  ,SUM(dv.cantidad) as cantidad
+from tb_detalle_venta as dv
+join tb_venta as v on v.idventa = dv.idventa
+join tb_articulo as a on a.idarticulo = dv.idarticulo
+join tb_categoria as c on c.idcategoria = a.idcategoria
+
+where v.fecha_hora >= '2019-10-1' 
+  and v.fecha_hora >= '2019-10-30'
+  and v.estado <> 'Anulada'
+  and v.estado <> 'Eliminada' 
+
+group by v.idvendedor, dv.idarticulo, a.nombre, c.nombre
+order by v.idvendedor, cantidad desc 
+
 https://mega.nz/#!oopUlQbB!KSbrrvXkKX_1Bx_tjDbiEub6SK2bP3UWqJ1miAKJREA3
 
 select  v.idvendedor, p2.nombre, dv.idarticulo, a.nombre, a.idcategoria, c.nombre, dv.cantidad
