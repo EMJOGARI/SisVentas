@@ -175,6 +175,7 @@
                     <li><a href="{{ url('reporte/venta/venta-cliente') }}"><i class="fa fa-th"></i>Ventas por Clientes</a></li>
                     <li><a href="{{ url('reporte/venta/venta-vendedor') }}"><i class="fa fa-th"></i>Ventas por Vendedor</a></li>
                     <li><a href="{{ url('reporte/venta/venta-categoria') }}"><i class="fa fa-th"></i>Ventas por Categoria</a></li>
+                    <li><a href="{{ url('reporte/venta/detalle-venta-vendedor') }}"><i class="fa fa-th"></i>Detalle Venta</a></li>
                     <li><a href="{{ url('reporte/venta/facturas-anuladas') }}"><i class="fa fa-th"></i>Facturas Anuladas</a></li>
 
                   </ul>

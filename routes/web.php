@@ -37,6 +37,7 @@ Route::get('reporte/almacen/producto-mas-vendido', 'ReportealmacenController@art
 /* REPORTES VENTAS */
 Route::get('reporte/venta/venta-cliente', 'ReporteventaController@reporte_venta_cliente');
 Route::get('reporte/venta/venta-vendedor', 'ReporteventaController@reporte_venta_vendedor');
+Route::get('reporte/venta/detalle-venta-vendedor', 'ReporteventaController@reporte_venta_detallada_vendedor');
 Route::get('reporte/venta/venta-categoria', 'ReporteventaController@reporte_venta_categoria');
 Route::get('reporte/venta/facturas-anuladas', 'ReporteventaController@reporte_factura_anulada');
 /* REPORTES INGRESO */

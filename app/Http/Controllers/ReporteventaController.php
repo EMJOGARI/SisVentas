@@ -304,4 +304,73 @@ class ReporteventaController extends Controller
             }
         return view('reporte.venta.facturas-anuladas.index',["ventas"=>$ventas,"vendedores"=>$vendedores,"sum_total_venta"=>$sum_total_venta]);
     }
+    public function reporte_venta_detallada_vendedor(Request $request)
+    {
+        $vendedores=DB::table('tb_persona')->where('tipo_persona','Vendedor')->get();
+        $vende = trim($request->get('searchVendedor'));
+
+        $categorias=DB::table('tb_categoria')->where('condicion','=','1')->get();
+        $cat = trim($request->get('searchCategoria'));
+
+        $f1 = Carbon::now()->toDateString("FechaInicio");
+        $f2 = Carbon::now()->toDateString("FechaFinal");
+
+        $f1=$request->get('FechaInicio');
+        $f2=$request->get('FechaFinal');
+
+        $date = Carbon::now();
+
+        if(($f1 != "") & ($f2 != "")){
+            $date_1 = $request->get('FechaInicio');
+            $date_2 = $request->get('FechaFinal');
+        }else{
+            $date_1 = $date->format('Y-m-01');
+            $date_2 = $date;//$date->format('Y-m-d');
+        }
+
+        $art_ventas=DB::table('tb_detalle_venta as dv')
+            ->join('tb_venta as v','v.idventa','dv.idventa')
+            ->join('tb_articulo as a','a.idarticulo','dv.idarticulo')
+            ->join('tb_categoria as c','c.idcategoria','a.idcategoria')
+            ->select('v.idvendedor','dv.idarticulo','a.nombre','c.nombre as categoria',DB::raw("sum(cantidad) as cantidad"))
+            ->where(function($query) use ($cat,$vende,$f1,$f2){
+                 if (($f1) & ($f2)) {
+                        if (($f1 != "") & ($f2 != "") & ($vende != "")) {
+                            return $query->WhereBetween('v.fecha_hora', [$f1,$f2])
+                                            ->where(function($q) use ($vende){
+                                                $q->Where('v.idvendedor',$vende);
+                                            });
+                        }else{
+                            if (($f1 != "") & ($f2 != "")){
+                                return $query->WhereBetween('v.fecha_hora', [$f1,$f2]);
+                            }else{
+                                return $query->whereMonth('v.fecha_hora', date('m'));
+                            }
+                        }
+                    }
+                    if ($vende) {
+                        if ($vende != "") {
+                             return $query->where('v.idvendedor',$vende)
+                                        ->where(function($q){
+                                            $q->whereMonth('v.fecha_hora', date('m'));
+                                        });
+                        }
+                    }
+                if($cat){
+                    if ($cat != "") {
+                        return $query->where('c.idcategoria',$cat);
+                    }
+                }
+            })
+            ->where([
+
+                    ['v.estado','<>','Anulada'],
+                    ['v.estado','<>','Eliminada']
+                ])
+            ->groupBy('v.idvendedor','dv.idarticulo','a.nombre','c.nombre')
+            ->orderBy('cantidad','desc')
+            ->paginate(25);
+           // dd($art_ventas);
+         return view('reporte.venta.detalle-venta-vendedor.index',compact('art_ventas','categorias','vendedores'));
+    }
 }

@@ -35,7 +35,7 @@ class ReportealmacenController extends Controller
             ->select('a.idarticulo','a.nombre','a.stock','c.nombre as categoria','a.estado',
                 DB::raw("MAX(di.precio_venta) AS precio_venta"),
                 DB::raw("MAX(di.precio_compra) AS precio_compra")
-            )            
+            )
             ->where(function($query) use ($codigo, $stock, $cat){
                 if($codigo){
                     if ($codigo != "") {
