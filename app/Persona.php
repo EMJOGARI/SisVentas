@@ -20,7 +20,8 @@ class Persona extends Model
     	'direccion',
     	'telefono',
         'municipio',
-        'fecha_creacion'
+        'fecha_creacion',
+        'estado'
     ];
 
     protected $guarded =[

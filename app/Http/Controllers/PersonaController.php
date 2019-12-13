@@ -66,6 +66,7 @@ class PersonaController extends Controller
             $persona->municipio=$request->get('municipio');
                 $mytime = Carbon::now('America/Caracas');
             $persona->fecha_creacion=$mytime->toDateTimestring();
+            $persona->estado=1;
             $persona->save();
             DB::commit();
         }catch(\Exception $e){
@@ -103,7 +104,8 @@ class PersonaController extends Controller
     public function destroy($id)
     {
         $persona=Persona::findOrFail($id);
-        $persona->delete();
+        $persona->estado=0;
+        $persona->save();
         return Redirect::to('seguridad/persona');
     }
 }

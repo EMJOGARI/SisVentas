@@ -12,7 +12,7 @@
 
 <div class="row">
 	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
-		@foreach ($vendedores as $ven)
+		@foreach ($vendedor as $ven)
 		<div class="box-header with-border">
 	        <h3 class="box-title"><strong>{{ $ven->nombre }}</strong></h3>
         </div>
@@ -36,8 +36,10 @@
 					@endforeach
 				</table>
 			</div>
+			{{ $vendedor->appends(Request::all())->render() }}
 		@endforeach
-			{{ $art_ventas->appends(Request::all())->render() }}
+
+			
 	</div>
 </div>
 

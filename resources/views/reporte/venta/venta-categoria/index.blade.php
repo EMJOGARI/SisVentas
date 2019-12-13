@@ -25,15 +25,15 @@
 					<th width="10%">Neto</th>
 				</thead>
 					@foreach ($ventas as $ven)
-						@foreach ($noces as $no)
+						@foreach ($noces as $no)					
 							@if(($no->idvendedor == $ven->idvendedor) && ($no->idcategoria == $ven->idcategoria))
 								<tr>
 									<td>{{ $ven->vendedor }}</td>
 									<td>{{ $ven->categorias }}</td>
 									<td align="center">{{ $ven->cantidad - $no->cantidad}}</td>
 									<td align="right">{{ number_format($ven->neto - $no->neto, 2, ',', '.') }}</td>
-								</tr>
-							@else
+								</tr>							
+							@else 
 							    <tr>
 									<td>{{ $ven->vendedor }}</td>
 									<td>{{ $ven->categorias }}</td>
