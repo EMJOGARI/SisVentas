@@ -1,3 +1,7 @@
+agregar columna fecha_entrega en tb_ventas tipo character
+agregar columna estado en tb_persona tipo integer
+/*******************/
+/*******************/
 select v.idvendedor, dv.idarticulo, a.nombre, c.nombre as categoria
   ,SUM(dv.cantidad) as cantidad
 from tb_detalle_venta as dv
@@ -5,16 +9,18 @@ join tb_venta as v on v.idventa = dv.idventa
 join tb_articulo as a on a.idarticulo = dv.idarticulo
 join tb_categoria as c on c.idcategoria = a.idcategoria
 
-where v.fecha_hora >= '2019-10-1' 
+where v.fecha_hora >= '2019-10-1'
   and v.fecha_hora >= '2019-10-30'
   and v.estado <> 'Anulada'
-  and v.estado <> 'Eliminada' 
+  and v.estado <> 'Eliminada'
 
 group by v.idvendedor, dv.idarticulo, a.nombre, c.nombre
-order by v.idvendedor, cantidad desc 
-
+order by v.idvendedor, cantidad desc
+/*******************/
+/*******************/
 https://mega.nz/#!oopUlQbB!KSbrrvXkKX_1Bx_tjDbiEub6SK2bP3UWqJ1miAKJREA3
-
+/*******************/
+/*******************/
 select  v.idvendedor, p2.nombre, dv.idarticulo, a.nombre, a.idcategoria, c.nombre, dv.cantidad
 from tb_venta as v
 join tb_persona as p2 on p2.idpersona = v.idvendedor
@@ -27,7 +33,8 @@ where v.estado <> 'Eliminada' and v.estado <> 'Anulada' and v.fecha_hora >= '201
 group by v.idvendedor, p2.nombre, dv.idarticulo, a.nombre, a.idcategoria, c.nombre, dv.cantidad
 
 order by cantidad desc
-
+/*******************/
+/*******************/
 /*tablas nota de credito*/
 CREATE TABLE tb_nota_credito
 (
