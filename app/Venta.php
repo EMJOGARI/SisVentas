@@ -25,7 +25,8 @@ class Venta extends Model
         'estado',
         'detalle',
         'idnoce',
-        'total_noce'
+        'total_noce',
+        'dias_pago'
     ];
 
     protected $guarded =[

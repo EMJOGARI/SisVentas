@@ -1,5 +1,5 @@
 @extends ('layouts.admin')
-@section('name', "Volumen de Cobranzas por Clientes y Vendedor")
+@section('name', "Volumen de Cobranzas por Vendedor")
 @section('content')
 
 <div class="row" style="margin-bottom: 2rem;">
@@ -9,7 +9,7 @@
 		</div>
 	</div>
 	<div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 pull-right">
-		<a href="{{ url('pdf/reportearticuloprecio') }}"><button class="btn btn-primary"><i class="fa fa-print"></i> Imprimir</button></a>
+		<a href="{{ url('pdf/reportearticuloprecio') }}" target="_blank"><button class="btn btn-primary"><i class="fa fa-print"></i> Imprimir</button></a>
 	</div>
 </div>
 <div class="row">
@@ -33,33 +33,9 @@
 						<td align="center">{{ date('d-m-Y', strtotime($ven->fecha_hora)) }}</td>
 						<td>{{ $ven->serie_comprobante.' - '.$ven->num_comprobante }}</td>
 						<td>{{ str_pad($ven->idcliente, 3, "0", STR_PAD_LEFT).' - '.$ven->nombre }}</td>
-						<td align="center">
-							@if($ven->fecha_entrega > $ven->fecha_hora)
-								{{ date('d-m-Y', strtotime($ven->fecha_entrega)) }}
-							@endif
-						</td>
-						<td align="center">
-							@if($ven->fecha_entrega > $ven->fecha_hora)
-								{{ date('d-m-Y', strtotime($ven->fecha_pagada)) }}
-							@endif
-						</td>
-						<td align="center">
-							@if( $ven->fecha_pagada > $ven->fecha_entrega)
-								<?php
-									$StarDate = strtotime($ven->fecha_entrega);
-									$EndDate = strtotime($ven->fecha_pagada);
-									$cont = 0;
-									for($StarDate;$StarDate<=$EndDate;$StarDate=strtotime('+1 day ' . date('Y-m-d',$StarDate)))
-									{
-									    if((strcmp(date('D',$StarDate),'Sun')!=0) and (strcmp(date('D',$StarDate),'Sat')!=0))
-									    {
-									    	$cont = $cont + 1;
-		    							}
-									}
-									echo $cont;
-			    				?>
-							@endif
-						</td>
+						<td align="center">{{ date('d-m-Y', strtotime($ven->fecha_entrega)) }}</td>
+						<td align="center">{{ date('d-m-Y', strtotime($ven->fecha_pagada)) }}</td>
+						<td align="center">{{ $ven->dias_pago }}</td>
 						<td align="center">{{ $ven->idvendedor }}</td>
 						<td align="center">
 								@if($ven->estado == 'Pagada')
@@ -77,6 +53,8 @@
 					@include('ventas.venta.modal')
 				@endforeach
 					<tr>
+						<td></td>
+						<td></td>
 						<td></td>
 						<td></td>
 						<td></td>

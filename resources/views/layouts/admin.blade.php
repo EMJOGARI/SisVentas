@@ -215,8 +215,6 @@
 
                 <li><a href="{{ url('pdf/reportearticuloprecio') }}" target="_blank"><i class="fa fa-file-pdf-o"></i>Lista de Precio Productos</a></li>
                 <li><a href="{{ url('pdf/reportearticulo') }}" target="_blank"><i class="fa fa-file-pdf-o"></i>Reporte de Inventario Cero</a></li>
-                {{--<li><a href="{{ url('pdf/reporteventa') }}" target="_blank"><i class="fa fa-file-pdf-o"></i>Reporte de Ventas</a></li>
-                <li><a href="{{ url('pdf/reporteingreso') }}" target="_blank"><i class="fa fa-file-pdf-o"></i>Reporte de Ingresos</a></li>--}}
               </ul>
             </li>
             <li><a href="{{ url('seguridad/persona') }}"><i class="fa fa-user"></i><span>Personas</span></a></li>
@@ -233,6 +231,7 @@
                 </ul>
               </li>
             @endif
+            <li><a href="{{ url('reporte/venta/comisiones') }}"><i class="fa fa-th"></i>COMICION</a></li>
 
           </ul>
         </section>

@@ -40,9 +40,11 @@ Route::get('reporte/venta/venta-vendedor', 'ReporteventaController@reporte_venta
 Route::get('reporte/venta/detalle-venta-vendedor', 'ReporteventaController@reporte_venta_detallada_vendedor');
 Route::get('reporte/venta/venta-categoria', 'ReporteventaController@reporte_venta_categoria');
 Route::get('reporte/venta/facturas-anuladas', 'ReporteventaController@reporte_factura_anulada');
+Route::get('reporte/venta/comisiones', 'ReporteventaController@reporte_comision_vendedor');
 /* REPORTES INGRESO */
 Route::get('reporte/ingreso/ingreso-cliente', 'ReporteingresoController@reporte_ingreso_cliente');
 Route::get('reporte/ingreso/analisis-vencimiento', 'ReporteingresoController@reporte_analisis_vencimiento');
+Route::get('reporte/ingreso/comisiones', 'ReporteingresoController@reporte_comision_vendedor');
 /* REPORTE COMPRAS */
 Route::get('reporte/compra/compra-proveedor', 'ReporteCompraController@reporte_compra_proveedor');
 /* RANKING */
@@ -57,18 +59,10 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/{slug?}', 'HomeController@index')->name('home');
 
+Route::get('pdf/reportecomision', 'ReporteController@generar');
+
 Route::get('pdf/reportearticulo', 'ReporteController@ReporteArticulo');
 Route::get('pdf/reportearticuloprecio', 'ReporteController@ReporteArticuloPrecio');
 
-Route::get('pdf/reporteingreso', 'ReporteController@ReporteIngreso');
-Route::get('pdf/reporteingresoid/{id}', 'ReporteController@ReporteIngresoID');
-
-Route::get('pdf/reporteventa', 'ReporteController@ReporteVenta');
 Route::get('pdf/reportefactura/{id}', 'ReporteController@ReporteFactura');
 Route::get('pdf/reportenotacredito/{id}', 'ReporteController@ReporteNotaCredito');
-
-Route::get('pdf/reportepersona', 'ReporteController@ReportePersona');
-Route::get('pdf/reportecliente', 'ReporteController@ReporteCliente');
-Route::get('pdf/reporteproveedor', 'ReporteController@ReporteProveedor');
-Route::get('pdf/reportevendedor', 'ReporteController@ReporteVendedor');
-

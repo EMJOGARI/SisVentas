@@ -68,17 +68,42 @@ class CuentasporcobrarController extends Controller
 
     public function update(Request $request, $id)
     {
+
         $pagar = $request->get('up_pagar');
         $entrega = $request->get('up_entregar');
         if ($pagar == 1) {
             $venta=Venta::findOrFail($id);
+
             $venta->estado='Pagada';
                 $mytime = Carbon::now('America/Caracas');
             $venta->fecha_pagada=$mytime->toDateTimestring();
+
+                if( $venta->fecha_pagada > $venta->fecha_entrega)
+                {
+                    $StarDate = strtotime($venta->fecha_entrega);
+                    $EndDate = strtotime($venta->fecha_pagada);
+                    $cont = 0;
+                    for($StarDate;$StarDate<=$EndDate;$StarDate=strtotime('+1 day ' . date('Y-m-d',$StarDate)))
+                    {
+                        if((strcmp(date('D',$StarDate),'Sun')!=0) and (strcmp(date('D',$StarDate),'Sat')!=0))
+                        {
+                            $cont = $cont + 1;
+                        }
+                    }
+                   $cont;
+                }
+                elseif( $venta->fecha_pagada = $venta->fecha_entrega )
+                {
+                    $cont =  1;
+                }
+
             $venta->detalle=$request->get('detalle');
+            $venta->dias_pago=$cont;
+            //dd($venta, $cont);
             $venta->save();
 
             flash('Factura Pagada')->success();
+
         }
         elseif ($entrega == 1) {
             $venta=Venta::findOrFail($id);

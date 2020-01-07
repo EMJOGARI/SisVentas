@@ -37,14 +37,13 @@ class ReporteingresoController extends Controller
                 ->join('tb_persona as p','v.idcliente','=','p.idpersona')
                 ->join('tb_persona as p2','v.idvendedor','=','p2.idpersona')
                 ->join('tb_detalle_venta as dv','v.idventa','=','dv.idventa')
-                ->select('v.idventa','v.idvendedor','v.fecha_hora','v.fecha_entrega','v.fecha_pagada','v.idcliente','p.nombre','p2.nombre as vendedor','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.estado','v.total_venta','v.total_noce')
+                ->select('v.idventa','v.idvendedor','v.fecha_hora','v.fecha_entrega','v.fecha_pagada','v.idcliente','p.nombre','p2.nombre as vendedor','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.estado','v.total_venta','v.total_noce','v.dias_pago')
                 ->where(function($query) use ($clien,$f1,$f2,$vende){
                     if (($f1) & ($f2)) {
-                        if (($f1 != "") & ($f2 != "") & ($clien != "")) {
+                        if (($f1 != "") & ($f2 != "") & ($vende != "")) {
                             return $query->WhereBetween('v.fecha_hora', [$f1,$f2])
                                             ->where(function($q) use ($clien,$vende){
-                                                $q->orWhere('p.idpersona',$clien)
-                                                ->orWhere('p.idpersona',$vende);
+                                                $q->orWhere('v.idvendedor',$vende);
                                             });
                         }else{
                             if (($f1 != "") & ($f2 != "")){
@@ -72,7 +71,7 @@ class ReporteingresoController extends Controller
                         }
                     }
                 })
-                ->groupBy('v.idventa','v.fecha_hora','v.fecha_entrega','v.fecha_pagada','p.nombre','v.idcliente','p2.nombre','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.estado','v.total_venta','v.total_noce')
+                ->groupBy('v.idventa','v.fecha_hora','v.fecha_entrega','v.fecha_pagada','p.nombre','v.idcliente','p2.nombre','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.estado','v.total_venta','v.total_noce','v.dias_pago')
                 ->where('v.estado','Pagada')
                 ->orderBy('idventa','desc')
                 ->paginate(200);
