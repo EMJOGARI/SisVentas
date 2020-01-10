@@ -212,7 +212,7 @@
                     <li><a href="{{ url('reporte/ranking/cliente') }}"><i class="fa fa-th"></i>Ranking por Clientes</a></li>
                   </ul>
                 </li>
-
+                <li><a href="{{ url('reporte/venta/comisiones') }}"><i class="fa fa-th"></i>Comisiones de Ventas</a></li>
                 <li><a href="{{ url('pdf/reportearticuloprecio') }}" target="_blank"><i class="fa fa-file-pdf-o"></i>Lista de Precio Productos</a></li>
                 <li><a href="{{ url('pdf/reportearticulo') }}" target="_blank"><i class="fa fa-file-pdf-o"></i>Reporte de Inventario Cero</a></li>
               </ul>
@@ -228,10 +228,11 @@
                 <ul class="treeview-menu">
                   <li><a href="{{ url('seguridad/usuario') }}"><i class="fa fa-users"></i> {{ __('Ver Usuarios') }}</a></li>
                   <li><a href="{{ url('seguridad/precio_articulo') }}"><i class="fa fa-refresh"></i> {{ __('Cambiar precio producto') }}</a></li>
+                  <li><a href="{{ url('seguridad/variable_comision') }}"><i class="fa fa-refresh"></i> {{ __('Variables de Comisión') }}</a></li>
                 </ul>
               </li>
             @endif
-            <li><a href="{{ url('reporte/venta/comisiones') }}"><i class="fa fa-th"></i>COMICION</a></li>
+
 
           </ul>
         </section>

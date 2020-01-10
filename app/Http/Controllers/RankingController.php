@@ -26,21 +26,19 @@ class RankingController extends Controller
 
     	if(($f1 != "") & ($f2 != "")){
     		$date_1 = $request->get('FechaInicio');
-            $date_2 = $request->get('FechaFinal');    		
+            $date_2 = $request->get('FechaFinal');
     	}else{
     		$date_1 = $date->format('Y-m-01');
             $date_2 = $date;//$date->format('Y-m-d');
     	}
-    	
+
         $ranking=DB::table('tb_venta as v')
             ->join('tb_persona as p','p.idpersona','v.idcliente')
             ->join('tb_persona as p2','p2.idpersona','v.idvendedor')
             ->select('v.idcliente','p.nombre','p2.nombre as vendedor','v.idvendedor',
-            	DB::raw("SUM(v.total_venta) as total")
-            ,DB::raw("(select sum(total_venta) from tb_venta where estado = 'Pagada' and idcliente = v.idcliente and fecha_hora >= '$date_1' and fecha_hora <= '$date_2') as pagadas")
-            	,DB::raw("(select sum(total_venta) from tb_venta where estado = 'Pendiente' and idcliente = v.idcliente and fecha_hora >= '$date_1' and fecha_hora <= '$date_2') as pendientes")
+            	DB::raw("SUM(v.total_venta) as total"),DB::raw("SUM(v.total_noce) as noce")
             )
-           	->where(function($query) use ($vende, $f1, $f2){           		
+           	->where(function($query) use ($vende, $f1, $f2){
                 if (($f1) & ($f2)) {
                     if (($f1 != "") & ($f2 != "") & ($vende != "")) {
                         return $query->WhereBetween('v.fecha_hora', [$f1,$f2])
@@ -78,11 +76,9 @@ class RankingController extends Controller
             $sum_total_p = 0;
             $k =0;
             foreach ($ranking as $rank) {
-                $sum_total += $rank->total;
-                $sum_total_c += $rank->pagadas;
-                $sum_total_p += $rank->pendientes;
+                $sum_total += $rank->total - $rank->noce;
             }
-        return view('reporte.ranking.cliente.index', ["ranking"=>$ranking,"sum_total"=>$sum_total,"sum_total_c"=>$sum_total_c,"sum_total_p"=>$sum_total_p,"k"=>$k,"vendedores"=>$vendedores]);
+        return view('reporte.ranking.cliente.index', ["ranking"=>$ranking,"sum_total"=>$sum_total,"k"=>$k,"vendedores"=>$vendedores]);
     }
 /*************************/
 /* RANKING POR MUNICIPIO */

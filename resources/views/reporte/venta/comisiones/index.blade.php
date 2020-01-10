@@ -8,9 +8,11 @@
 			@include('reporte.venta.comisiones.search')
 		</div>
 	</div>
+	{{--
 	<div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 pull-right">
 		<a href="{{ url('pdf/reportecomision') }}" target="_blank"><button class="btn btn-primary"><i class="fa fa-print"></i> Imprimir</button></a>
 	</div>
+	--}}
 </div>
 <div class="row">
 	{{--
@@ -46,29 +48,14 @@
 			</table>
 		</div>
 	</div>
-	<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-		<div class="box box-success">
-		    <div class="box-body"><!-- /.box-header -->
-		      	<div class="table-responsive">
-					<table class="table table-striped table-bordered table-condensed table-hover">
-						<thead>
-							<th width="30%"></th>
-							<th width="10%"></th>
-						</thead>
-							<tr>
-								<td><strong>TOTAL VENTAS</strong></td>
-								<td align="right">{{ number_format( $sum_total_venta, 2, ',', '.') }}</td>
-							</tr>
-							<tr>
-								<td><strong>COMISIONES 3%</strong></td>
-								<td align="right">{{ number_format( $sum_total_venta * 0.03, 2, ',', '.') }}</td>
-							</tr>
-
-
-					</table>
-				</div>
-		    </div><!-- /.box-body -->
-		</div>
+	<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+		@include('reporte.venta.comisiones.comisiones')
+	</div>
+	<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+		@include('reporte.venta.comisiones.metas')
+	</div>
+	<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+		@include('reporte.venta.comisiones.visitas')
 	</div>
 </div>
 @endsection

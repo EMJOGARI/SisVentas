@@ -19,26 +19,20 @@
 					            <th width="5%">#</th>
 					            <th width="40%">Nombre</th>
 					            <th width="25%">Vendedor</th>
-					            <th width="10%">Fact. Pagadas</th>
-					            <th width="10%">Fact. Pendientes</th>
 					            <th width="10%">Fact. Neta</th>
 				          	</tr>
 				        @foreach ($ranking as $rank)
 				              <tr>
 					                <td align="center"><strong>{{$k = $k + 1}}</strong></td>
 					                <td>{{ str_pad($rank->idcliente, 3, "0", STR_PAD_LEFT).' - '.$rank->nombre }}</td>
-					                <td>{{ str_pad($rank->idvendedor, 3, "0", STR_PAD_LEFT).' - '.$rank->vendedor }}</td>
-					                <td align="right">{{ number_format($rank->pagadas, 2, ',', '.') }}</td>
-					                <td align="right">{{ number_format($rank->pendientes, 2, ',', '.') }}</td>
-					                <td align="right">{{ number_format($rank->total, 2, ',', '.') }}</td>
+					                <td>{{ str_pad($rank->idvendedor, 3, "0", STR_PAD_LEFT) }}</td>
+					                <td align="right">{{ number_format($rank->total - $rank->noce, 2, ',', '.') }}</td>
 				              </tr>
 				        @endforeach
 					          <tr>
 						            <td></td>
 						            <td></td>
 						            <td align="center"><strong>TOTAL:</strong></td>
-						            <td align="right"><strong>{{ number_format($sum_total_c, 2, ',', '.') }}</strong></td>
-						            <td align="right"><strong>{{ number_format($sum_total_p, 2, ',', '.') }}</strong></td>
 						            <td align="right"><strong>{{ number_format($sum_total, 2, ',', '.') }}</strong></td>
 					          </tr>
 				    </tbody>

@@ -77,7 +77,7 @@
 			    </tr>
 			    <tr>
 			      	<td colspan="4">{{ $venta->direccion }}</td>
-			      	<td colspan="1">Vendedor: {{ $venta->idvendedor }}</td>
+			      	<td colspan="1">C.C. Nº: {{ str_pad($venta->idcliente, 3, "0", STR_PAD_LEFT) }} - C.V. Nº: {{ $venta->idvendedor }}</td>
 			    </tr>
 
 			</tbody>

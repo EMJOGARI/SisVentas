@@ -190,7 +190,7 @@
 		{   //CANTIDAD DE ITEMS EN LA FACTURA
 			//if(cont<=6)
 			//{
-				if (stock>=cantidad)
+				if ((stock>=cantidad))
 				{
 					des=(descuento/100);
 					subtotal[cont]=(cantidad*precio_venta);

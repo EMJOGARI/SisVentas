@@ -1,3 +1,21 @@
+CREATE TABLE tb_variable
+(
+  id_variable serial,
+  comision_max numeric(11,2) DEFAULT 0.00,
+  comision_min numeric(11,2) DEFAULT 0.00,
+  meta_cumplir numeric(11,2) DEFAULT 0.00,
+  dia_min integer DEFAULT 0,
+  dia_max integer DEFAULT 0,
+  objetivo_meta numeric(11,2) DEFAULT 0,
+  visita_activa integer DEFAULT 0,
+  objetivo_visita numeric(11,2) DEFAULT 0
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE tb_variable
+  OWNER TO postgres;
+======================================================================
 agregar columna fecha_entrega en tb_ventas tipo character
 agregar columna estado en tb_persona tipo integer
 /*******************/

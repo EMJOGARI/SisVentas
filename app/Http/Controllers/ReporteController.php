@@ -151,7 +151,7 @@ class ReporteController extends Controller
             ->join('tb_persona as p','v.idcliente','=','p.idpersona')
             ->join('tb_persona as p2','v.idvendedor','=','p2.idpersona')
             ->join('tb_detalle_venta as dv','v.idventa','=','dv.idventa')
-            ->select('v.idventa','v.fecha_hora','p.nombre','p2.nombre as vendedor','v.idvendedor','p.direccion','p.tipo_documento','p.num_documento','p.telefono','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.estado','v.total_venta')
+            ->select('v.idcliente','v.idventa','v.fecha_hora','p.nombre','p2.nombre as vendedor','v.idvendedor','p.direccion','p.tipo_documento','p.num_documento','p.telefono','v.tipo_comprobante','v.serie_comprobante','v.num_comprobante','v.estado','v.total_venta')
             ->where('v.idventa','=',$id)
             ->first();
 
