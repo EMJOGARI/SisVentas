@@ -14,9 +14,10 @@
 	@foreach ($vendedor as $ven)
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 			<div class="box-header with-border">
-		        <h3 class="box-title"><strong>{{ $ven->nombre }}</strong></h3>
+		        <h3 class="box-title"><strong>{{$ven->idpersona.' - '.$ven->nombre }}</strong></h3>
 	        </div>
 		</div>
+	@endforeach
 		<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 			@include('reporte.venta.venta-categoria.venta')
 		</div>
@@ -29,6 +30,6 @@
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="display: none">
 			{{ $vendedor->appends(Request::all())->render() }}
 		</div>
-	@endforeach
+
 </div>
 @endsection

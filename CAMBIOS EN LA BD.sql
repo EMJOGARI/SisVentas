@@ -1,3 +1,20 @@
+CREATE TABLE tb_variable_vendedor
+(
+  idvar serial NOT NULL,
+  idvendedor integer,
+  cuota_venta numeric(11,2),
+  incentivo_venta numeric(11,2),
+  cuota_cliente_activar integer,
+  incentivo_cliente_activar numeric(11,2),
+  fecha date
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE tb_variable_vendedor
+  OWNER TO postgres;
+
+====================================================================
 CREATE TABLE tb_variable
 (
   id_variable serial,

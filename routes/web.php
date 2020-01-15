@@ -21,6 +21,7 @@ Route::resource('seguridad/usuario', 'UsuarioController');
 Route::resource('seguridad/persona', 'PersonaController');
 /* VARIABLES DEL SISTEMA*/
 Route::resource('seguridad/variable_comision', 'VariableController');
+Route::resource('seguridad/variable_vendedor', 'VariablevendedorController');
 /**/
 Route::resource('seguridad/precio_articulo', 'EditPrecioController');
 Route::resource('almacen/categoria', 'CategoriaController');

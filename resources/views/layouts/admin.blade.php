@@ -228,7 +228,18 @@
                 <ul class="treeview-menu">
                   <li><a href="{{ url('seguridad/usuario') }}"><i class="fa fa-users"></i> {{ __('Ver Usuarios') }}</a></li>
                   <li><a href="{{ url('seguridad/precio_articulo') }}"><i class="fa fa-refresh"></i> {{ __('Cambiar precio producto') }}</a></li>
-                  <li><a href="{{ url('seguridad/variable_comision') }}"><i class="fa fa-refresh"></i> {{ __('Variables de Comisión') }}</a></li>
+                  <li class="treeview menu-open">
+                    <a href="#"><i class="fa fa-line-chart"></i> Variables Sistema
+                      <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                      </span>
+                    </a>
+                    <ul class="treeview-menu" style="display: auto;">
+                        <li><a href="{{ url('seguridad/variable_comision') }}"><i class="fa fa-refresh"></i> {{ __('Variables de Comisión') }}</a></li>
+                        <li><a href="{{ url('seguridad/variable_vendedor') }}"><i class="fa fa-refresh"></i> {{ __('Variables Vendedores') }}</a></li>
+                    </ul>
+                  </li>
+
                 </ul>
               </li>
             @endif

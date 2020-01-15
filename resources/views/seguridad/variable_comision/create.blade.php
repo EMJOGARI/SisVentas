@@ -14,7 +14,7 @@
 				</div>
 			@endif
 
-			{!! Form::open(array('url'=>'seguridad/variable_sistema', 'method'=>'POST', 'autocomplete'=>'off')) !!}
+			{!! Form::open(array('url'=>'seguridad/variable_comision', 'method'=>'POST', 'autocomplete'=>'off')) !!}
 			{{ Form::token() }}
 			<div class="row">
 	            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
